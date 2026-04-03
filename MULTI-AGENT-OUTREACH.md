@@ -158,15 +158,15 @@ Use the practical completion rule unless Dylan explicitly says otherwise.
 ## Initial Launch Order
 
 Start with these in order:
-1. Contact Discovery Agent
+1. Sweep Agent
 2. Qualification Agent
-3. Sweep Agent
+3. Contact Discovery Agent
 4. Batch Assembly Agent
 
 Reason:
-- contact discovery is the current pain point
-- qualification is the next most valuable filter
-- geographic sweep helps scale future batches
+- the project team should be ready to begin at the top of the workflow
+- Sweep Agent is the clean first live role for building future geography slices
+- qualification and contact discovery follow naturally after sweep output exists
 - batch assembly becomes most useful once the earlier steps are active
 
 ## Current Use Case

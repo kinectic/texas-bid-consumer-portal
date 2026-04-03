@@ -26,10 +26,11 @@ Current operational snapshot for Zee.
 - Outreach workflow files now exist and can be reused for future batches
 - Multi-agent outreach structure was defined with Zee as manager over helper outreach agents
 - General Zee-led multi-agent operating model was defined for future teams beyond outreach
+- Texas HVAC outreach team was concretely defined and made ready for Sweep Agent creation
 
 ## Next Actions
 
-- Decide whether to activate the outreach helper-agent workflow immediately for batch 2 or finish more setup first
+- Create and test the first live Sweep Agent workflow for the next geography slice
 - Add reusable templates for outreach batches and contact classification
 - Extend the Zee-led model into future category-agent teams when needed
 - Continue improving system operations where it reduces friction for real work

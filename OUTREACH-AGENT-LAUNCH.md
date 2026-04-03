@@ -9,9 +9,10 @@ Use a small team of helper agents to accelerate Texas outreach work while Zee re
 ## First Agent Roster
 
 ### Contact Discovery Agent
-Use first when:
+Use when:
+- qualified companies already exist
 - direct emails are the bottleneck
-- companies already exist and mainly need contact-path completion
+- companies mainly need contact-path completion
 
 Mission:
 - find direct emails first
@@ -50,9 +51,9 @@ Mission:
 
 ## Launch Order
 
-1. Contact Discovery Agent
+1. Sweep Agent
 2. Qualification Agent
-3. Sweep Agent
+3. Contact Discovery Agent
 4. Batch Assembly Agent
 
 ## Operating Rule

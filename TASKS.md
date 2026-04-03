@@ -10,6 +10,7 @@ A clean operating list for Zee.
 - Improve outreach operations so future batches move faster and stop cleanly.
 - Improve Dylan-facing setup visibility through clearer workspace status files.
 - Stand up the outreach multi-agent structure with Zee managing helper agents for future batch sweeps.
+- Finalize the Texas HVAC outreach team definition so the Sweep Agent is ready to be the first live helper agent.
 
 ## Pending
 
@@ -18,6 +19,7 @@ A clean operating list for Zee.
 - Expand the operations dashboard to reflect more real runtime state.
 - Add reusable templates for contact classification and send-ready outreach batches.
 - Decide when to activate the first outreach helper agents in live workflow.
+- Create and test the first live Sweep Agent workflow for the next geography slice.
 
 ## Completed
 
