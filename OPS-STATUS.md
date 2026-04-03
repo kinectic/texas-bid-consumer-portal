@@ -18,6 +18,7 @@ Current operational snapshot for Zee.
 
 - WhatsApp approval flow can still be inconsistent for some shell commands
 - Heavier scans can be less reliable than lighter built-in fetch paths
+- Persistent helper-agent session/runtime behavior is not currently reliable enough from this route, so on-demand helper execution is the safer working model
 
 ## Recent Wins
 
@@ -27,10 +28,11 @@ Current operational snapshot for Zee.
 - Multi-agent outreach structure was defined with Zee as manager over helper outreach agents
 - General Zee-led multi-agent operating model was defined for future teams beyond outreach
 - Texas HVAC outreach team was concretely defined and made ready for Sweep Agent creation
+- Runtime limitation and on-demand helper-agent workaround were documented clearly
 
 ## Next Actions
 
-- Create and test the first live Sweep Agent workflow for the next geography slice
+- Create and test the first live Sweep Agent workflow using the on-demand helper model
 - Add reusable templates for outreach batches and contact classification
 - Extend the Zee-led model into future category-agent teams when needed
 - Continue improving system operations where it reduces friction for real work

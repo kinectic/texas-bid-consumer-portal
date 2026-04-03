@@ -192,5 +192,10 @@ The team is considered ready when:
 - workflow order is fixed
 - batch completion rule is fixed
 - security rule is fixed
+- the team can operate under the current environment's supported execution model
 
 This document is the readiness definition for creating and using the Sweep Agent as the first live project helper.
+
+## Runtime Note
+
+If persistent helper sessions are not supported cleanly in the current environment, this team should operate through Zee-managed on-demand helper-agent execution rather than always-on helper sessions.
