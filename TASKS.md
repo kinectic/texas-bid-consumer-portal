@@ -9,6 +9,7 @@ A clean operating list for Zee.
 - Improve memory and continuity so project state carries forward cleanly.
 - Improve outreach operations so future batches move faster and stop cleanly.
 - Improve Dylan-facing setup visibility through clearer workspace status files.
+- Stand up the outreach multi-agent structure with Zee managing helper agents for future batch sweeps.
 
 ## Pending
 
@@ -16,6 +17,7 @@ A clean operating list for Zee.
 - Decide whether the next outreach step should be a send-ready batch 1 list or a batch 2 research pass.
 - Expand the operations dashboard to reflect more real runtime state.
 - Add reusable templates for contact classification and send-ready outreach batches.
+- Decide when to activate the first outreach helper agents in live workflow.
 
 ## Completed
 
