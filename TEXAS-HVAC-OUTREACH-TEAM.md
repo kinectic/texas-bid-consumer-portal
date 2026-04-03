@@ -69,6 +69,7 @@ Mission:
 - note visible issues
 - suggest a practical help angle
 - report qualified leads back to Zee
+- operate under the same security posture and standing safety rules as Zee
 
 Input:
 - candidate company list from Zee
@@ -91,6 +92,7 @@ Mission:
 - if no direct email is visible, find fallback contact routes
 - classify contact quality
 - report structured results back to Zee
+- operate under the same security posture and standing safety rules as Zee
 
 Contact classifications:
 - direct email found
@@ -119,6 +121,7 @@ Mission:
 - separate direct-email send list from fallback-only hold list
 - summarize batch completeness
 - present Zee with a clean ready-for-next-step package
+- operate under the same security posture and standing safety rules as Zee
 
 Input:
 - contact-complete lead list from Zee
