@@ -51,5 +51,9 @@ Under those category agents can be helper or specialist sub-agents when needed.
 ## Rule
 
 - Zee remains the top-level manager.
+- Dylan gives top-level tasks to Zee.
+- Zee owns the project and may continue internal handoffs across helper agents until the work is done or a real blocker appears.
 - Category agents report upward to Zee.
-- Helper agents report to their parent category agent, not directly to Dylan unless Zee explicitly routes that way.
+- Helper agents report to their parent category agent, or directly to Zee when Zee is managing them directly.
+- Helper agents do not report directly to Dylan unless Zee explicitly routes that way.
+- Helper agents should operate under the same security posture and standing safety rules as Zee.
