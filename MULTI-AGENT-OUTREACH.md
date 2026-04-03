@@ -27,7 +27,7 @@ Dylan does not need to manage the helper agents directly.
 
 ## Outreach Agent Roster
 
-### 1. West Sweep Agent
+### 1. Sweep Agent
 Role:
 - Gather target companies by geography
 - Keep the Texas sweep orderly from west to east
@@ -109,7 +109,7 @@ Helper agents support Zee; they do not replace Zee.
 ## Standard Outreach Workflow
 
 ### Phase 1: Sweep
-West Sweep Agent gathers companies for the current geography slice.
+Sweep Agent gathers companies for the current geography slice.
 
 ### Phase 2: Qualify
 Qualification Agent filters the sweep into likely outreach candidates.
@@ -147,7 +147,7 @@ Use the practical completion rule unless Dylan explicitly says otherwise.
 Start with these in order:
 1. Contact Discovery Agent
 2. Qualification Agent
-3. West Sweep Agent
+3. Sweep Agent
 4. Batch Assembly Agent
 
 Reason:

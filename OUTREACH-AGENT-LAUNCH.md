@@ -28,7 +28,7 @@ Mission:
 - note visible issues
 - suggest the pitch angle
 
-### West Sweep Agent
+### Sweep Agent
 Use when:
 - the next geography slice needs to be built
 - Texas coverage must stay orderly west-to-east
@@ -52,7 +52,7 @@ Mission:
 
 1. Contact Discovery Agent
 2. Qualification Agent
-3. West Sweep Agent
+3. Sweep Agent
 4. Batch Assembly Agent
 
 ## Operating Rule

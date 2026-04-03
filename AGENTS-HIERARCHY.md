@@ -43,7 +43,7 @@ Under those category agents can be helper or specialist sub-agents when needed.
   - Role: Manage lead discovery, qualification, contact discovery, batch assembly, and outreach preparation
   - Reports to: Zee
   - Current planned helpers under it:
-    - west sweep agent
+    - sweep agent
     - qualification agent
     - contact discovery agent
     - batch assembly agent
