@@ -38,3 +38,25 @@ Before any provider-sensitive run:
 - define checkpoint
 - define fallback path
 - stop at soft threshold and reassess
+
+## Codex OAuth weekly policy
+
+- Primary scarce resource to manage: weekly Codex OAuth usage bucket
+- Default posture: Codex remains the preferred model path
+- Monitoring source: `openclaw status --usage`
+- Weekly safety bands:
+  - Green: 70% to 100% remaining
+  - Yellow: 40% to 69% remaining
+  - Orange: 20% to 39% remaining
+  - Red: below 20% remaining
+- Operating rule:
+  - Green: normal disciplined work
+  - Yellow: conserve and batch more aggressively
+  - Orange: high-value work only
+  - Red: emergency conservation for essential tasks only
+- Main waste patterns to avoid:
+  - recurring reminders that often produce no new value
+  - repeated status checks
+  - duplicate searches or reads
+  - long exploratory loops without checkpoints
+  - multi-agent fan-out unless the value is clearly worth it
