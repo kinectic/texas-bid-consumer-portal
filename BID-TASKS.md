@@ -12,8 +12,9 @@ Stand up the janitorial public-bid monitoring service as a real operating lane.
 - [x] Choose first geographic wedge
 - [x] Build first real source list
 - [ ] Build first prospect list
-- [ ] Collect first sample opportunities
-- [ ] Produce first 3–5 sample briefs
+- [x] Collect first sample opportunities
+- [x] Produce first 3–5 sample briefs
+- [x] Rank top 15 monitoring targets
 - [ ] Draft first outreach batch
 
 ## Notes
