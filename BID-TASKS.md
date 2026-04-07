@@ -16,6 +16,12 @@ Stand up the janitorial public-bid monitoring service as a real operating lane.
 - [x] Produce first 3–5 sample briefs
 - [x] Rank top 15 monitoring targets
 - [x] Draft first outreach batch
+- [x] Define reliability checklist
+- [x] Define pilot framing
+- [x] Start monitoring log
+- [ ] Run repeated monitoring passes over multiple days
+- [ ] Strengthen sample pack with more real custodial examples
+- [ ] Decide pilot pricing and payment collection only after reliability improves
 
 ## Notes
 - Stay low-cost and service-first.
