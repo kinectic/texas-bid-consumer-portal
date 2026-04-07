@@ -91,7 +91,9 @@
   - **Custodial Equipment & Supplies**
   - **Custodial Maintenance and Repair Services**
 - Search-visible references also showed a bid trail connected to **pressure/power washing services** under custodial maintenance and repair services.
-- This is useful because it confirms Dallas ISD is not just theoretically relevant — it has observable custodial procurement history.
+- More specifically, Google-visible results surfaced Dallas ISD bid references around **Bid 208263 — Pressure/Power Washing Services**, tied to category code **30280 (Custodial Maintenance and Repair Services)**.
+- Search-visible vendor/result examples connected to that signal included **CCNG Building Services**, **Prestige Building Group, LLC**, **TJ'S Professional Painting and Construction**, and **JET SET II, LLC**.
+- This is useful because it confirms Dallas ISD is not just theoretically relevant — it has observable custodial procurement history with identifiable bid references and vendors.
 
 ### Fort Worth ISD custodial signal
 - Search-visible FWISD pages strongly connect procurement navigation with **Maintenance & Custodial Services** and current bid-opportunity infrastructure.
