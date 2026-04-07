@@ -42,6 +42,26 @@
   - continue combining direct portal checks with search-assisted deeper excavation
   - gather more recent/historical custodial examples from other DFW public entities
 
+### 2026-04-07 — Transit / airport custodial excavation pass
+- Sources / paths checked:
+  - search-assisted DFW Airport procurement / board-document custodial references
+  - search-assisted DART procurement / board-document janitorial references
+  - search-assisted Dallas County BidNet query attempts
+- Relevant janitorial signal found?
+  - Yes for DFW Airport
+  - Yes for DART
+  - No useful direct query return from Dallas County BidNet search pattern
+- Strongest findings:
+  - DFW Airport visible materials referenced janitorial cleaning supplies and chemicals for airport custodial vendors and a contract providing custodial cleaning services for Terminal E facilities
+  - DART visible materials referenced contract modification for janitorial services for passenger facilities and janitorial/custodial services for 18 bus and rail operations
+- Briefs updated: yes
+- False positive notes:
+  - direct site-specific Google queries work better for airport/transit board docs than broad procurement landing pages alone
+  - Dallas County direct site query returned no useful Google-indexed result in this pass
+- Follow-up needed:
+  - continue targeted document-history extraction for counties, cities, schools, and transit entities
+  - keep separate track of live-open opportunities vs. strong historical procurement evidence
+
 ## Instructions
 For each future pass, add:
 - date checked

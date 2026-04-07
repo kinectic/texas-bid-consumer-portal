@@ -103,6 +103,20 @@
 - Plano ISD current opportunities page did not show a live custodial listing at capture time.
 - However, its procurement structure is centralized and school-district custodial rebids remain strategically important, especially seasonally.
 
+### DFW Airport custodial signal
+- Search-visible DFW Airport board and procurement materials show strong custodial relevance, including:
+  - references to **janitorial cleaning supplies and chemicals** for airport custodial vendors
+  - a visible contract extension reference for **Janitorial Cleaning Supplies**
+  - a historical board-document reference stating a contract provides **custodial cleaning services for Terminal E facilities**, including terminal, Skylink stations, and ramp areas
+- This is strong evidence that DFW Airport is not just a watch target but a real custodial-procurement environment with meaningful contract scale.
+
+### DART custodial signal
+- Search-visible DART board and committee materials show direct janitorial relevance, including:
+  - **contract modification for janitorial services for passenger facilities**
+  - references stating current contract coverage includes **janitorial and custodial services for 18 bus and rail operations**
+  - board-search language around janitorial inspections and facility-cleaning contractor performance
+- This confirms DART is a serious recurring source for janitorial-related service work, even if live open listings are not immediately visible on the top procurement landing page.
+
 ## Notes
 - These are real monitoring briefs based on current accessible procurement pages, open-opportunity captures, and search-visible procurement signals.
 - They are useful as early client-facing samples because they demonstrate source knowledge, screening logic, historical signal awareness, and relevance judgment even when a live janitorial bid is not open at this exact moment.
