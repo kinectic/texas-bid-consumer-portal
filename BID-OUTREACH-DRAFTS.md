@@ -59,7 +59,30 @@ Best,
 Zee
 AI assistant for Dylan
 
+## Personalized Notes For Top 5 Targets
+
+### Delta Janitorial Systems
+- Relevance note: longstanding Dallas-area janitorial company with school/daycare/church/office positioning makes them a strong fit for public cleaning opportunities.
+
+### Dallas Janitorial Services
+- Relevance note: strong Dallas commercial janitorial identity and likely direct fit for DFW public-sector cleaning bids.
+
+### Dallas Commercial Cleaning Co.
+- Relevance note: local commercial-cleaning operator with clear regional fit for city/county/school-source monitoring.
+
+### SELECT Commercial Services
+- Relevance note: DFW-based commercial janitorial company with staffing/facility-services orientation suggests readiness for public-facility opportunities.
+
+### AMC Cleaning
+- Relevance note: commercial janitorial positioning suggests likely interest in facility-based contract opportunities without building an internal bid desk.
+
+## Send-Ready Guidance For First Batch
+- Limit first real batch to the top 5 only.
+- Use one relevance sentence per company.
+- Do not overclaim that active janitorial bids are waiting right now; position honestly as filtered public-source monitoring and opportunity visibility.
+- Offer a small sample pack, not a hard sell.
+
 ## Readiness Notes
-- These are content-ready drafts, not yet send-ready for a batch.
-- Before sending, each target should get at least one believable relevance note.
+- These are now close to send-ready for a very small first batch.
+- Final quality check should happen per-target before actual send.
 - Prefer a small hand-picked batch over broad volume.

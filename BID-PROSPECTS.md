@@ -42,3 +42,34 @@
 | Mint Condition DFW | Dallas-Fort Worth, TX | https://mintconditioninc.com/locations/dfw-tx/commercial-cleaning-services/ |  |  |  |  | DFW commercial cleaning service with tailored janitorial messaging; likely relevant. | medium-high | research |
 | Delta Janitorial Systems | Dallas area, TX | https://deltajanitorial.com/ |  |  |  | (972) 261-9800 | Longstanding janitorial company; snippet suggests schools, daycare centers, churches, and offices. Strong candidate. | high | research |
 | ServiceMaster Quality Cleaning Services NW Dallas | Dallas, TX | https://www.servicemasterclean.com/servicemaster-quality-cleaning-services-nwdallas/ |  |  |  |  | More brand/franchise-oriented; useful reference, lower initial priority than local independent firms. | medium | research |
+
+## Top 5 Actual First-Contact Targets
+
+1. **Delta Janitorial Systems**
+   - Why: long-running local janitorial company, broad facility fit, snippets suggest schools/daycare/churches/offices.
+   - Priority: very high
+
+2. **Dallas Janitorial Services**
+   - Why: direct janitorial identity, local, clearly commercial-facing, likely to understand the value fast.
+   - Priority: very high
+
+3. **Dallas Commercial Cleaning Co.**
+   - Why: local operator, commercial orientation, straightforward fit for a DFW public-bid watch offer.
+   - Priority: high
+
+4. **SELECT Commercial Services**
+   - Why: DFW-based, explicit commercial janitorial messaging, likely capable of handling public-facility work.
+   - Priority: high
+
+5. **AMC Cleaning**
+   - Why: commercial-cleaning positioning and likely flexible enough to value opportunity monitoring support.
+   - Priority: medium-high
+
+## Lower-Priority / Benchmark Targets
+- JAN-PRO DFW
+- Flagship Facility Services
+- Vanguard Cleaning Systems of Dallas-Fort Worth
+- Mint Condition DFW
+- ServiceMaster Quality Cleaning Services NW Dallas
+
+Reason: these are still relevant, but several appear more franchise-like, larger, or better suited as benchmarks before outreach.

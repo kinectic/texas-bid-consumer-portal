@@ -84,7 +84,24 @@
 
 ---
 
+## Historical / Recent Custodial-Signal Notes
+
+### Dallas ISD historical custodial signal
+- Search results surfaced Dallas ISD pages showing category codes and awarded-vendor references tied to:
+  - **Custodial Equipment & Supplies**
+  - **Custodial Maintenance and Repair Services**
+- Search-visible references also showed a bid trail connected to **pressure/power washing services** under custodial maintenance and repair services.
+- This is useful because it confirms Dallas ISD is not just theoretically relevant — it has observable custodial procurement history.
+
+### Fort Worth ISD custodial signal
+- Search-visible FWISD pages strongly connect procurement navigation with **Maintenance & Custodial Services** and current bid-opportunity infrastructure.
+- Even when a live custodial line item was not visible in open opportunities at capture time, the district clearly operates procurement pathways relevant to custodial work.
+
+### Plano ISD custodial signal
+- Plano ISD current opportunities page did not show a live custodial listing at capture time.
+- However, its procurement structure is centralized and school-district custodial rebids remain strategically important, especially seasonally.
+
 ## Notes
-- These are real monitoring briefs based on current accessible procurement pages and open-opportunity captures.
-- They are useful as early client-facing samples because they demonstrate source knowledge, screening logic, and relevance judgment even when a live janitorial bid is not open at this exact moment.
-- Next step is to keep digging for currently open or recently closed janitorial/custodial examples to strengthen the sample pack further.
+- These are real monitoring briefs based on current accessible procurement pages, open-opportunity captures, and search-visible procurement signals.
+- They are useful as early client-facing samples because they demonstrate source knowledge, screening logic, historical signal awareness, and relevance judgment even when a live janitorial bid is not open at this exact moment.
+- Next step is to keep improving the sample pack with stronger recently awarded or historically visible custodial examples.
