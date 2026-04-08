@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Texas Public Contract Intelligence</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121a31;
+      --panel-2: #18223f;
+      --text: #e8ecf8;
+      --muted: #a7b1cd;
+      --line: #2a365f;
+      --accent: #68a4ff;
+      --open: #1f9d55;
+      --awarded: #8b5cf6;
+      --historical: #d97706;
+      --weak: #64748b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #09101f 0%, #0f1730 100%);
+      color: var(--text);
+    }
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+    .hero {
+      background: linear-gradient(135deg, rgba(104,164,255,.16), rgba(139,92,246,.10));
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+    h1 { margin: 0 0 10px; font-size: 2.2rem; }
+    .sub { color: var(--muted); font-size: 1.05rem; line-height: 1.55; max-width: 900px; }
+    .chips, .stats { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .chip, .stat {
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 22px 0 24px;
+    }
+    .filter {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+    }
+    .filter label {
+      display: block;
+      color: var(--muted);
+      font-size: .82rem;
+      margin-bottom: 8px;
+    }
+    .filter input, .filter select {
+      width: 100%;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--text);
+      padding: 10px 12px;
+      font-size: .95rem;
+    }
+    .section-title { margin: 30px 0 14px; font-size: 1.35rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+    .cards {
+      display: grid;
+      gap: 14px;
+    }
+    .card, .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .title { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
+    .meta { color: var(--muted); font-size: .92rem; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .8rem;
+      font-weight: 700;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+    .open { background: rgba(31,157,85,.12); color: #8cf0b6; border-color: rgba(31,157,85,.35); }
+    .awarded { background: rgba(139,92,246,.12); color: #cdb5ff; border-color: rgba(139,92,246,.35); }
+    .historical_signal { background: rgba(217,119,6,.12); color: #f7c37c; border-color: rgba(217,119,6,.35); }
+    .weak_signal { background: rgba(100,116,139,.12); color: #c0cad8; border-color: rgba(100,116,139,.35); }
+    .summary { margin: 14px 0; line-height: 1.55; color: #d7def2; }
+    .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .tag {
+      font-size: .78rem;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      border-radius: 999px;
+      padding: 5px 9px;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .list { display: grid; gap: 12px; }
+    .list-item { border-top: 1px solid var(--line); padding-top: 12px; }
+    .list-item:first-child { border-top: 0; padding-top: 0; }
+    .muted { color: var(--muted); }
+    @media (max-width: 900px) {
+      .filters { grid-template-columns: 1fr 1fr; }
+      .grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .filters { grid-template-columns: 1fr; }
+      h1 { font-size: 1.7rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Texas Public Contract Intelligence</h1>
+      <div class="sub">
+        A structured view of fragmented public procurement data — starting with a DFW facilities and janitorial wedge. This is procurement intelligence, not a raw dump of bid links.
+      </div>
+      <div class="stats">
+        <div class="stat">14 entities tracked</div>
+        <div class="stat">17 sources mapped</div>
+        <div class="stat">6 evidence records</div>
+        <div class="stat">5 structured opportunities/signals</div>
+      </div>
+      <div class="chips">
+        <div class="chip">Wedge: DFW</div>
+        <div class="chip">Focus: Janitorial / Custodial / Facilities</div>
+        <div class="chip">Status-aware dataset</div>
+        <div class="chip">Built for expansion to Texas-wide coverage</div>
+      </div>
+    </section>
+
+    <section class="filters">
+      <div class="filter">
+        <label>Keyword</label>
+        <input type="text" value="janitorial / custodial" readonly />
+      </div>
+      <div class="filter">
+        <label>Region</label>
+        <select disabled><option selected>DFW</option></select>
+      </div>
+      <div class="filter">
+        <label>Category</label>
+        <select disabled><option selected>Janitorial / Facilities</option></select>
+      </div>
+      <div class="filter">
+        <label>Status</label>
+        <select disabled><option selected>All statuses</option></select>
+      </div>
+    </section>
+
+    <div class="grid">
+      <main>
+        <div class="section-title">Opportunity Feed</div>
+        <div class="cards">
+          <article class="card">
+            <div class="card-top">
+              <div>
+                <div class="title">Janitorial Services for Passenger Facilities</div>
+                <div class="meta">DART • DFW • Transit Agency</div>
+              </div>
+              <div class="badge awarded">Awarded</div>
+            </div>
+            <div class="tags">
+              <div class="tag">Category: Janitorial</div>
+              <div class="tag">Subcategory: Transit Facilities Cleaning</div>
+              <div class="tag">Confidence: High</div>
+            </div>
+            <div class="summary">
+              Board-document evidence of contract modification for janitorial services for passenger facilities. Strong recurring transit-facility cleaning signal.
+            </div>
+            <a href="https://dartorgcmsblob.dart.org/prod/docs/default-source/about-dart/(item-7)-contract-mod-for-janitorial-srvs-for-passenger-facilities-_cotw-presentation.pdf?sfvrsn=930f4c78_1" target="_blank" rel="noopener noreferrer">View source</a>
+          </article>
+
+          <article class="card">
+            <div class="card-top">
+              <div>
+                <div class="title">Janitorial and Custodial Services for Operating Facilities</div>
+                <div class="meta">DART • DFW • Transit Agency</div>
+              </div>
+              <div class="badge awarded">Awarded</div>
+            </div>
+            <div class="tags">
+              <div class="tag">Category: Janitorial</div>
+              <div class="tag">Subcategory: Transit Operations Cleaning</div>
+              <div class="tag">Confidence: High</div>
+            </div>
+            <div class="summary">
+              Contract language indicates janitorial and custodial services for 18 bus and rail operations. Strong recurring operations signal.
+            </div>
+            <a href="https://dartorgcmsblob.dart.org/prod/docs/default-source/about-dart/2026-01-13-committee-of-the-whole-(work-session)-agenda-packet.pdf?sfvrsn=32abdaad_1" target="_blank" rel="noopener noreferrer">View source</a>
+          </article>
+
+          <article class="card">
+            <div class="card-top">
+              <div>
+                <div class="title">Custodial Cleaning Services for Terminal E Facilities</div>
+                <div class="meta">DFW Airport • DFW • Airport Authority</div>
+              </div>
+              <div class="badge historical_signal">Historical Signal</div>
+            </div>
+            <div class="tags">
+              <div class="tag">Category: Janitorial</div>
+              <div class="tag">Subcategory: Airport Custodial Services</div>
+              <div class="tag">Confidence: High</div>
+            </div>
+            <div class="summary">
+              Historical board-document evidence of custodial cleaning services contract for Terminal E facilities, including terminal, Skylink stations, and ramp areas.
+            </div>
+            <a href="https://apps.dfwairport.com/board/doc.php?docid=135041&date=Feb+11" target="_blank" rel="noopener noreferrer">View source</a>
+          </article>
+
+          <article class="card">
+            <div class="card-top">
+              <div>
+                <div class="title">Janitorial Cleaning Supplies Contract Extension</div>
+                <div class="meta">DFW Airport • DFW • Airport Authority</div>
+              </div>
+              <div class="badge awarded">Awarded</div>
+            </div>
+            <div class="tags">
+              <div class="tag">Category: Janitorial</div>
+              <div class="tag">Subcategory: Custodial Supplies</div>
+              <div class="tag">Confidence: High</div>
+            </div>
+            <div class="summary">
+              Board-document reference approving increase and extension of a janitorial cleaning supplies contract, confirming meaningful custodial operations buying activity.
+            </div>
+            <a href="https://apps.dfwairport.com/board/doc.php?docid=146596&date=May+2,+2024" target="_blank" rel="noopener noreferrer">View source</a>
+          </article>
+
+          <article class="card">
+            <div class="card-top">
+              <div>
+                <div class="title">Bid 208263 — Pressure/Power Washing Services</div>
+                <div class="meta">Dallas ISD • DFW • School District</div>
+              </div>
+              <div class="badge historical_signal">Historical Signal</div>
+            </div>
+            <div class="tags">
+              <div class="tag">Category: Facilities</div>
+              <div class="tag">Subcategory: Custodial Maintenance and Repair</div>
+              <div class="tag">Confidence: Medium-High</div>
+            </div>
+            <div class="summary">
+              Search-visible historical Dallas ISD bid tied to category code 30280, Custodial Maintenance and Repair Services. Strong proof of custodial procurement activity.
+            </div>
+            <a href="https://www2.dallasisd.org/inside_disd/depts/business/support/purchasing/catdetail.cfm?CCode=30280" target="_blank" rel="noopener noreferrer">View source</a>
+          </article>
+        </div>
+      </main>
+
+      <aside>
+        <div class="section-title">Entity Highlights</div>
+        <div class="panel list">
+          <div class="list-item">
+            <strong>DART</strong>
+            <div class="muted">Transit agency • Custom procurement + board docs</div>
+            <div>Strong direct janitorial contract evidence.</div>
+          </div>
+          <div class="list-item">
+            <strong>DFW Airport</strong>
+            <div class="muted">Airport authority • Procurement page + board docs</div>
+            <div>Strong custodial contract and janitorial supply evidence.</div>
+          </div>
+          <div class="list-item">
+            <strong>Dallas ISD</strong>
+            <div class="muted">School district • Bonfire/custom + awarded-by-code archive</div>
+            <div>Strong custodial category-code and vendor-detail evidence.</div>
+          </div>
+        </div>
+
+        <div class="section-title">Status Legend</div>
+        <div class="panel list">
+          <div class="list-item"><span class="badge open">Open</span> <span class="muted">Currently active opportunity</span></div>
+          <div class="list-item"><span class="badge awarded">Awarded</span> <span class="muted">Completed award, extension, or contract action</span></div>
+          <div class="list-item"><span class="badge historical_signal">Historical Signal</span> <span class="muted">Proof the entity buys in the category, but not currently confirmed open</span></div>
+          <div class="list-item"><span class="badge weak_signal">Weak Signal</span> <span class="muted">Too weak or noisy to feature prominently</span></div>
+        </div>
+
+        <div class="section-title">Why This Matters</div>
+        <div class="panel">
+          <div class="muted" style="line-height:1.6;">
+            Public contract data is fragmented across BidNet, IonWave, Bonfire, direct procurement pages, school archives, airport board documents, and transit committee records. This prototype shows how that fragmentation can be normalized into a usable intelligence layer.
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</body>
+</html>
