@@ -20,8 +20,9 @@ Stand up the janitorial public-bid monitoring service as a real operating lane.
 - [x] Define pilot framing
 - [x] Start monitoring log
 - [ ] Run repeated monitoring passes over multiple days
-- [ ] Strengthen sample pack with more real custodial examples
+- [x] Strengthen sample pack with more real custodial examples
 - [ ] Decide pilot pricing and payment collection only after reliability improves
+- [x] Structure initial DFW findings into platform-style data records
 
 ## Notes
 - Stay low-cost and service-first.
