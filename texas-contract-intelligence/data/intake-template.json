@@ -1,0 +1,19 @@
+{
+  "opportunity_id": "",
+  "entity_id": "",
+  "source_id": "",
+  "title": "",
+  "normalized_title": "",
+  "category": "",
+  "subcategory": "",
+  "geography": "DFW",
+  "open_date": "",
+  "due_date": "",
+  "contract_term": "",
+  "status": "open",
+  "source_url": "",
+  "summary": "",
+  "fit_score": "medium",
+  "confidence_level": "medium",
+  "notes": ""
+}

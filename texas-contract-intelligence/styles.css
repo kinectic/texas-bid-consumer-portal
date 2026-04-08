@@ -142,6 +142,26 @@ a:hover { text-decoration: underline; }
   margin: 0 0 8px;
   font-size: 1.1rem;
 }
+.directory {
+  display: grid;
+  gap: 10px;
+}
+.directory-item {
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+  cursor: pointer;
+}
+.directory-item:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+.directory-item:hover {
+  color: #ffffff;
+}
+.directory-title {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
 .detail-grid {
   display: grid;
   gap: 10px;

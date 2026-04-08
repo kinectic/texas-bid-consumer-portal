@@ -25,13 +25,15 @@ function buildLookup(items, key) {
 }
 
 (async function init() {
-  const [entities, sources, evidence, opportunities] = await Promise.all([
+  const [entities, sources, evidence, opportunities, openOpportunities] = await Promise.all([
     loadJson('./data/entities.json'),
     loadJson('./data/sources.json'),
     loadJson('./data/evidence.json'),
-    loadJson('./data/opportunities.json')
+    loadJson('./data/opportunities.json'),
+    loadJson('./data/open-opportunities.json')
   ]);
 
+  const records = [...openOpportunities, ...opportunities];
   const entityById = buildLookup(entities, 'entity_id');
   const sourceById = buildLookup(sources, 'source_id');
 
@@ -44,21 +46,24 @@ function buildLookup(items, key) {
   const statsEl = document.getElementById('stats');
   const resultsMeta = document.getElementById('resultsMeta');
   const entityHighlights = document.getElementById('entityHighlights');
+  const entityDirectory = document.getElementById('entityDirectory');
+  const sourceDirectory = document.getElementById('sourceDirectory');
 
   regionFilter.appendChild(createOption('', 'All regions'));
-  unique(opportunities.map(o => o.geography)).forEach(v => regionFilter.appendChild(createOption(v, v)));
+  unique(records.map(o => o.geography)).forEach(v => regionFilter.appendChild(createOption(v, v)));
 
   categoryFilter.appendChild(createOption('', 'All categories'));
-  unique(opportunities.map(o => o.category)).forEach(v => categoryFilter.appendChild(createOption(v, labelize(v))));
+  unique(records.map(o => o.category)).forEach(v => categoryFilter.appendChild(createOption(v, labelize(v))));
 
   statusFilter.appendChild(createOption('', 'All statuses'));
-  unique(opportunities.map(o => o.status)).forEach(v => statusFilter.appendChild(createOption(v, labelize(v))));
+  unique(records.map(o => o.status)).forEach(v => statusFilter.appendChild(createOption(v, labelize(v))));
 
   statsEl.innerHTML = `
     <div class="stat">${entities.length} entities tracked</div>
     <div class="stat">${sources.length} sources mapped</div>
     <div class="stat">${evidence.length} evidence records</div>
-    <div class="stat">${opportunities.length} opportunity records</div>
+    <div class="stat">${records.length} opportunity records</div>
+    <div class="stat">${openOpportunities.length} open/live records</div>
   `;
 
   const featuredEntityIds = ['entity_dart', 'entity_dfw_airport', 'entity_dallas_isd'];
@@ -76,13 +81,94 @@ function buildLookup(items, key) {
     `;
   }).join('');
 
+  entityDirectory.innerHTML = entities.map(entity => {
+    const relatedCount = records.filter(r => r.entity_id === entity.entity_id).length;
+    return `
+      <div class="directory-item" data-kind="entity" data-id="${entity.entity_id}">
+        <div class="directory-title">${entity.entity_name}</div>
+        <div class="muted">${labelize(entity.entity_type)} • ${relatedCount} related record${relatedCount === 1 ? '' : 's'}</div>
+      </div>
+    `;
+  }).join('');
+
+  sourceDirectory.innerHTML = sources.slice(0, 12).map(source => {
+    const relatedCount = records.filter(r => r.source_id === source.source_id).length;
+    return `
+      <div class="directory-item" data-kind="source" data-id="${source.source_id}">
+        <div class="directory-title">${source.source_name}</div>
+        <div class="muted">${source.parent_entity} • ${source.procurement_system} • ${relatedCount} record${relatedCount === 1 ? '' : 's'}</div>
+      </div>
+    `;
+  }).join('');
+
   let activeId = null;
 
   function matchingEvidence(opportunityId) {
     return evidence.filter(e => e.related_opportunity_id === opportunityId);
   }
 
-  function renderDetail(opportunity) {
+  function renderEntityDetail(entity) {
+    const relatedSources = sources.filter(s => s.parent_entity === entity.entity_name);
+    const relatedRecords = records.filter(r => r.entity_id === entity.entity_id);
+    detailPanel.innerHTML = `
+      <h3>${entity.entity_name}</h3>
+      <div class="badge historical_signal">${labelize(entity.entity_type)}</div>
+      <div class="detail-grid">
+        <div class="detail-row">
+          <div class="detail-label">Region</div>
+          <div>${entity.region}, ${entity.state}</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Procurement Entry</div>
+          <div><a href="${entity.procurement_url}" target="_blank" rel="noopener noreferrer">Open procurement page</a></div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Notes</div>
+          <div class="detail-copy">${entity.notes}</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Related Sources</div>
+          <div class="detail-copy">${relatedSources.length ? relatedSources.map(s => `${s.source_name} (${s.procurement_system})`).join('<br>') : 'No mapped sources.'}</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Related Records</div>
+          <div class="detail-copy">${relatedRecords.length ? relatedRecords.map(r => `${r.title} — ${labelize(r.status)}`).join('<br>') : 'No related records yet.'}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderSourceDetail(source) {
+    const relatedRecords = records.filter(r => r.source_id === source.source_id);
+    detailPanel.innerHTML = `
+      <h3>${source.source_name}</h3>
+      <div class="badge weak_signal">${source.procurement_system}</div>
+      <div class="detail-grid">
+        <div class="detail-row">
+          <div class="detail-label">Parent Entity</div>
+          <div>${source.parent_entity}</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Source Status</div>
+          <div>${labelize(source.status)}</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Notes</div>
+          <div class="detail-copy">${source.notes}</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Source URL</div>
+          <div><a href="${source.url}" target="_blank" rel="noopener noreferrer">Open source</a></div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Related Records</div>
+          <div class="detail-copy">${relatedRecords.length ? relatedRecords.map(r => `${r.title} — ${labelize(r.status)}`).join('<br>') : 'No related records yet.'}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderOpportunityDetail(opportunity) {
     const entity = entityById[opportunity.entity_id];
     const source = sourceById[opportunity.source_id];
     const relatedEvidence = matchingEvidence(opportunity.opportunity_id);
@@ -126,7 +212,7 @@ function buildLookup(items, key) {
 
   function getFilteredRecords() {
     const keyword = keywordFilter.value.trim().toLowerCase();
-    return opportunities.filter(opportunity => {
+    return records.filter(opportunity => {
       const entity = entityById[opportunity.entity_id];
       const haystack = [
         opportunity.title,
@@ -186,7 +272,7 @@ function buildLookup(items, key) {
     }).join('');
 
     const activeRecord = filtered.find(item => item.opportunity_id === activeId);
-    if (activeRecord) renderDetail(activeRecord);
+    if (activeRecord) renderOpportunityDetail(activeRecord);
 
     cardsEl.querySelectorAll('.card').forEach(card => {
       card.addEventListener('click', () => {
@@ -195,6 +281,14 @@ function buildLookup(items, key) {
       });
     });
   }
+
+  entityDirectory.querySelectorAll('.directory-item[data-kind="entity"]').forEach(item => {
+    item.addEventListener('click', () => renderEntityDetail(entityById[item.dataset.id]));
+  });
+
+  sourceDirectory.querySelectorAll('.directory-item[data-kind="source"]').forEach(item => {
+    item.addEventListener('click', () => renderSourceDetail(sourceById[item.dataset.id]));
+  });
 
   [keywordFilter, regionFilter, categoryFilter, statusFilter].forEach(control => {
     control.addEventListener('input', renderCards);

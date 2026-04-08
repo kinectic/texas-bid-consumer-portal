@@ -1,0 +1,40 @@
+[
+  {
+    "opportunity_id": "open_city_irving_active_feed",
+    "entity_id": "entity_city_irving",
+    "source_id": "source_irving_solicitations",
+    "title": "City of Irving Active Solicitations Feed",
+    "normalized_title": "Active Solicitations Feed",
+    "category": "procurement_intelligence",
+    "subcategory": "active_source_watch",
+    "geography": "DFW",
+    "open_date": "",
+    "due_date": "",
+    "contract_term": "",
+    "status": "open",
+    "source_url": "https://www.irvingtx.gov/index.php?section=purchasing-solicitations",
+    "summary": "Active city solicitation feed confirmed reachable and worth recurring monitoring. Specific janitorial items were not confirmed in the lightweight pass, but this source remains a live open-opportunity surface.",
+    "fit_score": "medium",
+    "confidence_level": "medium",
+    "notes": "Useful as a confirmed live source record rather than a janitorial-specific opportunity."
+  },
+  {
+    "opportunity_id": "open_pisd_current_bids_feed",
+    "entity_id": "entity_plano_isd",
+    "source_id": "source_pisd_current_bids",
+    "title": "Plano ISD Current Proposals/Bids Feed",
+    "normalized_title": "Current Proposals/Bids Feed",
+    "category": "procurement_intelligence",
+    "subcategory": "active_source_watch",
+    "geography": "DFW",
+    "open_date": "",
+    "due_date": "",
+    "contract_term": "",
+    "status": "open",
+    "source_url": "https://www.pisd.edu/departments-66/purchasing-services/current-proposalsbids",
+    "summary": "Plano ISD maintains an active current-bids surface routed into IonWave. The feed is live and appropriate for repeated monitoring even when no custodial item is visible in the current slice.",
+    "fit_score": "medium",
+    "confidence_level": "medium",
+    "notes": "Represents a confirmed live procurement feed, not a janitorial-only record."
+  }
+]
