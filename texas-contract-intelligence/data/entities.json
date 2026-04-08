@@ -1,0 +1,142 @@
+[
+  {
+    "entity_id": "entity_dallas_county",
+    "entity_name": "Dallas County",
+    "entity_type": "county",
+    "region": "DFW",
+    "state": "TX",
+    "website": "https://www.dallascounty.org/",
+    "procurement_url": "https://www.dallascounty.org/departments/purchasing/currentbids.php",
+    "notes": "Uses BidNet for solicitations."
+  },
+  {
+    "entity_id": "entity_tarrant_county",
+    "entity_name": "Tarrant County",
+    "entity_type": "county",
+    "region": "DFW",
+    "state": "TX",
+    "website": "https://www.tarrantcountytx.gov/",
+    "procurement_url": "https://www.tarrantcountytx.gov/en/purchasing.html",
+    "notes": "Uses IonWave portal."
+  },
+  {
+    "entity_id": "entity_collin_county",
+    "entity_name": "Collin County",
+    "entity_type": "county",
+    "region": "DFW",
+    "state": "TX",
+    "website": "https://www.collincountytx.gov/",
+    "procurement_url": "https://www.collincountytx.gov/Government/Purchasing",
+    "notes": "Growing county; procurement relevance."
+  },
+  {
+    "entity_id": "entity_denton_county",
+    "entity_name": "Denton County",
+    "entity_type": "county",
+    "region": "DFW",
+    "state": "TX",
+    "website": "https://www.dentoncounty.gov/",
+    "procurement_url": "https://www.dentoncounty.gov/1171/Bids-Request-For-Proposals",
+    "notes": "Uses Bonfire portal."
+  },
+  {
+    "entity_id": "entity_dallas_isd",
+    "entity_name": "Dallas ISD",
+    "entity_type": "school_district",
+    "region": "DFW",
+    "state": "TX",
+    "website": "https://www.dallasisd.org/",
+    "procurement_url": "https://www.dallasisd.org/departments/procurement/vendor-opportunities",
+    "notes": "Strong custodial procurement signal through category codes and awarded vendor history."
+  },
+  {
+    "entity_id": "entity_fwisd",
+    "entity_name": "Fort Worth ISD",
+    "entity_type": "school_district",
+    "region": "DFW",
+    "state": "TX",
+    "website": "https://www.fwisd.org/",
+    "procurement_url": "https://www.fwisd.org/departments/procurement-services/current-business-opportunities",
+    "notes": "eBid/IonWave style procurement path."
+  },
+  {
+    "entity_id": "entity_plano_isd",
+    "entity_name": "Plano ISD",
+    "entity_type": "school_district",
+    "region": "DFW",
+    "state": "TX",
+    "website": "https://www.pisd.edu/",
+    "procurement_url": "https://www.pisd.edu/departments-66/purchasing-services/current-proposalsbids",
+    "notes": "Centralized solicitations in IonWave."
+  },
+  {
+    "entity_id": "entity_arlington_isd",
+    "entity_name": "Arlington ISD",
+    "entity_type": "school_district",
+    "region": "DFW",
+    "state": "TX",
+    "website": "https://www.aisd.net/",
+    "procurement_url": "https://www.aisd.net/community/how-to-do-business-with-arlington-isd/",
+    "notes": "Procurement relevance; needs deeper structured capture."
+  },
+  {
+    "entity_id": "entity_dfw_airport",
+    "entity_name": "DFW Airport",
+    "entity_type": "airport_authority",
+    "region": "DFW",
+    "state": "TX",
+    "website": "https://www.dfwairport.com/",
+    "procurement_url": "https://www.dfwairport.com/business/opportunities/procurement/",
+    "notes": "Strong custodial and janitorial contract evidence through board docs."
+  },
+  {
+    "entity_id": "entity_dart",
+    "entity_name": "DART",
+    "entity_type": "transit_agency",
+    "region": "DFW",
+    "state": "TX",
+    "website": "https://www.dart.org/",
+    "procurement_url": "https://www.dart.org/about/doing-business/procurement",
+    "notes": "Strong janitorial/custodial contract evidence through board materials."
+  },
+  {
+    "entity_id": "entity_trinity_metro",
+    "entity_name": "Trinity Metro",
+    "entity_type": "transit_agency",
+    "region": "DFW",
+    "state": "TX",
+    "website": "https://ridetrinitymetro.org/",
+    "procurement_url": "https://www.procuretm.org/",
+    "notes": "Dedicated procurement portal."
+  },
+  {
+    "entity_id": "entity_city_irving",
+    "entity_name": "City of Irving",
+    "entity_type": "city",
+    "region": "DFW",
+    "state": "TX",
+    "website": "https://www.irvingtx.gov/",
+    "procurement_url": "https://www.irvingtx.gov/index.php?section=purchasing-solicitations",
+    "notes": "Active solicitations page."
+  },
+  {
+    "entity_id": "entity_city_plano",
+    "entity_name": "City of Plano",
+    "entity_type": "city",
+    "region": "DFW",
+    "state": "TX",
+    "website": "https://www.plano.gov/",
+    "procurement_url": "https://www.plano.gov/1686/Current-Solicitations",
+    "notes": "Procurement page needs tighter direct extraction."
+  },
+  {
+    "entity_id": "entity_dallas_college",
+    "entity_name": "Dallas College",
+    "entity_type": "college_system",
+    "region": "DFW",
+    "state": "TX",
+    "website": "https://www.dallascollege.edu/",
+    "procurement_url": "https://www.dallascollege.edu/business-industry/do-business-with-us/",
+    "notes": "Multi-campus facilities footprint."
+  }
+]

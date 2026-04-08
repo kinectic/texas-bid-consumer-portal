@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Texas Public Contract Intelligence</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Texas Public Contract Intelligence</h1>
+      <div class="sub">
+        A structured view of fragmented public procurement data — starting with a DFW facilities and janitorial wedge. This is procurement intelligence, not a raw dump of bid links.
+      </div>
+      <div class="stats" id="stats"></div>
+      <div class="chips">
+        <div class="chip">Wedge: DFW</div>
+        <div class="chip">Focus: Janitorial / Custodial / Facilities</div>
+        <div class="chip">Status-aware dataset</div>
+        <div class="chip">Built for expansion to Texas-wide coverage</div>
+      </div>
+    </section>
+
+    <section class="filters">
+      <div class="filter">
+        <label for="keywordFilter">Keyword</label>
+        <input id="keywordFilter" type="text" placeholder="Search title, summary, notes, entity..." />
+      </div>
+      <div class="filter">
+        <label for="regionFilter">Region</label>
+        <select id="regionFilter"></select>
+      </div>
+      <div class="filter">
+        <label for="categoryFilter">Category</label>
+        <select id="categoryFilter"></select>
+      </div>
+      <div class="filter">
+        <label for="statusFilter">Status</label>
+        <select id="statusFilter"></select>
+      </div>
+    </section>
+
+    <div class="grid">
+      <main>
+        <div class="section-title">Opportunity Feed</div>
+        <div id="resultsMeta" class="results-meta muted"></div>
+        <div class="cards" id="opportunityCards"></div>
+      </main>
+
+      <aside>
+        <div class="section-title">Record Detail</div>
+        <div class="panel detail-panel" id="detailPanel">
+          <div class="muted">Select a record to inspect the structured details.</div>
+        </div>
+
+        <div class="section-title">Entity Highlights</div>
+        <div class="panel list" id="entityHighlights"></div>
+
+        <div class="section-title">Status Legend</div>
+        <div class="panel list">
+          <div class="list-item"><span class="badge open">Open</span> <span class="muted">Currently active opportunity</span></div>
+          <div class="list-item"><span class="badge awarded">Awarded</span> <span class="muted">Completed award, extension, or contract action</span></div>
+          <div class="list-item"><span class="badge historical_signal">Historical Signal</span> <span class="muted">Proof the entity buys in the category, but not currently confirmed open</span></div>
+          <div class="list-item"><span class="badge weak_signal">Weak Signal</span> <span class="muted">Too weak or noisy to feature prominently</span></div>
+        </div>
+
+        <div class="section-title">Why This Matters</div>
+        <div class="panel">
+          <div class="muted detail-copy">
+            Public contract data is fragmented across BidNet, IonWave, Bonfire, direct procurement pages, school archives, airport board documents, and transit committee records. This local MVP shows how that fragmentation can be normalized into a usable intelligence layer.
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

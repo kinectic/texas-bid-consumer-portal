@@ -1,0 +1,189 @@
+[
+  {
+    "source_id": "source_dallas_county_bid_page",
+    "source_name": "Dallas County Current Bids",
+    "source_type": "county_portal",
+    "geography": "DFW",
+    "parent_entity": "Dallas County",
+    "procurement_system": "custom_to_bidnet",
+    "url": "https://www.dallascounty.org/departments/purchasing/currentbids.php",
+    "status": "active",
+    "notes": "Entry point to BidNet."
+  },
+  {
+    "source_id": "source_dallas_county_bidnet",
+    "source_name": "Dallas County BidNet",
+    "source_type": "county_portal",
+    "geography": "DFW",
+    "parent_entity": "Dallas County",
+    "procurement_system": "BidNet",
+    "url": "https://www.bidnetdirect.com/texas/dallas-county",
+    "status": "active",
+    "notes": "Strong source, weak indexed janitorial returns so far."
+  },
+  {
+    "source_id": "source_tarrant_county_ionwave",
+    "source_name": "Tarrant County IonWave",
+    "source_type": "county_portal",
+    "geography": "DFW",
+    "parent_entity": "Tarrant County",
+    "procurement_system": "IonWave",
+    "url": "https://tarrantcountytx.ionwave.net/Login.aspx",
+    "status": "active",
+    "notes": "Strong live-opportunity portal."
+  },
+  {
+    "source_id": "source_denton_county_bonfire",
+    "source_name": "Denton County Bonfire",
+    "source_type": "county_portal",
+    "geography": "DFW",
+    "parent_entity": "Denton County",
+    "procurement_system": "Bonfire",
+    "url": "https://dentoncounty.bonfirehub.com/portal/?tab=openOpportunities",
+    "status": "active",
+    "notes": "Strong portal structure."
+  },
+  {
+    "source_id": "source_collin_county_purchasing",
+    "source_name": "Collin County Purchasing",
+    "source_type": "county_portal",
+    "geography": "DFW",
+    "parent_entity": "Collin County",
+    "procurement_system": "custom",
+    "url": "https://www.collincountytx.gov/Government/Purchasing",
+    "status": "active",
+    "notes": "Needs deeper extraction."
+  },
+  {
+    "source_id": "source_dallas_isd_vendor_ops",
+    "source_name": "Dallas ISD Vendor Opportunities",
+    "source_type": "school_portal",
+    "geography": "DFW",
+    "parent_entity": "Dallas ISD",
+    "procurement_system": "Bonfire / custom",
+    "url": "https://www.dallasisd.org/departments/procurement/vendor-opportunities",
+    "status": "active",
+    "notes": "Strong direct vendor-opportunity page."
+  },
+  {
+    "source_id": "source_dallas_isd_awarded_by_code",
+    "source_name": "Dallas ISD Awarded Vendors by Category Code",
+    "source_type": "school_archive",
+    "geography": "DFW",
+    "parent_entity": "Dallas ISD",
+    "procurement_system": "custom_archive",
+    "url": "https://www.dallasisd.org/departments/procurement/doing-business-with-dallas-isd/awarded-vendors-bids/awarded-vendors-by-category-code",
+    "status": "active",
+    "notes": "Strong historical evidence source."
+  },
+  {
+    "source_id": "source_fwisd_current_bids",
+    "source_name": "Fort Worth ISD Current Business Opportunities",
+    "source_type": "school_portal",
+    "geography": "DFW",
+    "parent_entity": "Fort Worth ISD",
+    "procurement_system": "custom_to_ionwave",
+    "url": "https://www.fwisd.org/departments/procurement-services/current-business-opportunities",
+    "status": "active",
+    "notes": "Strong current-opportunity path."
+  },
+  {
+    "source_id": "source_fwisd_ionwave",
+    "source_name": "Fort Worth ISD eBids",
+    "source_type": "school_portal",
+    "geography": "DFW",
+    "parent_entity": "Fort Worth ISD",
+    "procurement_system": "IonWave",
+    "url": "https://fwisd.ionwave.net/Login.aspx",
+    "status": "active",
+    "notes": "Good live bidding portal."
+  },
+  {
+    "source_id": "source_pisd_current_bids",
+    "source_name": "Plano ISD Current Proposals/Bids",
+    "source_type": "school_portal",
+    "geography": "DFW",
+    "parent_entity": "Plano ISD",
+    "procurement_system": "custom_to_ionwave",
+    "url": "https://www.pisd.edu/departments-66/purchasing-services/current-proposalsbids",
+    "status": "active",
+    "notes": "Clear procurement entry point."
+  },
+  {
+    "source_id": "source_pisd_ionwave",
+    "source_name": "Plano ISD IonWave",
+    "source_type": "school_portal",
+    "geography": "DFW",
+    "parent_entity": "Plano ISD",
+    "procurement_system": "IonWave",
+    "url": "https://pisd.ionwave.net/SourcingEvents.aspx?SourceType=1",
+    "status": "active",
+    "notes": "Live opportunities source."
+  },
+  {
+    "source_id": "source_dfw_airport_procurement",
+    "source_name": "DFW Airport Procurement",
+    "source_type": "airport_portal",
+    "geography": "DFW",
+    "parent_entity": "DFW Airport",
+    "procurement_system": "custom",
+    "url": "https://www.dfwairport.com/business/opportunities/procurement/",
+    "status": "active",
+    "notes": "Entry point to solicitations and supplier registration."
+  },
+  {
+    "source_id": "source_dfw_airport_board_docs",
+    "source_name": "DFW Airport Board Documents",
+    "source_type": "airport_archive",
+    "geography": "DFW",
+    "parent_entity": "DFW Airport",
+    "procurement_system": "board_docs",
+    "url": "https://apps.dfwairport.com/board/",
+    "status": "active",
+    "notes": "Strong historical janitorial/custodial evidence source."
+  },
+  {
+    "source_id": "source_dart_procurement",
+    "source_name": "DART Procurement",
+    "source_type": "transit_portal",
+    "geography": "DFW",
+    "parent_entity": "DART",
+    "procurement_system": "custom",
+    "url": "https://www.dart.org/about/doing-business/procurement",
+    "status": "active",
+    "notes": "Procurement entry point."
+  },
+  {
+    "source_id": "source_dart_board_docs",
+    "source_name": "DART Board / Committee Documents",
+    "source_type": "transit_archive",
+    "geography": "DFW",
+    "parent_entity": "DART",
+    "procurement_system": "board_docs",
+    "url": "https://dartorgcmsblob.dart.org/prod/docs/default-source/about-dart/",
+    "status": "active",
+    "notes": "Strong janitorial/custodial evidence source."
+  },
+  {
+    "source_id": "source_trinity_metro_procure",
+    "source_name": "Trinity Metro Procurement",
+    "source_type": "transit_portal",
+    "geography": "DFW",
+    "parent_entity": "Trinity Metro",
+    "procurement_system": "custom_portal",
+    "url": "https://www.procuretm.org/",
+    "status": "active",
+    "notes": "Dedicated portal."
+  },
+  {
+    "source_id": "source_irving_solicitations",
+    "source_name": "City of Irving Purchasing Solicitations",
+    "source_type": "city_portal",
+    "geography": "DFW",
+    "parent_entity": "City of Irving",
+    "procurement_system": "custom_to_ionwave",
+    "url": "https://www.irvingtx.gov/index.php?section=purchasing-solicitations",
+    "status": "active",
+    "notes": "Good city-level source."
+  }
+]

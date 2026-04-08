@@ -1,0 +1,74 @@
+[
+  {
+    "evidence_id": "evidence_dallasisd_30280",
+    "entity_id": "entity_dallas_isd",
+    "source_id": "source_dallas_isd_awarded_by_code",
+    "evidence_type": "category_page",
+    "title": "Dallas ISD Category Code 30280",
+    "date": "2026-04-07",
+    "url": "https://www2.dallasisd.org/inside_disd/depts/business/support/purchasing/catdetail.cfm?CCode=30280",
+    "excerpt": "Category code 30280 corresponds to Custodial Maintenance and Repair Services.",
+    "related_opportunity_id": "opportunity_dallasisd_208263",
+    "notes": "Strong custodial-history evidence."
+  },
+  {
+    "evidence_id": "evidence_dallasisd_bid_208263",
+    "entity_id": "entity_dallas_isd",
+    "source_id": "source_dallas_isd_awarded_by_code",
+    "evidence_type": "vendor_detail",
+    "title": "Dallas ISD Bid 208263 Pressure/Power Washing Services",
+    "date": "2025-12-19",
+    "url": "https://www2.dallasisd.org/inside_disd/depts/business/support/purchasing/vendordetail.cfm?av=PRESTIGE+BUILDING+GROUP%2C+LLC&CCode=30280&desc=CUSTODIAL+MAINTENANCE+AND+REPAIR+SERVICES&bidnum=208263",
+    "excerpt": "Bid 208263 visible under Custodial Maintenance and Repair Services.",
+    "related_opportunity_id": "opportunity_dallasisd_208263",
+    "notes": "Search-visible vendor detail tied to custodial category."
+  },
+  {
+    "evidence_id": "evidence_dfw_terminal_e",
+    "entity_id": "entity_dfw_airport",
+    "source_id": "source_dfw_airport_board_docs",
+    "evidence_type": "board_doc",
+    "title": "DFW Airport custodial cleaning services for Terminal E facilities",
+    "date": "2021-02-11",
+    "url": "https://apps.dfwairport.com/board/doc.php?docid=135041&date=Feb+11",
+    "excerpt": "Contract provides custodial cleaning services for Terminal E facilities, including terminal, Skylink stations and ramp areas.",
+    "related_opportunity_id": "opportunity_dfw_terminal_e_custodial",
+    "notes": "Strong direct service-contract evidence."
+  },
+  {
+    "evidence_id": "evidence_dfw_janitorial_supplies",
+    "entity_id": "entity_dfw_airport",
+    "source_id": "source_dfw_airport_board_docs",
+    "evidence_type": "board_doc",
+    "title": "DFW Airport janitorial cleaning supplies contract reference",
+    "date": "2024-05-02",
+    "url": "https://apps.dfwairport.com/board/doc.php?docid=146596&date=May+2,+2024",
+    "excerpt": "Approve to increase and extend contract for Janitorial Cleaning Supplies.",
+    "related_opportunity_id": "opportunity_dfw_janitorial_supplies_2024",
+    "notes": "Strong janitorial supply / custodial operations signal."
+  },
+  {
+    "evidence_id": "evidence_dart_passenger_facilities",
+    "entity_id": "entity_dart",
+    "source_id": "source_dart_board_docs",
+    "evidence_type": "board_doc",
+    "title": "DART contract modification for janitorial services for passenger facilities",
+    "date": "2026-01-13",
+    "url": "https://dartorgcmsblob.dart.org/prod/docs/default-source/about-dart/(item-7)-contract-mod-for-janitorial-srvs-for-passenger-facilities-_cotw-presentation.pdf?sfvrsn=930f4c78_1",
+    "excerpt": "Contract modification for janitorial services for passenger facilities.",
+    "related_opportunity_id": "opportunity_dart_passenger_facilities",
+    "notes": "Strong direct janitorial service evidence."
+  },
+  {
+    "evidence_id": "evidence_dart_18_ops",
+    "entity_id": "entity_dart",
+    "source_id": "source_dart_board_docs",
+    "evidence_type": "board_doc",
+    "title": "DART janitorial and custodial services for 18 bus and rail operations",
+    "date": "2026-01-13",
+    "url": "https://dartorgcmsblob.dart.org/prod/docs/default-source/about-dart/2026-01-13-committee-of-the-whole-(work-session)-agenda-packet.pdf?sfvrsn=32abdaad_1",
+    "excerpt": "Contract includes janitorial and custodial services for 18 bus and rail operations.",
+    "related_opportunity_id": "opportunity_dart_operating_facilities",
+    "notes": "Strong recurring-operations signal."
+  }
+]
