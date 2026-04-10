@@ -1,9 +1,9 @@
 import { FieldMock } from '../components/FieldMock'
 import { submissionFormState } from '../data/formState'
-import { opportunities } from '../data/mockData'
+import { selectedOpportunity } from '../data/mockData'
 
 export function SubmissionWorkflowPage() {
-  const selectedOpportunity = opportunities[0]
+  const opportunity = selectedOpportunity
 
   return (
     <main className="main">
@@ -27,22 +27,30 @@ export function SubmissionWorkflowPage() {
           <div className="detail-grid">
             <div>
               <div className="detail-label">Bid</div>
-              <div>{selectedOpportunity.title}</div>
+              <div>{opportunity.title}</div>
             </div>
             <div>
               <div className="detail-label">Agency</div>
-              <div>{selectedOpportunity.agency}</div>
+              <div>{opportunity.agency}</div>
             </div>
             <div>
               <div className="detail-label">Deadline</div>
-              <div>{selectedOpportunity.dueDate}</div>
+              <div>{opportunity.dueDate}</div>
             </div>
             <div>
               <div className="detail-label">Category</div>
-              <div>{selectedOpportunity.category}</div>
+              <div>{opportunity.category}</div>
+            </div>
+            <div>
+              <div className="detail-label">Source</div>
+              <div>{opportunity.source}</div>
+            </div>
+            <div>
+              <div className="detail-label">Opportunity ID</div>
+              <div>{opportunity.id}</div>
             </div>
           </div>
-          <p className="detail-copy">{selectedOpportunity.summary}</p>
+          <p className="detail-copy">{opportunity.summary}</p>
         </div>
 
         <div className="panel">
@@ -82,7 +90,7 @@ export function SubmissionWorkflowPage() {
           <div className="panel-title">Required attachments</div>
           <div className="draft-list">
             <div className="draft-card">
-              <strong>Pricing Sheet.xlsx</strong>
+              <strong>{opportunity.documents[2]}</strong>
               <div className="muted">Pending upload</div>
             </div>
             <div className="draft-card">
@@ -102,7 +110,7 @@ export function SubmissionWorkflowPage() {
         <div className="panel">
           <div className="panel-title">Pre-submit checklist</div>
           <ol className="flow-list">
-            <li>Pricing file attached</li>
+            <li>Pricing file attached for {opportunity.title}</li>
             <li>Required compliance documents attached</li>
             <li>Response narrative completed</li>
             <li>Authorized signer confirmed</li>
@@ -113,7 +121,7 @@ export function SubmissionWorkflowPage() {
         <div className="panel">
           <div className="panel-title">Submission confirmation</div>
           <div className="dashboard-note">
-            This is the core V1 workflow: vendors should be able to move from discovery to actual response submission without leaving the Texas-first portal.
+            This is the core V1 workflow: vendors should be able to move from {opportunity.title} discovery to actual response submission without leaving the Texas-first portal.
           </div>
           <button className="primary wide">Final submit</button>
         </div>

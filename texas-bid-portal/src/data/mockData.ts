@@ -57,6 +57,10 @@ export const vendorSubmissions: Submission[] = [
   },
 ]
 
+export const selectedOpportunityId = 'tx-001'
+
+export const selectedOpportunity = opportunities.find((opportunity) => opportunity.id === selectedOpportunityId) ?? opportunities[0]
+
 export const statusClass: Record<Status, string> = {
   open: 'status status-open',
   awarded: 'status status-awarded',

@@ -1,7 +1,7 @@
-import { opportunities, statusClass } from '../data/mockData'
+import { selectedOpportunity, statusClass } from '../data/mockData'
 
 export function OpportunityDetailPage() {
-  const opportunity = opportunities[0]
+  const opportunity = selectedOpportunity
 
   return (
     <main className="main">
