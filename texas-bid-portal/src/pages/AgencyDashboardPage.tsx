@@ -1,3 +1,4 @@
+import { lifecycleMetrics } from '../data/metrics'
 import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
 
 export function AgencyDashboardPage() {
@@ -11,7 +12,7 @@ export function AgencyDashboardPage() {
           <div className="eyebrow">Agency workspace</div>
           <h1>Agency dashboard</h1>
           <p className="intro">
-            A Texas-first control center for procurement teams to manage live bids, drafts, vendor activity, and fast next actions without portal clutter.
+            A Texas-first control center for procurement teams to manage live bids, vendor activity, and fast next actions without portal clutter.
           </p>
         </div>
         <div className="top-actions">
@@ -22,15 +23,15 @@ export function AgencyDashboardPage() {
 
       <section className="stats-grid">
         <div className="stat-card">
-          <span className="stat-value">{activeBids.length}</span>
+          <span className="stat-value">{lifecycleMetrics.activeBids}</span>
           <span className="stat-label">Active bids</span>
         </div>
         <div className="stat-card">
-          <span className="stat-value">2</span>
+          <span className="stat-value">{lifecycleMetrics.draftBids}</span>
           <span className="stat-label">Drafts waiting for final review</span>
         </div>
         <div className="stat-card">
-          <span className="stat-value">{vendorSubmissions.length}</span>
+          <span className="stat-value">{lifecycleMetrics.responsesInReview}</span>
           <span className="stat-label">Recent vendor submissions</span>
         </div>
       </section>

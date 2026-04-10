@@ -1,3 +1,4 @@
+import { lifecycleMetrics } from '../data/metrics'
 import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
 import { submissionLifecycle, submissionStatusSummary } from '../data/submissionStatus'
 
@@ -27,11 +28,11 @@ export function VendorDashboardPage() {
           <span className="stat-label">Saved opportunities</span>
         </div>
         <div className="stat-card">
-          <span className="stat-value">{vendorSubmissions.length}</span>
+          <span className="stat-value">{lifecycleMetrics.responsesInReview}</span>
           <span className="stat-label">Active submissions</span>
         </div>
         <div className="stat-card">
-          <span className="stat-value">92%</span>
+          <span className="stat-value">{lifecycleMetrics.vendorProfileCompleteness}</span>
           <span className="stat-label">Profile completeness</span>
         </div>
       </section>

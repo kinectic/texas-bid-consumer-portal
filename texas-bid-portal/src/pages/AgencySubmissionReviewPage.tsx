@@ -1,4 +1,5 @@
 import { FieldMock } from '../components/FieldMock'
+import { lifecycleMetrics } from '../data/metrics'
 import { vendorSubmissions } from '../data/mockData'
 import { submissionLifecycle, submissionStatusSummary } from '../data/submissionStatus'
 import type { ReviewNotesState } from '../types/forms'
@@ -27,11 +28,11 @@ export function AgencySubmissionReviewPage({ reviewNotes, onChange }: AgencySubm
 
       <section className="stats-grid">
         <div className="stat-card">
-          <span className="stat-value">{vendorSubmissions.length}</span>
+          <span className="stat-value">{lifecycleMetrics.responsesInReview}</span>
           <span className="stat-label">Responses in review</span>
         </div>
         <div className="stat-card">
-          <span className="stat-value">1</span>
+          <span className="stat-value">{lifecycleMetrics.shortlisted}</span>
           <span className="stat-label">Shortlist candidate</span>
         </div>
         <div className="stat-card">

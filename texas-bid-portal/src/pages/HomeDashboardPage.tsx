@@ -1,3 +1,4 @@
+import { lifecycleMetrics } from '../data/metrics'
 import type { CreateBidFormState } from '../types/forms'
 
 const workflowCards = [
@@ -68,7 +69,7 @@ export function HomeDashboardPage({ publishedBidPreview }: HomeDashboardPageProp
 
       <section className="stats-grid">
         <div className="stat-card">
-          <span className="stat-value">6</span>
+          <span className="stat-value">{lifecycleMetrics.workflowScreensBuilt}</span>
           <span className="stat-label">Interactive workflow screens built</span>
         </div>
         <div className="stat-card">
@@ -95,21 +96,23 @@ export function HomeDashboardPage({ publishedBidPreview }: HomeDashboardPageProp
         </div>
 
         <div className="panel">
-          <div className="panel-title">Why this exists</div>
-          <div className="dashboard-note">
-            The goal is not just another listing page. The goal is a Texas-first procurement product where agencies and vendors can actually complete meaningful workflow steps inside one cleaner system.
-          </div>
-          <div className="dashboard-note">
-            This landing view gives the shell a real front door instead of forcing the prototype to start on one specific sub-screen.
-          </div>
+          <div className="panel-title">Lifecycle metrics</div>
           <div className="draft-list">
             <div className="draft-card">
-              <strong>Recently published</strong>
-              <div className="muted">{publishedBidPreview.title} now appears in the marketplace lane</div>
+              <strong>Active bids</strong>
+              <div className="muted">{lifecycleMetrics.activeBids}</div>
             </div>
             <div className="draft-card">
-              <strong>Publishing continuity</strong>
-              <div className="muted">Agency-created opportunities should visibly flow into vendor discovery and response paths.</div>
+              <strong>Draft bids</strong>
+              <div className="muted">{lifecycleMetrics.draftBids}</div>
+            </div>
+            <div className="draft-card">
+              <strong>Responses in review</strong>
+              <div className="muted">{lifecycleMetrics.responsesInReview}</div>
+            </div>
+            <div className="draft-card">
+              <strong>Shortlisted</strong>
+              <div className="muted">{lifecycleMetrics.shortlisted}</div>
             </div>
           </div>
         </div>
