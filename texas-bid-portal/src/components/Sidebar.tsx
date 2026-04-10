@@ -12,6 +12,7 @@ export function Sidebar({ activeView, onSelect }: SidebarProps) {
     { key: 'opportunity', label: 'Opportunity Detail' },
     { key: 'agency-dashboard', label: 'Agency Dashboard' },
     { key: 'create-bid', label: 'Create Bid' },
+    { key: 'agency-submission-review', label: 'Agency Review' },
     { key: 'vendor-dashboard', label: 'Vendor Workspace' },
     { key: 'submission-workflow', label: 'Submissions' },
   ]

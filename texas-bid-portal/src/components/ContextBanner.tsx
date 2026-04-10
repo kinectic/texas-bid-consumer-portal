@@ -25,6 +25,10 @@ const contextMap: Record<ViewKey, { lane: string; summary: string }> = {
     lane: 'Agency posting flow',
     summary: 'Agencies draft and publish a structured solicitation directly inside the product.',
   },
+  'agency-submission-review': {
+    lane: 'Agency review flow',
+    summary: 'Agencies inspect submissions, compare completeness, and move decisions forward.',
+  },
   'vendor-dashboard': {
     lane: 'Vendor operations',
     summary: 'Vendors track saved bids, compliance readiness, and active submissions.',

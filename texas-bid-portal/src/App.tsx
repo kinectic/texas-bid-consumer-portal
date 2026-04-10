@@ -4,6 +4,7 @@ import { ContextBanner } from './components/ContextBanner'
 import { Sidebar } from './components/Sidebar'
 import { viewOrder, type ViewKey } from './data/viewData'
 import { AgencyDashboardPage } from './pages/AgencyDashboardPage'
+import { AgencySubmissionReviewPage } from './pages/AgencySubmissionReviewPage'
 import { CreateBidPage } from './pages/CreateBidPage'
 import { HomeDashboardPage } from './pages/HomeDashboardPage'
 import { MarketplacePage } from './pages/MarketplacePage'
@@ -23,6 +24,8 @@ function renderView(view: ViewKey) {
       return <AgencyDashboardPage />
     case 'create-bid':
       return <CreateBidPage />
+    case 'agency-submission-review':
+      return <AgencySubmissionReviewPage />
     case 'vendor-dashboard':
       return <VendorDashboardPage />
     case 'submission-workflow':
