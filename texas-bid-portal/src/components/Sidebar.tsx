@@ -1,17 +1,27 @@
+type ViewKey =
+  | 'home'
+  | 'marketplace'
+  | 'opportunity'
+  | 'agency-dashboard'
+  | 'create-bid'
+  | 'vendor-dashboard'
+  | 'submission-workflow'
+
 type SidebarProps = {
-  activeView: string
-  onSelect: (view: 'marketplace' | 'opportunity' | 'agency-dashboard' | 'create-bid' | 'vendor-dashboard' | 'submission-workflow') => void
+  activeView: ViewKey
+  onSelect: (view: ViewKey) => void
 }
 
 export function Sidebar({ activeView, onSelect }: SidebarProps) {
-  const navItems = [
+  const navItems: { key: ViewKey; label: string }[] = [
+    { key: 'home', label: 'Overview' },
     { key: 'marketplace', label: 'Marketplace' },
     { key: 'opportunity', label: 'Opportunity Detail' },
     { key: 'agency-dashboard', label: 'Agency Dashboard' },
     { key: 'create-bid', label: 'Create Bid' },
     { key: 'vendor-dashboard', label: 'Vendor Workspace' },
     { key: 'submission-workflow', label: 'Submissions' },
-  ] as const
+  ]
 
   return (
     <aside className="sidebar">
