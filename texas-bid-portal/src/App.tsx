@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import { ContextBanner } from './components/ContextBanner'
 import { Sidebar } from './components/Sidebar'
+import { WorkflowActions } from './components/WorkflowActions'
 import { viewOrder, type ViewKey } from './data/viewData'
 import { AgencyDashboardPage } from './pages/AgencyDashboardPage'
 import { AgencySubmissionReviewPage } from './pages/AgencySubmissionReviewPage'
@@ -54,6 +55,7 @@ function App() {
           ))}
         </div>
         <ContextBanner activeView={activeView} />
+        <WorkflowActions activeView={activeView} onNavigate={setActiveView} />
         {renderView(activeView)}
       </div>
     </div>

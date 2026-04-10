@@ -108,6 +108,21 @@ button {
   max-width: 620px;
 }
 
+.workflow-actions {
+  margin: 18px 30px 0;
+  padding: 16px 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(120, 146, 196, 0.18);
+  background: rgba(15, 25, 48, 0.55);
+}
+
+.workflow-actions-list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
 .context-label {
   color: #98a8ca;
   margin-bottom: 6px;
@@ -152,6 +167,10 @@ button {
     margin: 18px 18px 0;
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .workflow-actions {
+    margin: 18px 18px 0;
   }
 
   .main {
