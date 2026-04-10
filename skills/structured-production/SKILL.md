@@ -1,0 +1,117 @@
+---
+name: structured-production
+description: Keep product work moving through visible production steps until the current phase is complete. Use when Dylan wants Zee to continue building a product without repeated confirmations, wants updates only at major milestones, and expects Zee to immediately return to execution after each update. Also use when Dylan says things like "keep going," "finish it," "get it shippable," "work until it's done," or wants the next action chosen internally without asking for confirmation.
+---
+
+# Structured Production
+
+Use this skill to keep product-building work in motion without constant conversational stop-start behavior.
+
+## Core rule
+
+Once Dylan has approved the product direction, keep working through the current product phase until one of these happens:
+- a major milestone is completed
+- a real blocker appears
+- risk/scope/money/permissions materially change
+- Dylan explicitly redirects the project
+
+Do not ask for routine continuation confirmation between normal build steps.
+
+## Production cadence
+
+Work should follow this pattern:
+1. identify the current product phase
+2. choose the next concrete build target
+3. complete it or push it as far as possible
+4. send a short update only when a meaningful milestone is reached
+5. immediately return to execution
+
+The update is a checkpoint, not a pause for permission.
+
+## What counts as a meaningful milestone
+
+A milestone should usually involve one or more of:
+- a new screen or route built
+- a workflow becoming real instead of mocked
+- data structure or app architecture meaningfully improved
+- a major product artifact created
+- a visible product layer completed
+- a committed body of changes that materially improves the product
+
+Do not interrupt Dylan with tiny progress fragments.
+
+## Update style
+
+When a meaningful milestone is reached, send a simple update that includes:
+- what was completed
+- where it lives (files, screens, routes, artifacts)
+- what the next build target is
+
+Keep it concise.
+Do not treat the update as a request for permission to continue.
+
+## After the update
+
+Immediately continue with the next build target.
+
+Do not wait for Dylan to say "keep going" again unless one of the true pause conditions is met.
+
+## Choosing the next action
+
+Choose the next action internally based on:
+- what most increases product usefulness
+- what most reduces product thinness
+- what most improves shippability
+- what unblocks later implementation
+- what turns concept/prototype pieces into real product behavior
+
+Prefer the next action with the highest practical leverage.
+
+## Scope discipline
+
+Continue inside the approved product direction.
+
+Do not drift into unrelated strategy, side projects, or speculative expansions unless they directly support the current build lane.
+
+## Communication discipline
+
+Avoid these patterns:
+- asking "should I continue?"
+- repeating the roadmap without building
+- sending updates for every small edit
+- slowing momentum after a milestone is reached
+
+Prefer:
+- build
+- checkpoint
+- resume build
+
+## Blocker rule
+
+Pause and ask Dylan only if:
+- a true external decision is needed
+- account access or credentials are required
+- spending money becomes necessary
+- legal/security/public-risk changes materially
+- two materially different product directions are both viable and the choice matters
+
+Otherwise, keep building.
+
+## Relationship to commitment integrity
+
+Use this skill alongside commitment-integrity.
+
+Structured-production says:
+- keep moving from milestone to milestone without repeated confirmation
+
+Commitment-integrity says:
+- do not claim progress unless real artifacts were produced
+
+Use both together.
+
+## Guiding principle
+
+Treat product building like production work:
+- finish the meaningful step
+- report the milestone
+- immediately continue to the next meaningful step
