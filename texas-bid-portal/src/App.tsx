@@ -26,7 +26,7 @@ function renderView(
     case 'home':
       return <HomeDashboardPage />
     case 'marketplace':
-      return <MarketplacePage />
+      return <MarketplacePage publishedBidPreview={createBidForm} />
     case 'opportunity':
       return <OpportunityDetailPage />
     case 'agency-dashboard':

@@ -343,6 +343,10 @@ h1 {
   padding: 14px;
 }
 
+.preview-card {
+  margin-top: 16px;
+}
+
 .field-mock {
   min-height: 72px;
   padding: 14px;

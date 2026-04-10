@@ -1,7 +1,21 @@
+import type { CreateBidFormState } from '../types/forms'
 import { opportunities, statusClass, vendorSubmissions } from '../data/mockData'
 
-export function MarketplacePage() {
+type MarketplacePageProps = {
+  publishedBidPreview: CreateBidFormState
+}
+
+export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
   const highlighted = opportunities[0]
+  const previewOpportunity = {
+    ...highlighted,
+    title: publishedBidPreview.title,
+    category: publishedBidPreview.category,
+    dueDate: publishedBidPreview.deadline,
+    summary: publishedBidPreview.scope,
+  }
+
+  const marketplaceFeed = [previewOpportunity, ...opportunities.slice(1)]
 
   return (
     <main className="main">
@@ -49,8 +63,15 @@ export function MarketplacePage() {
             </div>
           </div>
 
+          <div className="draft-card preview-card">
+            <strong>Published bid preview sync</strong>
+            <div className="muted">
+              The top marketplace record now mirrors the current agency create-bid form state.
+            </div>
+          </div>
+
           <div className="opportunity-list">
-            {opportunities.map((opportunity) => (
+            {marketplaceFeed.map((opportunity) => (
               <article className="opportunity-card" key={opportunity.id}>
                 <div className="opportunity-top">
                   <div>
@@ -73,28 +94,28 @@ export function MarketplacePage() {
 
         <div className="panel detail-panel">
           <div className="panel-title">Opportunity detail</div>
-          <h2>{highlighted.title}</h2>
+          <h2>{previewOpportunity.title}</h2>
           <div className="detail-grid">
             <div>
               <div className="detail-label">Agency</div>
-              <div>{highlighted.agency}</div>
+              <div>{previewOpportunity.agency}</div>
             </div>
             <div>
               <div className="detail-label">Deadline</div>
-              <div>{highlighted.dueDate}</div>
+              <div>{previewOpportunity.dueDate}</div>
             </div>
             <div>
               <div className="detail-label">Category</div>
-              <div>{highlighted.category}</div>
+              <div>{previewOpportunity.category}</div>
             </div>
             <div>
               <div className="detail-label">Source</div>
-              <div>{highlighted.source}</div>
+              <div>{previewOpportunity.source}</div>
             </div>
           </div>
-          <p className="detail-copy">{highlighted.summary}</p>
+          <p className="detail-copy">{previewOpportunity.summary}</p>
           <div className="doc-list">
-            {highlighted.documents.map((document) => (
+            {previewOpportunity.documents.map((document) => (
               <div className="doc-item" key={document}>
                 <span>{document}</span>
                 <button className="linkish">Open</button>
