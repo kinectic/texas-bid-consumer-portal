@@ -1,7 +1,12 @@
 import { FieldMock } from '../components/FieldMock'
-import { createBidFormState } from '../data/formState'
+import type { CreateBidFormState } from '../types/forms'
 
-export function CreateBidPage() {
+type CreateBidPageProps = {
+  formState: CreateBidFormState
+  onChange: (field: keyof CreateBidFormState, value: string) => void
+}
+
+export function CreateBidPage({ formState, onChange }: CreateBidPageProps) {
   return (
     <main className="main">
       <header className="topbar">
@@ -22,17 +27,17 @@ export function CreateBidPage() {
         <div className="panel">
           <div className="panel-title">Solicitation details</div>
           <div className="form-mock create-bid-form">
-            <FieldMock label="Bid title" value={createBidFormState.title} />
+            <FieldMock label="Bid title" value={formState.title} onChange={(value) => onChange('title', value)} />
             <div className="input-row">
-              <FieldMock label="Category" value={createBidFormState.category} />
-              <FieldMock label="Solicitation type" value={createBidFormState.solicitationType} />
+              <FieldMock label="Category" value={formState.category} onChange={(value) => onChange('category', value)} />
+              <FieldMock label="Solicitation type" value={formState.solicitationType} onChange={(value) => onChange('solicitationType', value)} />
             </div>
             <div className="input-row">
-              <FieldMock label="Issue date" value={createBidFormState.issueDate} />
-              <FieldMock label="Submission deadline" value={createBidFormState.deadline} />
+              <FieldMock label="Issue date" value={formState.issueDate} onChange={(value) => onChange('issueDate', value)} />
+              <FieldMock label="Submission deadline" value={formState.deadline} onChange={(value) => onChange('deadline', value)} />
             </div>
-            <FieldMock label="Scope / project description" value={createBidFormState.scope} multiline />
-            <FieldMock label="Vendor requirements and evaluation notes" value={createBidFormState.requirements} multiline />
+            <FieldMock label="Scope / project description" value={formState.scope} multiline onChange={(value) => onChange('scope', value)} />
+            <FieldMock label="Vendor requirements and evaluation notes" value={formState.requirements} multiline onChange={(value) => onChange('requirements', value)} />
           </div>
         </div>
 

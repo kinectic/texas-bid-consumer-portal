@@ -1,8 +1,13 @@
 import { FieldMock } from '../components/FieldMock'
-import { submissionFormState } from '../data/formState'
 import { selectedOpportunity } from '../data/mockData'
+import type { SubmissionFormState } from '../types/forms'
 
-export function SubmissionWorkflowPage() {
+type SubmissionWorkflowPageProps = {
+  formState: SubmissionFormState
+  onChange: (field: keyof SubmissionFormState, value: string) => void
+}
+
+export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkflowPageProps) {
   const opportunity = selectedOpportunity
 
   return (
@@ -76,13 +81,13 @@ export function SubmissionWorkflowPage() {
         <div className="panel">
           <div className="panel-title">Response builder</div>
           <div className="form-mock create-bid-form">
-            <FieldMock label="Company contact and authorized signer" value={submissionFormState.signer} />
+            <FieldMock label="Company contact and authorized signer" value={formState.signer} onChange={(value) => onChange('signer', value)} />
             <div className="input-row">
-              <FieldMock label="Pricing total" value={submissionFormState.pricing} />
-              <FieldMock label="Delivery / service timeline" value={submissionFormState.timeline} />
+              <FieldMock label="Pricing total" value={formState.pricing} onChange={(value) => onChange('pricing', value)} />
+              <FieldMock label="Delivery / service timeline" value={formState.timeline} onChange={(value) => onChange('timeline', value)} />
             </div>
-            <FieldMock label="Response narrative" value={submissionFormState.narrative} multiline />
-            <FieldMock label="Exceptions, qualifications, or clarifications" value={submissionFormState.exceptions} multiline />
+            <FieldMock label="Response narrative" value={formState.narrative} multiline onChange={(value) => onChange('narrative', value)} />
+            <FieldMock label="Exceptions, qualifications, or clarifications" value={formState.exceptions} multiline onChange={(value) => onChange('exceptions', value)} />
           </div>
         </div>
 

@@ -1,4 +1,6 @@
-export const createBidFormState = {
+import type { CreateBidFormState, SubmissionFormState } from '../types/forms'
+
+export const createBidFormState: CreateBidFormState = {
   title: 'Citywide Custodial Services RFP',
   category: 'Janitorial',
   solicitationType: 'Request for Proposals',
@@ -8,7 +10,7 @@ export const createBidFormState = {
   requirements: 'Vendors must show prior public-sector experience, insurance coverage, and staffing plan.',
 }
 
-export const submissionFormState = {
+export const submissionFormState: SubmissionFormState = {
   signer: 'Jordan Patel, Operations Director',
   pricing: '$184,500 annual bid',
   timeline: 'Mobilization within 14 days of award',
