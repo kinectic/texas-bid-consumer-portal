@@ -15,3 +15,8 @@ export type SubmissionFormState = {
   narrative: string
   exceptions: string
 }
+
+export type ReviewNotesState = {
+  internalNotes: string
+  vendorQuestions: string
+}

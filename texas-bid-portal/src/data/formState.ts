@@ -1,4 +1,4 @@
-import type { CreateBidFormState, SubmissionFormState } from '../types/forms'
+import type { CreateBidFormState, ReviewNotesState, SubmissionFormState } from '../types/forms'
 
 export const createBidFormState: CreateBidFormState = {
   title: 'Citywide Custodial Services RFP',
@@ -16,4 +16,9 @@ export const submissionFormState: SubmissionFormState = {
   timeline: 'Mobilization within 14 days of award',
   narrative: 'Regional janitorial team with transit and municipal facility experience across Texas.',
   exceptions: 'No material exceptions. Minor clarification requested on consumables reimbursement.',
+}
+
+export const reviewNotesState: ReviewNotesState = {
+  internalNotes: 'Pricing is competitive. Need final confirmation on consumables and backup staffing coverage.',
+  vendorQuestions: 'Please confirm whether weekend emergency support is included in the quoted annual rate.',
 }

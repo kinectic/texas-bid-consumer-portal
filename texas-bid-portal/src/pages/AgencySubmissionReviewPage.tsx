@@ -1,7 +1,14 @@
+import { FieldMock } from '../components/FieldMock'
 import { vendorSubmissions } from '../data/mockData'
 import { submissionLifecycle, submissionStatusSummary } from '../data/submissionStatus'
+import type { ReviewNotesState } from '../types/forms'
 
-export function AgencySubmissionReviewPage() {
+type AgencySubmissionReviewPageProps = {
+  reviewNotes: ReviewNotesState
+  onChange: (field: keyof ReviewNotesState, value: string) => void
+}
+
+export function AgencySubmissionReviewPage({ reviewNotes, onChange }: AgencySubmissionReviewPageProps) {
   return (
     <main className="main">
       <header className="topbar">
@@ -105,8 +112,8 @@ export function AgencySubmissionReviewPage() {
         <div className="panel">
           <div className="panel-title">Reviewer notes</div>
           <div className="form-mock create-bid-form">
-            <div className="input-mock tall">Internal procurement notes</div>
-            <div className="input-mock tall">Follow-up questions for vendor</div>
+            <FieldMock label="Internal procurement notes" value={reviewNotes.internalNotes} multiline onChange={(value) => onChange('internalNotes', value)} />
+            <FieldMock label="Follow-up questions for vendor" value={reviewNotes.vendorQuestions} multiline onChange={(value) => onChange('vendorQuestions', value)} />
             <button className="ghost wide">Save review note</button>
           </div>
         </div>
