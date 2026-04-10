@@ -61,6 +61,9 @@ A valid ETA should include:
 - named artifact
 - what done means
 
+Anchor the estimate to recent similar artifact throughput when possible.
+Do not inflate the window with generic caution if the last comparable artifacts were clearly faster.
+
 ## After the update
 
 Immediately continue with the next build target.
@@ -88,6 +91,7 @@ Choose the next action internally based on:
 
 Prefer the next action with the highest practical leverage.
 Keep one active build target at a time; queue other ideas instead of splitting attention.
+When the current lane consists of short, low-uncertainty prototype artifacts, chain them continuously without waiting for another prompt between completions.
 
 ## Scope discipline
 
