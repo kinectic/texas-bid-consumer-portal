@@ -1,4 +1,18 @@
-export function Sidebar() {
+type SidebarProps = {
+  activeView: string
+  onSelect: (view: 'marketplace' | 'opportunity' | 'agency-dashboard' | 'create-bid' | 'vendor-dashboard' | 'submission-workflow') => void
+}
+
+export function Sidebar({ activeView, onSelect }: SidebarProps) {
+  const navItems = [
+    { key: 'marketplace', label: 'Marketplace' },
+    { key: 'opportunity', label: 'Opportunity Detail' },
+    { key: 'agency-dashboard', label: 'Agency Dashboard' },
+    { key: 'create-bid', label: 'Create Bid' },
+    { key: 'vendor-dashboard', label: 'Vendor Workspace' },
+    { key: 'submission-workflow', label: 'Submissions' },
+  ] as const
+
   return (
     <aside className="sidebar">
       <div>
@@ -6,11 +20,15 @@ export function Sidebar() {
         <div className="brand-sub">Texas-first procurement platform</div>
       </div>
       <nav className="nav">
-        <a className="nav-item active">Marketplace</a>
-        <a className="nav-item">Agency Dashboard</a>
-        <a className="nav-item">Vendor Workspace</a>
-        <a className="nav-item">Submissions</a>
-        <a className="nav-item">Documents</a>
+        {navItems.map((item) => (
+          <button
+            key={item.key}
+            className={item.key === activeView ? 'nav-item active nav-button' : 'nav-item nav-button'}
+            onClick={() => onSelect(item.key)}
+          >
+            {item.label}
+          </button>
+        ))}
       </nav>
       <div className="sidebar-card">
         <div className="card-label">MVP direction</div>

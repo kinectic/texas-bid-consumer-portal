@@ -58,6 +58,38 @@ button {
   text-decoration: none;
 }
 
+.nav-button {
+  width: 100%;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.page-shell {
+  min-width: 0;
+}
+
+.view-switcher {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 24px 30px 0;
+}
+
+.switch-pill {
+  border: 1px solid rgba(120, 146, 196, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  color: #c8d5f3;
+  border-radius: 999px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.switch-pill-active {
+  background: rgba(104, 164, 255, 0.16);
+  color: white;
+}
+
 .nav-item.active,
 .nav-item:hover {
   background: rgba(104, 164, 255, 0.12);
@@ -85,7 +117,17 @@ button {
 }
 
 .main {
-  padding: 30px;
+  padding: 24px 30px 30px;
+}
+
+@media (max-width: 1100px) {
+  .view-switcher {
+    padding: 18px 18px 0;
+  }
+
+  .main {
+    padding: 18px;
+  }
 }
 
 .topbar {
