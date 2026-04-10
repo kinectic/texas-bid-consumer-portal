@@ -1,12 +1,12 @@
 import './App.css'
 import { Sidebar } from './components/Sidebar'
-import { AgencyDashboardPage } from './pages/AgencyDashboardPage'
+import { CreateBidPage } from './pages/CreateBidPage'
 
 function App() {
   return (
     <div className="app-shell">
       <Sidebar />
-      <AgencyDashboardPage />
+      <CreateBidPage />
     </div>
   )
 }
