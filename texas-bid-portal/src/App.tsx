@@ -1,12 +1,12 @@
 import './App.css'
 import { Sidebar } from './components/Sidebar'
-import { SubmissionWorkflowPage } from './pages/SubmissionWorkflowPage'
+import { OpportunityDetailPage } from './pages/OpportunityDetailPage'
 
 function App() {
   return (
     <div className="app-shell">
       <Sidebar />
-      <SubmissionWorkflowPage />
+      <OpportunityDetailPage />
     </div>
   )
 }
