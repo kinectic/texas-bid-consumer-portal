@@ -336,6 +336,10 @@ h1 {
   color: #c8d5f3;
 }
 
+.compact-note {
+  margin-top: 10px;
+}
+
 .draft-card {
   background: rgba(15, 25, 48, 0.85);
   border: 1px solid rgba(120, 146, 196, 0.18);

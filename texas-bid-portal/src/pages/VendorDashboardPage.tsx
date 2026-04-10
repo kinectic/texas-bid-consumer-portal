@@ -1,4 +1,5 @@
 import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
+import { submissionLifecycle, submissionStatusSummary } from '../data/submissionStatus'
 
 export function VendorDashboardPage() {
   const savedOpportunities = opportunities.filter((opportunity) => opportunity.status === 'open')
@@ -84,21 +85,38 @@ export function VendorDashboardPage() {
         <div className="panel">
           <div className="panel-title">Active submissions</div>
           <div className="submission-list">
-            {vendorSubmissions.map((submission) => (
-              <div className="submission-card" key={`${submission.vendor}-${submission.opportunity}`}>
-                <div className="submission-header">
-                  <strong>{submission.opportunity}</strong>
-                  <span className={submission.status === 'received' ? 'status status-open' : 'status status-review'}>
-                    {submission.status}
-                  </span>
+            {vendorSubmissions.map((submission) => {
+              const statusSummary = submissionStatusSummary[submission.status]
+
+              return (
+                <div className="submission-card" key={`${submission.vendor}-${submission.opportunity}`}>
+                  <div className="submission-header">
+                    <strong>{submission.opportunity}</strong>
+                    <span className={submission.status === 'received' ? 'status status-open' : 'status status-review'}>
+                      {statusSummary.label}
+                    </span>
+                  </div>
+                  <div className="muted">Submitted by: {submission.vendor}</div>
+                  <div className="muted">Submitted: {submission.submittedAt}</div>
+                  <div className="muted">Progress: {statusSummary.progress}</div>
+                  <div className="dashboard-note compact-note">{statusSummary.detail}</div>
                 </div>
-                <div className="muted">Submitted by: {submission.vendor}</div>
-                <div className="muted">Submitted: {submission.submittedAt}</div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
 
+        <div className="panel">
+          <div className="panel-title">Submission status progression</div>
+          <ol className="flow-list">
+            {submissionLifecycle.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="content-grid lower-grid">
         <div className="panel">
           <div className="panel-title">Recommended bids</div>
           <div className="draft-list">
