@@ -92,6 +92,9 @@ Choose the next action internally based on:
 Prefer the next action with the highest practical leverage.
 Keep one active build target at a time; queue other ideas instead of splitting attention.
 When the current lane consists of short, low-uncertainty prototype artifacts, chain them continuously without waiting for another prompt between completions.
+Idle after an artifact without a real blocker counts as stalled execution.
+Continuation is presumed in an approved build lane; silence from Dylan does not mean stop.
+Do not stop after an artifact unless a real stop condition exists.
 
 ## Scope discipline
 
