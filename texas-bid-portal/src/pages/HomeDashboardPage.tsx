@@ -73,6 +73,16 @@ export function HomeDashboardPage() {
           <div className="dashboard-note">
             This landing view gives the shell a real front door instead of forcing the prototype to start on one specific sub-screen.
           </div>
+          <div className="draft-list">
+            <div className="draft-card">
+              <strong>Recently published</strong>
+              <div className="muted">Citywide Custodial Services RFP now appears in the marketplace lane</div>
+            </div>
+            <div className="draft-card">
+              <strong>Publishing continuity</strong>
+              <div className="muted">Agency-created opportunities should visibly flow into vendor discovery and response paths.</div>
+            </div>
+          </div>
         </div>
       </section>
 

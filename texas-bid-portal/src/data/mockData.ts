@@ -3,16 +3,16 @@ import type { Opportunity, Submission, Status } from '../types'
 export const opportunities: Opportunity[] = [
   {
     id: 'tx-001',
-    title: 'Custodial Supplies',
-    agency: 'Region 4 ESC',
-    location: 'Houston, TX',
-    category: 'Facilities / Supplies',
-    dueDate: 'May 26, 2026',
+    title: 'Citywide Custodial Services RFP',
+    agency: 'City of Fort Worth',
+    location: 'Fort Worth, TX',
+    category: 'Janitorial',
+    dueDate: 'May 6, 2026',
     status: 'open',
-    source: 'Texas Purchasing Group',
+    source: 'TexasBid Agency Publish Flow',
     summary:
-      'Multi-agency purchasing opportunity for custodial supplies with statewide buyer visibility and recurring school / public facility relevance.',
-    documents: ['Solicitation Overview.pdf', 'Vendor Terms.pdf', 'Pricing Sheet.xlsx'],
+      'Newly published agency-created opportunity showing how a direct posting flow can feed straight into vendor discovery and submission inside the same Texas-first platform.',
+    documents: ['Scope of Work.pdf', 'Vendor Terms.pdf', 'Pricing Template.xlsx'],
   },
   {
     id: 'tx-002',
@@ -45,7 +45,7 @@ export const opportunities: Opportunity[] = [
 export const vendorSubmissions: Submission[] = [
   {
     vendor: 'Lone Star Facility Group',
-    opportunity: 'Custodial Supplies',
+    opportunity: 'Citywide Custodial Services RFP',
     submittedAt: 'Apr 8, 2026 · 10:24 AM',
     status: 'received',
   },
