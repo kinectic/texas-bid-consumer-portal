@@ -1,3 +1,5 @@
+import { FieldMock } from '../components/FieldMock'
+import { submissionFormState } from '../data/formState'
 import { opportunities } from '../data/mockData'
 
 export function SubmissionWorkflowPage() {
@@ -66,13 +68,13 @@ export function SubmissionWorkflowPage() {
         <div className="panel">
           <div className="panel-title">Response builder</div>
           <div className="form-mock create-bid-form">
-            <div className="input-mock">Company contact and authorized signer</div>
+            <FieldMock label="Company contact and authorized signer" value={submissionFormState.signer} />
             <div className="input-row">
-              <div className="input-mock">Pricing total</div>
-              <div className="input-mock">Delivery / service timeline</div>
+              <FieldMock label="Pricing total" value={submissionFormState.pricing} />
+              <FieldMock label="Delivery / service timeline" value={submissionFormState.timeline} />
             </div>
-            <div className="input-mock tall">Response narrative</div>
-            <div className="input-mock tall">Exceptions, qualifications, or clarifications</div>
+            <FieldMock label="Response narrative" value={submissionFormState.narrative} multiline />
+            <FieldMock label="Exceptions, qualifications, or clarifications" value={submissionFormState.exceptions} multiline />
           </div>
         </div>
 

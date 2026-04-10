@@ -1,3 +1,6 @@
+import { FieldMock } from '../components/FieldMock'
+import { createBidFormState } from '../data/formState'
+
 export function CreateBidPage() {
   return (
     <main className="main">
@@ -19,17 +22,17 @@ export function CreateBidPage() {
         <div className="panel">
           <div className="panel-title">Solicitation details</div>
           <div className="form-mock create-bid-form">
-            <div className="input-mock">Bid title</div>
+            <FieldMock label="Bid title" value={createBidFormState.title} />
             <div className="input-row">
-              <div className="input-mock">Category</div>
-              <div className="input-mock">Solicitation type</div>
+              <FieldMock label="Category" value={createBidFormState.category} />
+              <FieldMock label="Solicitation type" value={createBidFormState.solicitationType} />
             </div>
             <div className="input-row">
-              <div className="input-mock">Issue date</div>
-              <div className="input-mock">Submission deadline</div>
+              <FieldMock label="Issue date" value={createBidFormState.issueDate} />
+              <FieldMock label="Submission deadline" value={createBidFormState.deadline} />
             </div>
-            <div className="input-mock tall">Scope / project description</div>
-            <div className="input-mock tall">Vendor requirements and evaluation notes</div>
+            <FieldMock label="Scope / project description" value={createBidFormState.scope} multiline />
+            <FieldMock label="Vendor requirements and evaluation notes" value={createBidFormState.requirements} multiline />
           </div>
         </div>
 
