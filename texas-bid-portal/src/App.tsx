@@ -24,7 +24,7 @@ function renderView(
 ) {
   switch (view) {
     case 'home':
-      return <HomeDashboardPage />
+      return <HomeDashboardPage publishedBidPreview={createBidForm} />
     case 'marketplace':
       return <MarketplacePage publishedBidPreview={createBidForm} />
     case 'opportunity':
@@ -40,7 +40,7 @@ function renderView(
     case 'submission-workflow':
       return <SubmissionWorkflowPage formState={submissionForm} onChange={updateSubmissionForm} />
     default:
-      return <HomeDashboardPage />
+      return <HomeDashboardPage publishedBidPreview={createBidForm} />
   }
 }
 

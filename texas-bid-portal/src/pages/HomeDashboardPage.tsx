@@ -1,3 +1,5 @@
+import type { CreateBidFormState } from '../types/forms'
+
 const workflowCards = [
   {
     title: 'Marketplace search',
@@ -43,7 +45,11 @@ const lifecycleSteps = [
   },
 ]
 
-export function HomeDashboardPage() {
+type HomeDashboardPageProps = {
+  publishedBidPreview: CreateBidFormState
+}
+
+export function HomeDashboardPage({ publishedBidPreview }: HomeDashboardPageProps) {
   return (
     <main className="main">
       <header className="topbar">
@@ -99,7 +105,7 @@ export function HomeDashboardPage() {
           <div className="draft-list">
             <div className="draft-card">
               <strong>Recently published</strong>
-              <div className="muted">Citywide Custodial Services RFP now appears in the marketplace lane</div>
+              <div className="muted">{publishedBidPreview.title} now appears in the marketplace lane</div>
             </div>
             <div className="draft-card">
               <strong>Publishing continuity</strong>
@@ -123,6 +129,27 @@ export function HomeDashboardPage() {
         </div>
 
         <div className="panel">
+          <div className="panel-title">Published bid snapshot</div>
+          <div className="draft-list">
+            <div className="draft-card">
+              <strong>{publishedBidPreview.title}</strong>
+              <div className="muted">Category: {publishedBidPreview.category}</div>
+              <div className="muted">Deadline: {publishedBidPreview.deadline}</div>
+            </div>
+            <div className="draft-card">
+              <strong>Scope preview</strong>
+              <div className="muted">{publishedBidPreview.scope}</div>
+            </div>
+            <div className="draft-card">
+              <strong>Requirements preview</strong>
+              <div className="muted">{publishedBidPreview.requirements}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="content-grid lower-grid">
+        <div className="panel">
           <div className="panel-title">Built milestones</div>
           <ol className="flow-list">
             {milestoneCards.map((milestone) => (
@@ -130,9 +157,7 @@ export function HomeDashboardPage() {
             ))}
           </ol>
         </div>
-      </section>
 
-      <section className="content-grid lower-grid">
         <div className="panel">
           <div className="panel-title">Next product layers</div>
           <div className="draft-list">
