@@ -65,8 +65,9 @@ Immediately continue with the next build target.
 
 After one artifact is completed:
 1. send the milestone update
-2. name the next artifact
-3. start work on that next artifact immediately
+2. send the next artifact as a separate message by itself
+3. treat that next artifact as already assigned unless scope or priorities materially changed
+4. start work on that next artifact immediately
 
 Do not wait for Dylan to say "keep going" again unless one of the true pause conditions is met.
 
