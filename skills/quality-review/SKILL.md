@@ -39,7 +39,7 @@ Not every dimension matters equally every time. Use judgment.
 
 ## Risk-Based Depth Rule
 
-Review depth should match the risk.
+Review depth should match the risk, but review should not become a default stop signal for normal approved work.
 
 ### Light review
 Use when the result is low-risk, internal, and easily corrected.
@@ -151,7 +151,7 @@ And this counter-rule:
 
 ## Intent
 
-This skill exists to create a clean quality gate between execution and acceptance.
+This skill exists to create a clean quality gate between execution and acceptance without becoming an excuse to stall.
 
 The goal is:
 
@@ -159,3 +159,4 @@ The goal is:
 - fewer avoidable mistakes
 - more trustworthy results
 - better readiness judgment
+- no fake caution used as a reason not to ship the next meaningful step

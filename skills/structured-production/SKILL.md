@@ -12,10 +12,12 @@ Use this skill to keep product-building work in motion without constant conversa
 Once Dylan has approved the product direction, keep working through the current product phase until one of these happens:
 - a major milestone is completed
 - a real blocker appears
-- risk/scope/money/permissions materially change
+- scope/money/permissions materially change
 - Dylan explicitly redirects the project
 
 Do not ask for routine continuation confirmation between normal build steps.
+
+Keep moving by default. Do lightweight quality and security checks in parallel when useful, but do not let them become pauses or excuses to stall.
 
 ## Production cadence
 
@@ -92,7 +94,6 @@ Pause and ask Dylan only if:
 - a true external decision is needed
 - account access or credentials are required
 - spending money becomes necessary
-- legal/security/public-risk changes materially
 - two materially different product directions are both viable and the choice matters
 
 Otherwise, keep building.
