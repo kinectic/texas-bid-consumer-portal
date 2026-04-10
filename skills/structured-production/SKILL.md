@@ -26,7 +26,7 @@ Work should follow this pattern:
 2. choose the next concrete build target
 3. complete it or push it as far as possible
 4. send a short update only when a meaningful milestone is reached
-5. send the next artifact as its own follow-up message
+5. include the next artifact clearly in that completion update
 6. immediately return to execution
 
 The update is a checkpoint, not a pause for permission.
@@ -67,13 +67,13 @@ Immediately continue with the next build target.
 
 After one artifact is completed:
 1. send the milestone update
-2. send the next artifact as a separate message by itself
+2. clearly name the next artifact in that same completion reply
 3. treat that next artifact as already assigned unless scope or priorities materially changed
 4. start work on that next artifact immediately
 
-A completion turn is not operationally complete until both messages have been sent.
+A completion turn is not operationally complete until the next artifact has been named.
 A milestone update by itself is incomplete execution.
-A user prompt starts the loop, but does not end it if the production sequence still requires the next-artifact message and resumed work.
+A user prompt starts the loop, but does not end it if the production sequence still requires the next artifact and resumed work.
 
 Do not wait for Dylan to say "keep going" again unless one of the true pause conditions is met.
 
