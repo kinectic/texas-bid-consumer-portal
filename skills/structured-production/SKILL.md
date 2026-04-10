@@ -52,9 +52,20 @@ When a meaningful milestone is reached, send a simple update that includes:
 Keep it concise.
 Do not treat the update as a request for permission to continue.
 
+When giving an ETA, bind it to a specific artifact.
+A valid ETA should include:
+- time window
+- named artifact
+- what done means
+
 ## After the update
 
 Immediately continue with the next build target.
+
+After one artifact is completed:
+1. send the milestone update
+2. name the next artifact
+3. start work on that next artifact immediately
 
 Do not wait for Dylan to say "keep going" again unless one of the true pause conditions is met.
 
