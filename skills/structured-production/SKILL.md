@@ -41,6 +41,7 @@ A milestone should usually involve one or more of:
 - a committed body of changes that materially improves the product
 
 Do not interrupt Dylan with tiny progress fragments.
+Do not claim a milestone is complete unless there is a committed change or a clearly named file/artifact that now exists.
 
 ## Update style
 
@@ -79,6 +80,7 @@ Choose the next action internally based on:
 - what turns concept/prototype pieces into real product behavior
 
 Prefer the next action with the highest practical leverage.
+Keep one active build target at a time; queue other ideas instead of splitting attention.
 
 ## Scope discipline
 
