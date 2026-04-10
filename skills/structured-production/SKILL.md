@@ -26,9 +26,11 @@ Work should follow this pattern:
 2. choose the next concrete build target
 3. complete it or push it as far as possible
 4. send a short update only when a meaningful milestone is reached
-5. immediately return to execution
+5. send the next artifact as its own follow-up message
+6. immediately return to execution
 
 The update is a checkpoint, not a pause for permission.
+During active product work, treat the artifact loop — not the last inbound message — as the default unit of completion.
 
 ## What counts as a meaningful milestone
 
@@ -71,6 +73,7 @@ After one artifact is completed:
 
 A completion turn is not operationally complete until both messages have been sent.
 A milestone update by itself is incomplete execution.
+A user prompt starts the loop, but does not end it if the production sequence still requires the next-artifact message and resumed work.
 
 Do not wait for Dylan to say "keep going" again unless one of the true pause conditions is met.
 
