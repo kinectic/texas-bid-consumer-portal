@@ -69,6 +69,9 @@ After one artifact is completed:
 3. treat that next artifact as already assigned unless scope or priorities materially changed
 4. start work on that next artifact immediately
 
+A completion turn is not operationally complete until both messages have been sent.
+A milestone update by itself is incomplete execution.
+
 Do not wait for Dylan to say "keep going" again unless one of the true pause conditions is met.
 
 ## Choosing the next action
