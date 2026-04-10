@@ -319,7 +319,8 @@ h1 {
 .form-mock,
 .action-stack,
 .draft-list,
-.submission-list {
+.submission-list,
+.lifecycle-list {
   display: grid;
   gap: 12px;
   margin-top: 16px;

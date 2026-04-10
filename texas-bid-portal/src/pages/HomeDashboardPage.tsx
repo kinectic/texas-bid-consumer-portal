@@ -20,6 +20,29 @@ const milestoneCards = [
   'Interactive shell navigation across the built prototype',
 ]
 
+const lifecycleSteps = [
+  {
+    stage: '1. Agency drafts bid',
+    detail: 'The procurement team structures the solicitation in the create-bid workflow.',
+  },
+  {
+    stage: '2. Bid is published',
+    detail: 'The opportunity appears in the marketplace with Texas-local sourcing clarity.',
+  },
+  {
+    stage: '3. Vendor qualifies opportunity',
+    detail: 'The vendor reviews fit, documents, and urgency from the detail screen.',
+  },
+  {
+    stage: '4. Vendor submits response',
+    detail: 'The submission workflow captures pricing, attachments, and confirmation in-platform.',
+  },
+  {
+    stage: '5. Agency reviews responses',
+    detail: 'The review lane supports triage, completeness checks, and shortlist decisions.',
+  },
+]
+
 export function HomeDashboardPage() {
   return (
     <main className="main">
@@ -88,6 +111,18 @@ export function HomeDashboardPage() {
 
       <section className="content-grid lower-grid">
         <div className="panel">
+          <div className="panel-title">Connected lifecycle summary</div>
+          <div className="draft-list">
+            {lifecycleSteps.map((step) => (
+              <div className="draft-card" key={step.stage}>
+                <strong>{step.stage}</strong>
+                <div className="muted">{step.detail}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="panel">
           <div className="panel-title">Built milestones</div>
           <ol className="flow-list">
             {milestoneCards.map((milestone) => (
@@ -95,7 +130,9 @@ export function HomeDashboardPage() {
             ))}
           </ol>
         </div>
+      </section>
 
+      <section className="content-grid lower-grid">
         <div className="panel">
           <div className="panel-title">Next product layers</div>
           <div className="draft-list">
