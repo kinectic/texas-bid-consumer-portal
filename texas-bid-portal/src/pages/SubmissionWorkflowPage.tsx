@@ -1,4 +1,5 @@
 import { FieldMock } from '../components/FieldMock'
+import { submissionDocuments } from '../data/formState'
 import { selectedOpportunity } from '../data/mockData'
 import type { SubmissionFormState } from '../types/forms'
 
@@ -94,18 +95,12 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
         <div className="panel">
           <div className="panel-title">Required attachments</div>
           <div className="draft-list">
-            <div className="draft-card">
-              <strong>{opportunity.documents[2]}</strong>
-              <div className="muted">Pending upload</div>
-            </div>
-            <div className="draft-card">
-              <strong>W-9.pdf</strong>
-              <div className="muted">Attached</div>
-            </div>
-            <div className="draft-card">
-              <strong>Insurance Certificate.pdf</strong>
-              <div className="muted">Attached</div>
-            </div>
+            {submissionDocuments.map((document) => (
+              <div className="draft-card" key={document.name}>
+                <strong>{document.name}</strong>
+                <div className="muted">{document.status}</div>
+              </div>
+            ))}
           </div>
           <button className="ghost wide">Upload attachment</button>
         </div>

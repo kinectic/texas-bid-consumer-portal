@@ -20,3 +20,8 @@ export type ReviewNotesState = {
   internalNotes: string
   vendorQuestions: string
 }
+
+export type BidDocument = {
+  name: string
+  status: string
+}

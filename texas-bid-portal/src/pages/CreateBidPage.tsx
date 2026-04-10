@@ -1,12 +1,13 @@
 import { FieldMock } from '../components/FieldMock'
-import type { CreateBidFormState } from '../types/forms'
+import type { BidDocument, CreateBidFormState } from '../types/forms'
 
 type CreateBidPageProps = {
   formState: CreateBidFormState
+  documents: BidDocument[]
   onChange: (field: keyof CreateBidFormState, value: string) => void
 }
 
-export function CreateBidPage({ formState, onChange }: CreateBidPageProps) {
+export function CreateBidPage({ formState, documents, onChange }: CreateBidPageProps) {
   return (
     <main className="main">
       <header className="topbar">
@@ -50,7 +51,7 @@ export function CreateBidPage({ formState, onChange }: CreateBidPageProps) {
             </div>
             <div className="draft-card">
               <strong>Document package</strong>
-              <div className="muted">RFP, pricing sheet, insurance requirements, vendor instructions</div>
+              <div className="muted">Synced from the shared bid packet state below</div>
             </div>
             <div className="draft-card">
               <strong>Submission mode</strong>
@@ -67,18 +68,12 @@ export function CreateBidPage({ formState, onChange }: CreateBidPageProps) {
         <div className="panel">
           <div className="panel-title">Attachments</div>
           <div className="draft-list">
-            <div className="draft-card">
-              <strong>Scope of Work.pdf</strong>
-              <div className="muted">Required</div>
-            </div>
-            <div className="draft-card">
-              <strong>Pricing Template.xlsx</strong>
-              <div className="muted">Optional</div>
-            </div>
-            <div className="draft-card">
-              <strong>Insurance Requirements.pdf</strong>
-              <div className="muted">Required</div>
-            </div>
+            {documents.map((document) => (
+              <div className="draft-card" key={document.name}>
+                <strong>{document.name}</strong>
+                <div className="muted">{document.status}</div>
+              </div>
+            ))}
           </div>
           <button className="ghost wide">Add Attachment</button>
         </div>

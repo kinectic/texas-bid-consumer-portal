@@ -4,6 +4,7 @@ import { ContextBanner } from './components/ContextBanner'
 import { Sidebar } from './components/Sidebar'
 import { WorkflowActions } from './components/WorkflowActions'
 import {
+  bidPacketDocuments,
   createBidFormState as initialCreateBidFormState,
   reviewNotesState as initialReviewNotesState,
   submissionFormState as initialSubmissionFormState,
@@ -38,7 +39,7 @@ function renderView(
     case 'agency-dashboard':
       return <AgencyDashboardPage />
     case 'create-bid':
-      return <CreateBidPage formState={createBidForm} onChange={updateCreateBidForm} />
+      return <CreateBidPage formState={createBidForm} documents={bidPacketDocuments} onChange={updateCreateBidForm} />
     case 'agency-submission-review':
       return <AgencySubmissionReviewPage reviewNotes={reviewNotes} onChange={updateReviewNotes} />
     case 'vendor-dashboard':

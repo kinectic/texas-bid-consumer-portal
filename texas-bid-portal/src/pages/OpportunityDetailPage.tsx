@@ -1,3 +1,4 @@
+import { bidPacketDocuments } from '../data/formState'
 import { selectedOpportunity, statusClass } from '../data/mockData'
 
 export function OpportunityDetailPage() {
@@ -94,10 +95,10 @@ export function OpportunityDetailPage() {
         <div className="panel">
           <div className="panel-title">Documents</div>
           <div className="doc-list">
-            {opportunity.documents.map((document) => (
-              <div className="doc-item" key={document}>
-                <span>{document}</span>
-                <button className="linkish">Open</button>
+            {bidPacketDocuments.map((document) => (
+              <div className="doc-item" key={document.name}>
+                <span>{document.name}</span>
+                <button className="linkish">{document.status}</button>
               </div>
             ))}
           </div>
