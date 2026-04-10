@@ -1,11 +1,4 @@
-type ViewKey =
-  | 'home'
-  | 'marketplace'
-  | 'opportunity'
-  | 'agency-dashboard'
-  | 'create-bid'
-  | 'vendor-dashboard'
-  | 'submission-workflow'
+import type { ViewKey } from '../data/viewData'
 
 type SidebarProps = {
   activeView: ViewKey

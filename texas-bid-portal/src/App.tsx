@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './App.css'
+import { ContextBanner } from './components/ContextBanner'
 import { Sidebar } from './components/Sidebar'
+import { viewOrder, type ViewKey } from './data/viewData'
 import { AgencyDashboardPage } from './pages/AgencyDashboardPage'
 import { CreateBidPage } from './pages/CreateBidPage'
 import { HomeDashboardPage } from './pages/HomeDashboardPage'
@@ -8,25 +10,6 @@ import { MarketplacePage } from './pages/MarketplacePage'
 import { OpportunityDetailPage } from './pages/OpportunityDetailPage'
 import { SubmissionWorkflowPage } from './pages/SubmissionWorkflowPage'
 import { VendorDashboardPage } from './pages/VendorDashboardPage'
-
-type ViewKey =
-  | 'home'
-  | 'marketplace'
-  | 'opportunity'
-  | 'agency-dashboard'
-  | 'create-bid'
-  | 'vendor-dashboard'
-  | 'submission-workflow'
-
-const viewOrder: { key: ViewKey; label: string }[] = [
-  { key: 'home', label: 'Overview' },
-  { key: 'marketplace', label: 'Marketplace' },
-  { key: 'opportunity', label: 'Opportunity Detail' },
-  { key: 'agency-dashboard', label: 'Agency Dashboard' },
-  { key: 'create-bid', label: 'Create Bid' },
-  { key: 'vendor-dashboard', label: 'Vendor Dashboard' },
-  { key: 'submission-workflow', label: 'Submission Workflow' },
-]
 
 function renderView(view: ViewKey) {
   switch (view) {
@@ -67,6 +50,7 @@ function App() {
             </button>
           ))}
         </div>
+        <ContextBanner activeView={activeView} />
         {renderView(activeView)}
       </div>
     </div>
