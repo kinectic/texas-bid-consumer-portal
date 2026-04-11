@@ -18,8 +18,13 @@ import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import { opportunities, statusClass } from '../data/mockData'
 import { buildSubmissionActivityItems } from '../utils/submissionActivity'
-import { agencyFlowSteps, marketplaceCopy, marketplaceStatsItems } from '../utils/marketplaceContent'
-import { presentMarketplacePublishedSnapshotState, shellContent } from '../utils/shellContent'
+import {
+  agencyFlowSteps,
+  marketplaceCopy,
+  marketplaceStatsItems,
+  presentMarketplacePublishedSnapshotState,
+  shellContent,
+} from '../utils/shellLane'
 
 type MarketplacePageProps = {
   publishedBidPreview: CreateBidFormState

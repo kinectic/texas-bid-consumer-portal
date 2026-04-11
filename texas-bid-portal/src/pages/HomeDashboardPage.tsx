@@ -23,8 +23,9 @@ import {
   homeLifecycleSteps,
   homeMilestoneCards,
   homeWorkflowCards,
-} from '../utils/homeDashboardContent'
-import { presentHomePublishedSnapshotState, shellContent } from '../utils/shellContent'
+  presentHomePublishedSnapshotState,
+  shellContent,
+} from '../utils/shellLane'
 
 const workflowStageSummaryItems = homeWorkflowCards.map((card) => ({
   stage: workflowStageLabels[card.key].stage,
