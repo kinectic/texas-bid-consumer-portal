@@ -25,7 +25,7 @@ import {
   presentVendorPrimaryActionDescription,
   presentVendorQueueSubtitle,
   presentVendorRowSummary,
-} from '../utils/vendorHelpers'
+} from '../utils/vendorLane'
 import { shellContent } from '../utils/shellContent'
 
 const submissionStatusItems = [

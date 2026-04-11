@@ -22,7 +22,7 @@ import { SubmissionWorkflowPage } from './pages/SubmissionWorkflowPage'
 import { VendorDashboardPage } from './pages/VendorDashboardPage'
 import type { CreateBidFormState, ReviewNotesState, SubmissionFormState, BidDocument } from './types/forms'
 import type { Opportunity, Submission } from './types'
-import { computeDraftSummaryState, computePackageCompletenessItems, computeReadinessByOpportunityId } from './utils/vendorHelpers'
+import { computeDraftSummaryState, computePackageCompletenessItems, computeReadinessByOpportunityId } from './utils/vendorLane'
 
 type SubmissionFormStateByKey = Record<string, SubmissionFormState>
 type SubmissionDocumentsByKey = Record<string, BidDocument[]>

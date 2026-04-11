@@ -16,6 +16,7 @@ import type { ViewKey } from '../data/viewData'
 import type { BidDocument, SubmissionFormState } from '../types/forms'
 import {
   buildSubmissionQueueRowMeta,
+  lifecycleSummaryItems,
   presentVendorActiveSubmissionLabel,
   presentVendorDraftPersistenceDetail,
   presentVendorDraftPersistenceLabel,
@@ -27,15 +28,12 @@ import {
   presentVendorUnsavedDraftProgress,
   presentVendorWorkflowHeaderTitle,
   presentVendorWorkflowRecordLine,
-} from '../utils/vendorHelpers'
-import {
-  lifecycleSummaryItems,
   submissionRequirementItems,
   submissionStageSummaryItems,
   submissionStatusItems,
   vendorWorkflowCopy,
   vendorWorkflowPackageCompletenessItems,
-} from '../utils/vendorContent'
+} from '../utils/vendorLane'
 
 type SubmissionWorkflowPageProps = {
   formState: SubmissionFormState
