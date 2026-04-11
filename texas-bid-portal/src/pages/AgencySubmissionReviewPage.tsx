@@ -3,6 +3,7 @@ import { FieldMock } from '../components/FieldMock'
 import { MetricCard } from '../components/MetricCard'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { ReviewQueueCard } from '../components/ReviewQueueCard'
+import { StatusBadgeLegend } from '../components/StatusBadgeLegend'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
 import { lifecycleMetrics } from '../data/metrics'
 import { vendorSubmissions } from '../data/mockData'
@@ -84,13 +85,35 @@ export function AgencySubmissionReviewPage({ reviewNotes, onChange }: AgencySubm
       <section className="content-grid lower-grid">
         <SubmissionChecklistPanel title="Agency review checklist" contextLabel="before shortlist decision" />
 
-        <div className="panel">
-          <div className="panel-title">Status progression</div>
-          <ol className="flow-list">
-            {submissionLifecycle.map((step) => (
-              <li key={step}>{step}</li>
-            ))}
-          </ol>
+        <div className="content-grid nested-grid">
+          <div className="panel">
+            <div className="panel-title">Status progression</div>
+            <ol className="flow-list">
+              {submissionLifecycle.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ol>
+          </div>
+          <StatusBadgeLegend
+            title="Review status legend"
+            items={[
+              {
+                label: 'received',
+                className: 'status status-open',
+                description: 'Submission arrived and is ready for agency triage.',
+              },
+              {
+                label: 'reviewing',
+                className: 'status status-review',
+                description: 'Procurement staff are checking completeness and fit.',
+              },
+              {
+                label: 'shortlisted',
+                className: 'status status-awarded',
+                description: 'Response advanced to the next decision stage.',
+              },
+            ]}
+          />
         </div>
       </section>
 

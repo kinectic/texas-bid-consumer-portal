@@ -2,6 +2,7 @@ import { OpportunityDocumentsPanel } from '../components/OpportunityDocumentsPan
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
 import { OpportunityStatusPanel } from '../components/OpportunityStatusPanel'
 import { SectionIntro } from '../components/SectionIntro'
+import { StatusBadgeLegend } from '../components/StatusBadgeLegend'
 import { WorkflowFilterStrip } from '../components/WorkflowFilterStrip'
 import type { CreateBidFormState } from '../types/forms'
 import { opportunities, statusClass, vendorSubmissions } from '../data/mockData'
@@ -94,6 +95,7 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
         <div className="content-grid nested-grid">
           <OpportunityMetadataPanel opportunity={previewOpportunity} title="Marketplace metadata" />
           <OpportunityStatusPanel status="open" />
+          <StatusBadgeLegend title="Marketplace status legend" />
         </div>
       </section>
 

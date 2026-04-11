@@ -376,6 +376,17 @@ h1 {
   margin-top: 12px;
 }
 
+.status-legend-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.status-legend-item {
+  display: grid;
+  gap: 8px;
+}
+
 .filter-pill {
   padding: 8px 10px;
   border-radius: 999px;
