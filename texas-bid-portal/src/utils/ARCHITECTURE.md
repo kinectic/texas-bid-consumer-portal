@@ -6,9 +6,9 @@ This folder is intentionally split by responsibility so the MVP shell does not d
 
 - `agencyLane.ts` — main import surface for agency-facing page code
 - `vendorLane.ts` — main import surface for vendor-facing page code and vendor workflow state helpers
-- `shellContent.ts` — shared top-level shell copy used across home / marketplace / dashboard surfaces
+- `shellLane.ts` — main import surface for home / marketplace shell pages
 
-Page files should prefer these lane entrypoints before reaching into narrower helpers directly.
+Page files should prefer these lane entrypoints before reaching into narrower helpers directly. Direct imports into lower-level helpers are still acceptable when a page is itself the owner of that lower-level concern, but lane entrypoints are the default.
 
 ## Lower-level helper categories
 
