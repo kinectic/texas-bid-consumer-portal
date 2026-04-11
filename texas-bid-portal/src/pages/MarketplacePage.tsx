@@ -1,6 +1,7 @@
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
 import { OpportunityStatusPanel } from '../components/OpportunityStatusPanel'
 import { SectionIntro } from '../components/SectionIntro'
+import { WorkflowFilterStrip } from '../components/WorkflowFilterStrip'
 import type { CreateBidFormState } from '../types/forms'
 import { opportunities, statusClass, vendorSubmissions } from '../data/mockData'
 
@@ -58,12 +59,7 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
             title="Marketplace feed"
             description="What vendors see when they browse live opportunities and decide which bid deserves action next."
           />
-          <div className="filters">
-            <span className="filter-pill active">All</span>
-            <span className="filter-pill">Open</span>
-            <span className="filter-pill">Facilities</span>
-            <span className="filter-pill">Professional</span>
-          </div>
+          <WorkflowFilterStrip title="Marketplace filters" filters={['All', 'Open', 'Facilities', 'Professional']} activeIndex={0} />
 
           <div className="draft-card preview-card">
             <strong>Published bid preview sync</strong>

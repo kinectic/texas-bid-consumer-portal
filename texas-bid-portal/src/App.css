@@ -370,6 +370,12 @@ h1 {
   flex-wrap: wrap;
 }
 
+.workflow-filter-strip {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
 .filter-pill {
   padding: 8px 10px;
   border-radius: 999px;
