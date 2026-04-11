@@ -281,25 +281,29 @@ function App() {
   }
   const readinessByOpportunityId: Record<string, OpportunityReadinessSummary> = Object.fromEntries(
     opportunities.map((opportunity) => {
-      const activeKey = selectedSubmissionByOpportunity[opportunity.id] ?? `draft:${opportunity.id}`
-      const form = submissionFormsByKey[activeKey] ?? initialSubmissionFormState
+      const selectedSavedKey = selectedSubmissionByOpportunity[opportunity.id]
+      const activeKey = selectedSavedKey ?? `draft:${opportunity.id}`
       const docs = submissionDocumentsByKey[activeKey] ?? initialSubmissionDocuments
+      const unsavedDraftFormForOpportunity = submissionFormsByKey[`draft:${opportunity.id}`] ?? initialSubmissionFormState
+      const unsavedDraftDocsForOpportunity = submissionDocumentsByKey[`draft:${opportunity.id}`] ?? initialSubmissionDocuments
       const matchingSubmissions = submissionQueue.filter((item) => item.opportunityId === opportunity.id)
-      const submission = matchingSubmissions.find((item) => item.id === selectedSubmissionByOpportunity[opportunity.id])
+      const submission = matchingSubmissions.find((item) => item.id === selectedSavedKey)
         ?? matchingSubmissions[0]
         ?? null
       const responseCount = matchingSubmissions.length
-      const editedFields = Object.entries(form).filter(([key, value]) => value !== initialSubmissionFormState[key as keyof SubmissionFormState]).length
       const attachedDocs = docs.filter((document) => document.status.toLowerCase().includes('attached')).length
+      const unsavedEditedFields = Object.entries(unsavedDraftFormForOpportunity).filter(([key, value]) => value !== initialSubmissionFormState[key as keyof SubmissionFormState]).length
+      const unsavedAttachedDocs = unsavedDraftDocsForOpportunity.filter((document) => document.status.toLowerCase().includes('attached')).length
+      const unsavedHasEdits = unsavedEditedFields > 0 || unsavedAttachedDocs > 0
       const label = submission
-        ? `Response ${responseCount} • ${submission.status}`
-        : editedFields > 0 || attachedDocs > 0
-          ? 'Draft in progress'
+        ? `Saved row active • ${submission.status}`
+        : unsavedHasEdits
+          ? 'Unsaved draft lane has edits'
           : 'No activity yet'
       const detail = submission
-        ? `${responseCount} response row${responseCount === 1 ? '' : 's'} • active ${submission.id} • ${attachedDocs}/${docs.length} attachments ready • ${editedFields} edited fields`
-        : editedFields > 0 || attachedDocs > 0
-          ? `${attachedDocs}/${docs.length} attachments ready • ${editedFields} edited fields`
+        ? `${responseCount} saved row${responseCount === 1 ? '' : 's'} • active ${submission.id} • buffer saved-row • ${attachedDocs}/${docs.length} attachments ready • unsaved lane ${unsavedHasEdits ? 'has preserved edits' : 'empty'}`
+        : unsavedHasEdits
+          ? `Unsaved draft buffer • ${unsavedAttachedDocs}/${unsavedDraftDocsForOpportunity.length} attachments ready • ${unsavedEditedFields} edited fields`
           : 'Untouched default response state'
 
       return [opportunity.id, { label, detail }]
