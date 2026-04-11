@@ -33,21 +33,35 @@ const agencyFlowSteps = [
 type MarketplacePageProps = {
   publishedBidPreview: CreateBidFormState
   publishedOpportunity: Opportunity | null
+  currentOpportunity: Opportunity
   submissions: Submission[]
+  onSelectOpportunity: (opportunity: Opportunity) => void
   onNavigate: (view: ViewKey) => void
 }
 
-export function MarketplacePage({ publishedBidPreview, publishedOpportunity, submissions, onNavigate }: MarketplacePageProps) {
-  const highlighted = publishedOpportunity ?? opportunities[0]
-  const previewOpportunity = publishedOpportunity ?? {
-    ...highlighted,
-    title: publishedBidPreview.title,
-    category: publishedBidPreview.category,
-    dueDate: publishedBidPreview.deadline,
-    summary: publishedBidPreview.scope,
-  }
+export function MarketplacePage({
+  publishedBidPreview,
+  publishedOpportunity,
+  currentOpportunity,
+  submissions,
+  onSelectOpportunity,
+  onNavigate,
+}: MarketplacePageProps) {
+  const previewOpportunity = publishedOpportunity && currentOpportunity.id === publishedOpportunity.id
+    ? currentOpportunity
+    : currentOpportunity ?? {
+        ...(publishedOpportunity ?? opportunities[0]),
+        title: publishedBidPreview.title,
+        category: publishedBidPreview.category,
+        dueDate: publishedBidPreview.deadline,
+        summary: publishedBidPreview.scope,
+      }
 
-  const marketplaceFeed = publishedOpportunity ? [publishedOpportunity, ...opportunities.slice(1)] : opportunities
+  const highlighted = previewOpportunity
+  const marketplaceFeed = [
+    highlighted,
+    ...opportunities.filter((opportunity) => opportunity.id !== highlighted.id),
+  ]
   const activeSubmission = submissions.find((submission) => submission.opportunity === previewOpportunity.title)
   const submissionActivityItems = submissions.map((submission) => ({
     title: submission.vendor,
@@ -94,6 +108,11 @@ export function MarketplacePage({ publishedBidPreview, publishedOpportunity, sub
             opportunities={marketplaceFeed}
             statusClassMap={statusClass}
             metaFormatter={(opportunity) => `${opportunity.agency} • ${opportunity.location} • ${opportunity.category}`}
+            selectedOpportunityId={previewOpportunity.id}
+            onSelectOpportunity={(opportunity) => {
+              onSelectOpportunity(opportunity)
+              onNavigate('opportunity')
+            }}
           />
         </div>
 

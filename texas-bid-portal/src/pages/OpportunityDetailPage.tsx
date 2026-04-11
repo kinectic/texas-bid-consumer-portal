@@ -8,8 +8,8 @@ import { OpportunityStatusPanel } from '../components/OpportunityStatusPanel'
 import { OpportunitySummaryPanel } from '../components/OpportunitySummaryPanel'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
 import { bidPacketDocuments } from '../data/formState'
-import { opportunities, selectedOpportunity, statusClass } from '../data/mockData'
-import type { Submission } from '../types'
+import { opportunities, statusClass } from '../data/mockData'
+import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 
 const opportunityRequirementItems = [
@@ -21,13 +21,12 @@ const opportunityRequirementItems = [
 ] as const
 
 type OpportunityDetailPageProps = {
-  publishedOpportunity: typeof selectedOpportunity | null
+  opportunity: Opportunity
   submissionQueue: Submission[]
   onNavigate: (view: ViewKey) => void
 }
 
-export function OpportunityDetailPage({ publishedOpportunity, submissionQueue, onNavigate }: OpportunityDetailPageProps) {
-  const opportunity = publishedOpportunity ?? selectedOpportunity
+export function OpportunityDetailPage({ opportunity, submissionQueue, onNavigate }: OpportunityDetailPageProps) {
   const activeSubmission = submissionQueue.find((submission) => submission.opportunity === opportunity.title)
   const awardHistoryItems = opportunities
     .filter((item) => item.status === 'awarded')

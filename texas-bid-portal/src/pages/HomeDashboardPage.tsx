@@ -85,12 +85,14 @@ const lifecycleSteps = [
 type HomeDashboardPageProps = {
   publishedBidPreview: CreateBidFormState
   publishedOpportunity: Opportunity | null
+  currentOpportunity: Opportunity
+  onSelectOpportunity: (opportunity: Opportunity) => void
   onNavigate: (view: ViewKey) => void
 }
 
-export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, onNavigate }: HomeDashboardPageProps) {
+export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, currentOpportunity, onSelectOpportunity, onNavigate }: HomeDashboardPageProps) {
   const recommendedOpportunities = publishedOpportunity
-    ? [publishedOpportunity, ...opportunities.filter((opportunity) => opportunity.id !== publishedOpportunity.id)].slice(0, 2)
+    ? [currentOpportunity, ...opportunities.filter((opportunity) => opportunity.id !== currentOpportunity.id)].slice(0, 2)
     : opportunities.slice(0, 2)
   const workflowMetricsItems = [
     { value: lifecycleMetrics.workflowScreensBuilt, label: 'Interactive workflow screens built' },
@@ -152,7 +154,13 @@ export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, o
 
       <section className="content-grid lower-grid">
         <BidFormOverviewPanel formState={publishedBidPreview} />
-        <RecommendedOpportunitiesPanel title="Suggested opportunities" opportunities={recommendedOpportunities} actionLabel="Review opportunities" />
+        <RecommendedOpportunitiesPanel
+          title="Suggested opportunities"
+          opportunities={recommendedOpportunities}
+          actionLabel="Review opportunities"
+          onSelectOpportunity={onSelectOpportunity}
+          onAction={() => onNavigate('opportunity')}
+        />
       </section>
 
       <section className="content-grid lower-grid">

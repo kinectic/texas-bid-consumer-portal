@@ -38,6 +38,7 @@ function renderView(
   publishBid: () => void,
   publishedOpportunity: Opportunity | null,
   currentOpportunity: Opportunity,
+  selectOpportunity: (opportunity: Opportunity) => void,
   submissionQueue: Submission[],
   saveSubmissionDraft: () => void,
   submitVendorResponse: () => void,
@@ -47,11 +48,28 @@ function renderView(
 ) {
   switch (view) {
     case 'home':
-      return <HomeDashboardPage publishedBidPreview={createBidForm} publishedOpportunity={publishedOpportunity} onNavigate={navigate} />
+      return (
+        <HomeDashboardPage
+          publishedBidPreview={createBidForm}
+          publishedOpportunity={publishedOpportunity}
+          currentOpportunity={currentOpportunity}
+          onSelectOpportunity={selectOpportunity}
+          onNavigate={navigate}
+        />
+      )
     case 'marketplace':
-      return <MarketplacePage publishedBidPreview={createBidForm} publishedOpportunity={publishedOpportunity} submissions={submissionQueue} onNavigate={navigate} />
+      return (
+        <MarketplacePage
+          publishedBidPreview={createBidForm}
+          publishedOpportunity={publishedOpportunity}
+          currentOpportunity={currentOpportunity}
+          submissions={submissionQueue}
+          onSelectOpportunity={selectOpportunity}
+          onNavigate={navigate}
+        />
+      )
     case 'opportunity':
-      return <OpportunityDetailPage publishedOpportunity={publishedOpportunity} submissionQueue={submissionQueue} onNavigate={navigate} />
+      return <OpportunityDetailPage opportunity={currentOpportunity} submissionQueue={submissionQueue} onNavigate={navigate} />
     case 'agency-dashboard':
       return <AgencyDashboardPage publishedOpportunity={publishedOpportunity} submissions={submissionQueue} onNavigate={navigate} />
     case 'create-bid':
@@ -79,7 +97,7 @@ function renderView(
         />
       )
     case 'vendor-dashboard':
-      return <VendorDashboardPage currentOpportunity={currentOpportunity} submissions={submissionQueue} onNavigate={navigate} />
+      return <VendorDashboardPage currentOpportunity={currentOpportunity} submissions={submissionQueue} onSelectOpportunity={selectOpportunity} onNavigate={navigate} />
     case 'submission-workflow':
       return (
         <SubmissionWorkflowPage
@@ -95,7 +113,15 @@ function renderView(
         />
       )
     default:
-      return <HomeDashboardPage publishedBidPreview={createBidForm} publishedOpportunity={publishedOpportunity} onNavigate={navigate} />
+      return (
+        <HomeDashboardPage
+          publishedBidPreview={createBidForm}
+          publishedOpportunity={publishedOpportunity}
+          currentOpportunity={currentOpportunity}
+          onSelectOpportunity={selectOpportunity}
+          onNavigate={navigate}
+        />
+      )
   }
 }
 
@@ -107,6 +133,7 @@ function App() {
   const [submissionDocuments, setSubmissionDocuments] = useState<BidDocument[]>(initialSubmissionDocuments)
   const [submissionQueue, setSubmissionQueue] = useState<Submission[]>(initialVendorSubmissions)
   const [isBidPublished, setIsBidPublished] = useState(false)
+  const [selectedOpportunityId, setSelectedOpportunityId] = useState(opportunities[0].id)
 
   const updateCreateBidForm = (field: keyof CreateBidFormState, value: string) => {
     setIsBidPublished(false)
@@ -127,6 +154,10 @@ function App() {
 
   const publishBid = () => {
     setIsBidPublished(true)
+  }
+
+  const selectOpportunity = (opportunity: Opportunity) => {
+    setSelectedOpportunityId(opportunity.id)
   }
 
   const uploadNextSubmissionDocument = () => {
@@ -205,7 +236,13 @@ function App() {
         documents: bidPacketDocuments.map((document) => document.name),
       }
     : null
-  const currentOpportunity = publishedOpportunity ?? opportunities[0]
+  const currentOpportunity = (() => {
+    if (publishedOpportunity && selectedOpportunityId === publishedOpportunity.id) {
+      return publishedOpportunity
+    }
+
+    return opportunities.find((opportunity) => opportunity.id === selectedOpportunityId) ?? publishedOpportunity ?? opportunities[0]
+  })()
 
   return (
     <div className="app-shell">
@@ -239,6 +276,7 @@ function App() {
           publishBid,
           publishedOpportunity,
           currentOpportunity,
+          selectOpportunity,
           submissionQueue,
           saveSubmissionDraft,
           submitVendorResponse,

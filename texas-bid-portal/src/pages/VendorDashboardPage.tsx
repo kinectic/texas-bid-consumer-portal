@@ -27,10 +27,11 @@ const submissionStatusItems = [
 type VendorDashboardPageProps = {
   currentOpportunity: Opportunity
   submissions: Submission[]
+  onSelectOpportunity: (opportunity: Opportunity) => void
   onNavigate: (view: ViewKey) => void
 }
 
-export function VendorDashboardPage({ currentOpportunity, submissions, onNavigate }: VendorDashboardPageProps) {
+export function VendorDashboardPage({ currentOpportunity, submissions, onSelectOpportunity, onNavigate }: VendorDashboardPageProps) {
   const savedOpportunities = [
     currentOpportunity,
     ...opportunities.filter((opportunity) => opportunity.status === 'open' && opportunity.id !== currentOpportunity.id),
@@ -80,6 +81,11 @@ export function VendorDashboardPage({ currentOpportunity, submissions, onNavigat
             opportunities={savedOpportunities}
             statusClassMap={statusClass}
             metaFormatter={(opportunity) => `${opportunity.agency} • ${opportunity.location}`}
+            selectedOpportunityId={currentOpportunity.id}
+            onSelectOpportunity={(opportunity) => {
+              onSelectOpportunity(opportunity)
+              onNavigate('opportunity')
+            }}
           />
         </div>
 
@@ -107,7 +113,12 @@ export function VendorDashboardPage({ currentOpportunity, submissions, onNavigat
       <section className="content-grid lower-grid">
         <StatusProgressionPanel title="Submission lifecycle" steps={submissionLifecycle} />
 
-        <RecommendedOpportunitiesPanel opportunities={recommendedOpportunities} actionLabel="Open recommendations" />
+        <RecommendedOpportunitiesPanel
+          opportunities={recommendedOpportunities}
+          actionLabel="Open recommendations"
+          onSelectOpportunity={onSelectOpportunity}
+          onAction={() => onNavigate('opportunity')}
+        />
       </section>
 
       <section className="content-grid lower-grid">
