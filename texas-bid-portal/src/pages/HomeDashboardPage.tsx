@@ -24,11 +24,7 @@ import {
   homeMilestoneCards,
   homeWorkflowCards,
 } from '../utils/homeDashboardContent'
-import {
-  homeWorkflowMetricLabels,
-  presentHomePublishedSnapshotState,
-  sharedDashboardCopy,
-} from '../utils/dashboardSnapshotContent'
+import { presentHomePublishedSnapshotState, shellContent } from '../utils/shellContent'
 
 const workflowStageSummaryItems = homeWorkflowCards.map((card) => ({
   stage: workflowStageLabels[card.key].stage,
@@ -50,9 +46,9 @@ export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, c
     ? [currentOpportunity, ...opportunities.filter((opportunity) => opportunity.id !== currentOpportunity.id)].slice(0, 2)
     : opportunities.slice(0, 2)
   const workflowMetricsItems = [
-    { value: lifecycleMetrics.workflowScreensBuilt, label: homeWorkflowMetricLabels.screensBuilt },
-    { value: publishedOpportunity ? 1 : 0, label: homeWorkflowMetricLabels.draftPromoted },
-    { value: 'Texas', label: homeWorkflowMetricLabels.productDirection },
+    { value: lifecycleMetrics.workflowScreensBuilt, label: shellContent.homeWorkflowMetricLabels.screensBuilt },
+    { value: publishedOpportunity ? 1 : 0, label: shellContent.homeWorkflowMetricLabels.draftPromoted },
+    { value: 'Texas', label: shellContent.homeWorkflowMetricLabels.productDirection },
   ]
   const publishedSnapshotState = presentHomePublishedSnapshotState(Boolean(publishedOpportunity))
 
@@ -101,7 +97,7 @@ export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, c
 
       <section className="content-grid lower-grid">
         <LifecycleSummaryPanel items={[...homeLifecycleSteps]} />
-        <LifecycleTimelinePanel title={sharedDashboardCopy.lifecycleTimelineTitle} />
+        <LifecycleTimelinePanel title={shellContent.lifecycleTimelineTitle} />
       </section>
 
       <section className="content-grid lower-grid">

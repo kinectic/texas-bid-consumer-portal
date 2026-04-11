@@ -19,7 +19,7 @@ import type { ViewKey } from '../data/viewData'
 import { opportunities, statusClass } from '../data/mockData'
 import { buildSubmissionActivityItems } from '../utils/submissionActivity'
 import { agencyFlowSteps, marketplaceCopy, marketplaceStatsItems } from '../utils/marketplaceContent'
-import { presentMarketplacePublishedSnapshotState, sharedDashboardCopy } from '../utils/dashboardSnapshotContent'
+import { presentMarketplacePublishedSnapshotState, shellContent } from '../utils/shellContent'
 
 type MarketplacePageProps = {
   publishedBidPreview: CreateBidFormState
@@ -154,7 +154,7 @@ export function MarketplacePage({
 
       <section className="content-grid lower-grid">
         <SelectionContextPanel
-          title={sharedDashboardCopy.selectionContextTitle}
+          title={shellContent.selectionContextTitle}
           currentOpportunity={previewOpportunity}
           activeSubmission={activeSubmission ?? null}
           mode="vendor"
