@@ -4,6 +4,7 @@ import { DecisionControlsPanel } from '../components/DecisionControlsPanel'
 import { DraftPipelinePanel } from '../components/DraftPipelinePanel'
 import { DraftPublishSummaryPanel } from '../components/DraftPublishSummaryPanel'
 import { EmptyStatePanel } from '../components/EmptyStatePanel'
+import { MilestonesPanel } from '../components/MilestonesPanel'
 import { OpportunityCardList } from '../components/OpportunityCardList'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
 import { SubmissionActivityPanel } from '../components/SubmissionActivityPanel'
@@ -33,6 +34,12 @@ const draftPipelineItems = [
     detail: 'Awaiting attachments and insurance requirements',
   },
 ]
+
+const milestoneItems = [
+  'Create bid workflow connected to publishing state',
+  'Agency dashboard active opportunities surface',
+  'Submission review and vendor activity tracking',
+] as const
 
 export function AgencyDashboardPage() {
   const activeBids = opportunities.filter((opportunity) => opportunity.status === 'open')
@@ -101,6 +108,7 @@ export function AgencyDashboardPage() {
 
       <section className="content-grid lower-grid">
         <SubmissionActivityPanel items={submissionActivityItems} />
+        <MilestonesPanel title="Agency workflow milestones" items={milestoneItems} />
       </section>
     </main>
   )

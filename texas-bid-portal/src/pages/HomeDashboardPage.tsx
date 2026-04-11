@@ -2,6 +2,7 @@ import { DraftPipelinePanel } from '../components/DraftPipelinePanel'
 import { HomeCtaPanel } from '../components/HomeCtaPanel'
 import { LifecycleSummaryPanel } from '../components/LifecycleSummaryPanel'
 import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
+import { MilestonesPanel } from '../components/MilestonesPanel'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
 import { PublishedBidSnapshotPanel } from '../components/PublishedBidSnapshotPanel'
@@ -49,7 +50,7 @@ const milestoneCards = [
   'Agency dashboard and bid creation',
   'Vendor dashboard and submission workflow',
   'Interactive shell navigation across the built prototype',
-]
+] as const
 
 const draftPipelineItems = [
   {
@@ -141,14 +142,7 @@ export function HomeDashboardPage({ publishedBidPreview, onNavigate }: HomeDashb
 
       <section className="content-grid lower-grid">
         <div className="content-grid nested-grid">
-          <div className="panel">
-            <div className="panel-title">Built milestones</div>
-            <ol className="flow-list">
-              {milestoneCards.map((milestone) => (
-                <li key={milestone}>{milestone}</li>
-              ))}
-            </ol>
-          </div>
+          <MilestonesPanel items={milestoneCards} />
           <DraftPipelinePanel title="Current build lanes" items={draftPipelineItems} />
         </div>
 
