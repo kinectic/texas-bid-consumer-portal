@@ -4,6 +4,7 @@ import { MetricCard } from '../components/MetricCard'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { PackageCompletenessPanel } from '../components/PackageCompletenessPanel'
 import { ReviewerNotesPanel } from '../components/ReviewerNotesPanel'
+import { SelectionContextPanel } from '../components/SelectionContextPanel'
 import { StatusBadgeLegend } from '../components/StatusBadgeLegend'
 import { StatusProgressionPanel } from '../components/StatusProgressionPanel'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
@@ -54,6 +55,7 @@ export function AgencySubmissionReviewPage({
     { label: 'Archive response', className: 'ghost wide' as const, onClick: onArchiveSubmission },
   ]
   const visibleSubmissions = submissions.filter((submission) => submission.status !== 'draft')
+  const activeSubmission = submissions.find((submission) => submission.opportunityId === currentOpportunity.id) ?? null
   return (
     <main className="main">
       <ActionHeader
@@ -90,6 +92,15 @@ export function AgencySubmissionReviewPage({
         />
 
         <PackageCompletenessPanel items={packageCompletenessItems} />
+      </section>
+
+      <section className="content-grid lower-grid">
+        <SelectionContextPanel
+          title="Selected opportunity + submission context"
+          currentOpportunity={currentOpportunity}
+          activeSubmission={activeSubmission}
+          mode="agency"
+        />
       </section>
 
       <section className="content-grid lower-grid">

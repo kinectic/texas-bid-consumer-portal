@@ -6,6 +6,7 @@ import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
 import { RecommendedOpportunitiesPanel } from '../components/RecommendedOpportunitiesPanel'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
+import { SelectionContextPanel } from '../components/SelectionContextPanel'
 import { StatusProgressionPanel } from '../components/StatusProgressionPanel'
 import { SubmissionQueueList } from '../components/SubmissionQueueList'
 import { SubmissionStatusSnapshot } from '../components/SubmissionStatusSnapshot'
@@ -49,6 +50,7 @@ export function VendorDashboardPage({ currentOpportunity, submissions, onSelectO
     ...submissions.filter((submission) => submission.opportunityId === currentOpportunity.id),
     ...submissions.filter((submission) => submission.opportunityId !== currentOpportunity.id),
   ]
+  const activeSubmission = submissions.find((submission) => submission.opportunityId === currentOpportunity.id) ?? null
 
   return (
     <main className="main">
@@ -106,6 +108,15 @@ export function VendorDashboardPage({ currentOpportunity, submissions, onSelectO
           <div className="panel-title">Active submissions</div>
           <SubmissionQueueList submissions={orderedSubmissions} mode="vendor" currentOpportunityId={currentOpportunity.id} />
         </div>
+      </section>
+
+      <section className="content-grid lower-grid">
+        <SelectionContextPanel
+          title="Selected opportunity + submission context"
+          currentOpportunity={currentOpportunity}
+          activeSubmission={activeSubmission}
+          mode="vendor"
+        />
       </section>
 
       <section className="content-grid lower-grid">
