@@ -2,6 +2,7 @@ import { ActionHeader } from '../components/ActionHeader'
 import { EmptyStatePanel } from '../components/EmptyStatePanel'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
+import { RecommendedOpportunitiesPanel } from '../components/RecommendedOpportunitiesPanel'
 import { ReviewQueueCard } from '../components/ReviewQueueCard'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
 import { SubmissionStatusSnapshot } from '../components/SubmissionStatusSnapshot'
@@ -12,12 +13,6 @@ import { lifecycleMetrics } from '../data/metrics'
 import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
 import { submissionStatusSummary } from '../data/submissionStatus'
 
-const vendorMetricsItems = [
-  { value: 2, label: 'Saved opportunities' },
-  { value: lifecycleMetrics.responsesInReview, label: 'Active submissions' },
-  { value: lifecycleMetrics.vendorProfileCompleteness, label: 'Profile completeness' },
-]
-
 const submissionStatusItems = [
   submissionStatusSummary.received,
   submissionStatusSummary.reviewing,
@@ -27,6 +22,11 @@ const submissionStatusItems = [
 export function VendorDashboardPage() {
   const savedOpportunities = opportunities.filter((opportunity) => opportunity.status === 'open')
   const recommendedOpportunities = opportunities.slice(0, 2)
+  const vendorMetricsItems = [
+    { value: savedOpportunities.length, label: 'Saved opportunities' },
+    { value: lifecycleMetrics.responsesInReview, label: 'Active submissions' },
+    { value: lifecycleMetrics.vendorProfileCompleteness, label: 'Profile completeness' },
+  ]
 
   return (
     <main className="main">
@@ -109,19 +109,7 @@ export function VendorDashboardPage() {
       <section className="content-grid lower-grid">
         <VendorSubmissionPacketPanel />
 
-        <div className="panel">
-          <div className="panel-title">Recommended bids</div>
-          <div className="draft-list">
-            {recommendedOpportunities.map((opportunity) => (
-              <div className="draft-card" key={opportunity.id}>
-                <strong>{opportunity.title}</strong>
-                <div className="muted">{opportunity.category}</div>
-                <div className="muted">Due {opportunity.dueDate}</div>
-              </div>
-            ))}
-          </div>
-          <button className="primary wide">Open recommendations</button>
-        </div>
+        <RecommendedOpportunitiesPanel opportunities={recommendedOpportunities} actionLabel="Open recommendations" />
       </section>
     </main>
   )

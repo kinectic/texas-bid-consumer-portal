@@ -2,10 +2,12 @@ import { HomeCtaPanel } from '../components/HomeCtaPanel'
 import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
+import { RecommendedOpportunitiesPanel } from '../components/RecommendedOpportunitiesPanel'
 import { WorkflowMetricsSnapshot } from '../components/WorkflowMetricsSnapshot'
 import { WorkflowStageSummary } from '../components/WorkflowStageSummary'
 import { lifecycleMetrics } from '../data/metrics'
 import { workflowStageLabels } from '../data/workflowStages'
+import { opportunities } from '../data/mockData'
 import type { CreateBidFormState } from '../types/forms'
 import type { ViewKey } from '../data/viewData'
 
@@ -75,6 +77,8 @@ type HomeDashboardPageProps = {
 }
 
 export function HomeDashboardPage({ publishedBidPreview, onNavigate }: HomeDashboardPageProps) {
+  const recommendedOpportunities = opportunities.slice(0, 2)
+
   return (
     <main className="main">
       <header className="topbar">
@@ -158,13 +162,7 @@ export function HomeDashboardPage({ publishedBidPreview, onNavigate }: HomeDashb
           </ol>
         </div>
 
-        <div className="panel">
-          <div className="panel-title">Consistent next move</div>
-          <div className="draft-card">
-            <strong>Follow the workflow actions bar</strong>
-            <div className="muted">Every major screen now pushes toward the next practical procurement step instead of leaving the user guessing.</div>
-          </div>
-        </div>
+        <RecommendedOpportunitiesPanel title="Suggested opportunities" opportunities={recommendedOpportunities} actionLabel="Review opportunities" />
       </section>
     </main>
   )
