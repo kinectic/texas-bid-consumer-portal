@@ -11,9 +11,8 @@ import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel
 import { SubmissionStatusSnapshot } from '../components/SubmissionStatusSnapshot'
 import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacketPanel'
 import { WorkflowStageSummary } from '../components/WorkflowStageSummary'
-import { selectedOpportunity } from '../data/mockData'
 import { submissionStatusSummary } from '../data/submissionStatus'
-import type { Submission } from '../types'
+import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import type { BidDocument, SubmissionFormState } from '../types/forms'
 
@@ -85,7 +84,7 @@ type SubmissionWorkflowPageProps = {
   onChange: (field: keyof SubmissionFormState, value: string) => void
   documents: BidDocument[]
   onUploadNextDocument: () => void
-  opportunityTitle: string
+  opportunity: Opportunity
   activeSubmission: Submission | null
   onSaveProgress: () => void
   onSubmitResponse: () => void
@@ -97,17 +96,12 @@ export function SubmissionWorkflowPage({
   onChange,
   documents,
   onUploadNextDocument,
-  opportunityTitle,
+  opportunity,
   activeSubmission,
   onSaveProgress,
   onSubmitResponse,
   onNavigate,
 }: SubmissionWorkflowPageProps) {
-  const opportunity = {
-    ...selectedOpportunity,
-    title: opportunityTitle,
-  }
-
   return (
     <main className="main">
       <header className="topbar">

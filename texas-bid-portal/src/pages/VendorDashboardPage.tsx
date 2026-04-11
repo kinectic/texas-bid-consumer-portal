@@ -14,7 +14,7 @@ import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacke
 import { lifecycleMetrics } from '../data/metrics'
 import { opportunities, statusClass } from '../data/mockData'
 import { submissionLifecycle, submissionStatusSummary } from '../data/submissionStatus'
-import type { Submission } from '../types'
+import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 
 const submissionStatusItems = [
@@ -25,13 +25,20 @@ const submissionStatusItems = [
 ]
 
 type VendorDashboardPageProps = {
+  currentOpportunity: Opportunity
   submissions: Submission[]
   onNavigate: (view: ViewKey) => void
 }
 
-export function VendorDashboardPage({ submissions, onNavigate }: VendorDashboardPageProps) {
-  const savedOpportunities = opportunities.filter((opportunity) => opportunity.status === 'open')
-  const recommendedOpportunities = opportunities.slice(0, 2)
+export function VendorDashboardPage({ currentOpportunity, submissions, onNavigate }: VendorDashboardPageProps) {
+  const savedOpportunities = [
+    currentOpportunity,
+    ...opportunities.filter((opportunity) => opportunity.status === 'open' && opportunity.id !== currentOpportunity.id),
+  ]
+  const recommendedOpportunities = [
+    currentOpportunity,
+    ...opportunities.filter((opportunity) => opportunity.id !== currentOpportunity.id),
+  ].slice(0, 2)
   const vendorStatsItems = [
     { value: savedOpportunities.length, label: 'Saved opportunities' },
     { value: submissions.length, label: 'Active submissions' },

@@ -9,7 +9,7 @@ import { StatusProgressionPanel } from '../components/StatusProgressionPanel'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
 import { SubmissionQueueList } from '../components/SubmissionQueueList'
 import { submissionLifecycle } from '../data/submissionStatus'
-import type { Submission } from '../types'
+import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import type { ReviewNotesState } from '../types/forms'
 
@@ -29,6 +29,7 @@ const packageCompletenessItems = [
 ]
 
 type AgencySubmissionReviewPageProps = {
+  currentOpportunity: Opportunity
   reviewNotes: ReviewNotesState
   onChange: (field: keyof ReviewNotesState, value: string) => void
   submissions: Submission[]
@@ -38,6 +39,7 @@ type AgencySubmissionReviewPageProps = {
 }
 
 export function AgencySubmissionReviewPage({
+  currentOpportunity,
   reviewNotes,
   onChange,
   submissions,
@@ -91,7 +93,7 @@ export function AgencySubmissionReviewPage({
       </section>
 
       <section className="content-grid lower-grid">
-        <SubmissionChecklistPanel title="Agency review checklist" contextLabel="before shortlist decision" />
+        <SubmissionChecklistPanel title="Agency review checklist" contextLabel={currentOpportunity.title} />
 
         <div className="content-grid nested-grid">
           <StatusProgressionPanel steps={submissionLifecycle} />

@@ -48,6 +48,7 @@ export function MarketplacePage({ publishedBidPreview, publishedOpportunity, sub
   }
 
   const marketplaceFeed = publishedOpportunity ? [publishedOpportunity, ...opportunities.slice(1)] : opportunities
+  const activeSubmission = submissions.find((submission) => submission.opportunity === previewOpportunity.title)
   const submissionActivityItems = submissions.map((submission) => ({
     title: submission.vendor,
     detail: `${submission.opportunity} • Submitted ${submission.submittedAt}`,
@@ -122,7 +123,7 @@ export function MarketplacePage({ publishedBidPreview, publishedOpportunity, sub
           />
           <DetailActionsStrip
             secondaryLabel="Save Opportunity"
-            primaryLabel="Submit Response"
+            primaryLabel={activeSubmission ? 'Continue Submission' : 'Submit Response'}
             onSecondaryAction={() => onNavigate('vendor-dashboard')}
             onPrimaryAction={() => onNavigate('submission-workflow')}
           />
@@ -141,7 +142,7 @@ export function MarketplacePage({ publishedBidPreview, publishedOpportunity, sub
           title="Ready to respond"
           description="Move from marketplace review into a direct submission flow without leaving the product."
           note="This is the product promise: discover, qualify, and act in one clearer Texas-first procurement surface."
-          actionLabel="Open submission workflow"
+          actionLabel={activeSubmission ? 'Continue submission workflow' : 'Open submission workflow'}
           onAction={() => onNavigate('submission-workflow')}
         />
       </section>

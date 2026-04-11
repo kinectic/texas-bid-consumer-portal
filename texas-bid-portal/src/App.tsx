@@ -37,6 +37,7 @@ function renderView(
   saveDraft: () => void,
   publishBid: () => void,
   publishedOpportunity: Opportunity | null,
+  currentOpportunity: Opportunity,
   submissionQueue: Submission[],
   saveSubmissionDraft: () => void,
   submitVendorResponse: () => void,
@@ -68,6 +69,7 @@ function renderView(
     case 'agency-submission-review':
       return (
         <AgencySubmissionReviewPage
+          currentOpportunity={currentOpportunity}
           reviewNotes={reviewNotes}
           onChange={updateReviewNotes}
           submissions={submissionQueue}
@@ -77,7 +79,7 @@ function renderView(
         />
       )
     case 'vendor-dashboard':
-      return <VendorDashboardPage submissions={submissionQueue} onNavigate={navigate} />
+      return <VendorDashboardPage currentOpportunity={currentOpportunity} submissions={submissionQueue} onNavigate={navigate} />
     case 'submission-workflow':
       return (
         <SubmissionWorkflowPage
@@ -85,8 +87,8 @@ function renderView(
           onChange={updateSubmissionForm}
           documents={submissionDocuments}
           onUploadNextDocument={uploadNextSubmissionDocument}
-          opportunityTitle={(publishedOpportunity ?? opportunities[0]).title}
-          activeSubmission={submissionQueue.find((submission) => submission.opportunity === (publishedOpportunity ?? opportunities[0]).title) ?? null}
+          opportunity={currentOpportunity}
+          activeSubmission={submissionQueue.find((submission) => submission.opportunity === currentOpportunity.title) ?? null}
           onSaveProgress={saveSubmissionDraft}
           onSubmitResponse={submitVendorResponse}
           onNavigate={navigate}
@@ -203,6 +205,7 @@ function App() {
         documents: bidPacketDocuments.map((document) => document.name),
       }
     : null
+  const currentOpportunity = publishedOpportunity ?? opportunities[0]
 
   return (
     <div className="app-shell">
@@ -235,6 +238,7 @@ function App() {
           saveDraft,
           publishBid,
           publishedOpportunity,
+          currentOpportunity,
           submissionQueue,
           saveSubmissionDraft,
           submitVendorResponse,
