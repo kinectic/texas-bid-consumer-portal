@@ -26,6 +26,7 @@ import {
   presentVendorQueueSubtitle,
   presentVendorRowSummary,
 } from '../utils/vendorPresentation'
+import { sharedDashboardCopy } from '../utils/dashboardSnapshotContent'
 
 const submissionStatusItems = [
   submissionStatusSummary.draft,
@@ -208,7 +209,7 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
 
       <section className="content-grid lower-grid">
         <SelectionContextPanel
-          title="Selected opportunity + submission context"
+          title={sharedDashboardCopy.selectionContextTitle}
           currentOpportunity={currentOpportunity}
           activeSubmission={activeSubmission}
           mode="vendor"

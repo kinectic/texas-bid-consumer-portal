@@ -24,6 +24,11 @@ import {
   homeMilestoneCards,
   homeWorkflowCards,
 } from '../utils/homeDashboardContent'
+import {
+  homeWorkflowMetricLabels,
+  presentHomePublishedSnapshotState,
+  sharedDashboardCopy,
+} from '../utils/dashboardSnapshotContent'
 
 const workflowStageSummaryItems = homeWorkflowCards.map((card) => ({
   stage: workflowStageLabels[card.key].stage,
@@ -45,10 +50,11 @@ export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, c
     ? [currentOpportunity, ...opportunities.filter((opportunity) => opportunity.id !== currentOpportunity.id)].slice(0, 2)
     : opportunities.slice(0, 2)
   const workflowMetricsItems = [
-    { value: lifecycleMetrics.workflowScreensBuilt, label: 'Interactive workflow screens built' },
-    { value: publishedOpportunity ? 1 : 0, label: 'Agency draft promoted live' },
-    { value: 'Texas', label: 'Localized procurement-first product direction' },
+    { value: lifecycleMetrics.workflowScreensBuilt, label: homeWorkflowMetricLabels.screensBuilt },
+    { value: publishedOpportunity ? 1 : 0, label: homeWorkflowMetricLabels.draftPromoted },
+    { value: 'Texas', label: homeWorkflowMetricLabels.productDirection },
   ]
+  const publishedSnapshotState = presentHomePublishedSnapshotState(Boolean(publishedOpportunity))
 
   return (
     <main className="main">
@@ -88,16 +94,14 @@ export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, c
         <HomeCtaPanel onNavigate={onNavigate} />
         <PublishedBidSnapshotPanel
           bid={publishedBidPreview}
-          statusLabel={publishedOpportunity ? 'Published' : 'Draft'}
-          note={publishedOpportunity
-            ? 'The current agency draft has been promoted into the live marketplace and dashboard state.'
-            : 'The current agency draft is still editable and waiting for publication.'}
+          statusLabel={publishedSnapshotState.statusLabel}
+          note={publishedSnapshotState.note}
         />
       </section>
 
       <section className="content-grid lower-grid">
         <LifecycleSummaryPanel items={[...homeLifecycleSteps]} />
-        <LifecycleTimelinePanel title="Lifecycle timeline" />
+        <LifecycleTimelinePanel title={sharedDashboardCopy.lifecycleTimelineTitle} />
       </section>
 
       <section className="content-grid lower-grid">

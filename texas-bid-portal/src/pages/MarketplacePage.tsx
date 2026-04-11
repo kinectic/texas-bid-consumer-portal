@@ -19,6 +19,7 @@ import type { ViewKey } from '../data/viewData'
 import { opportunities, statusClass } from '../data/mockData'
 import { buildSubmissionActivityItems } from '../utils/submissionActivity'
 import { agencyFlowSteps, marketplaceCopy, marketplaceStatsItems } from '../utils/marketplaceContent'
+import { presentMarketplacePublishedSnapshotState, sharedDashboardCopy } from '../utils/dashboardSnapshotContent'
 
 type MarketplacePageProps = {
   publishedBidPreview: CreateBidFormState
@@ -57,6 +58,7 @@ export function MarketplacePage({
     ...opportunities.filter((opportunity) => opportunity.id !== highlighted.id),
   ]
   const activeSubmission = submissions.find((submission) => submission.opportunityId === previewOpportunity.id)
+  const publishedSnapshotState = presentMarketplacePublishedSnapshotState(Boolean(publishedOpportunity))
   const submissionActivityItems = buildSubmissionActivityItems({
     submissions,
     allSubmissions: submissions,
@@ -92,12 +94,10 @@ export function MarketplacePage({
           <WorkflowFilterStrip title={marketplaceCopy.marketplaceFiltersTitle} filters={[...marketplaceCopy.marketplaceFilters]} activeIndex={0} />
 
           <PublishedBidSnapshotPanel
-            title="Published bid preview sync"
+            title={publishedSnapshotState.title}
             bid={publishedBidPreview}
-            statusLabel={publishedOpportunity ? 'Published' : 'Draft only'}
-            note={publishedOpportunity
-              ? 'This solicitation is live in the marketplace feed and now behaves like an active opportunity.'
-              : 'This solicitation is still draft-only. Publish it from the agency workflow to move it into the live marketplace feed.'}
+            statusLabel={publishedSnapshotState.statusLabel}
+            note={publishedSnapshotState.note}
           />
 
           <OpportunityCardList
@@ -154,7 +154,7 @@ export function MarketplacePage({
 
       <section className="content-grid lower-grid">
         <SelectionContextPanel
-          title={marketplaceCopy.selectionContextTitle}
+          title={sharedDashboardCopy.selectionContextTitle}
           currentOpportunity={previewOpportunity}
           activeSubmission={activeSubmission ?? null}
           mode="vendor"
