@@ -440,6 +440,11 @@ h1 {
   padding: 14px;
 }
 
+.draft-card-active {
+  border-color: rgba(37, 99, 235, 0.85);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.18) inset;
+}
+
 .cta-card {
   width: 100%;
   text-align: left;

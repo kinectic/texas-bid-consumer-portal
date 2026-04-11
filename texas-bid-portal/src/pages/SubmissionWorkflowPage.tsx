@@ -127,6 +127,7 @@ export function SubmissionWorkflowPage({
     stage: rowMetaBySubmissionId[submission.id]?.rowLabel ?? submission.id,
     detail: `${submission.vendor} • ${submission.id} • ${submission.status}${submission.id === activeSubmission?.id ? ' • active row' : ''}`,
     onClick: () => onSelectSubmission(submission),
+    active: submission.id === activeSubmission?.id,
   }))
 
   return (
