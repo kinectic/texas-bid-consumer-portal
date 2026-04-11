@@ -6,6 +6,7 @@ import { DraftPublishSummaryPanel } from '../components/DraftPublishSummaryPanel
 import { EmptyStatePanel } from '../components/EmptyStatePanel'
 import { OpportunityCardList } from '../components/OpportunityCardList'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
+import { SubmissionActivityPanel } from '../components/SubmissionActivityPanel'
 import { WorkflowMetricsSnapshot } from '../components/WorkflowMetricsSnapshot'
 import { lifecycleMetrics } from '../data/metrics'
 import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
@@ -39,6 +40,10 @@ export function AgencyDashboardPage() {
   const awardHistoryItems = awardedBids.map((opportunity) => ({
     title: opportunity.title,
     detail: opportunity.agency,
+  }))
+  const submissionActivityItems = vendorSubmissions.map((submission) => ({
+    title: submission.vendor,
+    detail: `${submission.opportunity} • Submitted ${submission.submittedAt}`,
   }))
 
   return (
@@ -95,23 +100,7 @@ export function AgencyDashboardPage() {
       </section>
 
       <section className="content-grid lower-grid">
-        <div className="panel">
-          <div className="panel-title">Recent submissions</div>
-          <div className="submission-list">
-            {vendorSubmissions.map((submission) => (
-              <div className="submission-card" key={`${submission.vendor}-${submission.opportunity}`}>
-                <div className="submission-header">
-                  <strong>{submission.vendor}</strong>
-                  <span className={submission.status === 'received' ? 'status status-open' : 'status status-review'}>
-                    {submission.status}
-                  </span>
-                </div>
-                <div className="muted">For: {submission.opportunity}</div>
-                <div className="muted">Submitted: {submission.submittedAt}</div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <SubmissionActivityPanel items={submissionActivityItems} />
       </section>
     </main>
   )

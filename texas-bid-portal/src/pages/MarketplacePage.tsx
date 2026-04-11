@@ -5,6 +5,7 @@ import { OpportunityStatusPanel } from '../components/OpportunityStatusPanel'
 import { OpportunitySummaryPanel } from '../components/OpportunitySummaryPanel'
 import { SectionIntro } from '../components/SectionIntro'
 import { StatusBadgeLegend } from '../components/StatusBadgeLegend'
+import { SubmissionActivityPanel } from '../components/SubmissionActivityPanel'
 import { WorkflowFilterStrip } from '../components/WorkflowFilterStrip'
 import type { CreateBidFormState } from '../types/forms'
 import { opportunities, statusClass, vendorSubmissions } from '../data/mockData'
@@ -24,6 +25,10 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
   }
 
   const marketplaceFeed = [previewOpportunity, ...opportunities.slice(1)]
+  const submissionActivityItems = vendorSubmissions.map((submission) => ({
+    title: submission.vendor,
+    detail: `${submission.opportunity} • Submitted ${submission.submittedAt}`,
+  }))
 
   return (
     <main className="main">
@@ -138,28 +143,7 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
       </section>
 
       <section className="content-grid lower-grid">
-        <div className="panel vendor-panel">
-          <SectionIntro
-            eyebrow="Vendor tracking"
-            title="Submission workspace"
-            description="Active submission records showing how vendor packets move after they are sent into the platform."
-          />
-          {vendorSubmissions.map((submission) => (
-            <div className="submission-card" key={`${submission.vendor}-${submission.opportunity}`}>
-              <div className="submission-header">
-                <strong>{submission.vendor}</strong>
-                <span className={submission.status === 'received' ? 'status status-open' : 'status status-review'}>
-                  {submission.status}
-                </span>
-              </div>
-              <div className="muted">For: {submission.opportunity}</div>
-              <div className="muted">Submitted: {submission.submittedAt}</div>
-            </div>
-          ))}
-          <div className="small-note">
-            This is the product direction: agencies post, vendors bid, and both sides stay inside one clearer Texas-first system.
-          </div>
-        </div>
+        <SubmissionActivityPanel title="Submission workspace" items={submissionActivityItems} />
       </section>
     </main>
   )
