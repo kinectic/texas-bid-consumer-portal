@@ -14,6 +14,7 @@ import { submissionLifecycle } from '../data/submissionStatus'
 import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import type { ReviewNotesState } from '../types/forms'
+import { buildSubmissionQueueRowMeta } from '../utils/submissionQueue'
 
 type AgencySubmissionReviewPageProps = {
   currentOpportunity: Opportunity
@@ -59,14 +60,17 @@ export function AgencySubmissionReviewPage({
   const activeSubmission = submissions.find((submission) => submission.id === selectedSubmissionId)
     ?? submissions.find((submission) => submission.opportunityId === currentOpportunity.id)
     ?? null
-  const activeSubmissionRowNumber = activeSubmission
-    ? currentOpportunitySubmissions.findIndex((submission) => submission.id === activeSubmission.id) + 1
-    : 0
+  const rowMetaBySubmissionId = buildSubmissionQueueRowMeta({
+    submissions: currentOpportunitySubmissions,
+    selectedSubmissionId: selectedSubmissionId ?? undefined,
+    mode: 'agency',
+  })
+  const activeRowMeta = activeSubmission ? rowMetaBySubmissionId[activeSubmission.id] : null
   const activeSubmissionLabel = activeSubmission
-    ? `${activeSubmission.vendor} · ${activeSubmission.id} · row ${activeSubmissionRowNumber || 1} of ${currentOpportunitySubmissions.length || 1}`
+    ? `${activeSubmission.vendor} · ${activeSubmission.id} · ${activeRowMeta?.rowLabel ?? 'Response row 1 of 1'}`
     : 'No submission selected'
   const activeOutcomeSummary = activeSubmission
-    ? `${activeSubmission.vendor} is currently ${activeSubmission.status} for ${currentOpportunity.title}. This is response row ${activeSubmissionRowNumber || 1} of ${currentOpportunitySubmissions.length || 1}, and decision actions now apply only to submission ${activeSubmission.id}.`
+    ? `${activeSubmission.vendor} is currently ${activeSubmission.status} for ${currentOpportunity.title}. This is ${activeRowMeta?.rowLabel.toLowerCase() ?? 'response row 1 of 1'}, and decision actions now apply only to submission ${activeSubmission.id}.`
     : 'Select a submission row to apply review actions and see row-specific review context.'
   const decisionControls = [
     { label: `Shortlist ${activeSubmission?.vendor ?? 'selected vendor'}`, className: 'primary wide' as const, onClick: () => onAdvanceStatus('shortlisted') },
