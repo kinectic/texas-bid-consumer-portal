@@ -72,6 +72,9 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
   const activeSubmissionLabel = activeSubmission
     ? `${activeSubmission.vendor} · ${activeSubmission.id}`
     : 'new unsaved response'
+  const draftRowSummary = activeSubmission
+    ? `Active saved row: ${activeSubmission.id}. Current opportunity has ${currentOpportunitySubmissions.length} total response rows.`
+    : `No saved active row selected. Starting now will create response ${currentOpportunitySubmissions.length + 1}.`
   const selectOpportunityFromSubmission = (submission: Submission) => {
     onSelectSubmission(submission)
     const matchingOpportunity = savedOpportunities.find((opportunity) => opportunity.id === submission.opportunityId)
@@ -141,6 +144,11 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
 
       <section className="content-grid lower-grid">
         <OutcomeSummaryPanel mode="vendor" />
+        <OutcomeSummaryPanel
+          mode="vendor"
+          overrideTitle="Vendor row context"
+          overrideSummary={draftRowSummary}
+        />
 
         <div className="panel">
           <div className="panel-header">

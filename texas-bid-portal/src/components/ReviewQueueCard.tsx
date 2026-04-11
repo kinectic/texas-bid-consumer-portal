@@ -6,10 +6,12 @@ type ReviewQueueCardProps = {
   mode?: 'agency' | 'vendor'
   currentOpportunityId?: string
   selectedSubmissionId?: string
+  rowLabel?: string
+  rowSummary?: string
   onSelect?: (submission: Submission) => void
 }
 
-export function ReviewQueueCard({ submission, mode = 'agency', currentOpportunityId, selectedSubmissionId, onSelect }: ReviewQueueCardProps) {
+export function ReviewQueueCard({ submission, mode = 'agency', currentOpportunityId, selectedSubmissionId, rowLabel, rowSummary, onSelect }: ReviewQueueCardProps) {
   const statusSummary = submissionStatusSummary[submission.status]
   const statusClassName =
     submission.status === 'shortlisted'
@@ -37,8 +39,10 @@ export function ReviewQueueCard({ submission, mode = 'agency', currentOpportunit
       </div>
       <div className="muted">Opportunity ID: {submission.opportunityId}</div>
       <div className="muted">Submission ID: {submission.id}</div>
+      {rowLabel ? <div className="muted">{rowLabel}</div> : null}
       {isSelectedSubmission ? <div className="dashboard-note compact-note">Active review row.</div> : null}
       {isCurrentOpportunity ? <div className="dashboard-note compact-note">Linked to current selected opportunity.</div> : null}
+      {rowSummary ? <div className="dashboard-note compact-note">{rowSummary}</div> : null}
       <div className="muted">Submitted: {submission.submittedAt}</div>
       <div className="muted">Progress: {statusSummary.progress}</div>
       <div className="dashboard-note compact-note">{statusSummary.detail}</div>
