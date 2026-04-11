@@ -69,6 +69,7 @@ function renderView(
   submissionQueue: Submission[],
   selectedSubmissionId: string | null,
   selectSubmission: (submission: Submission) => void,
+  startNewSubmission: () => void,
   vendorQueueFilter: SubmissionQueueFilter,
   setVendorQueueFilter: (filter: SubmissionQueueFilter) => void,
   agencyQueueFilter: SubmissionQueueFilter,
@@ -104,7 +105,7 @@ function renderView(
         />
       )
     case 'opportunity':
-      return <OpportunityDetailPage opportunity={currentOpportunity} submissionQueue={submissionQueue} onNavigate={navigate} />
+      return <OpportunityDetailPage opportunity={currentOpportunity} submissionQueue={submissionQueue} onStartNewSubmission={startNewSubmission} onNavigate={navigate} />
     case 'agency-dashboard':
       return (
         <AgencyDashboardPage
@@ -150,7 +151,7 @@ function renderView(
         />
       )
     case 'vendor-dashboard':
-      return <VendorDashboardPage currentOpportunity={currentOpportunity} submissions={submissionQueue} selectedSubmissionId={selectedSubmissionId} draftSummary={draftSummary} readinessByOpportunityId={readinessByOpportunityId} queueFilter={vendorQueueFilter} onQueueFilterChange={setVendorQueueFilter} onSelectOpportunity={selectOpportunity} onSelectSubmission={selectSubmission} onNavigate={navigate} />
+      return <VendorDashboardPage currentOpportunity={currentOpportunity} submissions={submissionQueue} selectedSubmissionId={selectedSubmissionId} draftSummary={draftSummary} readinessByOpportunityId={readinessByOpportunityId} queueFilter={vendorQueueFilter} onQueueFilterChange={setVendorQueueFilter} onSelectOpportunity={selectOpportunity} onSelectSubmission={selectSubmission} onStartNewSubmission={startNewSubmission} onNavigate={navigate} />
     case 'submission-workflow':
       return (
         <SubmissionWorkflowPage
@@ -358,6 +359,26 @@ function App() {
     }))
   }
 
+  const startNewSubmission = () => {
+    setSelectedSubmissionByOpportunity((current) => {
+      const next = { ...current }
+      delete next[currentOpportunity.id]
+      return next
+    })
+
+    setSubmissionFormsByOpportunity((current) => ({
+      ...current,
+      [currentOpportunity.id]: {
+        ...initialSubmissionFormState,
+      },
+    }))
+
+    setSubmissionDocumentsByOpportunity((current) => ({
+      ...current,
+      [currentOpportunity.id]: initialSubmissionDocuments.map((document) => ({ ...document })),
+    }))
+  }
+
   const setVendorQueueFilterWithSelectionRepair = (filter: SubmissionQueueFilter) => {
     setVendorQueueFilter(filter)
 
@@ -560,6 +581,7 @@ function App() {
           submissionQueue,
           selectedSubmissionId,
           selectSubmission,
+          startNewSubmission,
           vendorQueueFilter,
           setVendorQueueFilterWithSelectionRepair,
           agencyQueueFilter,

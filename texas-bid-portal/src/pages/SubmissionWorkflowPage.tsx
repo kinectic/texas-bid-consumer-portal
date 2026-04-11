@@ -118,6 +118,9 @@ export function SubmissionWorkflowPage({
           <p className="intro">
             A direct submission flow where Texas vendors can confirm fit, upload documents, answer requirements, and submit a bid response inside the platform.
           </p>
+          <p className="muted">
+            Active response record: {activeSubmission ? `${activeSubmission.vendor} · ${activeSubmission.id}` : 'new unsaved response'}
+          </p>
         </div>
         <div className="top-actions">
           <button className="ghost" onClick={() => {

@@ -23,10 +23,11 @@ const opportunityRequirementItems = [
 type OpportunityDetailPageProps = {
   opportunity: Opportunity
   submissionQueue: Submission[]
+  onStartNewSubmission: () => void
   onNavigate: (view: ViewKey) => void
 }
 
-export function OpportunityDetailPage({ opportunity, submissionQueue, onNavigate }: OpportunityDetailPageProps) {
+export function OpportunityDetailPage({ opportunity, submissionQueue, onStartNewSubmission, onNavigate }: OpportunityDetailPageProps) {
   const activeSubmission = submissionQueue.find((submission) => submission.opportunityId === opportunity.id)
   const awardHistoryItems = opportunities
     .filter((item) => item.status === 'awarded')
@@ -49,6 +50,12 @@ export function OpportunityDetailPage({ opportunity, submissionQueue, onNavigate
           <button className="ghost" onClick={() => onNavigate('vendor-dashboard')}>Save Opportunity</button>
           <button className="primary" onClick={() => onNavigate('submission-workflow')}>
             {activeSubmission ? 'Continue Submission' : 'Start Submission'}
+          </button>
+          <button className="ghost" onClick={() => {
+            onStartNewSubmission()
+            onNavigate('submission-workflow')
+          }}>
+            Start New Response
           </button>
         </div>
       </header>

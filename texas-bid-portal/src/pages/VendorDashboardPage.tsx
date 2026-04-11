@@ -40,10 +40,11 @@ type VendorDashboardPageProps = {
   onQueueFilterChange: (filter: 'current' | 'all') => void
   onSelectOpportunity: (opportunity: Opportunity) => void
   onSelectSubmission: (submission: Submission) => void
+  onStartNewSubmission: () => void
   onNavigate: (view: ViewKey) => void
 }
 
-export function VendorDashboardPage({ currentOpportunity, submissions, selectedSubmissionId, draftSummary, readinessByOpportunityId, queueFilter, onQueueFilterChange, onSelectOpportunity, onSelectSubmission, onNavigate }: VendorDashboardPageProps) {
+export function VendorDashboardPage({ currentOpportunity, submissions, selectedSubmissionId, draftSummary, readinessByOpportunityId, queueFilter, onQueueFilterChange, onSelectOpportunity, onSelectSubmission, onStartNewSubmission, onNavigate }: VendorDashboardPageProps) {
   const savedOpportunities = [
     currentOpportunity,
     ...opportunities.filter((opportunity) => opportunity.status === 'open' && opportunity.id !== currentOpportunity.id),
@@ -100,6 +101,10 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
           <>
             <button className="primary" onClick={() => onNavigate('marketplace')}>Find opportunities</button>
             <button className="ghost" onClick={() => onNavigate('submission-workflow')}>Continue submission</button>
+            <button className="ghost" onClick={() => {
+              onStartNewSubmission()
+              onNavigate('submission-workflow')
+            }}>Start new response</button>
             <button className="ghost" onClick={() => onNavigate('opportunity')}>Review packet</button>
           </>
         }
