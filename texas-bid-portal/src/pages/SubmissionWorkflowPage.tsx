@@ -1,5 +1,6 @@
 import { FieldMock } from '../components/FieldMock'
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
+import { SectionIntro } from '../components/SectionIntro'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
 import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacketPanel'
 import { submissionDocuments } from '../data/formState'
@@ -32,7 +33,11 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
 
       <section className="content-grid">
         <div className="panel">
-          <div className="panel-title">Opportunity summary</div>
+          <SectionIntro
+            eyebrow="Submission entry"
+            title="Opportunity summary"
+            description="The live opportunity context that stays visible while the vendor assembles the response packet."
+          />
           <p className="detail-copy">{opportunity.summary}</p>
         </div>
 
@@ -41,7 +46,11 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
 
       <section className="content-grid lower-grid">
         <div className="panel">
-          <div className="panel-title">Submission status</div>
+          <SectionIntro
+            eyebrow="Response status"
+            title="Submission status"
+            description="The vendor-side readiness state before the packet can be sent for agency review."
+          />
           <div className="draft-list">
             <div className="draft-card">
               <strong>Company profile</strong>
@@ -63,7 +72,11 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
 
       <section className="content-grid lower-grid">
         <div className="panel">
-          <div className="panel-title">Response builder</div>
+          <SectionIntro
+            eyebrow="Vendor drafting"
+            title="Response builder"
+            description="The editable vendor response form covering signer details, pricing, timing, and narrative support."
+          />
           <div className="form-mock create-bid-form">
             <FieldMock label="Company contact and authorized signer" value={formState.signer} onChange={(value) => onChange('signer', value)} />
             <div className="input-row">
@@ -76,7 +89,11 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
         </div>
 
         <div className="panel">
-          <div className="panel-title">Required attachments</div>
+          <SectionIntro
+            eyebrow="Packet files"
+            title="Required attachments"
+            description="The packet components the vendor must gather and upload before final submission."
+          />
           <div className="draft-list">
             {submissionDocuments.map((document) => (
               <div className="draft-card" key={document.name}>
@@ -93,7 +110,11 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
         <SubmissionChecklistPanel title="Pre-submit checklist" contextLabel={opportunity.title} />
 
         <div className="panel">
-          <div className="panel-title">Submission confirmation</div>
+          <SectionIntro
+            eyebrow="Final step"
+            title="Submission confirmation"
+            description="The last confirmation state before the vendor sends the completed response into agency review."
+          />
           <div className="dashboard-note">
             This is the core V1 workflow: vendors should be able to move from {opportunity.title} discovery to actual response submission without leaving the Texas-first portal.
           </div>

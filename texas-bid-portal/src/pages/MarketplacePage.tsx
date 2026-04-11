@@ -1,5 +1,6 @@
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
 import { OpportunityStatusPanel } from '../components/OpportunityStatusPanel'
+import { SectionIntro } from '../components/SectionIntro'
 import type { CreateBidFormState } from '../types/forms'
 import { opportunities, statusClass, vendorSubmissions } from '../data/mockData'
 
@@ -52,17 +53,16 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
 
       <section className="content-grid">
         <div className="panel marketplace-panel">
-          <div className="panel-header">
-            <div>
-              <div className="panel-title">Marketplace feed</div>
-              <div className="panel-subtitle">What vendors see when they browse opportunities</div>
-            </div>
-            <div className="filters">
-              <span className="filter-pill active">All</span>
-              <span className="filter-pill">Open</span>
-              <span className="filter-pill">Facilities</span>
-              <span className="filter-pill">Professional</span>
-            </div>
+          <SectionIntro
+            eyebrow="Vendor discovery"
+            title="Marketplace feed"
+            description="What vendors see when they browse live opportunities and decide which bid deserves action next."
+          />
+          <div className="filters">
+            <span className="filter-pill active">All</span>
+            <span className="filter-pill">Open</span>
+            <span className="filter-pill">Facilities</span>
+            <span className="filter-pill">Professional</span>
           </div>
 
           <div className="draft-card preview-card">
@@ -102,7 +102,11 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
 
       <section className="content-grid lower-grid">
         <div className="panel detail-panel">
-          <div className="panel-title">Opportunity detail</div>
+          <SectionIntro
+            eyebrow="Qualification"
+            title="Opportunity detail"
+            description="The focused opportunity view vendors use when deciding whether to move into the submission workflow."
+          />
           <h2>{previewOpportunity.title}</h2>
           <p className="detail-copy">{previewOpportunity.summary}</p>
           <div className="doc-list">
@@ -120,7 +124,11 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
         </div>
 
         <div className="panel agency-panel">
-          <div className="panel-title">Agency posting flow</div>
+          <SectionIntro
+            eyebrow="Agency flow"
+            title="Agency posting flow"
+            description="The simplified drafting-to-publish path that turns agency inputs into a vendor-visible opportunity."
+          />
           <ol className="flow-list">
             <li>Create agency profile</li>
             <li>Draft solicitation with deadlines and attachments</li>
@@ -145,7 +153,11 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
 
       <section className="content-grid lower-grid">
         <div className="panel vendor-panel">
-          <div className="panel-title">Submission workspace</div>
+          <SectionIntro
+            eyebrow="Vendor tracking"
+            title="Submission workspace"
+            description="Active submission records showing how vendor packets move after they are sent into the platform."
+          />
           {vendorSubmissions.map((submission) => (
             <div className="submission-card" key={`${submission.vendor}-${submission.opportunity}`}>
               <div className="submission-header">
