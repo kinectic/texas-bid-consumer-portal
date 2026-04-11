@@ -35,6 +35,7 @@ type MarketplacePageProps = {
   publishedBidPreview: CreateBidFormState
   publishedOpportunity: Opportunity | null
   currentOpportunity: Opportunity
+  readinessByOpportunityId: Record<string, { label: string, detail: string }>
   submissions: Submission[]
   onSelectOpportunity: (opportunity: Opportunity) => void
   onNavigate: (view: ViewKey) => void
@@ -44,6 +45,7 @@ export function MarketplacePage({
   publishedBidPreview,
   publishedOpportunity,
   currentOpportunity,
+  readinessByOpportunityId,
   submissions,
   onSelectOpportunity,
   onNavigate,
@@ -111,6 +113,7 @@ export function MarketplacePage({
             opportunities={marketplaceFeed}
             statusClassMap={statusClass}
             metaFormatter={(opportunity) => `${opportunity.agency} • ${opportunity.location} • ${opportunity.category}`}
+            readinessByOpportunityId={readinessByOpportunityId}
             selectedOpportunityId={previewOpportunity.id}
             onSelectOpportunity={(opportunity) => {
               onSelectOpportunity(opportunity)

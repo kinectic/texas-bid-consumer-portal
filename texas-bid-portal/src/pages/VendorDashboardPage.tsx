@@ -34,11 +34,12 @@ type VendorDashboardPageProps = {
     totalDocuments: number
     submissionStatus: string
   }
+  readinessByOpportunityId: Record<string, { label: string, detail: string }>
   onSelectOpportunity: (opportunity: Opportunity) => void
   onNavigate: (view: ViewKey) => void
 }
 
-export function VendorDashboardPage({ currentOpportunity, submissions, draftSummary, onSelectOpportunity, onNavigate }: VendorDashboardPageProps) {
+export function VendorDashboardPage({ currentOpportunity, submissions, draftSummary, readinessByOpportunityId, onSelectOpportunity, onNavigate }: VendorDashboardPageProps) {
   const savedOpportunities = [
     currentOpportunity,
     ...opportunities.filter((opportunity) => opportunity.status === 'open' && opportunity.id !== currentOpportunity.id),
@@ -93,6 +94,7 @@ export function VendorDashboardPage({ currentOpportunity, submissions, draftSumm
             opportunities={savedOpportunities}
             statusClassMap={statusClass}
             metaFormatter={(opportunity) => `${opportunity.agency} • ${opportunity.location}`}
+            readinessByOpportunityId={readinessByOpportunityId}
             selectedOpportunityId={currentOpportunity.id}
             onSelectOpportunity={(opportunity) => {
               onSelectOpportunity(opportunity)

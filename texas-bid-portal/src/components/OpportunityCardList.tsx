@@ -1,11 +1,17 @@
 import type { Opportunity } from '../types'
 
+type OpportunityReadinessSummary = {
+  label: string
+  detail: string
+}
+
 type OpportunityCardListProps = {
   opportunities: Opportunity[]
   statusClassMap: Record<Opportunity['status'], string>
   metaFormatter: (opportunity: Opportunity) => string
   selectedOpportunityId?: string
   onSelectOpportunity?: (opportunity: Opportunity) => void
+  readinessByOpportunityId?: Record<string, OpportunityReadinessSummary>
 }
 
 export function OpportunityCardList({
@@ -14,10 +20,14 @@ export function OpportunityCardList({
   metaFormatter,
   selectedOpportunityId,
   onSelectOpportunity,
+  readinessByOpportunityId,
 }: OpportunityCardListProps) {
   return (
     <div className="opportunity-list">
       {opportunities.map((opportunity) => (
+        (() => {
+          const readiness = readinessByOpportunityId?.[opportunity.id]
+          return (
         <article
           className="opportunity-card"
           key={opportunity.id}
@@ -32,11 +42,19 @@ export function OpportunityCardList({
             <span className={statusClassMap[opportunity.status]}>{opportunity.status}</span>
           </div>
           <p>{opportunity.summary}</p>
+          {readiness ? (
+            <div className="dashboard-note compact-note">
+              <strong>{readiness.label}</strong>
+              <div>{readiness.detail}</div>
+            </div>
+          ) : null}
           <div className="card-footer">
             <div className="muted">Due {opportunity.dueDate}</div>
             <div className="muted">Source: {opportunity.source}</div>
           </div>
         </article>
+          )
+        })()
       ))}
     </div>
   )

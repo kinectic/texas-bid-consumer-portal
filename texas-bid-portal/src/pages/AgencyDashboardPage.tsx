@@ -41,11 +41,12 @@ type AgencyDashboardPageProps = {
   currentOpportunity: Opportunity
   publishedOpportunity: Opportunity | null
   submissions: Submission[]
+  readinessByOpportunityId: Record<string, { label: string, detail: string }>
   onSelectOpportunity: (opportunity: Opportunity) => void
   onNavigate: (view: ViewKey) => void
 }
 
-export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, submissions, onSelectOpportunity, onNavigate }: AgencyDashboardPageProps) {
+export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, submissions, readinessByOpportunityId, onSelectOpportunity, onNavigate }: AgencyDashboardPageProps) {
   const activeBids = publishedOpportunity
     ? [publishedOpportunity, ...opportunities.filter((opportunity) => opportunity.status === 'open' && opportunity.id !== publishedOpportunity.id)]
     : opportunities.filter((opportunity) => opportunity.status === 'open')
@@ -120,6 +121,7 @@ export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, 
             opportunities={activeBids}
             statusClassMap={statusClass}
             metaFormatter={(opportunity) => `${opportunity.category} • ${opportunity.location}`}
+            readinessByOpportunityId={readinessByOpportunityId}
             selectedOpportunityId={currentOpportunity.id}
             onSelectOpportunity={(opportunity) => {
               onSelectOpportunity(opportunity)

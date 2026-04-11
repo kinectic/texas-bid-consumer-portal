@@ -5,6 +5,7 @@ import { LifecycleSummaryPanel } from '../components/LifecycleSummaryPanel'
 import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
 import { MilestonesPanel } from '../components/MilestonesPanel'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
+import { OpportunityCardList } from '../components/OpportunityCardList'
 import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
 import { PublishedBidSnapshotPanel } from '../components/PublishedBidSnapshotPanel'
 import { RecommendedOpportunitiesPanel } from '../components/RecommendedOpportunitiesPanel'
@@ -86,11 +87,12 @@ type HomeDashboardPageProps = {
   publishedBidPreview: CreateBidFormState
   publishedOpportunity: Opportunity | null
   currentOpportunity: Opportunity
+  readinessByOpportunityId: Record<string, { label: string, detail: string }>
   onSelectOpportunity: (opportunity: Opportunity) => void
   onNavigate: (view: ViewKey) => void
 }
 
-export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, currentOpportunity, onSelectOpportunity, onNavigate }: HomeDashboardPageProps) {
+export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, currentOpportunity, readinessByOpportunityId, onSelectOpportunity, onNavigate }: HomeDashboardPageProps) {
   const recommendedOpportunities = publishedOpportunity
     ? [currentOpportunity, ...opportunities.filter((opportunity) => opportunity.id !== currentOpportunity.id)].slice(0, 2)
     : opportunities.slice(0, 2)
@@ -161,6 +163,23 @@ export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, c
           onSelectOpportunity={onSelectOpportunity}
           onAction={() => onNavigate('opportunity')}
         />
+      </section>
+
+      <section className="content-grid lower-grid">
+        <div className="panel">
+          <div className="panel-title">Opportunity readiness scan</div>
+          <OpportunityCardList
+            opportunities={recommendedOpportunities}
+            statusClassMap={{ open: 'status status-open', awarded: 'status status-awarded', 'under-review': 'status status-review' }}
+            metaFormatter={(opportunity) => `${opportunity.agency} • ${opportunity.location}`}
+            readinessByOpportunityId={readinessByOpportunityId}
+            selectedOpportunityId={currentOpportunity.id}
+            onSelectOpportunity={(opportunity) => {
+              onSelectOpportunity(opportunity)
+              onNavigate('opportunity')
+            }}
+          />
+        </div>
       </section>
 
       <section className="content-grid lower-grid">

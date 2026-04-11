@@ -33,6 +33,11 @@ type DraftSummary = {
   submissionStatus: string
 }
 
+type OpportunityReadinessSummary = {
+  label: string
+  detail: string
+}
+
 function renderView(
   view: ViewKey,
   createBidForm: CreateBidFormState,
@@ -50,6 +55,7 @@ function renderView(
   publishedOpportunity: Opportunity | null,
   currentOpportunity: Opportunity,
   selectOpportunity: (opportunity: Opportunity) => void,
+  readinessByOpportunityId: Record<string, OpportunityReadinessSummary>,
   submissionQueue: Submission[],
   saveSubmissionDraft: () => void,
   submitVendorResponse: () => void,
@@ -64,6 +70,7 @@ function renderView(
           publishedBidPreview={createBidForm}
           publishedOpportunity={publishedOpportunity}
           currentOpportunity={currentOpportunity}
+          readinessByOpportunityId={readinessByOpportunityId}
           onSelectOpportunity={selectOpportunity}
           onNavigate={navigate}
         />
@@ -74,6 +81,7 @@ function renderView(
           publishedBidPreview={createBidForm}
           publishedOpportunity={publishedOpportunity}
           currentOpportunity={currentOpportunity}
+          readinessByOpportunityId={readinessByOpportunityId}
           submissions={submissionQueue}
           onSelectOpportunity={selectOpportunity}
           onNavigate={navigate}
@@ -86,6 +94,7 @@ function renderView(
         <AgencyDashboardPage
           currentOpportunity={currentOpportunity}
           publishedOpportunity={publishedOpportunity}
+          readinessByOpportunityId={readinessByOpportunityId}
           submissions={submissionQueue}
           onSelectOpportunity={selectOpportunity}
           onNavigate={navigate}
@@ -117,7 +126,7 @@ function renderView(
         />
       )
     case 'vendor-dashboard':
-      return <VendorDashboardPage currentOpportunity={currentOpportunity} submissions={submissionQueue} draftSummary={draftSummary} onSelectOpportunity={selectOpportunity} onNavigate={navigate} />
+      return <VendorDashboardPage currentOpportunity={currentOpportunity} submissions={submissionQueue} draftSummary={draftSummary} readinessByOpportunityId={readinessByOpportunityId} onSelectOpportunity={selectOpportunity} onNavigate={navigate} />
     case 'submission-workflow':
       return (
         <SubmissionWorkflowPage
@@ -139,6 +148,7 @@ function renderView(
           publishedBidPreview={createBidForm}
           publishedOpportunity={publishedOpportunity}
           currentOpportunity={currentOpportunity}
+          readinessByOpportunityId={readinessByOpportunityId}
           onSelectOpportunity={selectOpportunity}
           onNavigate={navigate}
         />
@@ -196,6 +206,27 @@ function App() {
     totalDocuments: submissionDocuments.length,
     submissionStatus: currentSubmission?.status ?? 'No saved submission record',
   }
+  const readinessByOpportunityId: Record<string, OpportunityReadinessSummary> = Object.fromEntries(
+    opportunities.map((opportunity) => {
+      const form = submissionFormsByOpportunity[opportunity.id] ?? initialSubmissionFormState
+      const docs = submissionDocumentsByOpportunity[opportunity.id] ?? initialSubmissionDocuments
+      const submission = submissionQueue.find((item) => item.opportunityId === opportunity.id)
+      const editedFields = Object.entries(form).filter(([key, value]) => value !== initialSubmissionFormState[key as keyof SubmissionFormState]).length
+      const attachedDocs = docs.filter((document) => document.status.toLowerCase().includes('attached')).length
+      const label = submission
+        ? `Submission ${submission.status}`
+        : editedFields > 0 || attachedDocs > 0
+          ? 'Draft in progress'
+          : 'No activity yet'
+      const detail = submission
+        ? `${attachedDocs}/${docs.length} attachments ready • ${editedFields} edited fields`
+        : editedFields > 0 || attachedDocs > 0
+          ? `${attachedDocs}/${docs.length} attachments ready • ${editedFields} edited fields`
+          : 'Untouched default response state'
+
+      return [opportunity.id, { label, detail }]
+    }),
+  )
 
   const updateSubmissionForm = (field: keyof SubmissionFormState, value: string) => {
     setSubmissionFormsByOpportunity((current) => ({
@@ -329,6 +360,7 @@ function App() {
           publishedOpportunity,
           currentOpportunity,
           selectOpportunity,
+          readinessByOpportunityId,
           submissionQueue,
           saveSubmissionDraft,
           submitVendorResponse,
