@@ -20,9 +20,17 @@ export function LifecycleSummaryPanel({
       <div className="lifecycle-summary-list">
         {items.map((item) => (
           <div
-            className={item.active ? 'draft-card draft-card-active' : 'draft-card'}
+            className={item.active ? 'draft-card draft-card-active interactive-card' : item.onClick ? 'draft-card interactive-card' : 'draft-card'}
             key={item.stage}
             onClick={item.onClick}
+            onKeyDown={(event) => {
+              if ((event.key === 'Enter' || event.key === ' ') && item.onClick) {
+                event.preventDefault()
+                item.onClick()
+              }
+            }}
+            role={item.onClick ? 'button' : undefined}
+            tabIndex={item.onClick ? 0 : undefined}
           >
             <strong>{item.stage}</strong>
             <div className="muted">{item.detail}</div>
