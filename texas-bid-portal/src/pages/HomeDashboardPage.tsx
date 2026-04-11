@@ -166,6 +166,14 @@ export function HomeDashboardPage({ publishedBidPreview }: HomeDashboardPageProp
 
       <section className="content-grid lower-grid">
         <div className="panel">
+          <div className="panel-title">Consistent next move</div>
+          <div className="draft-card">
+            <strong>Follow the workflow actions bar</strong>
+            <div className="muted">Every major screen now pushes toward the next practical procurement step instead of leaving the user guessing.</div>
+          </div>
+        </div>
+
+        <div className="panel">
           <div className="panel-title">Next product layers</div>
           <div className="draft-list">
             <div className="draft-card">

@@ -13,6 +13,7 @@ export const workflowActionMap: Partial<Record<ViewKey, { label: string; target:
   opportunity: [
     { label: 'Start submission', target: 'submission-workflow' },
     { label: 'Back to marketplace', target: 'marketplace' },
+    { label: 'Open vendor dashboard', target: 'vendor-dashboard' },
   ],
   'agency-dashboard': [
     { label: 'Create new bid', target: 'create-bid' },
@@ -20,6 +21,7 @@ export const workflowActionMap: Partial<Record<ViewKey, { label: string; target:
   ],
   'create-bid': [
     { label: 'Return to agency dashboard', target: 'agency-dashboard' },
+    { label: 'Preview in marketplace', target: 'marketplace' },
     { label: 'Review submissions', target: 'agency-submission-review' },
   ],
   'agency-submission-review': [

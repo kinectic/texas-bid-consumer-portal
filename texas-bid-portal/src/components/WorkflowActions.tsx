@@ -13,10 +13,14 @@ export function WorkflowActions({ activeView, onNavigate }: WorkflowActionsProps
 
   return (
     <section className="workflow-actions">
-      <div className="panel-title">Workflow actions</div>
+      <div className="panel-title">Next actions</div>
       <div className="workflow-actions-list">
-        {actions.map((action) => (
-          <button key={`${activeView}-${action.target}`} className="ghost" onClick={() => onNavigate(action.target)}>
+        {actions.map((action, index) => (
+          <button
+            key={`${activeView}-${action.target}`}
+            className={index === 0 ? 'primary' : 'ghost'}
+            onClick={() => onNavigate(action.target)}
+          >
             {action.label}
           </button>
         ))}
