@@ -89,6 +89,8 @@ type SubmissionWorkflowPageProps = {
     attachedCount: number
     totalDocuments: number
     submissionStatus: string
+    bufferLabel: string
+    preservedUnsavedDraftLabel: string
   }
   onUploadNextDocument: () => void
   opportunity: Opportunity
@@ -164,6 +166,12 @@ export function SubmissionWorkflowPage({
           <p className="muted">
             Mode: {responseRowMode}
           </p>
+          <p className="muted">
+            Buffer: {draftSummary.bufferLabel}
+          </p>
+          <p className="muted">
+            Unsaved draft lane: {draftSummary.preservedUnsavedDraftLabel}
+          </p>
         </div>
         <div className="top-actions">
           <button className="ghost" onClick={() => {
@@ -238,8 +246,13 @@ export function SubmissionWorkflowPage({
           items={[
             {
               label: `Draft persistence — ${responseRowLabel}`,
-              detail: `${responseRowMode} • ${draftSummary.formStatus} • ${draftSummary.attachedCount}/${draftSummary.totalDocuments} attachments ready • ${draftSummary.submissionStatus}`,
+              detail: `${responseRowMode} • ${draftSummary.bufferLabel} • ${draftSummary.formStatus} • ${draftSummary.attachedCount}/${draftSummary.totalDocuments} attachments ready • ${draftSummary.submissionStatus}`,
               progress: `${Math.round((draftSummary.attachedCount / Math.max(draftSummary.totalDocuments, 1)) * 100)}%`,
+            },
+            {
+              label: 'Unsaved draft lane',
+              detail: draftSummary.preservedUnsavedDraftLabel,
+              progress: draftSummary.preservedUnsavedDraftLabel.startsWith('Preserved') ? '60%' : '0%',
             },
             ...submissionStatusItems,
           ]}

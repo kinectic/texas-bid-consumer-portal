@@ -31,6 +31,8 @@ type DraftSummary = {
   attachedCount: number
   totalDocuments: number
   submissionStatus: string
+  bufferLabel: string
+  preservedUnsavedDraftLabel: string
 }
 
 type OpportunityReadinessSummary = {
@@ -260,13 +262,22 @@ function App() {
   const currentDraftKey = selectedSubmissionId ?? `draft:${currentOpportunity.id}`
   const submissionForm = submissionFormsByKey[currentDraftKey] ?? initialSubmissionFormState
   const submissionDocuments = submissionDocumentsByKey[currentDraftKey] ?? initialSubmissionDocuments
+  const unsavedDraftForm = submissionFormsByKey[`draft:${currentOpportunity.id}`] ?? initialSubmissionFormState
+  const unsavedDraftDocuments = submissionDocumentsByKey[`draft:${currentOpportunity.id}`] ?? initialSubmissionDocuments
   const changedFormFields = Object.entries(submissionForm).filter(([key, value]) => value !== initialSubmissionFormState[key as keyof SubmissionFormState]).length
   const attachedCount = submissionDocuments.filter((document) => document.status.toLowerCase().includes('attached')).length
+  const unsavedDraftChangedFields = Object.entries(unsavedDraftForm).filter(([key, value]) => value !== initialSubmissionFormState[key as keyof SubmissionFormState]).length
+  const unsavedDraftAttachedCount = unsavedDraftDocuments.filter((document) => document.status.toLowerCase().includes('attached')).length
+  const unsavedDraftHasEdits = unsavedDraftChangedFields > 0 || unsavedDraftAttachedCount > 0
   const draftSummary: DraftSummary = {
     formStatus: changedFormFields === 0 ? 'Untouched default draft' : `Edited draft (${changedFormFields} fields changed)`,
     attachedCount,
     totalDocuments: submissionDocuments.length,
     submissionStatus: currentSubmission?.status ?? 'No saved submission record',
+    bufferLabel: selectedSubmissionId ? `Saved-row buffer (${selectedSubmissionId})` : `Unsaved draft buffer (draft:${currentOpportunity.id})`,
+    preservedUnsavedDraftLabel: unsavedDraftHasEdits
+      ? `Preserved unsaved draft available: ${unsavedDraftChangedFields} edited fields • ${unsavedDraftAttachedCount}/${unsavedDraftDocuments.length} attachments ready`
+      : 'No preserved unsaved draft edits for this opportunity',
   }
   const readinessByOpportunityId: Record<string, OpportunityReadinessSummary> = Object.fromEntries(
     opportunities.map((opportunity) => {
