@@ -38,6 +38,7 @@ type MarketplacePageProps = {
   readinessByOpportunityId: Record<string, { label: string, detail: string }>
   submissions: Submission[]
   onSelectOpportunity: (opportunity: Opportunity) => void
+  onSelectSubmission: (submission: Submission) => void
   onNavigate: (view: ViewKey) => void
 }
 
@@ -48,6 +49,7 @@ export function MarketplacePage({
   readinessByOpportunityId,
   submissions,
   onSelectOpportunity,
+  onSelectSubmission,
   onNavigate,
 }: MarketplacePageProps) {
   const previewOpportunity = publishedOpportunity && currentOpportunity.id === publishedOpportunity.id
@@ -67,10 +69,14 @@ export function MarketplacePage({
   ]
   const activeSubmission = submissions.find((submission) => submission.opportunityId === previewOpportunity.id)
   const submissionActivityItems = submissions.map((submission) => ({
-    key: `${submission.opportunityId}-${submission.vendor}`,
+    key: submission.id,
     opportunityId: submission.opportunityId,
-    title: submission.vendor,
+    submissionId: submission.id,
+    title: `${submission.vendor} • ${submission.id}`,
     detail: `${submission.opportunity} • ${submission.opportunityId} • Submitted ${submission.submittedAt}`,
+    summary: submission.id === activeSubmission?.id
+      ? 'Currently selected vendor-side submission row for this opportunity.'
+      : 'Click to open this exact submission row in the vendor workflow.',
   }))
 
   return (
@@ -171,11 +177,18 @@ export function MarketplacePage({
           title="Submission workspace"
           items={submissionActivityItems}
           currentOpportunityId={previewOpportunity.id}
-          onSelectSubmission={(opportunityId) => {
+          selectedSubmissionId={activeSubmission?.id}
+          onSelectSubmission={(opportunityId, submissionId) => {
             const matchingOpportunity = marketplaceFeed.find((opportunity) => opportunity.id === opportunityId)
+            const matchingSubmission = submissionId
+              ? submissions.find((submission) => submission.id === submissionId)
+              : null
             if (matchingOpportunity) {
+              if (matchingSubmission) {
+                onSelectSubmission(matchingSubmission)
+              }
               onSelectOpportunity(matchingOpportunity)
-              onNavigate('opportunity')
+              onNavigate('submission-workflow')
             }
           }}
         />

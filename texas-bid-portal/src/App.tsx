@@ -101,6 +101,7 @@ function renderView(
           readinessByOpportunityId={readinessByOpportunityId}
           submissions={submissionQueue}
           onSelectOpportunity={selectOpportunity}
+          onSelectSubmission={selectSubmission}
           onNavigate={navigate}
         />
       )
