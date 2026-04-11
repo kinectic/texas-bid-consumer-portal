@@ -26,7 +26,7 @@ import {
   presentVendorQueueSubtitle,
   presentVendorRowSummary,
 } from '../utils/vendorPresentation'
-import { sharedDashboardCopy } from '../utils/dashboardSnapshotContent'
+import { shellMetricsCopy } from '../utils/shellMetricsContent'
 
 const submissionStatusItems = [
   submissionStatusSummary.draft,
@@ -73,10 +73,10 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
         ...submissions.filter((submission) => submission.opportunityId !== currentOpportunity.id),
       ]
   const vendorStatsItems = [
-    { value: savedOpportunities.length, label: 'Saved opportunities' },
-    { value: currentOpportunitySubmissions.length, label: 'Current opportunity submissions' },
-    { value: submissions.length, label: 'All submission records' },
-    { value: lifecycleMetrics.vendorProfileCompleteness, label: 'Profile completeness' },
+    { value: savedOpportunities.length, label: shellMetricsCopy.vendorStats.savedOpportunities },
+    { value: currentOpportunitySubmissions.length, label: shellMetricsCopy.vendorStats.currentOpportunitySubmissions },
+    { value: submissions.length, label: shellMetricsCopy.vendorStats.allSubmissionRecords },
+    { value: lifecycleMetrics.vendorProfileCompleteness, label: shellMetricsCopy.vendorStats.profileCompleteness },
   ]
   const activeSubmission = submissions.find((submission) => submission.id === selectedSubmissionId)
     ?? submissions.find((submission) => submission.opportunityId === currentOpportunity.id)
@@ -209,7 +209,7 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
 
       <section className="content-grid lower-grid">
         <SelectionContextPanel
-          title={sharedDashboardCopy.selectionContextTitle}
+          title={shellMetricsCopy.opportunitySelectionTitle}
           currentOpportunity={currentOpportunity}
           activeSubmission={activeSubmission}
           mode="vendor"

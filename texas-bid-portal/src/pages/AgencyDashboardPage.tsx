@@ -19,6 +19,7 @@ import {
   agencyMilestoneItems,
   agencyPriorityControls,
 } from '../utils/agencyDashboardContent'
+import { shellMetricsCopy } from '../utils/shellMetricsContent'
 import type { ViewKey } from '../data/viewData'
 
 type AgencyDashboardPageProps = {
@@ -40,9 +41,9 @@ export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, 
     : opportunities.filter((opportunity) => opportunity.status === 'open')
   const awardedBids = opportunities.filter((opportunity) => opportunity.status === 'awarded')
   const agencyMetricsItems = [
-    { value: activeBids.length, label: 'Active bids' },
-    { value: publishedOpportunity ? 0 : 1, label: 'Drafts waiting for final review' },
-    { value: submissions.length, label: 'Recent vendor submissions' },
+    { value: activeBids.length, label: shellMetricsCopy.agencyMetrics.activeBids },
+    { value: publishedOpportunity ? 0 : 1, label: shellMetricsCopy.agencyMetrics.draftsWaiting },
+    { value: submissions.length, label: shellMetricsCopy.agencyMetrics.recentVendorSubmissions },
   ]
   const draftSummaryItems = [
     {
@@ -132,7 +133,7 @@ export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, 
 
       <section className="content-grid lower-grid">
         <SelectionContextPanel
-          title={agencyDashboardCopy.selectionContextTitle}
+          title={shellMetricsCopy.opportunitySelectionTitle}
           currentOpportunity={currentOpportunity}
           activeSubmission={activeSubmission}
           mode="agency"
