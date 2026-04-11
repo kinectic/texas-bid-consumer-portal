@@ -1,4 +1,5 @@
 import type { Submission } from '../types'
+import { presentReadinessForRole } from './readinessPresentation'
 
 export type SubmissionActivityItem = {
   key: string
@@ -7,23 +8,6 @@ export type SubmissionActivityItem = {
   title: string
   detail: string
   summary?: string
-}
-
-function agencyReadinessSummary(readiness?: { label: string; detail: string }): string {
-  if (!readiness) return ''
-
-  const label = readiness.label
-    .replace('Saved row active', 'Vendor prep state: saved response active')
-    .replace('Unsaved draft lane has edits', 'Vendor prep state: unsent draft work exists')
-    .replace('No activity yet', 'Vendor prep state: no saved or draft activity')
-
-  const detail = readiness.detail
-    .replace('buffer saved-row', 'saved response package on file')
-    .replace('unsaved lane has preserved edits', 'vendor still has unsent draft work')
-    .replace('unsaved lane empty', 'no extra unsent draft work')
-    .replace('Unsaved draft buffer', 'Unsent draft work')
-
-  return `${label} • ${detail}`
 }
 
 type BuildSubmissionActivityItemsOptions = {
@@ -49,6 +33,8 @@ export function buildSubmissionActivityItems({
     const isSelected = submission.id === selectedSubmissionId
     const isCurrentOpportunity = submission.opportunityId === currentOpportunityId
 
+    const presentedReadiness = presentReadinessForRole(readinessByOpportunityId?.[submission.opportunityId], mode)
+
     return {
       key: submission.id,
       opportunityId: submission.opportunityId,
@@ -57,10 +43,10 @@ export function buildSubmissionActivityItems({
       detail: `${submission.opportunity} • row ${rowNumber} of ${siblingRows.length} • ${submission.opportunityId} • Submitted ${submission.submittedAt}`,
       summary:
         mode === 'agency'
-          ? `${isCurrentOpportunity ? 'Current opportunity' : 'Other opportunity'} • ${submission.status} • Vendor ${submission.vendor} • active row ${isSelected ? 'yes' : 'no'} • response row ${rowNumber}${readinessByOpportunityId?.[submission.opportunityId] ? ` • ${agencyReadinessSummary(readinessByOpportunityId[submission.opportunityId])}` : ''}`
+          ? `${isCurrentOpportunity ? 'Current opportunity' : 'Other opportunity'} • ${submission.status} • Vendor ${submission.vendor} • active row ${isSelected ? 'yes' : 'no'} • response row ${rowNumber}${presentedReadiness.label ? ` • ${presentedReadiness.label} • ${presentedReadiness.detail}` : ''}`
           : isSelected
-            ? `Active vendor-side submission row. ${readinessByOpportunityId?.[submission.opportunityId]?.label ?? 'Saved row active'} • ${readinessByOpportunityId?.[submission.opportunityId]?.detail ?? 'No extra buffer context.'}`
-            : `Click to reopen this exact vendor response row in the workflow. ${readinessByOpportunityId?.[submission.opportunityId]?.label ?? 'Saved/draft state available'} • ${readinessByOpportunityId?.[submission.opportunityId]?.detail ?? 'No extra buffer context.'}`,
+            ? `Active vendor-side submission row. ${presentedReadiness.label || 'Saved row active'} • ${presentedReadiness.detail || 'No extra buffer context.'}`
+            : `Click to reopen this exact vendor response row in the workflow. ${presentedReadiness.label || 'Saved/draft state available'} • ${presentedReadiness.detail || 'No extra buffer context.'}`,
     }
   })
 }
