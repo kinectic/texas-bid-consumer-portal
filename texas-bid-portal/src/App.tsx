@@ -210,7 +210,9 @@ function App() {
 
   const advanceSubmissionStatus = (status: Submission['status']) => {
     setSubmissionQueue((current) => {
-      const activeIndex = current.findIndex((submission) => submission.status !== 'shortlisted')
+      const activeIndex = current.findIndex(
+        (submission) => submission.opportunityId === currentOpportunity.id && submission.status !== 'shortlisted',
+      )
 
       if (activeIndex === -1) {
         return current
@@ -223,7 +225,7 @@ function App() {
   }
 
   const archiveSubmission = () => {
-    setSubmissionQueue((current) => current.slice(1))
+    setSubmissionQueue((current) => current.filter((submission) => submission.opportunityId !== currentOpportunity.id))
   }
 
   const publishedOpportunity = isBidPublished

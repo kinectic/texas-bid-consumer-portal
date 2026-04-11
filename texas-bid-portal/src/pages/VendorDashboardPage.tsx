@@ -42,8 +42,12 @@ export function VendorDashboardPage({ currentOpportunity, submissions, onSelectO
   ].slice(0, 2)
   const vendorStatsItems = [
     { value: savedOpportunities.length, label: 'Saved opportunities' },
-    { value: submissions.length, label: 'Active submissions' },
+    { value: submissions.filter((submission) => submission.opportunityId === currentOpportunity.id).length, label: 'Active submissions' },
     { value: lifecycleMetrics.vendorProfileCompleteness, label: 'Profile completeness' },
+  ]
+  const orderedSubmissions = [
+    ...submissions.filter((submission) => submission.opportunityId === currentOpportunity.id),
+    ...submissions.filter((submission) => submission.opportunityId !== currentOpportunity.id),
   ]
 
   return (
@@ -100,7 +104,7 @@ export function VendorDashboardPage({ currentOpportunity, submissions, onSelectO
 
         <div className="panel">
           <div className="panel-title">Active submissions</div>
-          <SubmissionQueueList submissions={submissions} mode="vendor" />
+          <SubmissionQueueList submissions={orderedSubmissions} mode="vendor" currentOpportunityId={currentOpportunity.id} />
         </div>
       </section>
 

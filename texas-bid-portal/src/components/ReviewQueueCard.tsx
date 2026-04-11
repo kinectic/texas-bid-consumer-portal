@@ -4,9 +4,10 @@ import type { Submission } from '../types'
 type ReviewQueueCardProps = {
   submission: Submission
   mode?: 'agency' | 'vendor'
+  currentOpportunityId?: string
 }
 
-export function ReviewQueueCard({ submission, mode = 'agency' }: ReviewQueueCardProps) {
+export function ReviewQueueCard({ submission, mode = 'agency', currentOpportunityId }: ReviewQueueCardProps) {
   const statusSummary = submissionStatusSummary[submission.status]
   const statusClassName =
     submission.status === 'shortlisted'
@@ -14,6 +15,7 @@ export function ReviewQueueCard({ submission, mode = 'agency' }: ReviewQueueCard
       : submission.status === 'reviewing'
         ? 'status status-review'
         : 'status status-open'
+  const isCurrentOpportunity = submission.opportunityId === currentOpportunityId
 
   return (
     <div className="submission-card">
@@ -26,6 +28,8 @@ export function ReviewQueueCard({ submission, mode = 'agency' }: ReviewQueueCard
       <div className="muted">
         {mode === 'agency' ? `Opportunity: ${submission.opportunity}` : `Submitted by: ${submission.vendor}`}
       </div>
+      <div className="muted">Opportunity ID: {submission.opportunityId}</div>
+      {isCurrentOpportunity ? <div className="dashboard-note compact-note">Linked to current selected opportunity.</div> : null}
       <div className="muted">Submitted: {submission.submittedAt}</div>
       <div className="muted">Progress: {statusSummary.progress}</div>
       <div className="dashboard-note compact-note">{statusSummary.detail}</div>

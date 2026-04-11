@@ -65,7 +65,7 @@ export function MarketplacePage({
   const activeSubmission = submissions.find((submission) => submission.opportunityId === previewOpportunity.id)
   const submissionActivityItems = submissions.map((submission) => ({
     title: submission.vendor,
-    detail: `${submission.opportunity} • Submitted ${submission.submittedAt}`,
+    detail: `${submission.opportunity} • ${submission.opportunityId} • Submitted ${submission.submittedAt}`,
   }))
 
   return (

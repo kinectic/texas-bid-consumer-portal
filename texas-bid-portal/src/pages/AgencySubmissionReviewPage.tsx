@@ -77,7 +77,7 @@ export function AgencySubmissionReviewPage({
       <section className="content-grid">
         <div className="panel">
           <div className="panel-title">Response queue</div>
-          <SubmissionQueueList submissions={visibleSubmissions} mode="agency" />
+          <SubmissionQueueList submissions={visibleSubmissions} mode="agency" currentOpportunityId={currentOpportunity.id} />
         </div>
 
         <OutcomeSummaryPanel mode="agency" />
