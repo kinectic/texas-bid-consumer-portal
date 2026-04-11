@@ -214,6 +214,8 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
           activeSubmission={activeSubmission}
           mode="vendor"
           draftSummary={draftSummary}
+          responseRowCount={currentOpportunitySubmissions.length}
+          activeRowLabel={activeSubmission ? rowMetaBySubmissionId[activeSubmission.id]?.rowLabel : 'Unsaved draft lane'}
         />
         <SubmissionActivityPanel
           title="Submission activity — vendor view"

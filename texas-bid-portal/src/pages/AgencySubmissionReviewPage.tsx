@@ -176,6 +176,8 @@ export function AgencySubmissionReviewPage({
           activeSubmission={activeSubmission}
           mode="agency"
           draftSummary={draftSummary}
+          responseRowCount={currentOpportunitySubmissions.length}
+          activeRowLabel={activeRowMeta?.rowLabel ?? (activeSubmission ? 'Response row 1 of 1' : 'No active row')}
         />
       </section>
 

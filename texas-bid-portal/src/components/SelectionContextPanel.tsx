@@ -15,6 +15,8 @@ type SelectionContextPanelProps = {
   activeSubmission: Submission | null
   mode: 'vendor' | 'agency'
   draftSummary?: DraftSummary
+  responseRowCount?: number
+  activeRowLabel?: string
 }
 
 export function SelectionContextPanel({
@@ -23,6 +25,8 @@ export function SelectionContextPanel({
   activeSubmission,
   mode,
   draftSummary,
+  responseRowCount,
+  activeRowLabel,
 }: SelectionContextPanelProps) {
   return (
     <div className="panel selection-context-panel">
@@ -38,6 +42,8 @@ export function SelectionContextPanel({
           <strong>{mode === 'vendor' ? 'Vendor-side active submission' : 'Agency-side active submission'}</strong>
           <div className="muted">Status: {activeSubmission?.status ?? 'No linked submission yet'}</div>
           <div className="muted">Vendor: {activeSubmission?.vendor ?? 'No vendor record'}</div>
+          {activeRowLabel ? <div className="muted">Active row: {activeRowLabel}</div> : null}
+          {typeof responseRowCount === 'number' ? <div className="muted">Response rows for opportunity: {responseRowCount}</div> : null}
           <div className="muted">Selection linked: {activeSubmission?.opportunityId === currentOpportunity.id ? 'Yes' : 'No'}</div>
         </div>
         {draftSummary ? (
@@ -48,6 +54,11 @@ export function SelectionContextPanel({
             <div className="muted">Attachments: {draftSummary.attachedCount}/{draftSummary.totalDocuments} attached</div>
             <div className="muted">Submission record: {draftSummary.submissionStatus}</div>
             <div className="muted">Unsaved draft lane: {draftSummary.preservedUnsavedDraftLabel}</div>
+            <div className="dashboard-note compact-note">
+              {draftSummary.preservedUnsavedDraftLabel.startsWith('Preserved')
+                ? 'A separate unsaved draft lane exists for this opportunity and can be restored without overwriting the selected saved row.'
+                : 'No preserved unsaved draft is waiting behind the selected saved row.'}
+            </div>
           </div>
         ) : null}
       </div>
