@@ -1,4 +1,5 @@
 import { FieldMock } from '../components/FieldMock'
+import { LifecycleSummaryPanel } from '../components/LifecycleSummaryPanel'
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
 import { OpportunitySummaryPanel } from '../components/OpportunitySummaryPanel'
 import { PackageCompletenessPanel } from '../components/PackageCompletenessPanel'
@@ -49,6 +50,21 @@ const packageCompletenessItems = [
   {
     title: 'Signer confirmation',
     detail: 'Authorized signer is captured in the response form',
+  },
+]
+
+const lifecycleSummaryItems = [
+  {
+    stage: '1. Review opportunity fit',
+    detail: 'Confirm the bid matches capability, timing, and submission requirements.',
+  },
+  {
+    stage: '2. Assemble response packet',
+    detail: 'Prepare pricing, attachments, signer details, and response narrative.',
+  },
+  {
+    stage: '3. Submit into agency review',
+    detail: 'Send the final packet directly through the Texas-first portal workflow.',
   },
 ]
 
@@ -127,6 +143,10 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
       <section className="content-grid lower-grid">
         <PackageCompletenessPanel title="Response completeness" items={packageCompletenessItems} />
 
+        <LifecycleSummaryPanel title="Submission lifecycle summary" items={lifecycleSummaryItems} />
+      </section>
+
+      <section className="content-grid lower-grid">
         <div className="panel">
           <SectionIntro
             eyebrow="Final step"

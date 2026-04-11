@@ -1,5 +1,6 @@
 import { DraftPipelinePanel } from '../components/DraftPipelinePanel'
 import { HomeCtaPanel } from '../components/HomeCtaPanel'
+import { LifecycleSummaryPanel } from '../components/LifecycleSummaryPanel'
 import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
@@ -134,17 +135,7 @@ export function HomeDashboardPage({ publishedBidPreview, onNavigate }: HomeDashb
       </section>
 
       <section className="content-grid lower-grid">
-        <div className="panel">
-          <div className="panel-title">Connected lifecycle summary</div>
-          <div className="draft-list">
-            {lifecycleSteps.map((step) => (
-              <div className="draft-card" key={step.stage}>
-                <strong>{step.stage}</strong>
-                <div className="muted">{step.detail}</div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <LifecycleSummaryPanel items={lifecycleSteps} />
         <LifecycleTimelinePanel title="Lifecycle timeline" />
       </section>
 
