@@ -1,5 +1,6 @@
 import { ActionHeader } from '../components/ActionHeader'
 import { EmptyStatePanel } from '../components/EmptyStatePanel'
+import { MarketplaceStatsSnapshot } from '../components/MarketplaceStatsSnapshot'
 import { OpportunityCardList } from '../components/OpportunityCardList'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
@@ -10,7 +11,6 @@ import { SubmissionQueueList } from '../components/SubmissionQueueList'
 import { SubmissionStatusSnapshot } from '../components/SubmissionStatusSnapshot'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
 import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacketPanel'
-import { WorkflowMetricsSnapshot } from '../components/WorkflowMetricsSnapshot'
 import { lifecycleMetrics } from '../data/metrics'
 import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
 import { submissionLifecycle, submissionStatusSummary } from '../data/submissionStatus'
@@ -24,7 +24,7 @@ const submissionStatusItems = [
 export function VendorDashboardPage() {
   const savedOpportunities = opportunities.filter((opportunity) => opportunity.status === 'open')
   const recommendedOpportunities = opportunities.slice(0, 2)
-  const vendorMetricsItems = [
+  const vendorStatsItems = [
     { value: savedOpportunities.length, label: 'Saved opportunities' },
     { value: lifecycleMetrics.responsesInReview, label: 'Active submissions' },
     { value: lifecycleMetrics.vendorProfileCompleteness, label: 'Profile completeness' },
@@ -56,7 +56,7 @@ export function VendorDashboardPage() {
         }
       />
 
-      <WorkflowMetricsSnapshot items={vendorMetricsItems} />
+      <MarketplaceStatsSnapshot items={vendorStatsItems} />
 
       <section className="content-grid">
         <div className="panel">

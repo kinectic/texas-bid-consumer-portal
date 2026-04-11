@@ -1,4 +1,5 @@
 import { FinalActionPanel } from '../components/FinalActionPanel'
+import { MarketplaceStatsSnapshot } from '../components/MarketplaceStatsSnapshot'
 import { OpportunityCardList } from '../components/OpportunityCardList'
 import { OpportunityDocumentsPanel } from '../components/OpportunityDocumentsPanel'
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
@@ -11,6 +12,12 @@ import { SubmissionActivityPanel } from '../components/SubmissionActivityPanel'
 import { WorkflowFilterStrip } from '../components/WorkflowFilterStrip'
 import type { CreateBidFormState } from '../types/forms'
 import { opportunities, statusClass, vendorSubmissions } from '../data/mockData'
+
+const marketplaceStatsItems = [
+  { value: '2,092+', label: 'Texas opportunities visible in ecosystem research' },
+  { value: 3, label: 'Core workflows shown in this prototype' },
+  { value: 1, label: 'Texas-first experience instead of generic procurement clutter' },
+]
 
 type MarketplacePageProps = {
   publishedBidPreview: CreateBidFormState
@@ -48,20 +55,7 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
         </div>
       </header>
 
-      <section className="stats-grid">
-        <div className="stat-card">
-          <span className="stat-value">2,092+</span>
-          <span className="stat-label">Texas opportunities visible in ecosystem research</span>
-        </div>
-        <div className="stat-card">
-          <span className="stat-value">3</span>
-          <span className="stat-label">Core workflows shown in this prototype</span>
-        </div>
-        <div className="stat-card">
-          <span className="stat-value">1</span>
-          <span className="stat-label">Texas-first experience instead of generic procurement clutter</span>
-        </div>
-      </section>
+      <MarketplaceStatsSnapshot items={marketplaceStatsItems} />
 
       <section className="content-grid">
         <div className="panel marketplace-panel">
