@@ -8,12 +8,18 @@ type ReviewQueueCardProps = {
 
 export function ReviewQueueCard({ submission, mode = 'agency' }: ReviewQueueCardProps) {
   const statusSummary = submissionStatusSummary[submission.status]
+  const statusClassName =
+    submission.status === 'shortlisted'
+      ? 'status status-awarded'
+      : submission.status === 'reviewing'
+        ? 'status status-review'
+        : 'status status-open'
 
   return (
     <div className="submission-card">
       <div className="submission-header">
         <strong>{mode === 'agency' ? submission.vendor : submission.opportunity}</strong>
-        <span className={submission.status === 'received' ? 'status status-open' : 'status status-review'}>
+        <span className={statusClassName}>
           {statusSummary.label}
         </span>
       </div>

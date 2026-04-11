@@ -18,6 +18,7 @@ import type { Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 
 const submissionStatusItems = [
+  submissionStatusSummary.draft,
   submissionStatusSummary.received,
   submissionStatusSummary.reviewing,
   submissionStatusSummary.shortlisted,

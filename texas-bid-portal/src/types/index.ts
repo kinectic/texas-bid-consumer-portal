@@ -17,5 +17,5 @@ export type Submission = {
   vendor: string
   opportunity: string
   submittedAt: string
-  status: 'received' | 'reviewing' | 'shortlisted'
+  status: 'draft' | 'received' | 'reviewing' | 'shortlisted'
 }

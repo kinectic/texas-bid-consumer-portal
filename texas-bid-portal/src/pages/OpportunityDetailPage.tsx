@@ -9,6 +9,7 @@ import { OpportunitySummaryPanel } from '../components/OpportunitySummaryPanel'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
 import { bidPacketDocuments } from '../data/formState'
 import { opportunities, selectedOpportunity, statusClass } from '../data/mockData'
+import type { Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 
 const opportunityRequirementItems = [
@@ -20,11 +21,14 @@ const opportunityRequirementItems = [
 ] as const
 
 type OpportunityDetailPageProps = {
+  publishedOpportunity: typeof selectedOpportunity | null
+  submissionQueue: Submission[]
   onNavigate: (view: ViewKey) => void
 }
 
-export function OpportunityDetailPage({ onNavigate }: OpportunityDetailPageProps) {
-  const opportunity = selectedOpportunity
+export function OpportunityDetailPage({ publishedOpportunity, submissionQueue, onNavigate }: OpportunityDetailPageProps) {
+  const opportunity = publishedOpportunity ?? selectedOpportunity
+  const activeSubmission = submissionQueue.find((submission) => submission.opportunity === opportunity.title)
   const awardHistoryItems = opportunities
     .filter((item) => item.status === 'awarded')
     .map((item) => ({
@@ -44,7 +48,9 @@ export function OpportunityDetailPage({ onNavigate }: OpportunityDetailPageProps
         </div>
         <div className="top-actions">
           <button className="ghost" onClick={() => onNavigate('vendor-dashboard')}>Save Opportunity</button>
-          <button className="primary" onClick={() => onNavigate('submission-workflow')}>Start Submission</button>
+          <button className="primary" onClick={() => onNavigate('submission-workflow')}>
+            {activeSubmission ? 'Continue Submission' : 'Start Submission'}
+          </button>
         </div>
       </header>
 
@@ -72,7 +78,7 @@ export function OpportunityDetailPage({ onNavigate }: OpportunityDetailPageProps
           />
           <DetailActionsStrip
             secondaryLabel="Save Opportunity"
-            primaryLabel="Start Submission"
+            primaryLabel={activeSubmission ? 'Continue Submission' : 'Start Submission'}
             onSecondaryAction={() => onNavigate('vendor-dashboard')}
             onPrimaryAction={() => onNavigate('submission-workflow')}
           />

@@ -51,6 +51,7 @@ export function AgencySubmissionReviewPage({
     { label: 'Flag incomplete submission', className: 'ghost wide' as const, onClick: () => onAdvanceStatus('received') },
     { label: 'Archive response', className: 'ghost wide' as const, onClick: onArchiveSubmission },
   ]
+  const visibleSubmissions = submissions.filter((submission) => submission.status !== 'draft')
   return (
     <main className="main">
       <ActionHeader
@@ -66,15 +67,15 @@ export function AgencySubmissionReviewPage({
       />
 
       <section className="stats-grid">
-        <MetricCard value={submissions.length} label="Responses in review" />
-        <MetricCard value={submissions.filter((submission) => submission.status === 'shortlisted').length} label="Shortlist candidate" />
+        <MetricCard value={visibleSubmissions.length} label="Responses in review" />
+        <MetricCard value={visibleSubmissions.filter((submission) => submission.status === 'shortlisted').length} label="Shortlist candidate" />
         <MetricCard value="Today" label="Decision window" />
       </section>
 
       <section className="content-grid">
         <div className="panel">
           <div className="panel-title">Response queue</div>
-          <SubmissionQueueList submissions={submissions} mode="agency" />
+          <SubmissionQueueList submissions={visibleSubmissions} mode="agency" />
         </div>
 
         <OutcomeSummaryPanel mode="agency" />

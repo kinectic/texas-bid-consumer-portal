@@ -1,4 +1,9 @@
 export const submissionStatusSummary = {
+  draft: {
+    label: 'Draft',
+    detail: 'Vendor has started assembling a response but has not submitted it yet.',
+    progress: '10%',
+  },
   received: {
     label: 'Received',
     detail: 'Response package landed and is awaiting agency review.',
@@ -17,6 +22,7 @@ export const submissionStatusSummary = {
 } as const
 
 export const submissionLifecycle = [
+  'Draft',
   'Received',
   'Completeness check',
   'Reviewing',

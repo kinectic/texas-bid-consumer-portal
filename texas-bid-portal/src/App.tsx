@@ -38,6 +38,8 @@ function renderView(
   publishBid: () => void,
   publishedOpportunity: Opportunity | null,
   submissionQueue: Submission[],
+  saveSubmissionDraft: () => void,
+  submitVendorResponse: () => void,
   advanceSubmissionStatus: (status: Submission['status']) => void,
   archiveSubmission: () => void,
   navigate: (view: ViewKey) => void,
@@ -48,7 +50,7 @@ function renderView(
     case 'marketplace':
       return <MarketplacePage publishedBidPreview={createBidForm} publishedOpportunity={publishedOpportunity} submissions={submissionQueue} onNavigate={navigate} />
     case 'opportunity':
-      return <OpportunityDetailPage onNavigate={navigate} />
+      return <OpportunityDetailPage publishedOpportunity={publishedOpportunity} submissionQueue={submissionQueue} onNavigate={navigate} />
     case 'agency-dashboard':
       return <AgencyDashboardPage publishedOpportunity={publishedOpportunity} submissions={submissionQueue} onNavigate={navigate} />
     case 'create-bid':
@@ -83,6 +85,10 @@ function renderView(
           onChange={updateSubmissionForm}
           documents={submissionDocuments}
           onUploadNextDocument={uploadNextSubmissionDocument}
+          opportunityTitle={(publishedOpportunity ?? opportunities[0]).title}
+          activeSubmission={submissionQueue.find((submission) => submission.opportunity === (publishedOpportunity ?? opportunities[0]).title) ?? null}
+          onSaveProgress={saveSubmissionDraft}
+          onSubmitResponse={submitVendorResponse}
           onNavigate={navigate}
         />
       )
@@ -133,6 +139,39 @@ function App() {
         index === pendingIndex ? { ...document, status: 'Attached' } : document,
       )
     })
+  }
+
+  const upsertSubmission = (status: Submission['status']) => {
+    const vendorName = submissionForm.signer.split(',')[0]?.trim() || 'Draft Vendor Response'
+    const opportunityTitle = (publishedOpportunity ?? opportunities[0]).title
+
+    setSubmissionQueue((current) => {
+      const existingIndex = current.findIndex((submission) => submission.opportunity === opportunityTitle)
+      const nextRecord: Submission = {
+        vendor: vendorName,
+        opportunity: opportunityTitle,
+        submittedAt: status === 'draft' ? 'Saved just now' : 'Submitted just now',
+        status,
+      }
+
+      if (existingIndex === -1) {
+        return [nextRecord, ...current]
+      }
+
+      return current.map((submission, index) =>
+        index === existingIndex
+          ? { ...submission, ...nextRecord }
+          : submission,
+      )
+    })
+  }
+
+  const saveSubmissionDraft = () => {
+    upsertSubmission('draft')
+  }
+
+  const submitVendorResponse = () => {
+    upsertSubmission('received')
   }
 
   const advanceSubmissionStatus = (status: Submission['status']) => {
@@ -197,6 +236,8 @@ function App() {
           publishBid,
           publishedOpportunity,
           submissionQueue,
+          saveSubmissionDraft,
+          submitVendorResponse,
           advanceSubmissionStatus,
           archiveSubmission,
           setActiveView,

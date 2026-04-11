@@ -13,6 +13,7 @@ import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacke
 import { WorkflowStageSummary } from '../components/WorkflowStageSummary'
 import { selectedOpportunity } from '../data/mockData'
 import { submissionStatusSummary } from '../data/submissionStatus'
+import type { Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import type { BidDocument, SubmissionFormState } from '../types/forms'
 
@@ -35,6 +36,7 @@ const submissionStageSummaryItems = [
 ]
 
 const submissionStatusItems = [
+  submissionStatusSummary.draft,
   submissionStatusSummary.received,
   submissionStatusSummary.reviewing,
   submissionStatusSummary.shortlisted,
@@ -83,11 +85,28 @@ type SubmissionWorkflowPageProps = {
   onChange: (field: keyof SubmissionFormState, value: string) => void
   documents: BidDocument[]
   onUploadNextDocument: () => void
+  opportunityTitle: string
+  activeSubmission: Submission | null
+  onSaveProgress: () => void
+  onSubmitResponse: () => void
   onNavigate: (view: ViewKey) => void
 }
 
-export function SubmissionWorkflowPage({ formState, onChange, documents, onUploadNextDocument, onNavigate }: SubmissionWorkflowPageProps) {
-  const opportunity = selectedOpportunity
+export function SubmissionWorkflowPage({
+  formState,
+  onChange,
+  documents,
+  onUploadNextDocument,
+  opportunityTitle,
+  activeSubmission,
+  onSaveProgress,
+  onSubmitResponse,
+  onNavigate,
+}: SubmissionWorkflowPageProps) {
+  const opportunity = {
+    ...selectedOpportunity,
+    title: opportunityTitle,
+  }
 
   return (
     <main className="main">
@@ -100,8 +119,14 @@ export function SubmissionWorkflowPage({ formState, onChange, documents, onUploa
           </p>
         </div>
         <div className="top-actions">
-          <button className="ghost" onClick={() => onNavigate('vendor-dashboard')}>Save Progress</button>
-          <button className="primary" onClick={() => onNavigate('agency-submission-review')}>Submit Response</button>
+          <button className="ghost" onClick={() => {
+            onSaveProgress()
+            onNavigate('vendor-dashboard')
+          }}>Save Progress</button>
+          <button className="primary" onClick={() => {
+            onSubmitResponse()
+            onNavigate('agency-submission-review')
+          }}>{activeSubmission?.status === 'received' ? 'Update Submitted Response' : 'Submit Response'}</button>
         </div>
       </header>
 
@@ -165,9 +190,12 @@ export function SubmissionWorkflowPage({ formState, onChange, documents, onUploa
           eyebrow="Final step"
           title="Submission confirmation"
           description="The last confirmation state before the vendor sends the completed response into agency review."
-          note={`This is the core V1 workflow: vendors should be able to move from ${opportunity.title} discovery to actual response submission without leaving the Texas-first portal.`}
-          actionLabel="Final submit"
-          onAction={() => onNavigate('agency-submission-review')}
+          note={`This is the core V1 workflow: vendors should be able to move from ${opportunity.title} discovery to actual response submission without leaving the Texas-first portal. Current record: ${activeSubmission ? activeSubmission.status : 'not created yet'}.`}
+          actionLabel={activeSubmission?.status === 'received' ? 'Update final submit' : 'Final submit'}
+          onAction={() => {
+            onSubmitResponse()
+            onNavigate('agency-submission-review')
+          }}
         />
       </section>
     </main>
