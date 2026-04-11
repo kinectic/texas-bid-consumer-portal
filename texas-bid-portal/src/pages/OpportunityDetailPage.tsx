@@ -2,6 +2,7 @@ import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
 import { OpportunityDocumentsPanel } from '../components/OpportunityDocumentsPanel'
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
 import { OpportunityStatusPanel } from '../components/OpportunityStatusPanel'
+import { OpportunitySummaryPanel } from '../components/OpportunitySummaryPanel'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
 import { bidPacketDocuments } from '../data/formState'
 import { selectedOpportunity, statusClass } from '../data/mockData'
@@ -26,15 +27,12 @@ export function OpportunityDetailPage() {
       </header>
 
       <section className="content-grid">
-        <div className="panel">
-          <div className="opportunity-top">
-            <div>
-              <div className="panel-title">Opportunity overview</div>
-              <div className="panel-subtitle">Vendor-facing summary with core procurement facts</div>
-            </div>
+        <div>
+          <div className="opportunity-top opportunity-summary-status-row">
+            <div />
             <span className={statusClass[opportunity.status]}>{opportunity.status}</span>
           </div>
-          <p className="detail-copy">{opportunity.summary}</p>
+          <OpportunitySummaryPanel summary={opportunity.summary} />
         </div>
 
         <div className="content-grid nested-grid">

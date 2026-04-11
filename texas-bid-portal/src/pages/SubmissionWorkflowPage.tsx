@@ -1,5 +1,6 @@
 import { FieldMock } from '../components/FieldMock'
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
+import { OpportunitySummaryPanel } from '../components/OpportunitySummaryPanel'
 import { SectionIntro } from '../components/SectionIntro'
 import { SubmissionAttachmentsPanel } from '../components/SubmissionAttachmentsPanel'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
@@ -52,14 +53,11 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
       </header>
 
       <section className="content-grid">
-        <div className="panel">
-          <SectionIntro
-            eyebrow="Submission entry"
-            title="Opportunity summary"
-            description="The live opportunity context that stays visible while the vendor assembles the response packet."
-          />
-          <p className="detail-copy">{opportunity.summary}</p>
-        </div>
+        <OpportunitySummaryPanel
+          title="Opportunity summary"
+          subtitle="The live opportunity context that stays visible while the vendor assembles the response packet."
+          summary={opportunity.summary}
+        />
 
         <OpportunityMetadataPanel opportunity={opportunity} title="Submission metadata" />
       </section>

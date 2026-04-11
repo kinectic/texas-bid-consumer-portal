@@ -1,6 +1,7 @@
 import { OpportunityDocumentsPanel } from '../components/OpportunityDocumentsPanel'
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
 import { OpportunityStatusPanel } from '../components/OpportunityStatusPanel'
+import { OpportunitySummaryPanel } from '../components/OpportunitySummaryPanel'
 import { SectionIntro } from '../components/SectionIntro'
 import { StatusBadgeLegend } from '../components/StatusBadgeLegend'
 import { WorkflowFilterStrip } from '../components/WorkflowFilterStrip'
@@ -107,7 +108,11 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
             description="The focused opportunity view vendors use when deciding whether to move into the submission workflow."
           />
           <h2>{previewOpportunity.title}</h2>
-          <p className="detail-copy">{previewOpportunity.summary}</p>
+          <OpportunitySummaryPanel
+            title="Opportunity summary"
+            subtitle="Focused vendor-facing summary before moving into the submission workflow."
+            summary={previewOpportunity.summary}
+          />
           <OpportunityDocumentsPanel
             documents={previewOpportunity.documents.map((name) => ({ name, status: 'Open' }))}
             title="Opportunity documents"
