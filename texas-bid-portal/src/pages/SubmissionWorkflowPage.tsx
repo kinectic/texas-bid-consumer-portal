@@ -1,4 +1,5 @@
 import { FieldMock } from '../components/FieldMock'
+import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacketPanel'
 import { submissionDocuments } from '../data/formState'
 import { selectedOpportunity } from '../data/mockData'
 import type { SubmissionFormState } from '../types/forms'
@@ -92,6 +93,10 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
           </div>
         </div>
 
+        <VendorSubmissionPacketPanel />
+      </section>
+
+      <section className="content-grid lower-grid">
         <div className="panel">
           <div className="panel-title">Required attachments</div>
           <div className="draft-list">
@@ -104,9 +109,7 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
           </div>
           <button className="ghost wide">Upload attachment</button>
         </div>
-      </section>
 
-      <section className="content-grid lower-grid">
         <div className="panel">
           <div className="panel-title">Pre-submit checklist</div>
           <ol className="flow-list">
@@ -117,7 +120,9 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
             <li>Submission confirmation ready</li>
           </ol>
         </div>
+      </section>
 
+      <section className="content-grid lower-grid">
         <div className="panel">
           <div className="panel-title">Submission confirmation</div>
           <div className="dashboard-note">

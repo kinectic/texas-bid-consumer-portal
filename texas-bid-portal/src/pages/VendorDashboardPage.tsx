@@ -1,7 +1,8 @@
+import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
+import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacketPanel'
 import { lifecycleMetrics } from '../data/metrics'
 import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
 import { submissionLifecycle, submissionStatusSummary } from '../data/submissionStatus'
-import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
 
 export function VendorDashboardPage() {
   const savedOpportunities = opportunities.filter((opportunity) => opportunity.status === 'open')
@@ -102,6 +103,8 @@ export function VendorDashboardPage() {
       </section>
 
       <section className="content-grid lower-grid">
+        <VendorSubmissionPacketPanel />
+
         <div className="panel">
           <div className="panel-title">Recommended bids</div>
           <div className="draft-list">
