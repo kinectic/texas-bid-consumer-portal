@@ -63,6 +63,13 @@ button {
   border: 0;
   text-align: left;
   cursor: pointer;
+  display: grid;
+  gap: 4px;
+}
+
+.nav-stage-copy {
+  font-size: 0.82rem;
+  color: #8fa3cc;
 }
 
 .page-shell {

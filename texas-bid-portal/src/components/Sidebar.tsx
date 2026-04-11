@@ -1,3 +1,4 @@
+import { navigationLabels } from '../data/navigationLabels'
 import type { ViewKey } from '../data/viewData'
 
 type SidebarProps = {
@@ -6,15 +7,15 @@ type SidebarProps = {
 }
 
 export function Sidebar({ activeView, onSelect }: SidebarProps) {
-  const navItems: { key: ViewKey; label: string }[] = [
-    { key: 'home', label: 'Overview' },
-    { key: 'marketplace', label: 'Marketplace' },
-    { key: 'opportunity', label: 'Opportunity Detail' },
-    { key: 'agency-dashboard', label: 'Agency Dashboard' },
-    { key: 'create-bid', label: 'Create Bid' },
-    { key: 'agency-submission-review', label: 'Agency Review' },
-    { key: 'vendor-dashboard', label: 'Vendor Workspace' },
-    { key: 'submission-workflow', label: 'Submissions' },
+  const navItems: ViewKey[] = [
+    'home',
+    'marketplace',
+    'opportunity',
+    'agency-dashboard',
+    'create-bid',
+    'agency-submission-review',
+    'vendor-dashboard',
+    'submission-workflow',
   ]
 
   return (
@@ -24,13 +25,15 @@ export function Sidebar({ activeView, onSelect }: SidebarProps) {
         <div className="brand-sub">Texas-first procurement platform</div>
       </div>
       <nav className="nav">
-        {navItems.map((item) => (
+        {navItems.map((key) => (
           <button
-            key={item.key}
-            className={item.key === activeView ? 'nav-item active nav-button' : 'nav-item nav-button'}
-            onClick={() => onSelect(item.key)}
+            key={key}
+            className={key === activeView ? 'nav-item active nav-button' : 'nav-item nav-button'}
+            onClick={() => onSelect(key)}
+            title={navigationLabels[key].stageAware}
           >
-            {item.label}
+            <span>{navigationLabels[key].short}</span>
+            <span className="nav-stage-copy">{navigationLabels[key].stageAware}</span>
           </button>
         ))}
       </nav>
