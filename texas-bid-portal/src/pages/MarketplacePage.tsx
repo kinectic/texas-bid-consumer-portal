@@ -1,3 +1,4 @@
+import { OpportunityDocumentsPanel } from '../components/OpportunityDocumentsPanel'
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
 import { OpportunityStatusPanel } from '../components/OpportunityStatusPanel'
 import { SectionIntro } from '../components/SectionIntro'
@@ -105,14 +106,10 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
           />
           <h2>{previewOpportunity.title}</h2>
           <p className="detail-copy">{previewOpportunity.summary}</p>
-          <div className="doc-list">
-            {previewOpportunity.documents.map((document) => (
-              <div className="doc-item" key={document}>
-                <span>{document}</span>
-                <button className="linkish">Open</button>
-              </div>
-            ))}
-          </div>
+          <OpportunityDocumentsPanel
+            documents={previewOpportunity.documents.map((name) => ({ name, status: 'Open' }))}
+            title="Opportunity documents"
+          />
           <div className="detail-actions">
             <button className="ghost">Save Opportunity</button>
             <button className="primary">Submit Response</button>

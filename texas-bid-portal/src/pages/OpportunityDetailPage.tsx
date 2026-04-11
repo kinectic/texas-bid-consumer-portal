@@ -1,4 +1,5 @@
 import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
+import { OpportunityDocumentsPanel } from '../components/OpportunityDocumentsPanel'
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
 import { OpportunityStatusPanel } from '../components/OpportunityStatusPanel'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
@@ -58,17 +59,7 @@ export function OpportunityDetailPage() {
           </div>
         </div>
 
-        <div className="panel">
-          <div className="panel-title">Documents</div>
-          <div className="doc-list">
-            {bidPacketDocuments.map((document) => (
-              <div className="doc-item" key={document.name}>
-                <span>{document.name}</span>
-                <button className="linkish">{document.status}</button>
-              </div>
-            ))}
-          </div>
-        </div>
+        <OpportunityDocumentsPanel documents={bidPacketDocuments} />
       </section>
 
       <section className="content-grid lower-grid">
