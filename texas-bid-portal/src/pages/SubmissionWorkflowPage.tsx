@@ -121,6 +121,10 @@ export function SubmissionWorkflowPage({
     ? rowMetaBySubmissionId[activeSubmission.id]?.activeLabel ?? activeSubmission.id
     : 'new unsaved response'
   const responseRowMode = activeSubmission ? 'editing existing saved row' : 'drafting a brand-new unsaved row'
+  const siblingRowItems = siblingSubmissions.map((submission) => ({
+    stage: rowMetaBySubmissionId[submission.id]?.rowLabel ?? submission.id,
+    detail: `${submission.vendor} • ${submission.id} • ${submission.status}${submission.id === activeSubmission?.id ? ' • active row' : ''}`,
+  }))
 
   return (
     <main className="main">
@@ -164,6 +168,13 @@ export function SubmissionWorkflowPage({
         <WorkflowStageSummary title="Submission stage summary" items={submissionStageSummaryItems} />
 
         <VendorSubmissionPacketPanel />
+      </section>
+
+      <section className="content-grid lower-grid">
+        <LifecycleSummaryPanel
+          title="Other response rows for this opportunity"
+          items={siblingRowItems.length > 0 ? siblingRowItems : [{ stage: 'No saved rows yet', detail: 'Starting from a fresh unsaved vendor response for this opportunity.' }]}
+        />
       </section>
 
       <section className="content-grid lower-grid">
