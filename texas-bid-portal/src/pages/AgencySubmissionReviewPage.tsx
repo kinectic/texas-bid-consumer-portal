@@ -72,7 +72,7 @@ export function AgencySubmissionReviewPage({
     ? `${activeSubmission.vendor} · ${activeSubmission.id} · ${activeRowMeta?.rowLabel ?? 'Response row 1 of 1'}`
     : 'No submission selected'
   const activeOutcomeSummary = activeSubmission
-    ? `${activeSubmission.vendor} is currently ${activeSubmission.status} for ${currentOpportunity.title}. This is ${activeRowMeta?.rowLabel.toLowerCase() ?? 'response row 1 of 1'}, and decision actions now apply only to submission ${activeSubmission.id}. Vendor buffer state: ${draftSummary.bufferLabel}. ${draftSummary.preservedUnsavedDraftLabel}.`
+    ? `${activeSubmission.vendor} is currently ${activeSubmission.status} for ${currentOpportunity.title}. This is ${activeRowMeta?.rowLabel.toLowerCase() ?? 'response row 1 of 1'}, and decision actions now apply only to submission ${activeSubmission.id}. Vendor prep context: ${draftSummary.bufferLabel.replace('Saved-row buffer', 'Saved response on file').replace('Unsaved draft buffer', 'Unsent draft lane')} • ${draftSummary.preservedUnsavedDraftLabel.replace('Preserved unsaved draft available', 'Vendor still has unsent draft work').replace('No preserved unsaved draft edits for this opportunity', 'No extra unsent draft work remains for this opportunity')}.`
     : 'Select a submission row to apply review actions and see row-specific review context.'
   const decisionControls = [
     { label: `Shortlist ${activeSubmission?.vendor ?? 'selected vendor'}`, className: 'primary wide' as const, onClick: () => onAdvanceStatus('shortlisted') },
