@@ -106,7 +106,7 @@ function renderView(
           documents={submissionDocuments}
           onUploadNextDocument={uploadNextSubmissionDocument}
           opportunity={currentOpportunity}
-          activeSubmission={submissionQueue.find((submission) => submission.opportunity === currentOpportunity.title) ?? null}
+          activeSubmission={submissionQueue.find((submission) => submission.opportunityId === currentOpportunity.id) ?? null}
           onSaveProgress={saveSubmissionDraft}
           onSubmitResponse={submitVendorResponse}
           onNavigate={navigate}
@@ -176,13 +176,14 @@ function App() {
 
   const upsertSubmission = (status: Submission['status']) => {
     const vendorName = submissionForm.signer.split(',')[0]?.trim() || 'Draft Vendor Response'
-    const opportunityTitle = (publishedOpportunity ?? opportunities[0]).title
+    const opportunityRecord = currentOpportunity
 
     setSubmissionQueue((current) => {
-      const existingIndex = current.findIndex((submission) => submission.opportunity === opportunityTitle)
+      const existingIndex = current.findIndex((submission) => submission.opportunityId === opportunityRecord.id)
       const nextRecord: Submission = {
+        opportunityId: opportunityRecord.id,
         vendor: vendorName,
-        opportunity: opportunityTitle,
+        opportunity: opportunityRecord.title,
         submittedAt: status === 'draft' ? 'Saved just now' : 'Submitted just now',
         status,
       }

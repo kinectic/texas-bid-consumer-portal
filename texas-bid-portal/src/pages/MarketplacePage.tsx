@@ -62,7 +62,7 @@ export function MarketplacePage({
     highlighted,
     ...opportunities.filter((opportunity) => opportunity.id !== highlighted.id),
   ]
-  const activeSubmission = submissions.find((submission) => submission.opportunity === previewOpportunity.title)
+  const activeSubmission = submissions.find((submission) => submission.opportunityId === previewOpportunity.id)
   const submissionActivityItems = submissions.map((submission) => ({
     title: submission.vendor,
     detail: `${submission.opportunity} • Submitted ${submission.submittedAt}`,

@@ -44,12 +44,14 @@ export const opportunities: Opportunity[] = [
 
 export const vendorSubmissions: Submission[] = [
   {
+    opportunityId: 'tx-001',
     vendor: 'Lone Star Facility Group',
     opportunity: 'Citywide Custodial Services RFP',
     submittedAt: 'Apr 8, 2026 · 10:24 AM',
     status: 'received',
   },
   {
+    opportunityId: 'tx-002',
     vendor: 'Texas Audit Partners',
     opportunity: 'Internal Audit Services',
     submittedAt: 'Apr 8, 2026 · 9:11 AM',

@@ -27,7 +27,7 @@ type OpportunityDetailPageProps = {
 }
 
 export function OpportunityDetailPage({ opportunity, submissionQueue, onNavigate }: OpportunityDetailPageProps) {
-  const activeSubmission = submissionQueue.find((submission) => submission.opportunity === opportunity.title)
+  const activeSubmission = submissionQueue.find((submission) => submission.opportunityId === opportunity.id)
   const awardHistoryItems = opportunities
     .filter((item) => item.status === 'awarded')
     .map((item) => ({

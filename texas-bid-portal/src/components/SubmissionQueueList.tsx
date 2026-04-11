@@ -10,7 +10,7 @@ export function SubmissionQueueList({ submissions, mode = 'agency' }: Submission
   return (
     <div className="submission-list">
       {submissions.map((submission) => (
-        <ReviewQueueCard key={`${submission.vendor}-${submission.opportunity}`} submission={submission} mode={mode} />
+        <ReviewQueueCard key={`${submission.opportunityId}-${submission.vendor}`} submission={submission} mode={mode} />
       ))}
     </div>
   )

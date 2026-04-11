@@ -14,6 +14,7 @@ export type Opportunity = {
 }
 
 export type Submission = {
+  opportunityId: string
   vendor: string
   opportunity: string
   submittedAt: string
