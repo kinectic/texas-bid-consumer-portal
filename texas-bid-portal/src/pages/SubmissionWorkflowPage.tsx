@@ -1,4 +1,5 @@
 import { FieldMock } from '../components/FieldMock'
+import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
 import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacketPanel'
 import { submissionDocuments } from '../data/formState'
 import { selectedOpportunity } from '../data/mockData'
@@ -110,16 +111,7 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
           <button className="ghost wide">Upload attachment</button>
         </div>
 
-        <div className="panel">
-          <div className="panel-title">Pre-submit checklist</div>
-          <ol className="flow-list">
-            <li>Pricing file attached for {opportunity.title}</li>
-            <li>Required compliance documents attached</li>
-            <li>Response narrative completed</li>
-            <li>Authorized signer confirmed</li>
-            <li>Submission confirmation ready</li>
-          </ol>
-        </div>
+        <SubmissionChecklistPanel title="Pre-submit checklist" contextLabel={opportunity.title} />
       </section>
 
       <section className="content-grid lower-grid">

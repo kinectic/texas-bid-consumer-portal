@@ -1,4 +1,5 @@
 import { FieldMock } from '../components/FieldMock'
+import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
 import { lifecycleMetrics } from '../data/metrics'
 import { vendorSubmissions } from '../data/mockData'
 import { submissionLifecycle, submissionStatusSummary } from '../data/submissionStatus'
@@ -99,6 +100,10 @@ export function AgencySubmissionReviewPage({ reviewNotes, onChange }: AgencySubm
           </div>
         </div>
 
+        <SubmissionChecklistPanel title="Agency review checklist" contextLabel="before shortlist decision" />
+      </section>
+
+      <section className="content-grid lower-grid">
         <div className="panel">
           <div className="panel-title">Status progression</div>
           <ol className="flow-list">
@@ -107,9 +112,7 @@ export function AgencySubmissionReviewPage({ reviewNotes, onChange }: AgencySubm
             ))}
           </ol>
         </div>
-      </section>
 
-      <section className="content-grid lower-grid">
         <div className="panel">
           <div className="panel-title">Reviewer notes</div>
           <div className="form-mock create-bid-form">
