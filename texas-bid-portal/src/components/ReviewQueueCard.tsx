@@ -40,7 +40,7 @@ export function ReviewQueueCard({ submission, mode = 'agency', currentOpportunit
       <div className="muted">Opportunity ID: {submission.opportunityId}</div>
       <div className="muted">Submission ID: {submission.id}</div>
       {rowLabel ? <div className="muted">{rowLabel}</div> : null}
-      {isSelectedSubmission ? <div className="dashboard-note compact-note">Active review row.</div> : null}
+      {isSelectedSubmission ? <div className="dashboard-note compact-note">{mode === 'agency' ? 'Active review row.' : 'Active vendor response row.'}</div> : null}
       {isCurrentOpportunity ? <div className="dashboard-note compact-note">Linked to current selected opportunity.</div> : null}
       {rowSummary ? <div className="dashboard-note compact-note">{rowSummary}</div> : null}
       <div className="muted">Submitted: {submission.submittedAt}</div>

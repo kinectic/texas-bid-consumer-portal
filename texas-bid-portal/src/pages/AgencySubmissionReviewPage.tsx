@@ -59,11 +59,14 @@ export function AgencySubmissionReviewPage({
   const activeSubmission = submissions.find((submission) => submission.id === selectedSubmissionId)
     ?? submissions.find((submission) => submission.opportunityId === currentOpportunity.id)
     ?? null
+  const activeSubmissionRowNumber = activeSubmission
+    ? currentOpportunitySubmissions.findIndex((submission) => submission.id === activeSubmission.id) + 1
+    : 0
   const activeSubmissionLabel = activeSubmission
-    ? `${activeSubmission.vendor} · ${activeSubmission.id}`
+    ? `${activeSubmission.vendor} · ${activeSubmission.id} · row ${activeSubmissionRowNumber || 1} of ${currentOpportunitySubmissions.length || 1}`
     : 'No submission selected'
   const activeOutcomeSummary = activeSubmission
-    ? `${activeSubmission.vendor} is currently ${activeSubmission.status} for ${currentOpportunity.title}. Decision actions now apply only to submission ${activeSubmission.id}.`
+    ? `${activeSubmission.vendor} is currently ${activeSubmission.status} for ${currentOpportunity.title}. This is response row ${activeSubmissionRowNumber || 1} of ${currentOpportunitySubmissions.length || 1}, and decision actions now apply only to submission ${activeSubmission.id}.`
     : 'Select a submission row to apply review actions and see row-specific review context.'
   const decisionControls = [
     { label: `Shortlist ${activeSubmission?.vendor ?? 'selected vendor'}`, className: 'primary wide' as const, onClick: () => onAdvanceStatus('shortlisted') },
@@ -106,7 +109,7 @@ export function AgencySubmissionReviewPage({
           <div className="panel-header">
             <div>
               <div className="panel-title">Response queue</div>
-              <div className="panel-subtitle">Keep the selected opportunity context while switching queue scope.</div>
+              <div className="panel-subtitle">Keep the selected opportunity context while switching queue scope. Current opportunity has {currentOpportunitySubmissions.length} review row{currentOpportunitySubmissions.length === 1 ? '' : 's'}.</div>
             </div>
             <div className="workflow-actions-list">
               <button className={queueFilter === 'current' ? 'switch-pill switch-pill-active' : 'switch-pill'} onClick={() => onQueueFilterChange('current')}>Current opportunity</button>

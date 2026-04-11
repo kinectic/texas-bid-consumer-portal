@@ -25,10 +25,16 @@ export function SubmissionQueueList({ submissions, mode = 'agency', currentOppor
         const isSelected = submission.id === selectedSubmissionId
         const rowLabel = `Response row ${rowNumber} of ${siblingRows.length}`
         const rowSummary = isSelected
-          ? 'Currently selected row for this opportunity.'
+          ? mode === 'agency'
+            ? 'Currently selected procurement review row for this opportunity.'
+            : 'Currently selected vendor response row for this opportunity.'
           : submission.status === 'draft'
-            ? 'Draft row available to continue or submit.'
-            : 'Saved row available for review or continuation.'
+            ? mode === 'agency'
+              ? 'Draft row is not yet in agency review.'
+              : 'Draft row available to continue or submit.'
+            : mode === 'agency'
+              ? 'Saved row available for procurement review and status action.'
+              : 'Saved row available for review or continuation.'
 
         return (
         <ReviewQueueCard
