@@ -15,6 +15,7 @@ import { submissionStatusSummary } from '../data/submissionStatus'
 import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import type { BidDocument, SubmissionFormState } from '../types/forms'
+import { buildSubmissionQueueRowMeta } from '../utils/submissionQueue'
 
 const submissionStageSummaryItems = [
   {
@@ -109,7 +110,14 @@ export function SubmissionWorkflowPage({
   onSubmitResponse,
   onNavigate,
 }: SubmissionWorkflowPageProps) {
-  const responseRowLabel = activeSubmission ? activeSubmission.id : 'new unsaved response'
+  const rowMetaBySubmissionId = buildSubmissionQueueRowMeta({
+    submissions: activeSubmission ? [activeSubmission] : [],
+    selectedSubmissionId: activeSubmission?.id,
+    mode: 'vendor',
+  })
+  const responseRowLabel = activeSubmission
+    ? rowMetaBySubmissionId[activeSubmission.id]?.activeLabel ?? activeSubmission.id
+    : 'new unsaved response'
   const responseRowMode = activeSubmission ? 'editing existing saved row' : 'drafting a brand-new unsaved row'
 
   return (

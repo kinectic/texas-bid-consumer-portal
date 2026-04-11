@@ -5,6 +5,7 @@ export type SubmissionQueueRowMeta = {
   rowCount: number
   rowLabel: string
   rowSummary: string
+  activeLabel: string
 }
 
 type BuildSubmissionQueueRowMetaOptions = {
@@ -36,8 +37,9 @@ export function buildSubmissionQueueRowMeta({
           : mode === 'agency'
             ? 'Saved row available for procurement review and status action.'
             : 'Saved row available for review or continuation.'
+      const activeLabel = `${submission.vendor} · ${submission.id} · ${rowLabel}`
 
-      return [submission.id, { rowNumber, rowCount, rowLabel, rowSummary }]
+      return [submission.id, { rowNumber, rowCount, rowLabel, rowSummary, activeLabel }]
     }),
   )
 }

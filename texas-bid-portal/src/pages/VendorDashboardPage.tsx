@@ -19,6 +19,7 @@ import { submissionLifecycle, submissionStatusSummary } from '../data/submission
 import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import { buildSubmissionActivityItems } from '../utils/submissionActivity'
+import { buildSubmissionQueueRowMeta } from '../utils/submissionQueue'
 
 const submissionStatusItems = [
   submissionStatusSummary.draft,
@@ -71,11 +72,16 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
   const activeSubmission = submissions.find((submission) => submission.id === selectedSubmissionId)
     ?? submissions.find((submission) => submission.opportunityId === currentOpportunity.id)
     ?? null
+  const rowMetaBySubmissionId = buildSubmissionQueueRowMeta({
+    submissions: currentOpportunitySubmissions,
+    selectedSubmissionId: selectedSubmissionId ?? undefined,
+    mode: 'vendor',
+  })
   const activeSubmissionLabel = activeSubmission
-    ? `${activeSubmission.vendor} · ${activeSubmission.id}`
+    ? rowMetaBySubmissionId[activeSubmission.id]?.activeLabel ?? `${activeSubmission.vendor} · ${activeSubmission.id}`
     : 'new unsaved response'
   const draftRowSummary = activeSubmission
-    ? `Active saved row: ${activeSubmission.id}. Current opportunity has ${currentOpportunitySubmissions.length} total response rows.`
+    ? `Active saved row: ${rowMetaBySubmissionId[activeSubmission.id]?.activeLabel ?? activeSubmission.id}. Current opportunity has ${currentOpportunitySubmissions.length} total response rows.`
     : `No saved active row selected. Starting now will create response ${currentOpportunitySubmissions.length + 1}.`
   const vendorActivityItems = buildSubmissionActivityItems({
     submissions: displayedSubmissions,
