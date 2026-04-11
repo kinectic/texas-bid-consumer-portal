@@ -1,3 +1,4 @@
+import { FinalActionPanel } from '../components/FinalActionPanel'
 import { OpportunityCardList } from '../components/OpportunityCardList'
 import { OpportunityDocumentsPanel } from '../components/OpportunityDocumentsPanel'
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
@@ -140,6 +141,13 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
 
       <section className="content-grid lower-grid">
         <SubmissionActivityPanel title="Submission workspace" items={submissionActivityItems} />
+        <FinalActionPanel
+          eyebrow="Vendor action"
+          title="Ready to respond"
+          description="Move from marketplace review into a direct submission flow without leaving the product."
+          note="This is the product promise: discover, qualify, and act in one clearer Texas-first procurement surface."
+          actionLabel="Open submission workflow"
+        />
       </section>
     </main>
   )

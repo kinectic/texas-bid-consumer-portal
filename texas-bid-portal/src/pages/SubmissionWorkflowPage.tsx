@@ -1,4 +1,5 @@
 import { FieldMock } from '../components/FieldMock'
+import { FinalActionPanel } from '../components/FinalActionPanel'
 import { LifecycleSummaryPanel } from '../components/LifecycleSummaryPanel'
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
 import { OpportunitySummaryPanel } from '../components/OpportunitySummaryPanel'
@@ -147,17 +148,13 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
       </section>
 
       <section className="content-grid lower-grid">
-        <div className="panel">
-          <SectionIntro
-            eyebrow="Final step"
-            title="Submission confirmation"
-            description="The last confirmation state before the vendor sends the completed response into agency review."
-          />
-          <div className="dashboard-note">
-            This is the core V1 workflow: vendors should be able to move from {opportunity.title} discovery to actual response submission without leaving the Texas-first portal.
-          </div>
-          <button className="primary wide">Final submit</button>
-        </div>
+        <FinalActionPanel
+          eyebrow="Final step"
+          title="Submission confirmation"
+          description="The last confirmation state before the vendor sends the completed response into agency review."
+          note={`This is the core V1 workflow: vendors should be able to move from ${opportunity.title} discovery to actual response submission without leaving the Texas-first portal.`}
+          actionLabel="Final submit"
+        />
       </section>
     </main>
   )
