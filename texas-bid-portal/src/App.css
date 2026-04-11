@@ -387,6 +387,12 @@ h1 {
   gap: 8px;
 }
 
+.workflow-stage-summary-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
 .filter-pill {
   padding: 8px 10px;
   border-radius: 999px;

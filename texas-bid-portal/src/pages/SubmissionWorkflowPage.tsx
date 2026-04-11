@@ -3,9 +3,28 @@ import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel
 import { SectionIntro } from '../components/SectionIntro'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
 import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacketPanel'
+import { WorkflowStageSummary } from '../components/WorkflowStageSummary'
 import { submissionDocuments } from '../data/formState'
 import { selectedOpportunity } from '../data/mockData'
 import type { SubmissionFormState } from '../types/forms'
+
+const submissionStageSummaryItems = [
+  {
+    stage: 'Qualification',
+    owner: 'Vendor',
+    detail: 'Confirm fit, urgency, and document readiness before spending effort on the packet.',
+  },
+  {
+    stage: 'Response assembly',
+    owner: 'Vendor',
+    detail: 'Prepare signer details, pricing, narrative support, and all required attachments.',
+  },
+  {
+    stage: 'Agency review',
+    owner: 'Agency',
+    detail: 'Submission moves into completeness checks, clarification handling, and shortlist decisions.',
+  },
+]
 
 type SubmissionWorkflowPageProps = {
   formState: SubmissionFormState
@@ -45,27 +64,7 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
       </section>
 
       <section className="content-grid lower-grid">
-        <div className="panel">
-          <SectionIntro
-            eyebrow="Response status"
-            title="Submission status"
-            description="The vendor-side readiness state before the packet can be sent for agency review."
-          />
-          <div className="draft-list">
-            <div className="draft-card">
-              <strong>Company profile</strong>
-              <div className="muted">Verified</div>
-            </div>
-            <div className="draft-card">
-              <strong>Compliance packet</strong>
-              <div className="muted">Ready to attach</div>
-            </div>
-            <div className="draft-card">
-              <strong>Pricing response</strong>
-              <div className="muted">In progress</div>
-            </div>
-          </div>
-        </div>
+        <WorkflowStageSummary title="Submission stage summary" items={submissionStageSummaryItems} />
 
         <VendorSubmissionPacketPanel />
       </section>

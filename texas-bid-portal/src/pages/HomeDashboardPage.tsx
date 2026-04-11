@@ -3,6 +3,7 @@ import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
 import { MetricCard } from '../components/MetricCard'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
+import { WorkflowStageSummary } from '../components/WorkflowStageSummary'
 import { lifecycleMetrics } from '../data/metrics'
 import { workflowStageLabels } from '../data/workflowStages'
 import type { CreateBidFormState } from '../types/forms'
@@ -25,6 +26,12 @@ const workflowCards = [
     description: 'Move from saved opportunity to actual submission without leaving the portal.',
   },
 ] as const
+
+const workflowStageSummaryItems = workflowCards.map((card) => ({
+  stage: workflowStageLabels[card.key].stage,
+  owner: workflowStageLabels[card.key].owner,
+  detail: card.description,
+}))
 
 const milestoneCards = [
   'Marketplace feed and opportunity detail',
@@ -97,18 +104,7 @@ export function HomeDashboardPage({ publishedBidPreview, onNavigate }: HomeDashb
       </section>
 
       <section className="content-grid">
-        <div className="panel">
-          <div className="panel-title">Workflow landing</div>
-          <div className="draft-list">
-            {workflowCards.map((card) => (
-              <div className="draft-card" key={card.title}>
-                <strong>{card.title}</strong>
-                <div className="muted">{card.description}</div>
-                <div className="muted">Stage: {workflowStageLabels[card.key].stage} · Owner: {workflowStageLabels[card.key].owner}</div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <WorkflowStageSummary title="Workflow landing" items={workflowStageSummaryItems} />
 
         <OutcomeSummaryPanel mode="shared" />
       </section>
