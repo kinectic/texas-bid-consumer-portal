@@ -123,12 +123,21 @@ export function SubmissionWorkflowPage({
     ? rowMetaBySubmissionId[activeSubmission.id]?.activeLabel ?? activeSubmission.id
     : 'new unsaved response'
   const responseRowMode = activeSubmission ? 'editing existing saved row' : 'drafting a brand-new unsaved row'
-  const siblingRowItems = siblingSubmissions.map((submission) => ({
-    stage: rowMetaBySubmissionId[submission.id]?.rowLabel ?? submission.id,
-    detail: `${submission.vendor} • ${submission.id} • ${submission.status}${submission.id === activeSubmission?.id ? ' • active row' : ''}`,
-    onClick: () => onSelectSubmission(submission),
-    active: submission.id === activeSubmission?.id,
-  }))
+  const siblingRowItems = [
+    ...(!activeSubmission
+      ? [{
+          stage: 'New unsaved response',
+          detail: 'Current draft is not saved as a submission row yet. Save or submit to create the next response row for this opportunity. • active row',
+          active: true,
+        }]
+      : []),
+    ...siblingSubmissions.map((submission) => ({
+      stage: rowMetaBySubmissionId[submission.id]?.rowLabel ?? submission.id,
+      detail: `${submission.vendor} • ${submission.id} • ${submission.status}${submission.id === activeSubmission?.id ? ' • active row' : ''}`,
+      onClick: () => onSelectSubmission(submission),
+      active: submission.id === activeSubmission?.id,
+    })),
+  ]
 
   return (
     <main className="main">
