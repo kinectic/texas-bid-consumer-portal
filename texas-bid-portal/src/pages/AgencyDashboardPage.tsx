@@ -1,3 +1,4 @@
+import { DraftPublishSummaryPanel } from '../components/DraftPublishSummaryPanel'
 import { lifecycleMetrics } from '../data/metrics'
 import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
 
@@ -67,18 +68,7 @@ export function AgencyDashboardPage() {
           </div>
         </div>
 
-        <div className="panel">
-          <div className="panel-title">Quick actions</div>
-          <div className="action-stack">
-            <button className="primary wide">Create new solicitation</button>
-            <button className="ghost wide">Review draft package</button>
-            <button className="ghost wide">Invite vendors</button>
-            <button className="ghost wide">Open submission inbox</button>
-          </div>
-          <div className="dashboard-note">
-            The dashboard should let an agency operator move from drafting to publishing to review without bouncing across multiple portals.
-          </div>
-        </div>
+        <DraftPublishSummaryPanel title="Draft publishing readiness" />
       </section>
 
       <section className="content-grid lower-grid">

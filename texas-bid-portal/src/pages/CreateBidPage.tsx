@@ -1,3 +1,4 @@
+import { DraftPublishSummaryPanel } from '../components/DraftPublishSummaryPanel'
 import { FieldMock } from '../components/FieldMock'
 import type { BidDocument, CreateBidFormState } from '../types/forms'
 
@@ -42,26 +43,7 @@ export function CreateBidPage({ formState, documents, onChange }: CreateBidPageP
           </div>
         </div>
 
-        <div className="panel">
-          <div className="panel-title">Publishing controls</div>
-          <div className="draft-list">
-            <div className="draft-card">
-              <strong>Visibility</strong>
-              <div className="muted">Texas statewide marketplace listing</div>
-            </div>
-            <div className="draft-card">
-              <strong>Document package</strong>
-              <div className="muted">Synced from the shared bid packet state below</div>
-            </div>
-            <div className="draft-card">
-              <strong>Submission mode</strong>
-              <div className="muted">Direct portal response with attachments and confirmations</div>
-            </div>
-          </div>
-          <div className="dashboard-note">
-            This form is where the product stops being a marketplace mock and starts behaving like an agency posting workflow.
-          </div>
-        </div>
+        <DraftPublishSummaryPanel />
       </section>
 
       <section className="content-grid lower-grid create-bid-layout">
