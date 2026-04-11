@@ -42,11 +42,13 @@ type AgencyDashboardPageProps = {
   publishedOpportunity: Opportunity | null
   submissions: Submission[]
   readinessByOpportunityId: Record<string, { label: string, detail: string }>
+  queueFilter: 'current' | 'all'
+  onQueueFilterChange: (filter: 'current' | 'all') => void
   onSelectOpportunity: (opportunity: Opportunity) => void
   onNavigate: (view: ViewKey) => void
 }
 
-export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, submissions, readinessByOpportunityId, onSelectOpportunity, onNavigate }: AgencyDashboardPageProps) {
+export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, submissions, readinessByOpportunityId, queueFilter, onQueueFilterChange, onSelectOpportunity, onNavigate }: AgencyDashboardPageProps) {
   const activeBids = publishedOpportunity
     ? [publishedOpportunity, ...opportunities.filter((opportunity) => opportunity.status === 'open' && opportunity.id !== publishedOpportunity.id)]
     : opportunities.filter((opportunity) => opportunity.status === 'open')
@@ -78,7 +80,9 @@ export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, 
     title: opportunity.title,
     detail: opportunity.agency,
   }))
-  const submissionActivityItems = submissions.map((submission) => ({
+  const currentOpportunitySubmissions = submissions.filter((submission) => submission.opportunityId === currentOpportunity.id)
+  const displayedSubmissions = queueFilter === 'current' ? currentOpportunitySubmissions : submissions
+  const submissionActivityItems = displayedSubmissions.map((submission) => ({
     key: `${submission.opportunityId}-${submission.vendor}`,
     opportunityId: submission.opportunityId,
     title: submission.vendor,
@@ -157,6 +161,7 @@ export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, 
 
       <section className="content-grid lower-grid">
         <SubmissionActivityPanel
+          title={queueFilter === 'current' ? 'Submission activity — current opportunity' : 'Submission activity — all opportunities'}
           items={submissionActivityItems}
           currentOpportunityId={currentOpportunity.id}
           onSelectSubmission={(opportunityId) => {
@@ -169,6 +174,16 @@ export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, 
             }
           }}
         />
+        <div className="panel">
+          <div className="panel-title">Submission queue scope</div>
+          <div className="workflow-actions-list">
+            <button className={queueFilter === 'current' ? 'switch-pill switch-pill-active' : 'switch-pill'} onClick={() => onQueueFilterChange('current')}>Current opportunity</button>
+            <button className={queueFilter === 'all' ? 'switch-pill switch-pill-active' : 'switch-pill'} onClick={() => onQueueFilterChange('all')}>All opportunities</button>
+          </div>
+          <div className="dashboard-note compact-note">
+            Current opportunity submissions: {currentOpportunitySubmissions.length} • All submissions: {submissions.length}
+          </div>
+        </div>
       </section>
     </main>
   )

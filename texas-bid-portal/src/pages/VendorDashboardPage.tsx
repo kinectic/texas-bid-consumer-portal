@@ -35,11 +35,13 @@ type VendorDashboardPageProps = {
     submissionStatus: string
   }
   readinessByOpportunityId: Record<string, { label: string, detail: string }>
+  queueFilter: 'current' | 'all'
+  onQueueFilterChange: (filter: 'current' | 'all') => void
   onSelectOpportunity: (opportunity: Opportunity) => void
   onNavigate: (view: ViewKey) => void
 }
 
-export function VendorDashboardPage({ currentOpportunity, submissions, draftSummary, readinessByOpportunityId, onSelectOpportunity, onNavigate }: VendorDashboardPageProps) {
+export function VendorDashboardPage({ currentOpportunity, submissions, draftSummary, readinessByOpportunityId, queueFilter, onQueueFilterChange, onSelectOpportunity, onNavigate }: VendorDashboardPageProps) {
   const savedOpportunities = [
     currentOpportunity,
     ...opportunities.filter((opportunity) => opportunity.status === 'open' && opportunity.id !== currentOpportunity.id),
@@ -48,14 +50,18 @@ export function VendorDashboardPage({ currentOpportunity, submissions, draftSumm
     currentOpportunity,
     ...opportunities.filter((opportunity) => opportunity.id !== currentOpportunity.id),
   ].slice(0, 2)
+  const currentOpportunitySubmissions = submissions.filter((submission) => submission.opportunityId === currentOpportunity.id)
+  const displayedSubmissions = queueFilter === 'current'
+    ? currentOpportunitySubmissions
+    : [
+        ...currentOpportunitySubmissions,
+        ...submissions.filter((submission) => submission.opportunityId !== currentOpportunity.id),
+      ]
   const vendorStatsItems = [
     { value: savedOpportunities.length, label: 'Saved opportunities' },
-    { value: submissions.filter((submission) => submission.opportunityId === currentOpportunity.id).length, label: 'Active submissions' },
+    { value: currentOpportunitySubmissions.length, label: 'Current opportunity submissions' },
+    { value: submissions.length, label: 'All submission records' },
     { value: lifecycleMetrics.vendorProfileCompleteness, label: 'Profile completeness' },
-  ]
-  const orderedSubmissions = [
-    ...submissions.filter((submission) => submission.opportunityId === currentOpportunity.id),
-    ...submissions.filter((submission) => submission.opportunityId !== currentOpportunity.id),
   ]
   const activeSubmission = submissions.find((submission) => submission.opportunityId === currentOpportunity.id) ?? null
 
@@ -113,8 +119,17 @@ export function VendorDashboardPage({ currentOpportunity, submissions, draftSumm
         <OutcomeSummaryPanel mode="vendor" />
 
         <div className="panel">
-          <div className="panel-title">Active submissions</div>
-          <SubmissionQueueList submissions={orderedSubmissions} mode="vendor" currentOpportunityId={currentOpportunity.id} />
+          <div className="panel-header">
+            <div>
+              <div className="panel-title">Active submissions</div>
+              <div className="panel-subtitle">Filter between the selected opportunity and the full vendor queue.</div>
+            </div>
+            <div className="workflow-actions-list">
+              <button className={queueFilter === 'current' ? 'switch-pill switch-pill-active' : 'switch-pill'} onClick={() => onQueueFilterChange('current')}>Current opportunity</button>
+              <button className={queueFilter === 'all' ? 'switch-pill switch-pill-active' : 'switch-pill'} onClick={() => onQueueFilterChange('all')}>All opportunities</button>
+            </div>
+          </div>
+          <SubmissionQueueList submissions={displayedSubmissions} mode="vendor" currentOpportunityId={currentOpportunity.id} />
         </div>
       </section>
 

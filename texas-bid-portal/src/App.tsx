@@ -38,6 +38,8 @@ type OpportunityReadinessSummary = {
   detail: string
 }
 
+type SubmissionQueueFilter = 'current' | 'all'
+
 function renderView(
   view: ViewKey,
   createBidForm: CreateBidFormState,
@@ -57,6 +59,10 @@ function renderView(
   selectOpportunity: (opportunity: Opportunity) => void,
   readinessByOpportunityId: Record<string, OpportunityReadinessSummary>,
   submissionQueue: Submission[],
+  vendorQueueFilter: SubmissionQueueFilter,
+  setVendorQueueFilter: (filter: SubmissionQueueFilter) => void,
+  agencyQueueFilter: SubmissionQueueFilter,
+  setAgencyQueueFilter: (filter: SubmissionQueueFilter) => void,
   saveSubmissionDraft: () => void,
   submitVendorResponse: () => void,
   advanceSubmissionStatus: (status: Submission['status']) => void,
@@ -96,6 +102,8 @@ function renderView(
           publishedOpportunity={publishedOpportunity}
           readinessByOpportunityId={readinessByOpportunityId}
           submissions={submissionQueue}
+          queueFilter={agencyQueueFilter}
+          onQueueFilterChange={setAgencyQueueFilter}
           onSelectOpportunity={selectOpportunity}
           onNavigate={navigate}
         />
@@ -120,13 +128,15 @@ function renderView(
           reviewNotes={reviewNotes}
           onChange={updateReviewNotes}
           submissions={submissionQueue}
+          queueFilter={agencyQueueFilter}
+          onQueueFilterChange={setAgencyQueueFilter}
           onAdvanceStatus={advanceSubmissionStatus}
           onArchiveSubmission={archiveSubmission}
           onNavigate={navigate}
         />
       )
     case 'vendor-dashboard':
-      return <VendorDashboardPage currentOpportunity={currentOpportunity} submissions={submissionQueue} draftSummary={draftSummary} readinessByOpportunityId={readinessByOpportunityId} onSelectOpportunity={selectOpportunity} onNavigate={navigate} />
+      return <VendorDashboardPage currentOpportunity={currentOpportunity} submissions={submissionQueue} draftSummary={draftSummary} readinessByOpportunityId={readinessByOpportunityId} queueFilter={vendorQueueFilter} onQueueFilterChange={setVendorQueueFilter} onSelectOpportunity={selectOpportunity} onNavigate={navigate} />
     case 'submission-workflow':
       return (
         <SubmissionWorkflowPage
@@ -169,6 +179,8 @@ function App() {
   const [submissionQueue, setSubmissionQueue] = useState<Submission[]>(initialVendorSubmissions)
   const [isBidPublished, setIsBidPublished] = useState(false)
   const [selectedOpportunityId, setSelectedOpportunityId] = useState(opportunities[0].id)
+  const [vendorQueueFilter, setVendorQueueFilter] = useState<SubmissionQueueFilter>('current')
+  const [agencyQueueFilter, setAgencyQueueFilter] = useState<SubmissionQueueFilter>('current')
 
   const updateCreateBidForm = (field: keyof CreateBidFormState, value: string) => {
     setIsBidPublished(false)
@@ -362,6 +374,10 @@ function App() {
           selectOpportunity,
           readinessByOpportunityId,
           submissionQueue,
+          vendorQueueFilter,
+          setVendorQueueFilter,
+          agencyQueueFilter,
+          setAgencyQueueFilter,
           saveSubmissionDraft,
           submitVendorResponse,
           advanceSubmissionStatus,

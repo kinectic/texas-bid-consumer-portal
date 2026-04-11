@@ -40,6 +40,8 @@ type AgencySubmissionReviewPageProps = {
   reviewNotes: ReviewNotesState
   onChange: (field: keyof ReviewNotesState, value: string) => void
   submissions: Submission[]
+  queueFilter: 'current' | 'all'
+  onQueueFilterChange: (filter: 'current' | 'all') => void
   onAdvanceStatus: (status: Submission['status']) => void
   onArchiveSubmission: () => void
   onNavigate: (view: ViewKey) => void
@@ -51,6 +53,8 @@ export function AgencySubmissionReviewPage({
   reviewNotes,
   onChange,
   submissions,
+  queueFilter,
+  onQueueFilterChange,
   onAdvanceStatus,
   onArchiveSubmission,
   onNavigate,
@@ -62,6 +66,8 @@ export function AgencySubmissionReviewPage({
     { label: 'Archive response', className: 'ghost wide' as const, onClick: onArchiveSubmission },
   ]
   const visibleSubmissions = submissions.filter((submission) => submission.status !== 'draft')
+  const currentOpportunitySubmissions = visibleSubmissions.filter((submission) => submission.opportunityId === currentOpportunity.id)
+  const displayedSubmissions = queueFilter === 'current' ? currentOpportunitySubmissions : visibleSubmissions
   const activeSubmission = submissions.find((submission) => submission.opportunityId === currentOpportunity.id) ?? null
   return (
     <main className="main">
@@ -78,15 +84,25 @@ export function AgencySubmissionReviewPage({
       />
 
       <section className="stats-grid">
-        <MetricCard value={visibleSubmissions.length} label="Responses in review" />
+        <MetricCard value={currentOpportunitySubmissions.length} label="Current opportunity responses" />
+        <MetricCard value={visibleSubmissions.length} label="All responses in review" />
         <MetricCard value={visibleSubmissions.filter((submission) => submission.status === 'shortlisted').length} label="Shortlist candidate" />
         <MetricCard value="Today" label="Decision window" />
       </section>
 
       <section className="content-grid">
         <div className="panel">
-          <div className="panel-title">Response queue</div>
-          <SubmissionQueueList submissions={visibleSubmissions} mode="agency" currentOpportunityId={currentOpportunity.id} />
+          <div className="panel-header">
+            <div>
+              <div className="panel-title">Response queue</div>
+              <div className="panel-subtitle">Keep the selected opportunity context while switching queue scope.</div>
+            </div>
+            <div className="workflow-actions-list">
+              <button className={queueFilter === 'current' ? 'switch-pill switch-pill-active' : 'switch-pill'} onClick={() => onQueueFilterChange('current')}>Current opportunity</button>
+              <button className={queueFilter === 'all' ? 'switch-pill switch-pill-active' : 'switch-pill'} onClick={() => onQueueFilterChange('all')}>All opportunities</button>
+            </div>
+          </div>
+          <SubmissionQueueList submissions={displayedSubmissions} mode="agency" currentOpportunityId={currentOpportunity.id} />
         </div>
 
         <OutcomeSummaryPanel mode="agency" />
