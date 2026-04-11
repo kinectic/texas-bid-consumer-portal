@@ -23,8 +23,8 @@ import { VendorDashboardPage } from './pages/VendorDashboardPage'
 import type { CreateBidFormState, ReviewNotesState, SubmissionFormState, BidDocument } from './types/forms'
 import type { Opportunity, Submission } from './types'
 
-type SubmissionFormStateByOpportunity = Record<string, SubmissionFormState>
-type SubmissionDocumentsByOpportunity = Record<string, BidDocument[]>
+type SubmissionFormStateByKey = Record<string, SubmissionFormState>
+type SubmissionDocumentsByKey = Record<string, BidDocument[]>
 
 type DraftSummary = {
   formStatus: string
@@ -192,14 +192,14 @@ function renderView(
 function App() {
   const [activeView, setActiveView] = useState<ViewKey>('home')
   const [createBidForm, setCreateBidForm] = useState<CreateBidFormState>(initialCreateBidFormState)
-  const [submissionFormsByOpportunity, setSubmissionFormsByOpportunity] = useState<SubmissionFormStateByOpportunity>({
-    [opportunities[0].id]: initialSubmissionFormState,
+  const [submissionFormsByKey, setSubmissionFormsByKey] = useState<SubmissionFormStateByKey>({
+    [`draft:${opportunities[0].id}`]: initialSubmissionFormState,
   })
   const [reviewNotesByOpportunity, setReviewNotesByOpportunity] = useState<ReviewNotesByOpportunity>({
     [opportunities[0].id]: initialReviewNotesState,
   })
-  const [submissionDocumentsByOpportunity, setSubmissionDocumentsByOpportunity] = useState<SubmissionDocumentsByOpportunity>({
-    [opportunities[0].id]: initialSubmissionDocuments,
+  const [submissionDocumentsByKey, setSubmissionDocumentsByKey] = useState<SubmissionDocumentsByKey>({
+    [`draft:${opportunities[0].id}`]: initialSubmissionDocuments,
   })
   const [submissionQueue, setSubmissionQueue] = useState<Submission[]>(initialVendorSubmissions)
   const [isBidPublished, setIsBidPublished] = useState(false)
@@ -252,13 +252,14 @@ function App() {
     return queue.find((submission) => submission.opportunityId === opportunityId) ?? null
   }
 
-  const submissionForm = submissionFormsByOpportunity[currentOpportunity.id] ?? initialSubmissionFormState
-  const submissionDocuments = submissionDocumentsByOpportunity[currentOpportunity.id] ?? initialSubmissionDocuments
   const reviewNotes = reviewNotesByOpportunity[currentOpportunity.id] ?? initialReviewNotesState
   const selectedSubmissionId = selectedSubmissionByOpportunity[currentOpportunity.id] ?? null
   const currentSubmission = submissionQueue.find((submission) => submission.id === selectedSubmissionId)
     ?? submissionQueue.find((submission) => submission.opportunityId === currentOpportunity.id)
     ?? null
+  const currentDraftKey = selectedSubmissionId ?? `draft:${currentOpportunity.id}`
+  const submissionForm = submissionFormsByKey[currentDraftKey] ?? initialSubmissionFormState
+  const submissionDocuments = submissionDocumentsByKey[currentDraftKey] ?? initialSubmissionDocuments
   const changedFormFields = Object.entries(submissionForm).filter(([key, value]) => value !== initialSubmissionFormState[key as keyof SubmissionFormState]).length
   const attachedCount = submissionDocuments.filter((document) => document.status.toLowerCase().includes('attached')).length
   const draftSummary: DraftSummary = {
@@ -269,8 +270,9 @@ function App() {
   }
   const readinessByOpportunityId: Record<string, OpportunityReadinessSummary> = Object.fromEntries(
     opportunities.map((opportunity) => {
-      const form = submissionFormsByOpportunity[opportunity.id] ?? initialSubmissionFormState
-      const docs = submissionDocumentsByOpportunity[opportunity.id] ?? initialSubmissionDocuments
+      const activeKey = selectedSubmissionByOpportunity[opportunity.id] ?? `draft:${opportunity.id}`
+      const form = submissionFormsByKey[activeKey] ?? initialSubmissionFormState
+      const docs = submissionDocumentsByKey[activeKey] ?? initialSubmissionDocuments
       const matchingSubmissions = submissionQueue.filter((item) => item.opportunityId === opportunity.id)
       const submission = matchingSubmissions.find((item) => item.id === selectedSubmissionByOpportunity[opportunity.id])
         ?? matchingSubmissions[0]
@@ -312,10 +314,10 @@ function App() {
   ]
 
   const updateSubmissionForm = (field: keyof SubmissionFormState, value: string) => {
-    setSubmissionFormsByOpportunity((current) => ({
+    setSubmissionFormsByKey((current) => ({
       ...current,
-      [currentOpportunity.id]: {
-        ...(current[currentOpportunity.id] ?? initialSubmissionFormState),
+      [currentDraftKey]: {
+        ...(current[currentDraftKey] ?? initialSubmissionFormState),
         [field]: value,
       },
     }))
@@ -377,24 +379,24 @@ function App() {
     })
 
     const hasDraftEdits =
-      Object.entries(submissionFormsByOpportunity[currentOpportunity.id] ?? initialSubmissionFormState).some(
+      Object.entries(submissionFormsByKey[`draft:${currentOpportunity.id}`] ?? initialSubmissionFormState).some(
         ([key, value]) => value !== initialSubmissionFormState[key as keyof SubmissionFormState],
       )
-      || (submissionDocumentsByOpportunity[currentOpportunity.id] ?? initialSubmissionDocuments).some(
+      || (submissionDocumentsByKey[`draft:${currentOpportunity.id}`] ?? initialSubmissionDocuments).some(
         (document, index) => document.status !== initialSubmissionDocuments[index]?.status,
       )
 
     if (!hasDraftEdits) {
-      setSubmissionFormsByOpportunity((current) => ({
+      setSubmissionFormsByKey((current) => ({
         ...current,
-        [currentOpportunity.id]: {
+        [`draft:${currentOpportunity.id}`]: {
           ...initialSubmissionFormState,
         },
       }))
 
-      setSubmissionDocumentsByOpportunity((current) => ({
+      setSubmissionDocumentsByKey((current) => ({
         ...current,
-        [currentOpportunity.id]: initialSubmissionDocuments.map((document) => ({ ...document })),
+        [`draft:${currentOpportunity.id}`]: initialSubmissionDocuments.map((document) => ({ ...document })),
       }))
     }
   }
@@ -443,8 +445,8 @@ function App() {
   }
 
   const uploadNextSubmissionDocument = () => {
-    setSubmissionDocumentsByOpportunity((current) => {
-      const currentDocuments = current[currentOpportunity.id] ?? initialSubmissionDocuments
+    setSubmissionDocumentsByKey((current) => {
+      const currentDocuments = current[currentDraftKey] ?? initialSubmissionDocuments
       const pendingIndex = currentDocuments.findIndex((document) => document.status.toLowerCase().includes('pending'))
 
       if (pendingIndex === -1) {
@@ -453,7 +455,7 @@ function App() {
 
       return {
         ...current,
-        [currentOpportunity.id]: currentDocuments.map((document, index) =>
+        [currentDraftKey]: currentDocuments.map((document, index) =>
           index === pendingIndex ? { ...document, status: 'Attached' } : document,
         ),
       }
@@ -463,6 +465,8 @@ function App() {
   const upsertSubmission = (status: Submission['status']) => {
     const vendorName = submissionForm.signer.split(',')[0]?.trim() || 'Draft Vendor Response'
     const opportunityRecord = currentOpportunity
+    const sourceForm = submissionFormsByKey[currentDraftKey] ?? initialSubmissionFormState
+    const sourceDocuments = submissionDocumentsByKey[currentDraftKey] ?? initialSubmissionDocuments
 
     setSubmissionQueue((current) => {
       const existingIndex = current.findIndex(
@@ -478,6 +482,14 @@ function App() {
       }
 
       if (existingIndex === -1) {
+        setSubmissionFormsByKey((buffers) => ({
+          ...buffers,
+          [nextRecord.id]: { ...sourceForm },
+        }))
+        setSubmissionDocumentsByKey((buffers) => ({
+          ...buffers,
+          [nextRecord.id]: sourceDocuments.map((document) => ({ ...document })),
+        }))
         setSelectedSubmissionByOpportunity((selected) => ({
           ...selected,
           [opportunityRecord.id]: nextRecord.id,
@@ -485,6 +497,14 @@ function App() {
         return [nextRecord, ...current]
       }
 
+      setSubmissionFormsByKey((buffers) => ({
+        ...buffers,
+        [nextRecord.id]: { ...sourceForm },
+      }))
+      setSubmissionDocumentsByKey((buffers) => ({
+        ...buffers,
+        [nextRecord.id]: sourceDocuments.map((document) => ({ ...document })),
+      }))
       setSelectedSubmissionByOpportunity((selected) => ({
         ...selected,
         [opportunityRecord.id]: nextRecord.id,
