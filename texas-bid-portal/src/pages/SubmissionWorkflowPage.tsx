@@ -95,6 +95,7 @@ type SubmissionWorkflowPageProps = {
   siblingSubmissions: Submission[]
   activeSubmission: Submission | null
   onSelectSubmission: (submission: Submission) => void
+  onStartNewSubmission: () => void
   onSaveProgress: () => void
   onSubmitResponse: () => void
   onNavigate: (view: ViewKey) => void
@@ -110,6 +111,7 @@ export function SubmissionWorkflowPage({
   siblingSubmissions,
   activeSubmission,
   onSelectSubmission,
+  onStartNewSubmission,
   onSaveProgress,
   onSubmitResponse,
   onNavigate,
@@ -130,7 +132,12 @@ export function SubmissionWorkflowPage({
           detail: 'Current draft is not saved as a submission row yet. Save or submit to create the next response row for this opportunity. • active row',
           active: true,
         }]
-      : []),
+      : [{
+          stage: `Start response ${siblingSubmissions.length + 1}`,
+          detail: 'Jump back into a fresh unsaved draft without leaving the workflow. Creates a brand-new response row after save or submit.',
+          onClick: onStartNewSubmission,
+          active: false,
+        }]),
     ...siblingSubmissions.map((submission) => ({
       stage: rowMetaBySubmissionId[submission.id]?.rowLabel ?? submission.id,
       detail: `${submission.vendor} • ${submission.id} • ${submission.status}${submission.id === activeSubmission?.id ? ' • active row' : ''}`,

@@ -169,6 +169,7 @@ function renderView(
             ?? submissionQueue.find((submission) => submission.opportunityId === currentOpportunity.id)
             ?? null}
           onSelectSubmission={selectSubmission}
+          onStartNewSubmission={startNewSubmission}
           onSaveProgress={saveSubmissionDraft}
           onSubmitResponse={submitVendorResponse}
           onNavigate={navigate}
