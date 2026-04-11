@@ -1,3 +1,4 @@
+import { AgencyFlowPanel } from '../components/AgencyFlowPanel'
 import { FinalActionPanel } from '../components/FinalActionPanel'
 import { MarketplaceStatsSnapshot } from '../components/MarketplaceStatsSnapshot'
 import { OpportunityCardList } from '../components/OpportunityCardList'
@@ -18,6 +19,13 @@ const marketplaceStatsItems = [
   { value: 3, label: 'Core workflows shown in this prototype' },
   { value: 1, label: 'Texas-first experience instead of generic procurement clutter' },
 ]
+
+const agencyFlowSteps = [
+  'Create agency profile',
+  'Draft solicitation with deadlines and attachments',
+  'Publish to Texas marketplace',
+  'Review vendor responses in one dashboard',
+] as const
 
 type MarketplacePageProps = {
   publishedBidPreview: CreateBidFormState
@@ -105,32 +113,10 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
           </div>
         </div>
 
-        <div className="panel agency-panel">
-          <SectionIntro
-            eyebrow="Agency flow"
-            title="Agency posting flow"
-            description="The simplified drafting-to-publish path that turns agency inputs into a vendor-visible opportunity."
-          />
-          <ol className="flow-list">
-            <li>Create agency profile</li>
-            <li>Draft solicitation with deadlines and attachments</li>
-            <li>Publish to Texas marketplace</li>
-            <li>Review vendor responses in one dashboard</li>
-          </ol>
-          <div className="form-mock">
-            <div className="input-mock">Bid title</div>
-            <div className="input-row">
-              <div className="input-mock">Issue date</div>
-              <div className="input-mock">Submission deadline</div>
-            </div>
-            <div className="input-mock tall">Scope / description</div>
-            <div className="input-row">
-              <div className="input-mock">Attachments</div>
-              <div className="input-mock">Category</div>
-            </div>
-            <button className="primary wide">Publish Bid</button>
-          </div>
-        </div>
+        <AgencyFlowPanel
+          description="The simplified drafting-to-publish path that turns agency inputs into a vendor-visible opportunity."
+          steps={agencyFlowSteps}
+        />
       </section>
 
       <section className="content-grid lower-grid">

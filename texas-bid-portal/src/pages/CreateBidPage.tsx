@@ -1,3 +1,4 @@
+import { AgencyFlowPanel } from '../components/AgencyFlowPanel'
 import { DraftPublishSummaryPanel } from '../components/DraftPublishSummaryPanel'
 import { FieldMock } from '../components/FieldMock'
 import { ProcurementChecklistPanel } from '../components/ProcurementChecklistPanel'
@@ -5,6 +6,13 @@ import { ReviewerNotesPanel } from '../components/ReviewerNotesPanel'
 import { SubmissionAttachmentsPanel } from '../components/SubmissionAttachmentsPanel'
 import { prePublishChecklist } from '../data/checklists'
 import type { BidDocument, CreateBidFormState } from '../types/forms'
+
+const agencyFlowSteps = [
+  'Create agency profile',
+  'Draft solicitation with deadlines and attachments',
+  'Publish to Texas marketplace',
+  'Review vendor responses in one dashboard',
+] as const
 
 type CreateBidPageProps = {
   formState: CreateBidFormState
@@ -75,6 +83,12 @@ export function CreateBidPage({ formState, documents, onChange }: CreateBidPageP
           onPrimaryChange={(value) => onChange('scope', value)}
           onSecondaryChange={(value) => onChange('requirements', value)}
           actionLabel="Save drafting notes"
+        />
+
+        <AgencyFlowPanel
+          title="Agency workflow"
+          description="How this draft moves from internal preparation into a live Texas marketplace opportunity."
+          steps={agencyFlowSteps}
         />
       </section>
     </main>
