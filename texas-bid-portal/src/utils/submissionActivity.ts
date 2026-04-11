@@ -43,10 +43,10 @@ export function buildSubmissionActivityItems({
       detail: `${submission.opportunity} • row ${rowNumber} of ${siblingRows.length} • ${submission.opportunityId} • Submitted ${submission.submittedAt}`,
       summary:
         mode === 'agency'
-          ? `${isCurrentOpportunity ? 'Current opportunity' : 'Other opportunity'} • ${submission.status} • Vendor ${submission.vendor} • active row ${isSelected ? 'yes' : 'no'} • response row ${rowNumber}${presentedReadiness.label ? ` • ${presentedReadiness.label} • ${presentedReadiness.detail}` : ''}`
+          ? `${isCurrentOpportunity ? 'Current opportunity' : 'Other opportunity'} • ${submission.status} • Vendor ${submission.vendor} • active row ${isSelected ? 'yes' : 'no'} • response row ${rowNumber} • click keeps you in agency review${presentedReadiness.label ? ` • ${presentedReadiness.label} • ${presentedReadiness.detail}` : ''}`
           : isSelected
             ? `Active vendor-side submission row. ${presentedReadiness.label || 'Saved row active'} • ${presentedReadiness.detail || 'No extra buffer context.'}`
-            : `Click to reopen this exact vendor response row in the workflow. ${presentedReadiness.label || 'Saved/draft state available'} • ${presentedReadiness.detail || 'No extra buffer context.'}`,
+            : `Click to reopen this exact vendor response row in the workflow. Vendor ${submission.vendor} • response row ${rowNumber}. ${presentedReadiness.label || 'Saved/draft state available'} • ${presentedReadiness.detail || 'No extra buffer context.'}`,
     }
   })
 }

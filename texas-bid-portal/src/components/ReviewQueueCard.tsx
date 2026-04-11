@@ -39,10 +39,16 @@ export function ReviewQueueCard({ submission, mode = 'agency', currentOpportunit
       </div>
       <div className="muted">Opportunity ID: {submission.opportunityId}</div>
       <div className="muted">Submission ID: {submission.id}</div>
+      <div className="muted">Target vendor: {submission.vendor}</div>
       {rowLabel ? <div className="muted">{rowLabel}</div> : null}
       {isSelectedSubmission ? <div className="dashboard-note compact-note">{mode === 'agency' ? 'Active review row.' : 'Active vendor response row.'}</div> : null}
       {isCurrentOpportunity ? <div className="dashboard-note compact-note">Linked to current selected opportunity.</div> : null}
       {rowSummary ? <div className="dashboard-note compact-note">{rowSummary}</div> : null}
+      <div className="dashboard-note compact-note">
+        {mode === 'agency'
+          ? 'Clicking this row keeps you in agency review and retargets all actions to this exact submission.'
+          : 'Clicking this row opens the vendor workflow on this exact saved response row.'}
+      </div>
       <div className="muted">Submitted: {submission.submittedAt}</div>
       <div className="muted">Progress: {statusSummary.progress}</div>
       <div className="dashboard-note compact-note">{statusSummary.detail}</div>

@@ -33,6 +33,11 @@ export function SubmissionActivityPanel({
             <strong>{item.title}</strong>
             <div className="muted">{item.detail}</div>
             {item.summary ? <div className="dashboard-note compact-note">{item.summary}</div> : null}
+            <div className="dashboard-note compact-note">
+              {item.submissionId
+                ? `Targets submission ${item.submissionId} for opportunity ${item.opportunityId}.`
+                : `Targets opportunity ${item.opportunityId}.`}
+            </div>
           </div>
         ))}
       </div>
