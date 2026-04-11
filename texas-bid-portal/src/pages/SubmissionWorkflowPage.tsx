@@ -11,7 +11,6 @@ import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel
 import { SubmissionStatusSnapshot } from '../components/SubmissionStatusSnapshot'
 import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacketPanel'
 import { WorkflowStageSummary } from '../components/WorkflowStageSummary'
-import { submissionStatusSummary } from '../data/submissionStatus'
 import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import type { BidDocument, SubmissionFormState } from '../types/forms'
@@ -29,69 +28,13 @@ import {
   presentVendorWorkflowHeaderTitle,
   presentVendorWorkflowRecordLine,
 } from '../utils/vendorPresentation'
-
-const submissionStageSummaryItems = [
-  {
-    stage: 'Qualification',
-    owner: 'Vendor',
-    detail: 'Confirm fit, urgency, and document readiness before spending effort on the packet.',
-  },
-  {
-    stage: 'Response assembly',
-    owner: 'Vendor',
-    detail: 'Prepare signer details, pricing, narrative support, and all required attachments.',
-  },
-  {
-    stage: 'Agency review',
-    owner: 'Agency',
-    detail: 'Submission moves into completeness checks, clarification handling, and shortlist decisions.',
-  },
-]
-
-const submissionStatusItems = [
-  submissionStatusSummary.draft,
-  submissionStatusSummary.received,
-  submissionStatusSummary.reviewing,
-  submissionStatusSummary.shortlisted,
-]
-
-const packageCompletenessItems = [
-  {
-    title: 'Pricing response',
-    detail: 'In progress and ready for final vendor confirmation',
-  },
-  {
-    title: 'Compliance packet',
-    detail: 'Required attachments are ready to upload before submission',
-  },
-  {
-    title: 'Signer confirmation',
-    detail: 'Authorized signer is captured in the response form',
-  },
-]
-
-const lifecycleSummaryItems = [
-  {
-    stage: '1. Review opportunity fit',
-    detail: 'Confirm the bid matches capability, timing, and submission requirements.',
-  },
-  {
-    stage: '2. Assemble response packet',
-    detail: 'Prepare pricing, attachments, signer details, and response narrative.',
-  },
-  {
-    stage: '3. Submit into agency review',
-    detail: 'Send the final packet directly through the Texas-first portal workflow.',
-  },
-]
-
-const submissionRequirementItems = [
-  'Confirm the bid matches capability, timing, and submission requirements',
-  'Prepare pricing total, timeline, and response narrative',
-  'Upload required attachments and compliance materials',
-  'Validate signer details and final packet completeness',
-  'Submit directly into agency review',
-] as const
+import {
+  lifecycleSummaryItems,
+  submissionRequirementItems,
+  submissionStageSummaryItems,
+  submissionStatusItems,
+  vendorWorkflowPackageCompletenessItems,
+} from '../utils/vendorWorkflowContent'
 
 type SubmissionWorkflowPageProps = {
   formState: SubmissionFormState
@@ -200,7 +143,7 @@ export function SubmissionWorkflowPage({
       </section>
 
       <section className="content-grid lower-grid">
-        <WorkflowStageSummary title="Submission stage summary" items={submissionStageSummaryItems} />
+        <WorkflowStageSummary title="Submission stage summary" items={[...submissionStageSummaryItems]} />
 
         <VendorSubmissionPacketPanel />
       </section>
@@ -261,11 +204,11 @@ export function SubmissionWorkflowPage({
             ...submissionStatusItems,
           ]}
         />
-        <PackageCompletenessPanel title="Response completeness" items={packageCompletenessItems} />
+        <PackageCompletenessPanel title="Response completeness" items={[...vendorWorkflowPackageCompletenessItems]} />
       </section>
 
       <section className="content-grid lower-grid">
-        <LifecycleSummaryPanel title="Submission lifecycle summary" items={lifecycleSummaryItems} />
+        <LifecycleSummaryPanel title="Submission lifecycle summary" items={[...lifecycleSummaryItems]} />
         <FinalActionPanel
           eyebrow="Final step"
           title={finalAction.title}
