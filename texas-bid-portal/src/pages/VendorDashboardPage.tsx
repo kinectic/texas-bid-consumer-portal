@@ -1,3 +1,4 @@
+import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
 import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacketPanel'
 import { lifecycleMetrics } from '../data/metrics'
@@ -64,7 +65,10 @@ export function VendorDashboardPage() {
           </div>
         </div>
 
-        <VendorQualificationPanel />
+        <div className="content-grid nested-grid">
+          <RoleModeSummaryPanel mode="vendor" />
+          <VendorQualificationPanel />
+        </div>
       </section>
 
       <section className="content-grid lower-grid">

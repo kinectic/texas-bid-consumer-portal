@@ -1,4 +1,5 @@
 import { DraftPublishSummaryPanel } from '../components/DraftPublishSummaryPanel'
+import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
 import { lifecycleMetrics } from '../data/metrics'
 import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
 
@@ -68,7 +69,10 @@ export function AgencyDashboardPage() {
           </div>
         </div>
 
-        <DraftPublishSummaryPanel title="Draft publishing readiness" />
+        <div className="content-grid nested-grid">
+          <RoleModeSummaryPanel mode="agency" />
+          <DraftPublishSummaryPanel title="Draft publishing readiness" />
+        </div>
       </section>
 
       <section className="content-grid lower-grid">
