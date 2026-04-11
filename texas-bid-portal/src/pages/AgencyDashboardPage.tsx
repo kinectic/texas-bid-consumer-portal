@@ -1,5 +1,6 @@
 import { ActionHeader } from '../components/ActionHeader'
 import { DraftPublishSummaryPanel } from '../components/DraftPublishSummaryPanel'
+import { EmptyStatePanel } from '../components/EmptyStatePanel'
 import { MetricCard } from '../components/MetricCard'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
 import { lifecycleMetrics } from '../data/metrics'
@@ -67,6 +68,8 @@ export function AgencyDashboardPage() {
       </section>
 
       <section className="content-grid lower-grid">
+        <EmptyStatePanel mode="agency" />
+
         <div className="panel">
           <div className="panel-title">Draft pipeline</div>
           <div className="draft-list">
@@ -89,7 +92,9 @@ export function AgencyDashboardPage() {
             ))}
           </div>
         </div>
+      </section>
 
+      <section className="content-grid lower-grid">
         <div className="panel">
           <div className="panel-title">Recent submissions</div>
           <div className="submission-list">

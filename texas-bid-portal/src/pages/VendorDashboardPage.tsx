@@ -1,4 +1,5 @@
 import { ActionHeader } from '../components/ActionHeader'
+import { EmptyStatePanel } from '../components/EmptyStatePanel'
 import { MetricCard } from '../components/MetricCard'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
@@ -92,6 +93,8 @@ export function VendorDashboardPage() {
       </section>
 
       <section className="content-grid lower-grid">
+        <EmptyStatePanel mode="vendor" />
+
         <div className="panel">
           <div className="panel-title">Submission status progression</div>
           <ol className="flow-list">
@@ -100,11 +103,11 @@ export function VendorDashboardPage() {
             ))}
           </ol>
         </div>
-
-        <VendorSubmissionPacketPanel />
       </section>
 
       <section className="content-grid lower-grid">
+        <VendorSubmissionPacketPanel />
+
         <div className="panel">
           <div className="panel-title">Recommended bids</div>
           <div className="draft-list">
