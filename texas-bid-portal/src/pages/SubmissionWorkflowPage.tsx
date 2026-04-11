@@ -35,7 +35,7 @@ import {
   submissionStatusItems,
   vendorWorkflowCopy,
   vendorWorkflowPackageCompletenessItems,
-} from '../utils/vendorWorkflowContent'
+} from '../utils/vendorContent'
 
 type SubmissionWorkflowPageProps = {
   formState: SubmissionFormState

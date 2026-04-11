@@ -18,7 +18,7 @@ import {
   agencyDraftPipelineItems,
   agencyMilestoneItems,
   agencyPriorityControls,
-} from '../utils/agencyDashboardContent'
+} from '../utils/agencyContent'
 import { shellContent } from '../utils/shellContent'
 import type { ViewKey } from '../data/viewData'
 

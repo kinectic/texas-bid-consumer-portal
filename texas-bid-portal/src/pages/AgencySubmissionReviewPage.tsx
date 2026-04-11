@@ -15,7 +15,7 @@ import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import type { ReviewNotesState } from '../types/forms'
 import { buildSubmissionQueueRowMeta } from '../utils/submissionQueue'
-import { agencyReviewCopy } from '../utils/agencyReviewContent'
+import { agencyReviewCopy } from '../utils/agencyContent'
 import {
   presentAgencyActiveSubmissionLabel,
   presentAgencyChecklistContext,
