@@ -1,3 +1,4 @@
+import { AwardHistoryPanel } from '../components/AwardHistoryPanel'
 import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
 import { OpportunityDocumentsPanel } from '../components/OpportunityDocumentsPanel'
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
@@ -5,10 +6,16 @@ import { OpportunityStatusPanel } from '../components/OpportunityStatusPanel'
 import { OpportunitySummaryPanel } from '../components/OpportunitySummaryPanel'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
 import { bidPacketDocuments } from '../data/formState'
-import { selectedOpportunity, statusClass } from '../data/mockData'
+import { opportunities, selectedOpportunity, statusClass } from '../data/mockData'
 
 export function OpportunityDetailPage() {
   const opportunity = selectedOpportunity
+  const awardHistoryItems = opportunities
+    .filter((item) => item.status === 'awarded')
+    .map((item) => ({
+      title: item.title,
+      detail: item.agency,
+    }))
 
   return (
     <main className="main">
@@ -62,6 +69,7 @@ export function OpportunityDetailPage() {
 
       <section className="content-grid lower-grid">
         <LifecycleTimelinePanel />
+        <AwardHistoryPanel title="Related award history" items={awardHistoryItems} />
       </section>
     </main>
   )

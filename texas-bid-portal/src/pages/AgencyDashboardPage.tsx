@@ -1,4 +1,5 @@
 import { ActionHeader } from '../components/ActionHeader'
+import { AwardHistoryPanel } from '../components/AwardHistoryPanel'
 import { DecisionControlsPanel } from '../components/DecisionControlsPanel'
 import { DraftPipelinePanel } from '../components/DraftPipelinePanel'
 import { DraftPublishSummaryPanel } from '../components/DraftPublishSummaryPanel'
@@ -35,6 +36,10 @@ const draftPipelineItems = [
 export function AgencyDashboardPage() {
   const activeBids = opportunities.filter((opportunity) => opportunity.status === 'open')
   const awardedBids = opportunities.filter((opportunity) => opportunity.status === 'awarded')
+  const awardHistoryItems = awardedBids.map((opportunity) => ({
+    title: opportunity.title,
+    detail: opportunity.agency,
+  }))
 
   return (
     <main className="main">
@@ -85,18 +90,7 @@ export function AgencyDashboardPage() {
 
         <div className="content-grid nested-grid">
           <DraftPipelinePanel items={draftPipelineItems} />
-
-          <div className="panel">
-            <div className="panel-title section-title">Recently awarded</div>
-            <div className="draft-list">
-              {awardedBids.map((opportunity) => (
-                <div className="draft-card" key={opportunity.id}>
-                  <strong>{opportunity.title}</strong>
-                  <div className="muted">{opportunity.agency}</div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <AwardHistoryPanel items={awardHistoryItems} />
         </div>
       </section>
 
