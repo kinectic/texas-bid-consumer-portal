@@ -265,16 +265,20 @@ function App() {
     opportunities.map((opportunity) => {
       const form = submissionFormsByOpportunity[opportunity.id] ?? initialSubmissionFormState
       const docs = submissionDocumentsByOpportunity[opportunity.id] ?? initialSubmissionDocuments
-      const submission = submissionQueue.find((item) => item.opportunityId === opportunity.id)
+      const matchingSubmissions = submissionQueue.filter((item) => item.opportunityId === opportunity.id)
+      const submission = matchingSubmissions.find((item) => item.id === selectedSubmissionByOpportunity[opportunity.id])
+        ?? matchingSubmissions[0]
+        ?? null
+      const responseCount = matchingSubmissions.length
       const editedFields = Object.entries(form).filter(([key, value]) => value !== initialSubmissionFormState[key as keyof SubmissionFormState]).length
       const attachedDocs = docs.filter((document) => document.status.toLowerCase().includes('attached')).length
       const label = submission
-        ? `Submission ${submission.status}`
+        ? `Response ${responseCount} • ${submission.status}`
         : editedFields > 0 || attachedDocs > 0
           ? 'Draft in progress'
           : 'No activity yet'
       const detail = submission
-        ? `${attachedDocs}/${docs.length} attachments ready • ${editedFields} edited fields`
+        ? `${responseCount} response row${responseCount === 1 ? '' : 's'} • active ${submission.id} • ${attachedDocs}/${docs.length} attachments ready • ${editedFields} edited fields`
         : editedFields > 0 || attachedDocs > 0
           ? `${attachedDocs}/${docs.length} attachments ready • ${editedFields} edited fields`
           : 'Untouched default response state'

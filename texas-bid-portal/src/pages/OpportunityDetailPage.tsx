@@ -28,7 +28,9 @@ type OpportunityDetailPageProps = {
 }
 
 export function OpportunityDetailPage({ opportunity, submissionQueue, onStartNewSubmission, onNavigate }: OpportunityDetailPageProps) {
-  const activeSubmission = submissionQueue.find((submission) => submission.opportunityId === opportunity.id)
+  const matchingSubmissions = submissionQueue.filter((submission) => submission.opportunityId === opportunity.id)
+  const activeSubmission = matchingSubmissions[0]
+  const nextResponseNumber = matchingSubmissions.length + 1
   const awardHistoryItems = opportunities
     .filter((item) => item.status === 'awarded')
     .map((item) => ({
@@ -49,13 +51,13 @@ export function OpportunityDetailPage({ opportunity, submissionQueue, onStartNew
         <div className="top-actions">
           <button className="ghost" onClick={() => onNavigate('vendor-dashboard')}>Save Opportunity</button>
           <button className="primary" onClick={() => onNavigate('submission-workflow')}>
-            {activeSubmission ? 'Continue Submission' : 'Start Submission'}
+            {activeSubmission ? `Continue ${activeSubmission.id}` : 'Start Submission'}
           </button>
           <button className="ghost" onClick={() => {
             onStartNewSubmission()
             onNavigate('submission-workflow')
           }}>
-            Start New Response
+            Start Response {nextResponseNumber}
           </button>
         </div>
       </header>
@@ -80,11 +82,11 @@ export function OpportunityDetailPage({ opportunity, submissionQueue, onStartNew
         <div>
           <OpportunityRequirementsPanel
             items={opportunityRequirementItems}
-            note="This screen should make it immediately obvious what the opportunity is, what matters, and what the vendor should do next."
+            note={`This screen should make it immediately obvious what the opportunity is, what matters, and what the vendor should do next. Current response rows: ${matchingSubmissions.length}. ${activeSubmission ? `Active row: ${activeSubmission.id}.` : 'No saved response row yet.'}`}
           />
           <DetailActionsStrip
             secondaryLabel="Save Opportunity"
-            primaryLabel={activeSubmission ? 'Continue Submission' : 'Start Submission'}
+            primaryLabel={activeSubmission ? `Continue ${activeSubmission.id}` : 'Start Submission'}
             onSecondaryAction={() => onNavigate('vendor-dashboard')}
             onPrimaryAction={() => onNavigate('submission-workflow')}
           />

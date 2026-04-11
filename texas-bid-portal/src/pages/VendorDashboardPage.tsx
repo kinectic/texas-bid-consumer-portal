@@ -69,6 +69,9 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
   const activeSubmission = submissions.find((submission) => submission.id === selectedSubmissionId)
     ?? submissions.find((submission) => submission.opportunityId === currentOpportunity.id)
     ?? null
+  const activeSubmissionLabel = activeSubmission
+    ? `${activeSubmission.vendor} · ${activeSubmission.id}`
+    : 'new unsaved response'
   const selectOpportunityFromSubmission = (submission: Submission) => {
     onSelectSubmission(submission)
     const matchingOpportunity = savedOpportunities.find((opportunity) => opportunity.id === submission.opportunityId)
@@ -96,15 +99,17 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
 
       <PrimaryActionStrip
         title="Vendor priorities"
-        description="Keep the active bid pipeline moving from qualification into submission and tracking."
+        description={`Keep the active bid pipeline moving from qualification into submission and tracking. Current opportunity has ${currentOpportunitySubmissions.length} response row${currentOpportunitySubmissions.length === 1 ? '' : 's'}; active row: ${activeSubmissionLabel}.`}
         actions={
           <>
             <button className="primary" onClick={() => onNavigate('marketplace')}>Find opportunities</button>
-            <button className="ghost" onClick={() => onNavigate('submission-workflow')}>Continue submission</button>
+            <button className="ghost" onClick={() => onNavigate('submission-workflow')}>
+              {activeSubmission ? `Continue ${activeSubmission.id}` : 'Continue submission'}
+            </button>
             <button className="ghost" onClick={() => {
               onStartNewSubmission()
               onNavigate('submission-workflow')
-            }}>Start new response</button>
+            }}>Start response {currentOpportunitySubmissions.length + 1}</button>
             <button className="ghost" onClick={() => onNavigate('opportunity')}>Review packet</button>
           </>
         }
@@ -141,7 +146,7 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
           <div className="panel-header">
             <div>
               <div className="panel-title">Active submissions</div>
-              <div className="panel-subtitle">Filter between the selected opportunity and the full vendor queue.</div>
+              <div className="panel-subtitle">Filter between the selected opportunity and the full vendor queue. Selected row: {activeSubmissionLabel}.</div>
             </div>
             <div className="workflow-actions-list">
               <button className={queueFilter === 'current' ? 'switch-pill switch-pill-active' : 'switch-pill'} onClick={() => onQueueFilterChange('current')}>Current opportunity</button>
