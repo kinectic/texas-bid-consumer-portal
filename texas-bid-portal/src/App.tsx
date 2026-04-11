@@ -23,6 +23,9 @@ import { VendorDashboardPage } from './pages/VendorDashboardPage'
 import type { CreateBidFormState, ReviewNotesState, SubmissionFormState, BidDocument } from './types/forms'
 import type { Opportunity, Submission } from './types'
 
+type SubmissionFormStateByOpportunity = Record<string, SubmissionFormState>
+type SubmissionDocumentsByOpportunity = Record<string, BidDocument[]>
+
 function renderView(
   view: ViewKey,
   createBidForm: CreateBidFormState,
@@ -136,9 +139,13 @@ function renderView(
 function App() {
   const [activeView, setActiveView] = useState<ViewKey>('home')
   const [createBidForm, setCreateBidForm] = useState<CreateBidFormState>(initialCreateBidFormState)
-  const [submissionForm, setSubmissionForm] = useState<SubmissionFormState>(initialSubmissionFormState)
+  const [submissionFormsByOpportunity, setSubmissionFormsByOpportunity] = useState<SubmissionFormStateByOpportunity>({
+    [opportunities[0].id]: initialSubmissionFormState,
+  })
   const [reviewNotes, setReviewNotes] = useState<ReviewNotesState>(initialReviewNotesState)
-  const [submissionDocuments, setSubmissionDocuments] = useState<BidDocument[]>(initialSubmissionDocuments)
+  const [submissionDocumentsByOpportunity, setSubmissionDocumentsByOpportunity] = useState<SubmissionDocumentsByOpportunity>({
+    [opportunities[0].id]: initialSubmissionDocuments,
+  })
   const [submissionQueue, setSubmissionQueue] = useState<Submission[]>(initialVendorSubmissions)
   const [isBidPublished, setIsBidPublished] = useState(false)
   const [selectedOpportunityId, setSelectedOpportunityId] = useState(opportunities[0].id)
@@ -148,8 +155,37 @@ function App() {
     setCreateBidForm((current) => ({ ...current, [field]: value }))
   }
 
+  const publishedOpportunity = isBidPublished
+    ? {
+        ...opportunities[0],
+        title: createBidForm.title,
+        category: createBidForm.category,
+        dueDate: createBidForm.deadline,
+        summary: createBidForm.scope,
+        source: 'TexasBid Agency Publish Flow',
+        documents: bidPacketDocuments.map((document) => document.name),
+      }
+    : null
+
+  const currentOpportunity = (() => {
+    if (publishedOpportunity && selectedOpportunityId === publishedOpportunity.id) {
+      return publishedOpportunity
+    }
+
+    return opportunities.find((opportunity) => opportunity.id === selectedOpportunityId) ?? publishedOpportunity ?? opportunities[0]
+  })()
+
+  const submissionForm = submissionFormsByOpportunity[currentOpportunity.id] ?? initialSubmissionFormState
+  const submissionDocuments = submissionDocumentsByOpportunity[currentOpportunity.id] ?? initialSubmissionDocuments
+
   const updateSubmissionForm = (field: keyof SubmissionFormState, value: string) => {
-    setSubmissionForm((current) => ({ ...current, [field]: value }))
+    setSubmissionFormsByOpportunity((current) => ({
+      ...current,
+      [currentOpportunity.id]: {
+        ...(current[currentOpportunity.id] ?? initialSubmissionFormState),
+        [field]: value,
+      },
+    }))
   }
 
   const updateReviewNotes = (field: keyof ReviewNotesState, value: string) => {
@@ -169,16 +205,20 @@ function App() {
   }
 
   const uploadNextSubmissionDocument = () => {
-    setSubmissionDocuments((current) => {
-      const pendingIndex = current.findIndex((document) => document.status.toLowerCase().includes('pending'))
+    setSubmissionDocumentsByOpportunity((current) => {
+      const currentDocuments = current[currentOpportunity.id] ?? initialSubmissionDocuments
+      const pendingIndex = currentDocuments.findIndex((document) => document.status.toLowerCase().includes('pending'))
 
       if (pendingIndex === -1) {
         return current
       }
 
-      return current.map((document, index) =>
-        index === pendingIndex ? { ...document, status: 'Attached' } : document,
-      )
+      return {
+        ...current,
+        [currentOpportunity.id]: currentDocuments.map((document, index) =>
+          index === pendingIndex ? { ...document, status: 'Attached' } : document,
+        ),
+      }
     })
   }
 
@@ -235,25 +275,6 @@ function App() {
   const archiveSubmission = () => {
     setSubmissionQueue((current) => current.filter((submission) => submission.opportunityId !== currentOpportunity.id))
   }
-
-  const publishedOpportunity = isBidPublished
-    ? {
-        ...opportunities[0],
-        title: createBidForm.title,
-        category: createBidForm.category,
-        dueDate: createBidForm.deadline,
-        summary: createBidForm.scope,
-        source: 'TexasBid Agency Publish Flow',
-        documents: bidPacketDocuments.map((document) => document.name),
-      }
-    : null
-  const currentOpportunity = (() => {
-    if (publishedOpportunity && selectedOpportunityId === publishedOpportunity.id) {
-      return publishedOpportunity
-    }
-
-    return opportunities.find((opportunity) => opportunity.id === selectedOpportunityId) ?? publishedOpportunity ?? opportunities[0]
-  })()
 
   return (
     <div className="app-shell">
