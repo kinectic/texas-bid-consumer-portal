@@ -3,6 +3,7 @@ import { FieldMock } from '../components/FieldMock'
 import { MetricCard } from '../components/MetricCard'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { StatusBadgeLegend } from '../components/StatusBadgeLegend'
+import { StatusProgressionPanel } from '../components/StatusProgressionPanel'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
 import { SubmissionQueueList } from '../components/SubmissionQueueList'
 import { lifecycleMetrics } from '../data/metrics'
@@ -82,14 +83,7 @@ export function AgencySubmissionReviewPage({ reviewNotes, onChange }: AgencySubm
         <SubmissionChecklistPanel title="Agency review checklist" contextLabel="before shortlist decision" />
 
         <div className="content-grid nested-grid">
-          <div className="panel">
-            <div className="panel-title">Status progression</div>
-            <ol className="flow-list">
-              {submissionLifecycle.map((step) => (
-                <li key={step}>{step}</li>
-              ))}
-            </ol>
-          </div>
+          <StatusProgressionPanel steps={submissionLifecycle} />
           <StatusBadgeLegend
             title="Review status legend"
             items={[

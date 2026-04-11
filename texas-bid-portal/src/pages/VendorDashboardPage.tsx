@@ -5,6 +5,7 @@ import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
 import { RecommendedOpportunitiesPanel } from '../components/RecommendedOpportunitiesPanel'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
+import { StatusProgressionPanel } from '../components/StatusProgressionPanel'
 import { SubmissionQueueList } from '../components/SubmissionQueueList'
 import { SubmissionStatusSnapshot } from '../components/SubmissionStatusSnapshot'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
@@ -12,7 +13,7 @@ import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacke
 import { WorkflowMetricsSnapshot } from '../components/WorkflowMetricsSnapshot'
 import { lifecycleMetrics } from '../data/metrics'
 import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
-import { submissionStatusSummary } from '../data/submissionStatus'
+import { submissionLifecycle, submissionStatusSummary } from '../data/submissionStatus'
 
 const submissionStatusItems = [
   submissionStatusSummary.received,
@@ -89,9 +90,13 @@ export function VendorDashboardPage() {
       </section>
 
       <section className="content-grid lower-grid">
-        <VendorSubmissionPacketPanel />
+        <StatusProgressionPanel title="Submission lifecycle" steps={submissionLifecycle} />
 
         <RecommendedOpportunitiesPanel opportunities={recommendedOpportunities} actionLabel="Open recommendations" />
+      </section>
+
+      <section className="content-grid lower-grid">
+        <VendorSubmissionPacketPanel />
       </section>
     </main>
   )
