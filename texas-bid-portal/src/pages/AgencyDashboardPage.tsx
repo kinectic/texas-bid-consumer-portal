@@ -2,6 +2,7 @@ import { ActionHeader } from '../components/ActionHeader'
 import { DraftPublishSummaryPanel } from '../components/DraftPublishSummaryPanel'
 import { EmptyStatePanel } from '../components/EmptyStatePanel'
 import { MetricCard } from '../components/MetricCard'
+import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
 import { lifecycleMetrics } from '../data/metrics'
 import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
@@ -20,6 +21,18 @@ export function AgencyDashboardPage() {
           <>
             <button className="ghost">Export Activity</button>
             <button className="primary">New Bid</button>
+          </>
+        }
+      />
+
+      <PrimaryActionStrip
+        title="Agency priorities"
+        description="Move the procurement flow forward from draft through publishing and review."
+        actions={
+          <>
+            <button className="primary">Create new bid</button>
+            <button className="ghost">Manage deadlines</button>
+            <button className="ghost">Review submissions</button>
           </>
         }
       />

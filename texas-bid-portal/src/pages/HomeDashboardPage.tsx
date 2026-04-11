@@ -2,6 +2,7 @@ import { HomeCtaPanel } from '../components/HomeCtaPanel'
 import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
 import { MetricCard } from '../components/MetricCard'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
+import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
 import { lifecycleMetrics } from '../data/metrics'
 import { workflowStageLabels } from '../data/workflowStages'
 import type { CreateBidFormState } from '../types/forms'
@@ -76,6 +77,18 @@ export function HomeDashboardPage({ publishedBidPreview, onNavigate }: HomeDashb
           <button className="primary" onClick={() => onNavigate('marketplace')}>Enter workflow</button>
         </div>
       </header>
+
+      <PrimaryActionStrip
+        title="Start the next move"
+        description="Jump straight into the most important lifecycle actions for agencies or vendors."
+        actions={
+          <>
+            <button className="primary" onClick={() => onNavigate('create-bid')}>Create a bid</button>
+            <button className="ghost" onClick={() => onNavigate('opportunity')}>Review live opportunity</button>
+            <button className="ghost" onClick={() => onNavigate('agency-submission-review')}>Review submissions</button>
+          </>
+        }
+      />
 
       <section className="stats-grid">
         <MetricCard value={lifecycleMetrics.workflowScreensBuilt} label="Interactive workflow screens built" />

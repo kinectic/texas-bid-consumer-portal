@@ -134,6 +134,15 @@ button {
   margin-top: 12px;
 }
 
+.primary-action-strip {
+  margin-top: 0;
+}
+
+.action-strip-copy {
+  margin: 8px 0 0;
+  color: #c8d5f3;
+}
+
 .timeline-list {
   display: grid;
   gap: 14px;

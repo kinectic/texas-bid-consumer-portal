@@ -2,6 +2,7 @@ import { ActionHeader } from '../components/ActionHeader'
 import { EmptyStatePanel } from '../components/EmptyStatePanel'
 import { MetricCard } from '../components/MetricCard'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
+import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
 import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacketPanel'
@@ -23,6 +24,18 @@ export function VendorDashboardPage() {
           <>
             <button className="ghost">Update Profile</button>
             <button className="primary">Find Opportunities</button>
+          </>
+        }
+      />
+
+      <PrimaryActionStrip
+        title="Vendor priorities"
+        description="Keep the active bid pipeline moving from qualification into submission and tracking."
+        actions={
+          <>
+            <button className="primary">Find opportunities</button>
+            <button className="ghost">Continue submission</button>
+            <button className="ghost">Review packet</button>
           </>
         }
       />
