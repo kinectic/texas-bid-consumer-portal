@@ -160,7 +160,9 @@ function renderView(
           draftSummary={draftSummary}
           onUploadNextDocument={uploadNextSubmissionDocument}
           opportunity={currentOpportunity}
-          activeSubmission={submissionQueue.find((submission) => submission.opportunityId === currentOpportunity.id) ?? null}
+          activeSubmission={submissionQueue.find((submission) => submission.id === selectedSubmissionId)
+            ?? submissionQueue.find((submission) => submission.opportunityId === currentOpportunity.id)
+            ?? null}
           onSaveProgress={saveSubmissionDraft}
           onSubmitResponse={submitVendorResponse}
           onNavigate={navigate}
@@ -422,7 +424,9 @@ function App() {
     const opportunityRecord = currentOpportunity
 
     setSubmissionQueue((current) => {
-      const existingIndex = current.findIndex((submission) => submission.opportunityId === opportunityRecord.id)
+      const existingIndex = current.findIndex(
+        (submission) => submission.id === selectedSubmissionId && submission.opportunityId === opportunityRecord.id,
+      )
       const nextRecord: Submission = {
         id: existingIndex === -1 ? `sub-${Date.now()}` : current[existingIndex].id,
         opportunityId: opportunityRecord.id,
