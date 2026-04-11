@@ -92,6 +92,7 @@ type SubmissionWorkflowPageProps = {
   }
   onUploadNextDocument: () => void
   opportunity: Opportunity
+  siblingSubmissions: Submission[]
   activeSubmission: Submission | null
   onSaveProgress: () => void
   onSubmitResponse: () => void
@@ -105,13 +106,14 @@ export function SubmissionWorkflowPage({
   draftSummary,
   onUploadNextDocument,
   opportunity,
+  siblingSubmissions,
   activeSubmission,
   onSaveProgress,
   onSubmitResponse,
   onNavigate,
 }: SubmissionWorkflowPageProps) {
   const rowMetaBySubmissionId = buildSubmissionQueueRowMeta({
-    submissions: activeSubmission ? [activeSubmission] : [],
+    submissions: siblingSubmissions,
     selectedSubmissionId: activeSubmission?.id,
     mode: 'vendor',
   })

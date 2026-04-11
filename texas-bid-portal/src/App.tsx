@@ -164,6 +164,7 @@ function renderView(
           draftSummary={draftSummary}
           onUploadNextDocument={uploadNextSubmissionDocument}
           opportunity={currentOpportunity}
+          siblingSubmissions={submissionQueue.filter((submission) => submission.opportunityId === currentOpportunity.id)}
           activeSubmission={submissionQueue.find((submission) => submission.id === selectedSubmissionId)
             ?? submissionQueue.find((submission) => submission.opportunityId === currentOpportunity.id)
             ?? null}
