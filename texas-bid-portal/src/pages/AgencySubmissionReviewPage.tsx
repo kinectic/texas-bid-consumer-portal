@@ -8,18 +8,10 @@ import { StatusBadgeLegend } from '../components/StatusBadgeLegend'
 import { StatusProgressionPanel } from '../components/StatusProgressionPanel'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
 import { SubmissionQueueList } from '../components/SubmissionQueueList'
-import { lifecycleMetrics } from '../data/metrics'
-import { vendorSubmissions } from '../data/mockData'
 import { submissionLifecycle } from '../data/submissionStatus'
+import type { Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import type { ReviewNotesState } from '../types/forms'
-
-const decisionControls = [
-  { label: 'Mark shortlisted', className: 'primary wide' as const },
-  { label: 'Request clarification', className: 'ghost wide' as const },
-  { label: 'Flag incomplete submission', className: 'ghost wide' as const },
-  { label: 'Archive response', className: 'ghost wide' as const },
-]
 
 const packageCompletenessItems = [
   {
@@ -39,10 +31,26 @@ const packageCompletenessItems = [
 type AgencySubmissionReviewPageProps = {
   reviewNotes: ReviewNotesState
   onChange: (field: keyof ReviewNotesState, value: string) => void
+  submissions: Submission[]
+  onAdvanceStatus: (status: Submission['status']) => void
+  onArchiveSubmission: () => void
   onNavigate: (view: ViewKey) => void
 }
 
-export function AgencySubmissionReviewPage({ reviewNotes, onChange, onNavigate }: AgencySubmissionReviewPageProps) {
+export function AgencySubmissionReviewPage({
+  reviewNotes,
+  onChange,
+  submissions,
+  onAdvanceStatus,
+  onArchiveSubmission,
+  onNavigate,
+}: AgencySubmissionReviewPageProps) {
+  const decisionControls = [
+    { label: 'Mark shortlisted', className: 'primary wide' as const, onClick: () => onAdvanceStatus('shortlisted') },
+    { label: 'Request clarification', className: 'ghost wide' as const, onClick: () => onAdvanceStatus('reviewing') },
+    { label: 'Flag incomplete submission', className: 'ghost wide' as const, onClick: () => onAdvanceStatus('received') },
+    { label: 'Archive response', className: 'ghost wide' as const, onClick: onArchiveSubmission },
+  ]
   return (
     <main className="main">
       <ActionHeader
@@ -58,15 +66,15 @@ export function AgencySubmissionReviewPage({ reviewNotes, onChange, onNavigate }
       />
 
       <section className="stats-grid">
-        <MetricCard value={lifecycleMetrics.responsesInReview} label="Responses in review" />
-        <MetricCard value={lifecycleMetrics.shortlisted} label="Shortlist candidate" />
+        <MetricCard value={submissions.length} label="Responses in review" />
+        <MetricCard value={submissions.filter((submission) => submission.status === 'shortlisted').length} label="Shortlist candidate" />
         <MetricCard value="Today" label="Decision window" />
       </section>
 
       <section className="content-grid">
         <div className="panel">
           <div className="panel-title">Response queue</div>
-          <SubmissionQueueList submissions={vendorSubmissions} mode="agency" />
+          <SubmissionQueueList submissions={submissions} mode="agency" />
         </div>
 
         <OutcomeSummaryPanel mode="agency" />

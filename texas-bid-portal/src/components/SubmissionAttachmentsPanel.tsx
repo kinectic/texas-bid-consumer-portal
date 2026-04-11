@@ -5,6 +5,7 @@ type SubmissionAttachmentsPanelProps = {
   description?: string
   documents: BidDocument[]
   actionLabel: string
+  onAction?: () => void
 }
 
 export function SubmissionAttachmentsPanel({
@@ -12,6 +13,7 @@ export function SubmissionAttachmentsPanel({
   description,
   documents,
   actionLabel,
+  onAction,
 }: SubmissionAttachmentsPanelProps) {
   return (
     <div className="panel">
@@ -25,7 +27,7 @@ export function SubmissionAttachmentsPanel({
           </div>
         ))}
       </div>
-      <button className="ghost wide">{actionLabel}</button>
+      <button className="ghost wide" onClick={onAction}>{actionLabel}</button>
     </div>
   )
 }

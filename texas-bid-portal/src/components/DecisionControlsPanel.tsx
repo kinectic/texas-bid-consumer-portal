@@ -1,6 +1,7 @@
 type DecisionControlItem = {
   label: string
   className?: 'primary wide' | 'ghost wide'
+  onClick?: () => void
 }
 
 type DecisionControlsPanelProps = {
@@ -19,7 +20,7 @@ export function DecisionControlsPanel({
       <div className="panel-title">{title}</div>
       <div className="action-stack decision-controls-list">
         {controls.map((control) => (
-          <button key={control.label} className={control.className ?? 'ghost wide'}>
+          <button key={control.label} className={control.className ?? 'ghost wide'} onClick={control.onClick}>
             {control.label}
           </button>
         ))}

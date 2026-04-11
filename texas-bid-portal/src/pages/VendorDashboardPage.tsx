@@ -12,8 +12,9 @@ import { SubmissionStatusSnapshot } from '../components/SubmissionStatusSnapshot
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
 import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacketPanel'
 import { lifecycleMetrics } from '../data/metrics'
-import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
+import { opportunities, statusClass } from '../data/mockData'
 import { submissionLifecycle, submissionStatusSummary } from '../data/submissionStatus'
+import type { Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 
 const submissionStatusItems = [
@@ -23,15 +24,16 @@ const submissionStatusItems = [
 ]
 
 type VendorDashboardPageProps = {
+  submissions: Submission[]
   onNavigate: (view: ViewKey) => void
 }
 
-export function VendorDashboardPage({ onNavigate }: VendorDashboardPageProps) {
+export function VendorDashboardPage({ submissions, onNavigate }: VendorDashboardPageProps) {
   const savedOpportunities = opportunities.filter((opportunity) => opportunity.status === 'open')
   const recommendedOpportunities = opportunities.slice(0, 2)
   const vendorStatsItems = [
     { value: savedOpportunities.length, label: 'Saved opportunities' },
-    { value: lifecycleMetrics.responsesInReview, label: 'Active submissions' },
+    { value: submissions.length, label: 'Active submissions' },
     { value: lifecycleMetrics.vendorProfileCompleteness, label: 'Profile completeness' },
   ]
 
@@ -84,7 +86,7 @@ export function VendorDashboardPage({ onNavigate }: VendorDashboardPageProps) {
 
         <div className="panel">
           <div className="panel-title">Active submissions</div>
-          <SubmissionQueueList submissions={vendorSubmissions} mode="vendor" />
+          <SubmissionQueueList submissions={submissions} mode="vendor" />
         </div>
       </section>
 

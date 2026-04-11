@@ -13,8 +13,9 @@ import { StatusBadgeLegend } from '../components/StatusBadgeLegend'
 import { SubmissionActivityPanel } from '../components/SubmissionActivityPanel'
 import { WorkflowFilterStrip } from '../components/WorkflowFilterStrip'
 import type { CreateBidFormState } from '../types/forms'
+import type { Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
-import { opportunities, statusClass, vendorSubmissions } from '../data/mockData'
+import { opportunities, statusClass } from '../data/mockData'
 
 const marketplaceStatsItems = [
   { value: '2,092+', label: 'Texas opportunities visible in ecosystem research' },
@@ -31,10 +32,11 @@ const agencyFlowSteps = [
 
 type MarketplacePageProps = {
   publishedBidPreview: CreateBidFormState
+  submissions: Submission[]
   onNavigate: (view: ViewKey) => void
 }
 
-export function MarketplacePage({ publishedBidPreview, onNavigate }: MarketplacePageProps) {
+export function MarketplacePage({ publishedBidPreview, submissions, onNavigate }: MarketplacePageProps) {
   const highlighted = opportunities[0]
   const previewOpportunity = {
     ...highlighted,
@@ -45,7 +47,7 @@ export function MarketplacePage({ publishedBidPreview, onNavigate }: Marketplace
   }
 
   const marketplaceFeed = [previewOpportunity, ...opportunities.slice(1)]
-  const submissionActivityItems = vendorSubmissions.map((submission) => ({
+  const submissionActivityItems = submissions.map((submission) => ({
     title: submission.vendor,
     detail: `${submission.opportunity} • Submitted ${submission.submittedAt}`,
   }))

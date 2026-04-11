@@ -11,11 +11,10 @@ import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel
 import { SubmissionStatusSnapshot } from '../components/SubmissionStatusSnapshot'
 import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacketPanel'
 import { WorkflowStageSummary } from '../components/WorkflowStageSummary'
-import { submissionDocuments } from '../data/formState'
 import { selectedOpportunity } from '../data/mockData'
 import { submissionStatusSummary } from '../data/submissionStatus'
 import type { ViewKey } from '../data/viewData'
-import type { SubmissionFormState } from '../types/forms'
+import type { BidDocument, SubmissionFormState } from '../types/forms'
 
 const submissionStageSummaryItems = [
   {
@@ -82,10 +81,12 @@ const submissionRequirementItems = [
 type SubmissionWorkflowPageProps = {
   formState: SubmissionFormState
   onChange: (field: keyof SubmissionFormState, value: string) => void
+  documents: BidDocument[]
+  onUploadNextDocument: () => void
   onNavigate: (view: ViewKey) => void
 }
 
-export function SubmissionWorkflowPage({ formState, onChange, onNavigate }: SubmissionWorkflowPageProps) {
+export function SubmissionWorkflowPage({ formState, onChange, documents, onUploadNextDocument, onNavigate }: SubmissionWorkflowPageProps) {
   const opportunity = selectedOpportunity
 
   return (
@@ -126,8 +127,9 @@ export function SubmissionWorkflowPage({ formState, onChange, onNavigate }: Subm
         <SubmissionAttachmentsPanel
           title="Required attachments"
           description="The packet components the vendor must gather and upload before final submission."
-          documents={submissionDocuments}
-          actionLabel="Upload attachment"
+          documents={documents}
+          actionLabel="Upload next pending attachment"
+          onAction={onUploadNextDocument}
         />
       </section>
 

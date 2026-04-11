@@ -10,7 +10,8 @@ import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
 import { SubmissionActivityPanel } from '../components/SubmissionActivityPanel'
 import { WorkflowMetricsSnapshot } from '../components/WorkflowMetricsSnapshot'
 import { lifecycleMetrics } from '../data/metrics'
-import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
+import { opportunities, statusClass } from '../data/mockData'
+import type { Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 
 const agencyMetricsItems = [
@@ -43,17 +44,18 @@ const milestoneItems = [
 ] as const
 
 type AgencyDashboardPageProps = {
+  submissions: Submission[]
   onNavigate: (view: ViewKey) => void
 }
 
-export function AgencyDashboardPage({ onNavigate }: AgencyDashboardPageProps) {
+export function AgencyDashboardPage({ submissions, onNavigate }: AgencyDashboardPageProps) {
   const activeBids = opportunities.filter((opportunity) => opportunity.status === 'open')
   const awardedBids = opportunities.filter((opportunity) => opportunity.status === 'awarded')
   const awardHistoryItems = awardedBids.map((opportunity) => ({
     title: opportunity.title,
     detail: opportunity.agency,
   }))
-  const submissionActivityItems = vendorSubmissions.map((submission) => ({
+  const submissionActivityItems = submissions.map((submission) => ({
     title: submission.vendor,
     detail: `${submission.opportunity} • Submitted ${submission.submittedAt}`,
   }))
