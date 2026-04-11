@@ -40,7 +40,7 @@ export function buildSubmissionActivityItems({
       detail: `${submission.opportunity} • row ${rowNumber} of ${siblingRows.length} • ${submission.opportunityId} • Submitted ${submission.submittedAt}`,
       summary:
         mode === 'agency'
-          ? `${isCurrentOpportunity ? 'Current opportunity' : 'Other opportunity'} • ${submission.status} • Vendor ${submission.vendor} • active row ${isSelected ? 'yes' : 'no'} • response row ${rowNumber}`
+          ? `${isCurrentOpportunity ? 'Current opportunity' : 'Other opportunity'} • ${submission.status} • Vendor ${submission.vendor} • active row ${isSelected ? 'yes' : 'no'} • response row ${rowNumber}${readinessByOpportunityId?.[submission.opportunityId] ? ` • vendor state: ${readinessByOpportunityId[submission.opportunityId].label} • ${readinessByOpportunityId[submission.opportunityId].detail}` : ''}`
           : isSelected
             ? `Active vendor-side submission row. ${readinessByOpportunityId?.[submission.opportunityId]?.label ?? 'Saved row active'} • ${readinessByOpportunityId?.[submission.opportunityId]?.detail ?? 'No extra buffer context.'}`
             : `Click to reopen this exact vendor response row in the workflow. ${readinessByOpportunityId?.[submission.opportunityId]?.label ?? 'Saved/draft state available'} • ${readinessByOpportunityId?.[submission.opportunityId]?.detail ?? 'No extra buffer context.'}`,

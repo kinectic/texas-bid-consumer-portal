@@ -92,6 +92,7 @@ export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, 
     selectedSubmissionId,
     currentOpportunityId: currentOpportunity.id,
     mode: 'agency',
+    readinessByOpportunityId,
   })
   const activeSubmission = selectedSubmissionForOpportunity
 
