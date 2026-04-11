@@ -53,18 +53,21 @@ export function AgencySubmissionReviewPage({
   onArchiveSubmission,
   onNavigate,
 }: AgencySubmissionReviewPageProps) {
-  const decisionControls = [
-    { label: 'Mark shortlisted', className: 'primary wide' as const, onClick: () => onAdvanceStatus('shortlisted') },
-    { label: 'Request clarification', className: 'ghost wide' as const, onClick: () => onAdvanceStatus('reviewing') },
-    { label: 'Flag incomplete submission', className: 'ghost wide' as const, onClick: () => onAdvanceStatus('received') },
-    { label: 'Archive response', className: 'ghost wide' as const, onClick: onArchiveSubmission },
-  ]
   const visibleSubmissions = submissions.filter((submission) => submission.status !== 'draft')
   const currentOpportunitySubmissions = visibleSubmissions.filter((submission) => submission.opportunityId === currentOpportunity.id)
   const displayedSubmissions = queueFilter === 'current' ? currentOpportunitySubmissions : visibleSubmissions
   const activeSubmission = submissions.find((submission) => submission.id === selectedSubmissionId)
     ?? submissions.find((submission) => submission.opportunityId === currentOpportunity.id)
     ?? null
+  const activeSubmissionLabel = activeSubmission
+    ? `${activeSubmission.vendor} · ${activeSubmission.id}`
+    : 'No submission selected'
+  const decisionControls = [
+    { label: `Shortlist ${activeSubmission?.vendor ?? 'selected vendor'}`, className: 'primary wide' as const, onClick: () => onAdvanceStatus('shortlisted') },
+    { label: `Request clarification from ${activeSubmission?.vendor ?? 'vendor'}`, className: 'ghost wide' as const, onClick: () => onAdvanceStatus('reviewing') },
+    { label: `Flag ${activeSubmission?.vendor ?? 'submission'} incomplete`, className: 'ghost wide' as const, onClick: () => onAdvanceStatus('received') },
+    { label: `Archive ${activeSubmission?.vendor ?? 'selected response'}`, className: 'ghost wide' as const, onClick: onArchiveSubmission },
+  ]
   const selectOpportunityFromSubmission = (submission: Submission) => {
     const matchingOpportunity = opportunities.find((opportunity) => opportunity.id === submission.opportunityId)
     if (matchingOpportunity) {
@@ -122,10 +125,10 @@ export function AgencySubmissionReviewPage({
       <section className="content-grid lower-grid">
         <DecisionControlsPanel
           controls={decisionControls}
-          description="This is where the agency workflow stops being a posting tool and becomes an actual procurement operations surface."
+          description={`This is where the agency workflow stops being a posting tool and becomes an actual procurement operations surface. Active row: ${activeSubmissionLabel}.`}
         />
 
-        <PackageCompletenessPanel items={packageCompletenessItems} />
+        <PackageCompletenessPanel title={`Package completeness — ${activeSubmissionLabel}`} items={packageCompletenessItems} />
       </section>
 
       <section className="content-grid lower-grid">
@@ -139,7 +142,7 @@ export function AgencySubmissionReviewPage({
       </section>
 
       <section className="content-grid lower-grid">
-        <SubmissionChecklistPanel title="Agency review checklist" contextLabel={currentOpportunity.title} />
+        <SubmissionChecklistPanel title="Agency review checklist" contextLabel={`${currentOpportunity.title} • ${activeSubmissionLabel}`} />
 
         <div className="content-grid nested-grid">
           <StatusProgressionPanel steps={submissionLifecycle} />
@@ -168,12 +171,14 @@ export function AgencySubmissionReviewPage({
 
       <section className="content-grid lower-grid">
         <ReviewerNotesPanel
-          primaryLabel="Internal procurement notes"
+          title={`Reviewer notes — ${activeSubmissionLabel}`}
+          primaryLabel={`Internal procurement notes for ${activeSubmission?.vendor ?? 'selected vendor'}`}
           primaryValue={reviewNotes.internalNotes}
-          secondaryLabel="Follow-up questions for vendor"
+          secondaryLabel={`Follow-up questions for ${activeSubmission?.vendor ?? 'selected vendor'}`}
           secondaryValue={reviewNotes.vendorQuestions}
           onPrimaryChange={(value) => onChange('internalNotes', value)}
           onSecondaryChange={(value) => onChange('vendorQuestions', value)}
+          actionLabel={`Save notes for ${activeSubmission?.vendor ?? 'selected vendor'}`}
         />
       </section>
     </main>
