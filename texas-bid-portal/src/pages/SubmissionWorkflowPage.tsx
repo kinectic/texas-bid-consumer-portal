@@ -4,10 +4,12 @@ import { OpportunitySummaryPanel } from '../components/OpportunitySummaryPanel'
 import { SectionIntro } from '../components/SectionIntro'
 import { SubmissionAttachmentsPanel } from '../components/SubmissionAttachmentsPanel'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
+import { SubmissionStatusSnapshot } from '../components/SubmissionStatusSnapshot'
 import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacketPanel'
 import { WorkflowStageSummary } from '../components/WorkflowStageSummary'
 import { submissionDocuments } from '../data/formState'
 import { selectedOpportunity } from '../data/mockData'
+import { submissionStatusSummary } from '../data/submissionStatus'
 import type { SubmissionFormState } from '../types/forms'
 
 const submissionStageSummaryItems = [
@@ -26,6 +28,12 @@ const submissionStageSummaryItems = [
     owner: 'Agency',
     detail: 'Submission moves into completeness checks, clarification handling, and shortlist decisions.',
   },
+]
+
+const submissionStatusItems = [
+  submissionStatusSummary.received,
+  submissionStatusSummary.reviewing,
+  submissionStatusSummary.shortlisted,
 ]
 
 type SubmissionWorkflowPageProps = {
@@ -97,6 +105,10 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
       <section className="content-grid lower-grid">
         <SubmissionChecklistPanel title="Pre-submit checklist" contextLabel={opportunity.title} />
 
+        <SubmissionStatusSnapshot items={submissionStatusItems} />
+      </section>
+
+      <section className="content-grid lower-grid">
         <div className="panel">
           <SectionIntro
             eyebrow="Final step"

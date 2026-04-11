@@ -1,15 +1,28 @@
 import { ActionHeader } from '../components/ActionHeader'
 import { EmptyStatePanel } from '../components/EmptyStatePanel'
-import { MetricCard } from '../components/MetricCard'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
 import { ReviewQueueCard } from '../components/ReviewQueueCard'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
+import { SubmissionStatusSnapshot } from '../components/SubmissionStatusSnapshot'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
 import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacketPanel'
+import { WorkflowMetricsSnapshot } from '../components/WorkflowMetricsSnapshot'
 import { lifecycleMetrics } from '../data/metrics'
 import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
-import { submissionLifecycle } from '../data/submissionStatus'
+import { submissionStatusSummary } from '../data/submissionStatus'
+
+const vendorMetricsItems = [
+  { value: 2, label: 'Saved opportunities' },
+  { value: lifecycleMetrics.responsesInReview, label: 'Active submissions' },
+  { value: lifecycleMetrics.vendorProfileCompleteness, label: 'Profile completeness' },
+]
+
+const submissionStatusItems = [
+  submissionStatusSummary.received,
+  submissionStatusSummary.reviewing,
+  submissionStatusSummary.shortlisted,
+]
 
 export function VendorDashboardPage() {
   const savedOpportunities = opportunities.filter((opportunity) => opportunity.status === 'open')
@@ -41,11 +54,7 @@ export function VendorDashboardPage() {
         }
       />
 
-      <section className="stats-grid">
-        <MetricCard value={savedOpportunities.length} label="Saved opportunities" />
-        <MetricCard value={lifecycleMetrics.responsesInReview} label="Active submissions" />
-        <MetricCard value={lifecycleMetrics.vendorProfileCompleteness} label="Profile completeness" />
-      </section>
+      <WorkflowMetricsSnapshot items={vendorMetricsItems} />
 
       <section className="content-grid">
         <div className="panel">
@@ -94,14 +103,7 @@ export function VendorDashboardPage() {
       <section className="content-grid lower-grid">
         <EmptyStatePanel mode="vendor" />
 
-        <div className="panel">
-          <div className="panel-title">Submission status progression</div>
-          <ol className="flow-list">
-            {submissionLifecycle.map((step) => (
-              <li key={step}>{step}</li>
-            ))}
-          </ol>
-        </div>
+        <SubmissionStatusSnapshot title="Submission status progression" items={submissionStatusItems} />
       </section>
 
       <section className="content-grid lower-grid">
