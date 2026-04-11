@@ -8,6 +8,7 @@ import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel
 import { OpportunityStatusPanel } from '../components/OpportunityStatusPanel'
 import { OpportunitySummaryPanel } from '../components/OpportunitySummaryPanel'
 import { PublishedBidSnapshotPanel } from '../components/PublishedBidSnapshotPanel'
+import { SelectionContextPanel } from '../components/SelectionContextPanel'
 import { SectionIntro } from '../components/SectionIntro'
 import { StatusBadgeLegend } from '../components/StatusBadgeLegend'
 import { SubmissionActivityPanel } from '../components/SubmissionActivityPanel'
@@ -64,6 +65,8 @@ export function MarketplacePage({
   ]
   const activeSubmission = submissions.find((submission) => submission.opportunityId === previewOpportunity.id)
   const submissionActivityItems = submissions.map((submission) => ({
+    key: `${submission.opportunityId}-${submission.vendor}`,
+    opportunityId: submission.opportunityId,
     title: submission.vendor,
     detail: `${submission.opportunity} • ${submission.opportunityId} • Submitted ${submission.submittedAt}`,
   }))
@@ -155,7 +158,27 @@ export function MarketplacePage({
       </section>
 
       <section className="content-grid lower-grid">
-        <SubmissionActivityPanel title="Submission workspace" items={submissionActivityItems} />
+        <SelectionContextPanel
+          title="Selected opportunity + submission context"
+          currentOpportunity={previewOpportunity}
+          activeSubmission={activeSubmission ?? null}
+          mode="vendor"
+        />
+        <SubmissionActivityPanel
+          title="Submission workspace"
+          items={submissionActivityItems}
+          currentOpportunityId={previewOpportunity.id}
+          onSelectSubmission={(opportunityId) => {
+            const matchingOpportunity = marketplaceFeed.find((opportunity) => opportunity.id === opportunityId)
+            if (matchingOpportunity) {
+              onSelectOpportunity(matchingOpportunity)
+              onNavigate('opportunity')
+            }
+          }}
+        />
+      </section>
+
+      <section className="content-grid lower-grid">
         <FinalActionPanel
           eyebrow="Vendor action"
           title="Ready to respond"

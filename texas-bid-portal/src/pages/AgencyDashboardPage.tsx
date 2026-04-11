@@ -7,6 +7,7 @@ import { EmptyStatePanel } from '../components/EmptyStatePanel'
 import { MilestonesPanel } from '../components/MilestonesPanel'
 import { OpportunityCardList } from '../components/OpportunityCardList'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
+import { SelectionContextPanel } from '../components/SelectionContextPanel'
 import { SubmissionActivityPanel } from '../components/SubmissionActivityPanel'
 import { WorkflowMetricsSnapshot } from '../components/WorkflowMetricsSnapshot'
 import { opportunities, statusClass } from '../data/mockData'
@@ -37,12 +38,14 @@ const milestoneItems = [
 ] as const
 
 type AgencyDashboardPageProps = {
+  currentOpportunity: Opportunity
   publishedOpportunity: Opportunity | null
   submissions: Submission[]
+  onSelectOpportunity: (opportunity: Opportunity) => void
   onNavigate: (view: ViewKey) => void
 }
 
-export function AgencyDashboardPage({ publishedOpportunity, submissions, onNavigate }: AgencyDashboardPageProps) {
+export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, submissions, onSelectOpportunity, onNavigate }: AgencyDashboardPageProps) {
   const activeBids = publishedOpportunity
     ? [publishedOpportunity, ...opportunities.filter((opportunity) => opportunity.status === 'open' && opportunity.id !== publishedOpportunity.id)]
     : opportunities.filter((opportunity) => opportunity.status === 'open')
@@ -75,9 +78,12 @@ export function AgencyDashboardPage({ publishedOpportunity, submissions, onNavig
     detail: opportunity.agency,
   }))
   const submissionActivityItems = submissions.map((submission) => ({
+    key: `${submission.opportunityId}-${submission.vendor}`,
+    opportunityId: submission.opportunityId,
     title: submission.vendor,
     detail: `${submission.opportunity} • ${submission.opportunityId} • Submitted ${submission.submittedAt}`,
   }))
+  const activeSubmission = submissions.find((submission) => submission.opportunityId === currentOpportunity.id) ?? null
 
   return (
     <main className="main">
@@ -114,6 +120,11 @@ export function AgencyDashboardPage({ publishedOpportunity, submissions, onNavig
             opportunities={activeBids}
             statusClassMap={statusClass}
             metaFormatter={(opportunity) => `${opportunity.category} • ${opportunity.location}`}
+            selectedOpportunityId={currentOpportunity.id}
+            onSelectOpportunity={(opportunity) => {
+              onSelectOpportunity(opportunity)
+              onNavigate('agency-submission-review')
+            }}
           />
         </div>
 
@@ -121,6 +132,16 @@ export function AgencyDashboardPage({ publishedOpportunity, submissions, onNavig
           <RoleModeSummaryPanel mode="agency" />
           <DraftPublishSummaryPanel title="Draft publishing readiness" items={draftSummaryItems} />
         </div>
+      </section>
+
+      <section className="content-grid lower-grid">
+        <SelectionContextPanel
+          title="Selected opportunity + submission context"
+          currentOpportunity={currentOpportunity}
+          activeSubmission={activeSubmission}
+          mode="agency"
+        />
+        <MilestonesPanel title="Agency workflow milestones" items={milestoneItems} />
       </section>
 
       <section className="content-grid lower-grid">
@@ -133,8 +154,19 @@ export function AgencyDashboardPage({ publishedOpportunity, submissions, onNavig
       </section>
 
       <section className="content-grid lower-grid">
-        <SubmissionActivityPanel items={submissionActivityItems} />
-        <MilestonesPanel title="Agency workflow milestones" items={milestoneItems} />
+        <SubmissionActivityPanel
+          items={submissionActivityItems}
+          currentOpportunityId={currentOpportunity.id}
+          onSelectSubmission={(opportunityId) => {
+            const matchingOpportunity = activeBids.find((opportunity) => opportunity.id === opportunityId)
+              ?? opportunities.find((opportunity) => opportunity.id === opportunityId)
+
+            if (matchingOpportunity) {
+              onSelectOpportunity(matchingOpportunity)
+              onNavigate('agency-submission-review')
+            }
+          }}
+        />
       </section>
     </main>
   )

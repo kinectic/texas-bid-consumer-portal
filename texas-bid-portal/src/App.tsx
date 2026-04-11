@@ -71,7 +71,15 @@ function renderView(
     case 'opportunity':
       return <OpportunityDetailPage opportunity={currentOpportunity} submissionQueue={submissionQueue} onNavigate={navigate} />
     case 'agency-dashboard':
-      return <AgencyDashboardPage publishedOpportunity={publishedOpportunity} submissions={submissionQueue} onNavigate={navigate} />
+      return (
+        <AgencyDashboardPage
+          currentOpportunity={currentOpportunity}
+          publishedOpportunity={publishedOpportunity}
+          submissions={submissionQueue}
+          onSelectOpportunity={selectOpportunity}
+          onNavigate={navigate}
+        />
+      )
     case 'create-bid':
       return (
         <CreateBidPage
