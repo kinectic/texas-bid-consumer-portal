@@ -2,6 +2,7 @@ import { ActionHeader } from '../components/ActionHeader'
 import { FieldMock } from '../components/FieldMock'
 import { MetricCard } from '../components/MetricCard'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
+import { PackageCompletenessPanel } from '../components/PackageCompletenessPanel'
 import { StatusBadgeLegend } from '../components/StatusBadgeLegend'
 import { StatusProgressionPanel } from '../components/StatusProgressionPanel'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
@@ -10,6 +11,21 @@ import { lifecycleMetrics } from '../data/metrics'
 import { vendorSubmissions } from '../data/mockData'
 import { submissionLifecycle } from '../data/submissionStatus'
 import type { ReviewNotesState } from '../types/forms'
+
+const packageCompletenessItems = [
+  {
+    title: 'Pricing sheet',
+    detail: 'Attached for both responses',
+  },
+  {
+    title: 'Compliance docs',
+    detail: 'One response missing updated insurance proof',
+  },
+  {
+    title: 'Response narrative',
+    detail: 'Both submissions complete',
+  },
+]
 
 type AgencySubmissionReviewPageProps = {
   reviewNotes: ReviewNotesState
@@ -60,23 +76,7 @@ export function AgencySubmissionReviewPage({ reviewNotes, onChange }: AgencySubm
           </div>
         </div>
 
-        <div className="panel">
-          <div className="panel-title">Package completeness</div>
-          <div className="draft-list">
-            <div className="draft-card">
-              <strong>Pricing sheet</strong>
-              <div className="muted">Attached for both responses</div>
-            </div>
-            <div className="draft-card">
-              <strong>Compliance docs</strong>
-              <div className="muted">One response missing updated insurance proof</div>
-            </div>
-            <div className="draft-card">
-              <strong>Response narrative</strong>
-              <div className="muted">Both submissions complete</div>
-            </div>
-          </div>
-        </div>
+        <PackageCompletenessPanel items={packageCompletenessItems} />
       </section>
 
       <section className="content-grid lower-grid">

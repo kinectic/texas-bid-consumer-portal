@@ -1,6 +1,7 @@
 import { FieldMock } from '../components/FieldMock'
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
 import { OpportunitySummaryPanel } from '../components/OpportunitySummaryPanel'
+import { PackageCompletenessPanel } from '../components/PackageCompletenessPanel'
 import { SectionIntro } from '../components/SectionIntro'
 import { SubmissionAttachmentsPanel } from '../components/SubmissionAttachmentsPanel'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
@@ -34,6 +35,21 @@ const submissionStatusItems = [
   submissionStatusSummary.received,
   submissionStatusSummary.reviewing,
   submissionStatusSummary.shortlisted,
+]
+
+const packageCompletenessItems = [
+  {
+    title: 'Pricing response',
+    detail: 'In progress and ready for final vendor confirmation',
+  },
+  {
+    title: 'Compliance packet',
+    detail: 'Required attachments are ready to upload before submission',
+  },
+  {
+    title: 'Signer confirmation',
+    detail: 'Authorized signer is captured in the response form',
+  },
 ]
 
 type SubmissionWorkflowPageProps = {
@@ -109,6 +125,8 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
       </section>
 
       <section className="content-grid lower-grid">
+        <PackageCompletenessPanel title="Response completeness" items={packageCompletenessItems} />
+
         <div className="panel">
           <SectionIntro
             eyebrow="Final step"
