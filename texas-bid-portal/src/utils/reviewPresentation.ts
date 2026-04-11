@@ -31,6 +31,18 @@ export function presentAgencyReviewerLabels(activeSubmission: Submission | null)
   }
 }
 
+export function presentAgencyDecisionDescription(activeSubmissionLabel: string) {
+  return `This is where the agency workflow stops being a posting tool and becomes an actual procurement operations surface. Active row: ${activeSubmissionLabel}.`
+}
+
+export function presentAgencyPackageTitle(activeSubmissionLabel: string) {
+  return `Package completeness — ${activeSubmissionLabel}`
+}
+
+export function presentAgencyChecklistContext(currentOpportunityTitle: string, activeSubmissionLabel: string) {
+  return `${currentOpportunityTitle} • ${activeSubmissionLabel}`
+}
+
 export function presentAgencyOutcomeSummary({
   activeSubmission,
   currentOpportunityTitle,

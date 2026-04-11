@@ -17,8 +17,11 @@ import type { ReviewNotesState } from '../types/forms'
 import { buildSubmissionQueueRowMeta } from '../utils/submissionQueue'
 import {
   presentAgencyActiveSubmissionLabel,
+  presentAgencyChecklistContext,
   presentAgencyDecisionControls,
+  presentAgencyDecisionDescription,
   presentAgencyOutcomeSummary,
+  presentAgencyPackageTitle,
   presentAgencyReviewerLabels,
 } from '../utils/reviewPresentation'
 
@@ -159,10 +162,10 @@ export function AgencySubmissionReviewPage({
       <section className="content-grid lower-grid">
         <DecisionControlsPanel
           controls={decisionControls}
-          description={`This is where the agency workflow stops being a posting tool and becomes an actual procurement operations surface. Active row: ${activeSubmissionLabel}.`}
+          description={presentAgencyDecisionDescription(activeSubmissionLabel)}
         />
 
-        <PackageCompletenessPanel title={`Package completeness — ${activeSubmissionLabel}`} items={packageCompletenessItems} />
+        <PackageCompletenessPanel title={presentAgencyPackageTitle(activeSubmissionLabel)} items={packageCompletenessItems} />
       </section>
 
       <section className="content-grid lower-grid">
@@ -176,7 +179,7 @@ export function AgencySubmissionReviewPage({
       </section>
 
       <section className="content-grid lower-grid">
-        <SubmissionChecklistPanel title="Agency review checklist" contextLabel={`${currentOpportunity.title} • ${activeSubmissionLabel}`} />
+        <SubmissionChecklistPanel title="Agency review checklist" contextLabel={presentAgencyChecklistContext(currentOpportunity.title, activeSubmissionLabel)} />
 
         <div className="content-grid nested-grid">
           <StatusProgressionPanel steps={submissionLifecycle} />
