@@ -5,6 +5,9 @@ type DraftSummaryLike = {
   formStatus: string
   attachedCount: number
   totalDocuments: number
+  submissionStatus: string
+  bufferLabel: string
+  preservedUnsavedDraftLabel: string
 }
 
 export function presentVendorActiveSubmissionLabel(
@@ -43,6 +46,58 @@ export function presentVendorQueueSubtitle(activeSubmissionLabel: string) {
 
 export function presentVendorResponseRowMode(activeSubmission: Submission | null) {
   return activeSubmission ? 'editing existing saved row' : 'drafting a brand-new unsaved row'
+}
+
+export function presentVendorWorkflowHeaderTitle(activeSubmission: Submission | null, responseRowLabel: string) {
+  return activeSubmission ? `Submission workflow — ${responseRowLabel}` : 'Submission workflow — new response'
+}
+
+export function presentVendorWorkflowRecordLine(activeSubmission: Submission | null) {
+  return activeSubmission ? `${activeSubmission.vendor} · ${activeSubmission.id}` : 'new unsaved response'
+}
+
+export function presentVendorSaveActionLabel(activeSubmission: Submission | null, responseRowLabel: string) {
+  return activeSubmission ? `Save ${responseRowLabel}` : 'Save new response draft'
+}
+
+export function presentVendorSubmitActionLabel(activeSubmission: Submission | null, responseRowLabel: string) {
+  if (activeSubmission?.status === 'received') {
+    return `Update ${responseRowLabel}`
+  }
+
+  return activeSubmission ? `Submit ${responseRowLabel}` : 'Submit new response'
+}
+
+export function presentVendorDraftPersistenceLabel(responseRowLabel: string) {
+  return `Draft persistence — ${responseRowLabel}`
+}
+
+export function presentVendorDraftPersistenceDetail(responseRowMode: string, draftSummary: DraftSummaryLike) {
+  return `${responseRowMode} • ${draftSummary.bufferLabel} • ${draftSummary.formStatus} • ${draftSummary.attachedCount}/${draftSummary.totalDocuments} attachments ready • ${draftSummary.submissionStatus}`
+}
+
+export function presentVendorUnsavedDraftProgress(draftSummary: DraftSummaryLike) {
+  return draftSummary.preservedUnsavedDraftLabel.startsWith('Preserved') ? '60%' : '0%'
+}
+
+export function presentVendorFinalAction({
+  activeSubmission,
+  responseRowLabel,
+  opportunityTitle,
+}: {
+  activeSubmission: Submission | null
+  responseRowLabel: string
+  opportunityTitle: string
+}) {
+  return {
+    title: `Submission confirmation — ${responseRowLabel}`,
+    note: `This is the core V1 workflow: vendors should be able to move from ${opportunityTitle} discovery to actual response submission without leaving the Texas-first portal. Current record: ${activeSubmission ? `${activeSubmission.id} (${activeSubmission.status})` : 'brand-new unsaved row'}.`,
+    actionLabel: activeSubmission?.status === 'received'
+      ? `Update final submit for ${responseRowLabel}`
+      : activeSubmission
+        ? `Final submit ${responseRowLabel}`
+        : 'Final submit new response',
+  }
 }
 
 export function presentVendorSiblingRowItems({

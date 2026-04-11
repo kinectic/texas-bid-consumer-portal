@@ -18,8 +18,16 @@ import type { BidDocument, SubmissionFormState } from '../types/forms'
 import { buildSubmissionQueueRowMeta } from '../utils/submissionQueue'
 import {
   presentVendorActiveSubmissionLabel,
+  presentVendorDraftPersistenceDetail,
+  presentVendorDraftPersistenceLabel,
+  presentVendorFinalAction,
   presentVendorResponseRowMode,
+  presentVendorSaveActionLabel,
   presentVendorSiblingRowItems,
+  presentVendorSubmitActionLabel,
+  presentVendorUnsavedDraftProgress,
+  presentVendorWorkflowHeaderTitle,
+  presentVendorWorkflowRecordLine,
 } from '../utils/vendorPresentation'
 
 const submissionStageSummaryItems = [
@@ -141,18 +149,23 @@ export function SubmissionWorkflowPage({
     onSelectSubmission,
     onStartNewSubmission,
   })
+  const finalAction = presentVendorFinalAction({
+    activeSubmission,
+    responseRowLabel,
+    opportunityTitle: opportunity.title,
+  })
 
   return (
     <main className="main">
       <header className="topbar">
         <div>
           <div className="eyebrow">Vendor workspace</div>
-          <h1>{activeSubmission ? `Submission workflow — ${responseRowLabel}` : 'Submission workflow — new response'}</h1>
+          <h1>{presentVendorWorkflowHeaderTitle(activeSubmission, responseRowLabel)}</h1>
           <p className="intro">
             A direct submission flow where Texas vendors can confirm fit, upload documents, answer requirements, and submit a bid response inside the platform.
           </p>
           <p className="muted">
-            Active response record: {activeSubmission ? `${activeSubmission.vendor} · ${activeSubmission.id}` : 'new unsaved response'}
+            Active response record: {presentVendorWorkflowRecordLine(activeSubmission)}
           </p>
           <p className="muted">
             Mode: {responseRowMode}
@@ -168,11 +181,11 @@ export function SubmissionWorkflowPage({
           <button className="ghost" onClick={() => {
             onSaveProgress()
             onNavigate('vendor-dashboard')
-          }}>{activeSubmission ? `Save ${responseRowLabel}` : 'Save new response draft'}</button>
+          }}>{presentVendorSaveActionLabel(activeSubmission, responseRowLabel)}</button>
           <button className="primary" onClick={() => {
             onSubmitResponse()
             onNavigate('agency-submission-review')
-          }}>{activeSubmission?.status === 'received' ? `Update ${responseRowLabel}` : activeSubmission ? `Submit ${responseRowLabel}` : 'Submit new response'}</button>
+          }}>{presentVendorSubmitActionLabel(activeSubmission, responseRowLabel)}</button>
         </div>
       </header>
 
@@ -236,14 +249,14 @@ export function SubmissionWorkflowPage({
         <SubmissionStatusSnapshot
           items={[
             {
-              label: `Draft persistence — ${responseRowLabel}`,
-              detail: `${responseRowMode} • ${draftSummary.bufferLabel} • ${draftSummary.formStatus} • ${draftSummary.attachedCount}/${draftSummary.totalDocuments} attachments ready • ${draftSummary.submissionStatus}`,
+              label: presentVendorDraftPersistenceLabel(responseRowLabel),
+              detail: presentVendorDraftPersistenceDetail(responseRowMode, draftSummary),
               progress: `${Math.round((draftSummary.attachedCount / Math.max(draftSummary.totalDocuments, 1)) * 100)}%`,
             },
             {
               label: 'Unsaved draft lane',
               detail: draftSummary.preservedUnsavedDraftLabel,
-              progress: draftSummary.preservedUnsavedDraftLabel.startsWith('Preserved') ? '60%' : '0%',
+              progress: presentVendorUnsavedDraftProgress(draftSummary),
             },
             ...submissionStatusItems,
           ]}
@@ -255,10 +268,10 @@ export function SubmissionWorkflowPage({
         <LifecycleSummaryPanel title="Submission lifecycle summary" items={lifecycleSummaryItems} />
         <FinalActionPanel
           eyebrow="Final step"
-          title={`Submission confirmation — ${responseRowLabel}`}
+          title={finalAction.title}
           description="The last confirmation state before the vendor sends the completed response into agency review."
-          note={`This is the core V1 workflow: vendors should be able to move from ${opportunity.title} discovery to actual response submission without leaving the Texas-first portal. Current record: ${activeSubmission ? `${activeSubmission.id} (${activeSubmission.status})` : 'brand-new unsaved row'}.`}
-          actionLabel={activeSubmission?.status === 'received' ? `Update final submit for ${responseRowLabel}` : activeSubmission ? `Final submit ${responseRowLabel}` : 'Final submit new response'}
+          note={finalAction.note}
+          actionLabel={finalAction.actionLabel}
           onAction={() => {
             onSubmitResponse()
             onNavigate('agency-submission-review')
