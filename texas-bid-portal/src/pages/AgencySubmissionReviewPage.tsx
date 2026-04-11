@@ -2,10 +2,11 @@ import { ActionHeader } from '../components/ActionHeader'
 import { FieldMock } from '../components/FieldMock'
 import { MetricCard } from '../components/MetricCard'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
+import { ReviewQueueCard } from '../components/ReviewQueueCard'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
 import { lifecycleMetrics } from '../data/metrics'
 import { vendorSubmissions } from '../data/mockData'
-import { submissionLifecycle, submissionStatusSummary } from '../data/submissionStatus'
+import { submissionLifecycle } from '../data/submissionStatus'
 import type { ReviewNotesState } from '../types/forms'
 
 type AgencySubmissionReviewPageProps = {
@@ -38,24 +39,9 @@ export function AgencySubmissionReviewPage({ reviewNotes, onChange }: AgencySubm
         <div className="panel">
           <div className="panel-title">Response queue</div>
           <div className="submission-list">
-            {vendorSubmissions.map((submission) => {
-              const statusSummary = submissionStatusSummary[submission.status]
-
-              return (
-                <div className="submission-card" key={`${submission.vendor}-${submission.opportunity}`}>
-                  <div className="submission-header">
-                    <strong>{submission.vendor}</strong>
-                    <span className={submission.status === 'received' ? 'status status-open' : 'status status-review'}>
-                      {statusSummary.label}
-                    </span>
-                  </div>
-                  <div className="muted">Opportunity: {submission.opportunity}</div>
-                  <div className="muted">Submitted: {submission.submittedAt}</div>
-                  <div className="muted">Progress: {statusSummary.progress}</div>
-                  <div className="dashboard-note compact-note">{statusSummary.detail}</div>
-                </div>
-              )
-            })}
+            {vendorSubmissions.map((submission) => (
+              <ReviewQueueCard key={`${submission.vendor}-${submission.opportunity}`} submission={submission} mode="agency" />
+            ))}
           </div>
         </div>
 

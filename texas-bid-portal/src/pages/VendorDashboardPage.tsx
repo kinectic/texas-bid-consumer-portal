@@ -3,12 +3,13 @@ import { EmptyStatePanel } from '../components/EmptyStatePanel'
 import { MetricCard } from '../components/MetricCard'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
+import { ReviewQueueCard } from '../components/ReviewQueueCard'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
 import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacketPanel'
 import { lifecycleMetrics } from '../data/metrics'
 import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
-import { submissionLifecycle, submissionStatusSummary } from '../data/submissionStatus'
+import { submissionLifecycle } from '../data/submissionStatus'
 
 export function VendorDashboardPage() {
   const savedOpportunities = opportunities.filter((opportunity) => opportunity.status === 'open')
@@ -83,24 +84,9 @@ export function VendorDashboardPage() {
         <div className="panel">
           <div className="panel-title">Active submissions</div>
           <div className="submission-list">
-            {vendorSubmissions.map((submission) => {
-              const statusSummary = submissionStatusSummary[submission.status]
-
-              return (
-                <div className="submission-card" key={`${submission.vendor}-${submission.opportunity}`}>
-                  <div className="submission-header">
-                    <strong>{submission.opportunity}</strong>
-                    <span className={submission.status === 'received' ? 'status status-open' : 'status status-review'}>
-                      {statusSummary.label}
-                    </span>
-                  </div>
-                  <div className="muted">Submitted by: {submission.vendor}</div>
-                  <div className="muted">Submitted: {submission.submittedAt}</div>
-                  <div className="muted">Progress: {statusSummary.progress}</div>
-                  <div className="dashboard-note compact-note">{statusSummary.detail}</div>
-                </div>
-              )
-            })}
+            {vendorSubmissions.map((submission) => (
+              <ReviewQueueCard key={`${submission.vendor}-${submission.opportunity}`} submission={submission} mode="vendor" />
+            ))}
           </div>
         </div>
       </section>
