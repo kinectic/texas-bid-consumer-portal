@@ -65,7 +65,9 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
     { value: submissions.length, label: 'All submission records' },
     { value: lifecycleMetrics.vendorProfileCompleteness, label: 'Profile completeness' },
   ]
-  const activeSubmission = submissions.find((submission) => submission.opportunityId === currentOpportunity.id) ?? null
+  const activeSubmission = submissions.find((submission) => submission.id === selectedSubmissionId)
+    ?? submissions.find((submission) => submission.opportunityId === currentOpportunity.id)
+    ?? null
   const selectOpportunityFromSubmission = (submission: Submission) => {
     onSelectSubmission(submission)
     const matchingOpportunity = savedOpportunities.find((opportunity) => opportunity.id === submission.opportunityId)

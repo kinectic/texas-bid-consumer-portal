@@ -356,6 +356,49 @@ function App() {
     }))
   }
 
+  const setVendorQueueFilterWithSelectionRepair = (filter: SubmissionQueueFilter) => {
+    setVendorQueueFilter(filter)
+
+    const visibleQueue = filter === 'current'
+      ? submissionQueue.filter((submission) => submission.opportunityId === currentOpportunity.id)
+      : [
+          ...submissionQueue.filter((submission) => submission.opportunityId === currentOpportunity.id),
+          ...submissionQueue.filter((submission) => submission.opportunityId !== currentOpportunity.id),
+        ]
+
+    const repairedSelection = ensureSubmissionSelection(visibleQueue, currentOpportunity.id, selectedSubmissionId)
+
+    if (repairedSelection) {
+      setSelectedSubmissionByOpportunity((current) => ({
+        ...current,
+        [currentOpportunity.id]: repairedSelection.id,
+      }))
+    }
+  }
+
+  const setAgencyQueueFilterWithSelectionRepair = (filter: SubmissionQueueFilter) => {
+    setAgencyQueueFilter(filter)
+
+    const visibleQueue = (filter === 'current'
+      ? submissionQueue.filter((submission) => submission.opportunityId === currentOpportunity.id && submission.status !== 'draft')
+      : submissionQueue.filter((submission) => submission.status !== 'draft'))
+
+    const repairedSelection = ensureSubmissionSelection(visibleQueue, currentOpportunity.id, selectedSubmissionId)
+      ?? visibleQueue[0]
+      ?? null
+
+    if (repairedSelection) {
+      setSelectedSubmissionByOpportunity((current) => ({
+        ...current,
+        [repairedSelection.opportunityId]: repairedSelection.id,
+      }))
+
+      if (repairedSelection.opportunityId !== currentOpportunity.id) {
+        setSelectedOpportunityId(repairedSelection.opportunityId)
+      }
+    }
+  }
+
   const uploadNextSubmissionDocument = () => {
     setSubmissionDocumentsByOpportunity((current) => {
       const currentDocuments = current[currentOpportunity.id] ?? initialSubmissionDocuments
@@ -514,9 +557,9 @@ function App() {
           selectedSubmissionId,
           selectSubmission,
           vendorQueueFilter,
-          setVendorQueueFilter,
+          setVendorQueueFilterWithSelectionRepair,
           agencyQueueFilter,
-          setAgencyQueueFilter,
+          setAgencyQueueFilterWithSelectionRepair,
           saveSubmissionDraft,
           submitVendorResponse,
           advanceSubmissionStatus,
