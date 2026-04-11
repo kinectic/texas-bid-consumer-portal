@@ -1,4 +1,5 @@
 import { AgencyFlowPanel } from '../components/AgencyFlowPanel'
+import { BidFormOverviewPanel } from '../components/BidFormOverviewPanel'
 import { DraftPublishSummaryPanel } from '../components/DraftPublishSummaryPanel'
 import { FieldMock } from '../components/FieldMock'
 import { ProcurementChecklistPanel } from '../components/ProcurementChecklistPanel'
@@ -90,6 +91,10 @@ export function CreateBidPage({ formState, documents, onChange }: CreateBidPageP
           description="How this draft moves from internal preparation into a live Texas marketplace opportunity."
           steps={agencyFlowSteps}
         />
+      </section>
+
+      <section className="content-grid lower-grid create-bid-layout">
+        <BidFormOverviewPanel formState={formState} />
       </section>
     </main>
   )

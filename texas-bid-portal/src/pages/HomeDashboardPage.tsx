@@ -1,3 +1,4 @@
+import { BidFormOverviewPanel } from '../components/BidFormOverviewPanel'
 import { DraftPipelinePanel } from '../components/DraftPipelinePanel'
 import { HomeCtaPanel } from '../components/HomeCtaPanel'
 import { LifecycleSummaryPanel } from '../components/LifecycleSummaryPanel'
@@ -141,12 +142,13 @@ export function HomeDashboardPage({ publishedBidPreview, onNavigate }: HomeDashb
       </section>
 
       <section className="content-grid lower-grid">
-        <div className="content-grid nested-grid">
-          <MilestonesPanel items={milestoneCards} />
-          <DraftPipelinePanel title="Current build lanes" items={draftPipelineItems} />
-        </div>
-
+        <BidFormOverviewPanel formState={publishedBidPreview} />
         <RecommendedOpportunitiesPanel title="Suggested opportunities" opportunities={recommendedOpportunities} actionLabel="Review opportunities" />
+      </section>
+
+      <section className="content-grid lower-grid">
+        <MilestonesPanel items={milestoneCards} />
+        <DraftPipelinePanel title="Current build lanes" items={draftPipelineItems} />
       </section>
     </main>
   )
