@@ -15,21 +15,6 @@ import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import type { ReviewNotesState } from '../types/forms'
 
-const packageCompletenessItems = [
-  {
-    title: 'Pricing sheet',
-    detail: 'Attached for both responses',
-  },
-  {
-    title: 'Compliance docs',
-    detail: 'One response missing updated insurance proof',
-  },
-  {
-    title: 'Response narrative',
-    detail: 'Both submissions complete',
-  },
-]
-
 type AgencySubmissionReviewPageProps = {
   currentOpportunity: Opportunity
   draftSummary: {
@@ -40,6 +25,7 @@ type AgencySubmissionReviewPageProps = {
   }
   reviewNotes: ReviewNotesState
   onChange: (field: keyof ReviewNotesState, value: string) => void
+  packageCompletenessItems: Array<{ title: string; detail: string }>
   submissions: Submission[]
   queueFilter: 'current' | 'all'
   onQueueFilterChange: (filter: 'current' | 'all') => void
@@ -54,6 +40,7 @@ export function AgencySubmissionReviewPage({
   draftSummary,
   reviewNotes,
   onChange,
+  packageCompletenessItems,
   submissions,
   queueFilter,
   onQueueFilterChange,

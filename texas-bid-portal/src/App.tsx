@@ -39,6 +39,12 @@ type OpportunityReadinessSummary = {
 }
 
 type SubmissionQueueFilter = 'current' | 'all'
+type ReviewNotesByOpportunity = Record<string, ReviewNotesState>
+
+type PackageCompletenessItem = {
+  title: string
+  detail: string
+}
 
 function renderView(
   view: ViewKey,
@@ -48,6 +54,7 @@ function renderView(
   updateSubmissionForm: (field: keyof SubmissionFormState, value: string) => void,
   reviewNotes: ReviewNotesState,
   updateReviewNotes: (field: keyof ReviewNotesState, value: string) => void,
+  packageCompletenessItems: PackageCompletenessItem[],
   submissionDocuments: BidDocument[],
   draftSummary: DraftSummary,
   uploadNextSubmissionDocument: () => void,
@@ -127,6 +134,7 @@ function renderView(
           draftSummary={draftSummary}
           reviewNotes={reviewNotes}
           onChange={updateReviewNotes}
+          packageCompletenessItems={packageCompletenessItems}
           submissions={submissionQueue}
           queueFilter={agencyQueueFilter}
           onQueueFilterChange={setAgencyQueueFilter}
@@ -173,7 +181,9 @@ function App() {
   const [submissionFormsByOpportunity, setSubmissionFormsByOpportunity] = useState<SubmissionFormStateByOpportunity>({
     [opportunities[0].id]: initialSubmissionFormState,
   })
-  const [reviewNotes, setReviewNotes] = useState<ReviewNotesState>(initialReviewNotesState)
+  const [reviewNotesByOpportunity, setReviewNotesByOpportunity] = useState<ReviewNotesByOpportunity>({
+    [opportunities[0].id]: initialReviewNotesState,
+  })
   const [submissionDocumentsByOpportunity, setSubmissionDocumentsByOpportunity] = useState<SubmissionDocumentsByOpportunity>({
     [opportunities[0].id]: initialSubmissionDocuments,
   })
@@ -210,6 +220,7 @@ function App() {
 
   const submissionForm = submissionFormsByOpportunity[currentOpportunity.id] ?? initialSubmissionFormState
   const submissionDocuments = submissionDocumentsByOpportunity[currentOpportunity.id] ?? initialSubmissionDocuments
+  const reviewNotes = reviewNotesByOpportunity[currentOpportunity.id] ?? initialReviewNotesState
   const currentSubmission = submissionQueue.find((submission) => submission.opportunityId === currentOpportunity.id) ?? null
   const changedFormFields = Object.entries(submissionForm).filter(([key, value]) => value !== initialSubmissionFormState[key as keyof SubmissionFormState]).length
   const attachedCount = submissionDocuments.filter((document) => document.status.toLowerCase().includes('attached')).length
@@ -240,6 +251,24 @@ function App() {
       return [opportunity.id, { label, detail }]
     }),
   )
+  const packageCompletenessItems: PackageCompletenessItem[] = [
+    {
+      title: 'Pricing sheet',
+      detail: submissionForm.pricing === initialSubmissionFormState.pricing
+        ? 'Using baseline pricing draft'
+        : 'Pricing updated for this selected opportunity',
+    },
+    {
+      title: 'Compliance docs',
+      detail: `${attachedCount}/${submissionDocuments.length} attachments linked to this opportunity packet`,
+    },
+    {
+      title: 'Response narrative',
+      detail: currentSubmission
+        ? `Submission status is ${currentSubmission.status} for this opportunity`
+        : 'No submission record created yet for this opportunity',
+    },
+  ]
 
   const updateSubmissionForm = (field: keyof SubmissionFormState, value: string) => {
     setSubmissionFormsByOpportunity((current) => ({
@@ -252,7 +281,13 @@ function App() {
   }
 
   const updateReviewNotes = (field: keyof ReviewNotesState, value: string) => {
-    setReviewNotes((current) => ({ ...current, [field]: value }))
+    setReviewNotesByOpportunity((current) => ({
+      ...current,
+      [currentOpportunity.id]: {
+        ...(current[currentOpportunity.id] ?? initialReviewNotesState),
+        [field]: value,
+      },
+    }))
   }
 
   const saveDraft = () => {
@@ -364,6 +399,7 @@ function App() {
           updateSubmissionForm,
           reviewNotes,
           updateReviewNotes,
+          packageCompletenessItems,
           submissionDocuments,
           draftSummary,
           uploadNextSubmissionDocument,
