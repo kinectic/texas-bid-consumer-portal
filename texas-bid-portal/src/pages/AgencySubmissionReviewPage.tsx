@@ -2,9 +2,9 @@ import { ActionHeader } from '../components/ActionHeader'
 import { FieldMock } from '../components/FieldMock'
 import { MetricCard } from '../components/MetricCard'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
-import { ReviewQueueCard } from '../components/ReviewQueueCard'
 import { StatusBadgeLegend } from '../components/StatusBadgeLegend'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
+import { SubmissionQueueList } from '../components/SubmissionQueueList'
 import { lifecycleMetrics } from '../data/metrics'
 import { vendorSubmissions } from '../data/mockData'
 import { submissionLifecycle } from '../data/submissionStatus'
@@ -39,11 +39,7 @@ export function AgencySubmissionReviewPage({ reviewNotes, onChange }: AgencySubm
       <section className="content-grid">
         <div className="panel">
           <div className="panel-title">Response queue</div>
-          <div className="submission-list">
-            {vendorSubmissions.map((submission) => (
-              <ReviewQueueCard key={`${submission.vendor}-${submission.opportunity}`} submission={submission} mode="agency" />
-            ))}
-          </div>
+          <SubmissionQueueList submissions={vendorSubmissions} mode="agency" />
         </div>
 
         <OutcomeSummaryPanel mode="agency" />

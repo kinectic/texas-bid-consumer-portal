@@ -4,8 +4,8 @@ import { OpportunityCardList } from '../components/OpportunityCardList'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
 import { RecommendedOpportunitiesPanel } from '../components/RecommendedOpportunitiesPanel'
-import { ReviewQueueCard } from '../components/ReviewQueueCard'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
+import { SubmissionQueueList } from '../components/SubmissionQueueList'
 import { SubmissionStatusSnapshot } from '../components/SubmissionStatusSnapshot'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
 import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacketPanel'
@@ -78,11 +78,7 @@ export function VendorDashboardPage() {
 
         <div className="panel">
           <div className="panel-title">Active submissions</div>
-          <div className="submission-list">
-            {vendorSubmissions.map((submission) => (
-              <ReviewQueueCard key={`${submission.vendor}-${submission.opportunity}`} submission={submission} mode="vendor" />
-            ))}
-          </div>
+          <SubmissionQueueList submissions={vendorSubmissions} mode="vendor" />
         </div>
       </section>
 
