@@ -1,4 +1,5 @@
 import { ActionHeader } from '../components/ActionHeader'
+import { DecisionControlsPanel } from '../components/DecisionControlsPanel'
 import { MetricCard } from '../components/MetricCard'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { PackageCompletenessPanel } from '../components/PackageCompletenessPanel'
@@ -11,6 +12,13 @@ import { lifecycleMetrics } from '../data/metrics'
 import { vendorSubmissions } from '../data/mockData'
 import { submissionLifecycle } from '../data/submissionStatus'
 import type { ReviewNotesState } from '../types/forms'
+
+const decisionControls = [
+  { label: 'Mark shortlisted', className: 'primary wide' as const },
+  { label: 'Request clarification', className: 'ghost wide' as const },
+  { label: 'Flag incomplete submission', className: 'ghost wide' as const },
+  { label: 'Archive response', className: 'ghost wide' as const },
+]
 
 const packageCompletenessItems = [
   {
@@ -63,18 +71,10 @@ export function AgencySubmissionReviewPage({ reviewNotes, onChange }: AgencySubm
       </section>
 
       <section className="content-grid lower-grid">
-        <div className="panel">
-          <div className="panel-title">Decision controls</div>
-          <div className="action-stack">
-            <button className="primary wide">Mark shortlisted</button>
-            <button className="ghost wide">Request clarification</button>
-            <button className="ghost wide">Flag incomplete submission</button>
-            <button className="ghost wide">Archive response</button>
-          </div>
-          <div className="dashboard-note">
-            This is where the agency workflow stops being a posting tool and becomes an actual procurement operations surface.
-          </div>
-        </div>
+        <DecisionControlsPanel
+          controls={decisionControls}
+          description="This is where the agency workflow stops being a posting tool and becomes an actual procurement operations surface."
+        />
 
         <PackageCompletenessPanel items={packageCompletenessItems} />
       </section>

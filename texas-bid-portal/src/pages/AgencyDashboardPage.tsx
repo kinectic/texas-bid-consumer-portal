@@ -1,8 +1,8 @@
 import { ActionHeader } from '../components/ActionHeader'
+import { DecisionControlsPanel } from '../components/DecisionControlsPanel'
 import { DraftPublishSummaryPanel } from '../components/DraftPublishSummaryPanel'
 import { EmptyStatePanel } from '../components/EmptyStatePanel'
 import { OpportunityCardList } from '../components/OpportunityCardList'
-import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
 import { WorkflowMetricsSnapshot } from '../components/WorkflowMetricsSnapshot'
 import { lifecycleMetrics } from '../data/metrics'
@@ -12,6 +12,12 @@ const agencyMetricsItems = [
   { value: lifecycleMetrics.activeBids, label: 'Active bids' },
   { value: lifecycleMetrics.draftBids, label: 'Drafts waiting for final review' },
   { value: lifecycleMetrics.responsesInReview, label: 'Recent vendor submissions' },
+]
+
+const agencyPriorityControls = [
+  { label: 'Create new bid', className: 'primary wide' as const },
+  { label: 'Manage deadlines', className: 'ghost wide' as const },
+  { label: 'Review submissions', className: 'ghost wide' as const },
 ]
 
 export function AgencyDashboardPage() {
@@ -32,16 +38,10 @@ export function AgencyDashboardPage() {
         }
       />
 
-      <PrimaryActionStrip
+      <DecisionControlsPanel
         title="Agency priorities"
+        controls={agencyPriorityControls}
         description="Move the procurement flow forward from draft through publishing and review."
-        actions={
-          <>
-            <button className="primary">Create new bid</button>
-            <button className="ghost">Manage deadlines</button>
-            <button className="ghost">Review submissions</button>
-          </>
-        }
       />
 
       <WorkflowMetricsSnapshot items={agencyMetricsItems} />
