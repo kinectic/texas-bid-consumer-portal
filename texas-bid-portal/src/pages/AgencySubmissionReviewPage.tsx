@@ -15,7 +15,7 @@ import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import type { ReviewNotesState } from '../types/forms'
 import { buildSubmissionQueueRowMeta } from '../utils/submissionQueue'
-import { presentReadinessForRole } from '../utils/readinessPresentation'
+import { presentAgencyOutcomeSummary } from '../utils/reviewPresentation'
 
 type AgencySubmissionReviewPageProps = {
   currentOpportunity: Opportunity
@@ -72,16 +72,15 @@ export function AgencySubmissionReviewPage({
   const activeSubmissionLabel = activeSubmission
     ? `${activeSubmission.vendor} · ${activeSubmission.id} · ${activeRowMeta?.rowLabel ?? 'Response row 1 of 1'}`
     : 'No submission selected'
-  const presentedDraftBuffer = presentReadinessForRole(
-    {
+  const activeOutcomeSummary = presentAgencyOutcomeSummary({
+    activeSubmission,
+    currentOpportunityTitle: currentOpportunity.title,
+    activeRowMeta,
+    bufferReadiness: {
       label: draftSummary.bufferLabel,
       detail: draftSummary.preservedUnsavedDraftLabel,
     },
-    'agency',
-  )
-  const activeOutcomeSummary = activeSubmission
-    ? `${activeSubmission.vendor} is currently ${activeSubmission.status} for ${currentOpportunity.title}. This is ${activeRowMeta?.rowLabel.toLowerCase() ?? 'response row 1 of 1'}, and decision actions now apply only to submission ${activeSubmission.id}. ${presentedDraftBuffer.label} • ${presentedDraftBuffer.detail}.`
-    : 'Select a submission row to apply review actions and see row-specific review context.'
+  })
   const decisionControls = [
     { label: `Shortlist ${activeSubmission?.vendor ?? 'selected vendor'}`, className: 'primary wide' as const, onClick: () => onAdvanceStatus('shortlisted') },
     { label: `Request clarification from ${activeSubmission?.vendor ?? 'vendor'}`, className: 'ghost wide' as const, onClick: () => onAdvanceStatus('reviewing') },
