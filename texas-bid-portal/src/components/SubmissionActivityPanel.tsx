@@ -1,6 +1,7 @@
 type SubmissionActivityItem = {
   key: string
   opportunityId: string
+  submissionId?: string
   title: string
   detail: string
   summary?: string
@@ -10,13 +11,15 @@ type SubmissionActivityPanelProps = {
   title?: string
   items: SubmissionActivityItem[]
   currentOpportunityId?: string
-  onSelectSubmission?: (opportunityId: string) => void
+  selectedSubmissionId?: string
+  onSelectSubmission?: (opportunityId: string, submissionId?: string) => void
 }
 
 export function SubmissionActivityPanel({
   title = 'Submission activity',
   items,
   currentOpportunityId,
+  selectedSubmissionId,
   onSelectSubmission,
 }: SubmissionActivityPanelProps) {
   return (
@@ -27,8 +30,12 @@ export function SubmissionActivityPanel({
           <div
             className="draft-card"
             key={item.key}
-            onClick={() => onSelectSubmission?.(item.opportunityId)}
-            style={item.opportunityId === currentOpportunityId ? { outline: '2px solid #2563eb', outlineOffset: '2px' } : undefined}
+            onClick={() => onSelectSubmission?.(item.opportunityId, item.submissionId)}
+            style={item.submissionId && item.submissionId === selectedSubmissionId
+              ? { outline: '3px solid #1d4ed8', outlineOffset: '2px' }
+              : item.opportunityId === currentOpportunityId
+                ? { outline: '2px solid #2563eb', outlineOffset: '2px' }
+                : undefined}
           >
             <strong>{item.title}</strong>
             <div className="muted">{item.detail}</div>

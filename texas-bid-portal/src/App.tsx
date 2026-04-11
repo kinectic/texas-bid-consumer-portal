@@ -113,9 +113,11 @@ function renderView(
           publishedOpportunity={publishedOpportunity}
           readinessByOpportunityId={readinessByOpportunityId}
           submissions={submissionQueue}
+          selectedSubmissionId={selectedSubmissionId}
           queueFilter={agencyQueueFilter}
           onQueueFilterChange={setAgencyQueueFilter}
           onSelectOpportunity={selectOpportunity}
+          onSelectSubmission={selectSubmission}
           onNavigate={navigate}
         />
       )

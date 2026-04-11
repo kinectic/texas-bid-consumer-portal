@@ -41,14 +41,16 @@ type AgencyDashboardPageProps = {
   currentOpportunity: Opportunity
   publishedOpportunity: Opportunity | null
   submissions: Submission[]
+  selectedSubmissionId: string | null
   readinessByOpportunityId: Record<string, { label: string, detail: string }>
   queueFilter: 'current' | 'all'
   onQueueFilterChange: (filter: 'current' | 'all') => void
   onSelectOpportunity: (opportunity: Opportunity) => void
+  onSelectSubmission: (submission: Submission) => void
   onNavigate: (view: ViewKey) => void
 }
 
-export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, submissions, readinessByOpportunityId, queueFilter, onQueueFilterChange, onSelectOpportunity, onNavigate }: AgencyDashboardPageProps) {
+export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, submissions, selectedSubmissionId, readinessByOpportunityId, queueFilter, onQueueFilterChange, onSelectOpportunity, onSelectSubmission, onNavigate }: AgencyDashboardPageProps) {
   const activeBids = publishedOpportunity
     ? [publishedOpportunity, ...opportunities.filter((opportunity) => opportunity.status === 'open' && opportunity.id !== publishedOpportunity.id)]
     : opportunities.filter((opportunity) => opportunity.status === 'open')
@@ -86,6 +88,7 @@ export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, 
   const submissionActivityItems = displayedSubmissions.map((submission) => ({
     key: submission.id,
     opportunityId: submission.opportunityId,
+    submissionId: submission.id,
     title: `${submission.vendor} • ${submission.id}`,
     detail: (() => {
       const siblingRows = submissions.filter((item) => item.opportunityId === submission.opportunityId)
@@ -175,11 +178,18 @@ export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, 
           title={queueFilter === 'current' ? 'Submission activity — current opportunity' : 'Submission activity — all opportunities'}
           items={submissionActivityItems}
           currentOpportunityId={currentOpportunity.id}
-          onSelectSubmission={(opportunityId) => {
+          selectedSubmissionId={selectedSubmissionId ?? undefined}
+          onSelectSubmission={(opportunityId, submissionId) => {
             const matchingOpportunity = activeBids.find((opportunity) => opportunity.id === opportunityId)
               ?? opportunities.find((opportunity) => opportunity.id === opportunityId)
+            const matchingSubmission = submissionId
+              ? submissions.find((submission) => submission.id === submissionId)
+              : null
 
             if (matchingOpportunity) {
+              if (matchingSubmission) {
+                onSelectSubmission(matchingSubmission)
+              }
               onSelectOpportunity(matchingOpportunity)
               onNavigate('agency-submission-review')
             }
