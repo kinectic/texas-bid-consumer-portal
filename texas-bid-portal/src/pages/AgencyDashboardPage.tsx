@@ -1,11 +1,17 @@
 import { ActionHeader } from '../components/ActionHeader'
 import { DraftPublishSummaryPanel } from '../components/DraftPublishSummaryPanel'
 import { EmptyStatePanel } from '../components/EmptyStatePanel'
-import { MetricCard } from '../components/MetricCard'
 import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
+import { WorkflowMetricsSnapshot } from '../components/WorkflowMetricsSnapshot'
 import { lifecycleMetrics } from '../data/metrics'
 import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
+
+const agencyMetricsItems = [
+  { value: lifecycleMetrics.activeBids, label: 'Active bids' },
+  { value: lifecycleMetrics.draftBids, label: 'Drafts waiting for final review' },
+  { value: lifecycleMetrics.responsesInReview, label: 'Recent vendor submissions' },
+]
 
 export function AgencyDashboardPage() {
   const activeBids = opportunities.filter((opportunity) => opportunity.status === 'open')
@@ -37,11 +43,7 @@ export function AgencyDashboardPage() {
         }
       />
 
-      <section className="stats-grid">
-        <MetricCard value={lifecycleMetrics.activeBids} label="Active bids" />
-        <MetricCard value={lifecycleMetrics.draftBids} label="Drafts waiting for final review" />
-        <MetricCard value={lifecycleMetrics.responsesInReview} label="Recent vendor submissions" />
-      </section>
+      <WorkflowMetricsSnapshot items={agencyMetricsItems} />
 
       <section className="content-grid">
         <div className="panel">

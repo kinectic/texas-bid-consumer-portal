@@ -1,8 +1,8 @@
 import { HomeCtaPanel } from '../components/HomeCtaPanel'
 import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
-import { MetricCard } from '../components/MetricCard'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
+import { WorkflowMetricsSnapshot } from '../components/WorkflowMetricsSnapshot'
 import { WorkflowStageSummary } from '../components/WorkflowStageSummary'
 import { lifecycleMetrics } from '../data/metrics'
 import { workflowStageLabels } from '../data/workflowStages'
@@ -26,6 +26,12 @@ const workflowCards = [
     description: 'Move from saved opportunity to actual submission without leaving the portal.',
   },
 ] as const
+
+const workflowMetricsItems = [
+  { value: lifecycleMetrics.workflowScreensBuilt, label: 'Interactive workflow screens built' },
+  { value: 3, label: 'Core workflow lanes shown in the MVP' },
+  { value: 'Texas', label: 'Localized procurement-first product direction' },
+]
 
 const workflowStageSummaryItems = workflowCards.map((card) => ({
   stage: workflowStageLabels[card.key].stage,
@@ -97,11 +103,7 @@ export function HomeDashboardPage({ publishedBidPreview, onNavigate }: HomeDashb
         }
       />
 
-      <section className="stats-grid">
-        <MetricCard value={lifecycleMetrics.workflowScreensBuilt} label="Interactive workflow screens built" />
-        <MetricCard value={3} label="Core workflow lanes shown in the MVP" />
-        <MetricCard value="Texas" label="Localized procurement-first product direction" />
-      </section>
+      <WorkflowMetricsSnapshot items={workflowMetricsItems} />
 
       <section className="content-grid">
         <WorkflowStageSummary title="Workflow landing" items={workflowStageSummaryItems} />
