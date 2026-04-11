@@ -22,6 +22,7 @@ import { SubmissionWorkflowPage } from './pages/SubmissionWorkflowPage'
 import { VendorDashboardPage } from './pages/VendorDashboardPage'
 import type { CreateBidFormState, ReviewNotesState, SubmissionFormState, BidDocument } from './types/forms'
 import type { Opportunity, Submission } from './types'
+import { computeDraftSummaryState, computeReadinessByOpportunityId } from './utils/readinessState'
 
 type SubmissionFormStateByKey = Record<string, SubmissionFormState>
 type SubmissionDocumentsByKey = Record<string, BidDocument[]>
@@ -259,56 +260,36 @@ function App() {
   const currentSubmission = submissionQueue.find((submission) => submission.id === selectedSubmissionId)
     ?? submissionQueue.find((submission) => submission.opportunityId === currentOpportunity.id)
     ?? null
-  const currentDraftKey = selectedSubmissionId ?? `draft:${currentOpportunity.id}`
-  const submissionForm = submissionFormsByKey[currentDraftKey] ?? initialSubmissionFormState
-  const submissionDocuments = submissionDocumentsByKey[currentDraftKey] ?? initialSubmissionDocuments
-  const unsavedDraftForm = submissionFormsByKey[`draft:${currentOpportunity.id}`] ?? initialSubmissionFormState
-  const unsavedDraftDocuments = submissionDocumentsByKey[`draft:${currentOpportunity.id}`] ?? initialSubmissionDocuments
-  const changedFormFields = Object.entries(submissionForm).filter(([key, value]) => value !== initialSubmissionFormState[key as keyof SubmissionFormState]).length
-  const attachedCount = submissionDocuments.filter((document) => document.status.toLowerCase().includes('attached')).length
-  const unsavedDraftChangedFields = Object.entries(unsavedDraftForm).filter(([key, value]) => value !== initialSubmissionFormState[key as keyof SubmissionFormState]).length
-  const unsavedDraftAttachedCount = unsavedDraftDocuments.filter((document) => document.status.toLowerCase().includes('attached')).length
-  const unsavedDraftHasEdits = unsavedDraftChangedFields > 0 || unsavedDraftAttachedCount > 0
-  const draftSummary: DraftSummary = {
-    formStatus: changedFormFields === 0 ? 'Untouched default draft' : `Edited draft (${changedFormFields} fields changed)`,
+  const {
+    currentDraftKey,
+    submissionForm,
+    submissionDocuments,
     attachedCount,
-    totalDocuments: submissionDocuments.length,
-    submissionStatus: currentSubmission?.status ?? 'No saved submission record',
-    bufferLabel: selectedSubmissionId ? `Saved-row buffer (${selectedSubmissionId})` : `Unsaved draft buffer (draft:${currentOpportunity.id})`,
-    preservedUnsavedDraftLabel: unsavedDraftHasEdits
-      ? `Preserved unsaved draft available: ${unsavedDraftChangedFields} edited fields • ${unsavedDraftAttachedCount}/${unsavedDraftDocuments.length} attachments ready`
-      : 'No preserved unsaved draft edits for this opportunity',
-  }
-  const readinessByOpportunityId: Record<string, OpportunityReadinessSummary> = Object.fromEntries(
-    opportunities.map((opportunity) => {
-      const selectedSavedKey = selectedSubmissionByOpportunity[opportunity.id]
-      const activeKey = selectedSavedKey ?? `draft:${opportunity.id}`
-      const docs = submissionDocumentsByKey[activeKey] ?? initialSubmissionDocuments
-      const unsavedDraftFormForOpportunity = submissionFormsByKey[`draft:${opportunity.id}`] ?? initialSubmissionFormState
-      const unsavedDraftDocsForOpportunity = submissionDocumentsByKey[`draft:${opportunity.id}`] ?? initialSubmissionDocuments
-      const matchingSubmissions = submissionQueue.filter((item) => item.opportunityId === opportunity.id)
-      const submission = matchingSubmissions.find((item) => item.id === selectedSavedKey)
-        ?? matchingSubmissions[0]
-        ?? null
-      const responseCount = matchingSubmissions.length
-      const attachedDocs = docs.filter((document) => document.status.toLowerCase().includes('attached')).length
-      const unsavedEditedFields = Object.entries(unsavedDraftFormForOpportunity).filter(([key, value]) => value !== initialSubmissionFormState[key as keyof SubmissionFormState]).length
-      const unsavedAttachedDocs = unsavedDraftDocsForOpportunity.filter((document) => document.status.toLowerCase().includes('attached')).length
-      const unsavedHasEdits = unsavedEditedFields > 0 || unsavedAttachedDocs > 0
-      const label = submission
-        ? `Saved row active • ${submission.status}`
-        : unsavedHasEdits
-          ? 'Unsaved draft lane has edits'
-          : 'No activity yet'
-      const detail = submission
-        ? `${responseCount} saved row${responseCount === 1 ? '' : 's'} • active ${submission.id} • buffer saved-row • ${attachedDocs}/${docs.length} attachments ready • unsaved lane ${unsavedHasEdits ? 'has preserved edits' : 'empty'}`
-        : unsavedHasEdits
-          ? `Unsaved draft buffer • ${unsavedAttachedDocs}/${unsavedDraftDocsForOpportunity.length} attachments ready • ${unsavedEditedFields} edited fields`
-          : 'Untouched default response state'
-
-      return [opportunity.id, { label, detail }]
-    }),
-  )
+    draftSummary,
+  }: {
+    currentDraftKey: string
+    submissionForm: SubmissionFormState
+    submissionDocuments: BidDocument[]
+    attachedCount: number
+    draftSummary: DraftSummary
+  } = computeDraftSummaryState({
+    currentOpportunityId: currentOpportunity.id,
+    selectedSubmissionId,
+    currentSubmission,
+    submissionFormsByKey,
+    submissionDocumentsByKey,
+    initialSubmissionFormState,
+    initialSubmissionDocuments,
+  })
+  const readinessByOpportunityId: Record<string, OpportunityReadinessSummary> = computeReadinessByOpportunityId({
+    opportunities,
+    selectedSubmissionByOpportunity,
+    submissionFormsByKey,
+    submissionDocumentsByKey,
+    submissionQueue,
+    initialSubmissionFormState,
+    initialSubmissionDocuments,
+  })
   const packageCompletenessItems: PackageCompletenessItem[] = [
     {
       title: 'Pricing sheet',
