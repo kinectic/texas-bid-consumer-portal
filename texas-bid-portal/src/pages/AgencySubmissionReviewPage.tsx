@@ -1,8 +1,8 @@
 import { ActionHeader } from '../components/ActionHeader'
-import { FieldMock } from '../components/FieldMock'
 import { MetricCard } from '../components/MetricCard'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { PackageCompletenessPanel } from '../components/PackageCompletenessPanel'
+import { ReviewerNotesPanel } from '../components/ReviewerNotesPanel'
 import { StatusBadgeLegend } from '../components/StatusBadgeLegend'
 import { StatusProgressionPanel } from '../components/StatusProgressionPanel'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
@@ -108,14 +108,14 @@ export function AgencySubmissionReviewPage({ reviewNotes, onChange }: AgencySubm
       </section>
 
       <section className="content-grid lower-grid">
-        <div className="panel">
-          <div className="panel-title">Reviewer notes</div>
-          <div className="form-mock create-bid-form">
-            <FieldMock label="Internal procurement notes" value={reviewNotes.internalNotes} multiline onChange={(value) => onChange('internalNotes', value)} />
-            <FieldMock label="Follow-up questions for vendor" value={reviewNotes.vendorQuestions} multiline onChange={(value) => onChange('vendorQuestions', value)} />
-            <button className="ghost wide">Save review note</button>
-          </div>
-        </div>
+        <ReviewerNotesPanel
+          primaryLabel="Internal procurement notes"
+          primaryValue={reviewNotes.internalNotes}
+          secondaryLabel="Follow-up questions for vendor"
+          secondaryValue={reviewNotes.vendorQuestions}
+          onPrimaryChange={(value) => onChange('internalNotes', value)}
+          onSecondaryChange={(value) => onChange('vendorQuestions', value)}
+        />
       </section>
     </main>
   )

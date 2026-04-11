@@ -1,6 +1,7 @@
 import { DraftPublishSummaryPanel } from '../components/DraftPublishSummaryPanel'
 import { FieldMock } from '../components/FieldMock'
 import { ProcurementChecklistPanel } from '../components/ProcurementChecklistPanel'
+import { ReviewerNotesPanel } from '../components/ReviewerNotesPanel'
 import { SubmissionAttachmentsPanel } from '../components/SubmissionAttachmentsPanel'
 import { prePublishChecklist } from '../data/checklists'
 import type { BidDocument, CreateBidFormState } from '../types/forms'
@@ -61,6 +62,19 @@ export function CreateBidPage({ formState, documents, onChange }: CreateBidPageP
           title="Pre-publish checklist"
           items={prePublishChecklist}
           actionLabel="Submit for agency review"
+        />
+      </section>
+
+      <section className="content-grid lower-grid create-bid-layout">
+        <ReviewerNotesPanel
+          title="Agency drafting notes"
+          primaryLabel="Internal drafting notes"
+          primaryValue={formState.scope}
+          secondaryLabel="Vendor guidance notes"
+          secondaryValue={formState.requirements}
+          onPrimaryChange={(value) => onChange('scope', value)}
+          onSecondaryChange={(value) => onChange('requirements', value)}
+          actionLabel="Save drafting notes"
         />
       </section>
     </main>
