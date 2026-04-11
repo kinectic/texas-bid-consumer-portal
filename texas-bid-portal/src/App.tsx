@@ -376,17 +376,27 @@ function App() {
       return next
     })
 
-    setSubmissionFormsByOpportunity((current) => ({
-      ...current,
-      [currentOpportunity.id]: {
-        ...initialSubmissionFormState,
-      },
-    }))
+    const hasDraftEdits =
+      Object.entries(submissionFormsByOpportunity[currentOpportunity.id] ?? initialSubmissionFormState).some(
+        ([key, value]) => value !== initialSubmissionFormState[key as keyof SubmissionFormState],
+      )
+      || (submissionDocumentsByOpportunity[currentOpportunity.id] ?? initialSubmissionDocuments).some(
+        (document, index) => document.status !== initialSubmissionDocuments[index]?.status,
+      )
 
-    setSubmissionDocumentsByOpportunity((current) => ({
-      ...current,
-      [currentOpportunity.id]: initialSubmissionDocuments.map((document) => ({ ...document })),
-    }))
+    if (!hasDraftEdits) {
+      setSubmissionFormsByOpportunity((current) => ({
+        ...current,
+        [currentOpportunity.id]: {
+          ...initialSubmissionFormState,
+        },
+      }))
+
+      setSubmissionDocumentsByOpportunity((current) => ({
+        ...current,
+        [currentOpportunity.id]: initialSubmissionDocuments.map((document) => ({ ...document })),
+      }))
+    }
   }
 
   const setVendorQueueFilterWithSelectionRepair = (filter: SubmissionQueueFilter) => {

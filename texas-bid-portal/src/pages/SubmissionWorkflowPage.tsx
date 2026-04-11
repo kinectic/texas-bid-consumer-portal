@@ -125,16 +125,19 @@ export function SubmissionWorkflowPage({
     ? rowMetaBySubmissionId[activeSubmission.id]?.activeLabel ?? activeSubmission.id
     : 'new unsaved response'
   const responseRowMode = activeSubmission ? 'editing existing saved row' : 'drafting a brand-new unsaved row'
+  const unsavedDraftHasEdits = draftSummary.formStatus !== 'Untouched default draft' || draftSummary.attachedCount > 0
   const siblingRowItems = [
     ...(!activeSubmission
       ? [{
           stage: 'New unsaved response',
-          detail: 'Current draft is not saved as a submission row yet. Save or submit to create the next response row for this opportunity. • active row',
+          detail: `Current draft is not saved as a submission row yet. ${unsavedDraftHasEdits ? 'Unsaved draft edits are preserved for this opportunity.' : 'No draft edits yet; save or submit to create the next response row.'} • active row`,
           active: true,
         }]
       : [{
           stage: `Start response ${siblingSubmissions.length + 1}`,
-          detail: 'Jump back into a fresh unsaved draft without leaving the workflow. Creates a brand-new response row after save or submit.',
+          detail: unsavedDraftHasEdits
+            ? `Return to the preserved unsaved draft for this opportunity. ${draftSummary.formStatus} • ${draftSummary.attachedCount}/${draftSummary.totalDocuments} attachments ready.`
+            : 'Jump back into a fresh unsaved draft without leaving the workflow. Creates a brand-new response row after save or submit.',
           onClick: onStartNewSubmission,
           active: false,
         }]),
