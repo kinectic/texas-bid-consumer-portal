@@ -94,6 +94,7 @@ type SubmissionWorkflowPageProps = {
   opportunity: Opportunity
   siblingSubmissions: Submission[]
   activeSubmission: Submission | null
+  onSelectSubmission: (submission: Submission) => void
   onSaveProgress: () => void
   onSubmitResponse: () => void
   onNavigate: (view: ViewKey) => void
@@ -108,6 +109,7 @@ export function SubmissionWorkflowPage({
   opportunity,
   siblingSubmissions,
   activeSubmission,
+  onSelectSubmission,
   onSaveProgress,
   onSubmitResponse,
   onNavigate,
@@ -124,6 +126,7 @@ export function SubmissionWorkflowPage({
   const siblingRowItems = siblingSubmissions.map((submission) => ({
     stage: rowMetaBySubmissionId[submission.id]?.rowLabel ?? submission.id,
     detail: `${submission.vendor} • ${submission.id} • ${submission.status}${submission.id === activeSubmission?.id ? ' • active row' : ''}`,
+    onClick: () => onSelectSubmission(submission),
   }))
 
   return (
