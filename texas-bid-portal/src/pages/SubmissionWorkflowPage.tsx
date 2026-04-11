@@ -1,6 +1,7 @@
 import { FieldMock } from '../components/FieldMock'
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
 import { SectionIntro } from '../components/SectionIntro'
+import { SubmissionAttachmentsPanel } from '../components/SubmissionAttachmentsPanel'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
 import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacketPanel'
 import { WorkflowStageSummary } from '../components/WorkflowStageSummary'
@@ -87,22 +88,12 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
           </div>
         </div>
 
-        <div className="panel">
-          <SectionIntro
-            eyebrow="Packet files"
-            title="Required attachments"
-            description="The packet components the vendor must gather and upload before final submission."
-          />
-          <div className="draft-list">
-            {submissionDocuments.map((document) => (
-              <div className="draft-card" key={document.name}>
-                <strong>{document.name}</strong>
-                <div className="muted">{document.status}</div>
-              </div>
-            ))}
-          </div>
-          <button className="ghost wide">Upload attachment</button>
-        </div>
+        <SubmissionAttachmentsPanel
+          title="Required attachments"
+          description="The packet components the vendor must gather and upload before final submission."
+          documents={submissionDocuments}
+          actionLabel="Upload attachment"
+        />
       </section>
 
       <section className="content-grid lower-grid">

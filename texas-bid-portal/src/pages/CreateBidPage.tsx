@@ -1,5 +1,6 @@
 import { DraftPublishSummaryPanel } from '../components/DraftPublishSummaryPanel'
 import { FieldMock } from '../components/FieldMock'
+import { SubmissionAttachmentsPanel } from '../components/SubmissionAttachmentsPanel'
 import type { BidDocument, CreateBidFormState } from '../types/forms'
 
 type CreateBidPageProps = {
@@ -47,18 +48,12 @@ export function CreateBidPage({ formState, documents, onChange }: CreateBidPageP
       </section>
 
       <section className="content-grid lower-grid create-bid-layout">
-        <div className="panel">
-          <div className="panel-title">Attachments</div>
-          <div className="draft-list">
-            {documents.map((document) => (
-              <div className="draft-card" key={document.name}>
-                <strong>{document.name}</strong>
-                <div className="muted">{document.status}</div>
-              </div>
-            ))}
-          </div>
-          <button className="ghost wide">Add Attachment</button>
-        </div>
+        <SubmissionAttachmentsPanel
+          title="Attachments"
+          description="The supporting files agencies need to upload before vendors can review and respond."
+          documents={documents}
+          actionLabel="Add attachment"
+        />
 
         <div className="panel">
           <div className="panel-title">Pre-publish checklist</div>
