@@ -8,6 +8,7 @@ import { RecommendedOpportunitiesPanel } from '../components/RecommendedOpportun
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
 import { SelectionContextPanel } from '../components/SelectionContextPanel'
 import { StatusProgressionPanel } from '../components/StatusProgressionPanel'
+import { SubmissionActivityPanel } from '../components/SubmissionActivityPanel'
 import { SubmissionQueueList } from '../components/SubmissionQueueList'
 import { SubmissionStatusSnapshot } from '../components/SubmissionStatusSnapshot'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
@@ -75,6 +76,22 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
   const draftRowSummary = activeSubmission
     ? `Active saved row: ${activeSubmission.id}. Current opportunity has ${currentOpportunitySubmissions.length} total response rows.`
     : `No saved active row selected. Starting now will create response ${currentOpportunitySubmissions.length + 1}.`
+  const vendorActivityItems = displayedSubmissions.map((submission) => {
+    const siblingRows = submissions.filter((item) => item.opportunityId === submission.opportunityId)
+    const rowNumber = siblingRows.findIndex((item) => item.id === submission.id) + 1
+
+    return {
+      key: submission.id,
+      opportunityId: submission.opportunityId,
+      submissionId: submission.id,
+      title: `${submission.vendor} • ${submission.id}`,
+      detail: `${submission.opportunity} • row ${rowNumber} of ${siblingRows.length} • Submitted ${submission.submittedAt}`,
+      summary: submission.id === selectedSubmissionId
+        ? 'Active vendor-side submission row.'
+        : 'Click to reopen this exact vendor response row in the workflow.',
+    }
+  })
+
   const selectOpportunityFromSubmission = (submission: Submission) => {
     onSelectSubmission(submission)
     const matchingOpportunity = savedOpportunities.find((opportunity) => opportunity.id === submission.opportunityId)
@@ -178,6 +195,28 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
           activeSubmission={activeSubmission}
           mode="vendor"
           draftSummary={draftSummary}
+        />
+        <SubmissionActivityPanel
+          title="Submission activity — vendor view"
+          items={vendorActivityItems}
+          currentOpportunityId={currentOpportunity.id}
+          selectedSubmissionId={selectedSubmissionId ?? undefined}
+          onSelectSubmission={(opportunityId, submissionId) => {
+            const matchingOpportunity = savedOpportunities.find((opportunity) => opportunity.id === opportunityId)
+              ?? opportunities.find((opportunity) => opportunity.id === opportunityId)
+            const matchingSubmission = submissionId
+              ? submissions.find((submission) => submission.id === submissionId)
+              : null
+
+            if (matchingSubmission) {
+              onSelectSubmission(matchingSubmission)
+            }
+
+            if (matchingOpportunity) {
+              onSelectOpportunity(matchingOpportunity)
+              onNavigate('submission-workflow')
+            }
+          }}
         />
       </section>
 
