@@ -62,3 +62,30 @@ export const submissionRequirementItems = [
   'Validate signer details and final packet completeness',
   'Submit directly into agency review',
 ] as const
+
+export const vendorWorkflowCopy = {
+  workspaceEyebrow: 'Vendor workspace',
+  intro:
+    'A direct submission flow where Texas vendors can confirm fit, upload documents, answer requirements, and submit a bid response inside the platform.',
+  opportunitySummaryTitle: 'Opportunity summary',
+  opportunitySummarySubtitle:
+    'The live opportunity context that stays visible while the vendor assembles the response packet.',
+  metadataTitle: 'Submission metadata',
+  stageSummaryTitle: 'Submission stage summary',
+  siblingRowsTitle: 'Other response rows for this opportunity',
+  emptySiblingRowsDetail: 'Starting from a fresh unsaved vendor response for this opportunity.',
+  requirementsTitle: 'Response requirements',
+  attachmentsTitle: 'Required attachments',
+  attachmentsDescription: 'The packet components the vendor must gather and upload before final submission.',
+  draftingEyebrow: 'Vendor drafting',
+  draftingTitle: 'Response builder',
+  draftingDescription:
+    'The editable vendor response form covering signer details, pricing, timing, and narrative support.',
+  checklistTitle: 'Pre-submit checklist',
+  completenessTitle: 'Response completeness',
+  lifecycleTitle: 'Submission lifecycle summary',
+  finalEyebrow: 'Final step',
+  finalDescription:
+    'The last confirmation state before the vendor sends the completed response into agency review.',
+  unsavedDraftLabel: 'Unsaved draft lane',
+} as const

@@ -33,6 +33,7 @@ import {
   submissionRequirementItems,
   submissionStageSummaryItems,
   submissionStatusItems,
+  vendorWorkflowCopy,
   vendorWorkflowPackageCompletenessItems,
 } from '../utils/vendorWorkflowContent'
 
@@ -102,11 +103,9 @@ export function SubmissionWorkflowPage({
     <main className="main">
       <header className="topbar">
         <div>
-          <div className="eyebrow">Vendor workspace</div>
+          <div className="eyebrow">{vendorWorkflowCopy.workspaceEyebrow}</div>
           <h1>{presentVendorWorkflowHeaderTitle(activeSubmission, responseRowLabel)}</h1>
-          <p className="intro">
-            A direct submission flow where Texas vendors can confirm fit, upload documents, answer requirements, and submit a bid response inside the platform.
-          </p>
+          <p className="intro">{vendorWorkflowCopy.intro}</p>
           <p className="muted">
             Active response record: {presentVendorWorkflowRecordLine(activeSubmission)}
           </p>
@@ -134,33 +133,33 @@ export function SubmissionWorkflowPage({
 
       <section className="content-grid">
         <OpportunitySummaryPanel
-          title="Opportunity summary"
-          subtitle="The live opportunity context that stays visible while the vendor assembles the response packet."
+          title={vendorWorkflowCopy.opportunitySummaryTitle}
+          subtitle={vendorWorkflowCopy.opportunitySummarySubtitle}
           summary={opportunity.summary}
         />
 
-        <OpportunityMetadataPanel opportunity={opportunity} title="Submission metadata" />
+        <OpportunityMetadataPanel opportunity={opportunity} title={vendorWorkflowCopy.metadataTitle} />
       </section>
 
       <section className="content-grid lower-grid">
-        <WorkflowStageSummary title="Submission stage summary" items={[...submissionStageSummaryItems]} />
+        <WorkflowStageSummary title={vendorWorkflowCopy.stageSummaryTitle} items={[...submissionStageSummaryItems]} />
 
         <VendorSubmissionPacketPanel />
       </section>
 
       <section className="content-grid lower-grid">
         <LifecycleSummaryPanel
-          title="Other response rows for this opportunity"
-          items={siblingRowItems.length > 0 ? siblingRowItems : [{ stage: 'No saved rows yet', detail: 'Starting from a fresh unsaved vendor response for this opportunity.' }]}
+          title={vendorWorkflowCopy.siblingRowsTitle}
+          items={siblingRowItems.length > 0 ? siblingRowItems : [{ stage: 'No saved rows yet', detail: vendorWorkflowCopy.emptySiblingRowsDetail }]}
         />
       </section>
 
       <section className="content-grid lower-grid">
-        <OpportunityRequirementsPanel title="Response requirements" items={submissionRequirementItems} />
+        <OpportunityRequirementsPanel title={vendorWorkflowCopy.requirementsTitle} items={submissionRequirementItems} />
 
         <SubmissionAttachmentsPanel
-          title="Required attachments"
-          description="The packet components the vendor must gather and upload before final submission."
+          title={vendorWorkflowCopy.attachmentsTitle}
+          description={vendorWorkflowCopy.attachmentsDescription}
           documents={documents}
           actionLabel="Upload next pending attachment"
           onAction={onUploadNextDocument}
@@ -170,9 +169,9 @@ export function SubmissionWorkflowPage({
       <section className="content-grid lower-grid">
         <div className="panel">
           <SectionIntro
-            eyebrow="Vendor drafting"
-            title="Response builder"
-            description="The editable vendor response form covering signer details, pricing, timing, and narrative support."
+            eyebrow={vendorWorkflowCopy.draftingEyebrow}
+            title={vendorWorkflowCopy.draftingTitle}
+            description={vendorWorkflowCopy.draftingDescription}
           />
           <div className="form-mock create-bid-form">
             <FieldMock label="Company contact and authorized signer" value={formState.signer} onChange={(value) => onChange('signer', value)} />
@@ -185,7 +184,7 @@ export function SubmissionWorkflowPage({
           </div>
         </div>
 
-        <SubmissionChecklistPanel title="Pre-submit checklist" contextLabel={opportunity.title} />
+        <SubmissionChecklistPanel title={vendorWorkflowCopy.checklistTitle} contextLabel={opportunity.title} />
       </section>
 
       <section className="content-grid lower-grid">
@@ -197,22 +196,22 @@ export function SubmissionWorkflowPage({
               progress: `${Math.round((draftSummary.attachedCount / Math.max(draftSummary.totalDocuments, 1)) * 100)}%`,
             },
             {
-              label: 'Unsaved draft lane',
+              label: vendorWorkflowCopy.unsavedDraftLabel,
               detail: draftSummary.preservedUnsavedDraftLabel,
               progress: presentVendorUnsavedDraftProgress(draftSummary),
             },
             ...submissionStatusItems,
           ]}
         />
-        <PackageCompletenessPanel title="Response completeness" items={[...vendorWorkflowPackageCompletenessItems]} />
+        <PackageCompletenessPanel title={vendorWorkflowCopy.completenessTitle} items={[...vendorWorkflowPackageCompletenessItems]} />
       </section>
 
       <section className="content-grid lower-grid">
-        <LifecycleSummaryPanel title="Submission lifecycle summary" items={[...lifecycleSummaryItems]} />
+        <LifecycleSummaryPanel title={vendorWorkflowCopy.lifecycleTitle} items={[...lifecycleSummaryItems]} />
         <FinalActionPanel
-          eyebrow="Final step"
+          eyebrow={vendorWorkflowCopy.finalEyebrow}
           title={finalAction.title}
-          description="The last confirmation state before the vendor sends the completed response into agency review."
+          description={vendorWorkflowCopy.finalDescription}
           note={finalAction.note}
           actionLabel={finalAction.actionLabel}
           onAction={() => {
