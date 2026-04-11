@@ -130,6 +130,7 @@ function renderView(
           submissions={submissionQueue}
           queueFilter={agencyQueueFilter}
           onQueueFilterChange={setAgencyQueueFilter}
+          onSelectOpportunity={selectOpportunity}
           onAdvanceStatus={advanceSubmissionStatus}
           onArchiveSubmission={archiveSubmission}
           onNavigate={navigate}

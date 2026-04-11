@@ -5,9 +5,10 @@ type ReviewQueueCardProps = {
   submission: Submission
   mode?: 'agency' | 'vendor'
   currentOpportunityId?: string
+  onSelect?: (submission: Submission) => void
 }
 
-export function ReviewQueueCard({ submission, mode = 'agency', currentOpportunityId }: ReviewQueueCardProps) {
+export function ReviewQueueCard({ submission, mode = 'agency', currentOpportunityId, onSelect }: ReviewQueueCardProps) {
   const statusSummary = submissionStatusSummary[submission.status]
   const statusClassName =
     submission.status === 'shortlisted'
@@ -18,7 +19,11 @@ export function ReviewQueueCard({ submission, mode = 'agency', currentOpportunit
   const isCurrentOpportunity = submission.opportunityId === currentOpportunityId
 
   return (
-    <div className="submission-card">
+    <div
+      className="submission-card"
+      onClick={() => onSelect?.(submission)}
+      style={isCurrentOpportunity ? { outline: '2px solid #2563eb', outlineOffset: '2px' } : undefined}
+    >
       <div className="submission-header">
         <strong>{mode === 'agency' ? submission.vendor : submission.opportunity}</strong>
         <span className={statusClassName}>

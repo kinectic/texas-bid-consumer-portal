@@ -5,9 +5,10 @@ type SubmissionQueueListProps = {
   submissions: Submission[]
   mode?: 'agency' | 'vendor'
   currentOpportunityId?: string
+  onSelectSubmission?: (submission: Submission) => void
 }
 
-export function SubmissionQueueList({ submissions, mode = 'agency', currentOpportunityId }: SubmissionQueueListProps) {
+export function SubmissionQueueList({ submissions, mode = 'agency', currentOpportunityId, onSelectSubmission }: SubmissionQueueListProps) {
   return (
     <div className="submission-list">
       {submissions.map((submission) => (
@@ -16,6 +17,7 @@ export function SubmissionQueueList({ submissions, mode = 'agency', currentOppor
           submission={submission}
           mode={mode}
           currentOpportunityId={currentOpportunityId}
+          onSelect={onSelectSubmission}
         />
       ))}
     </div>

@@ -9,6 +9,7 @@ import { StatusBadgeLegend } from '../components/StatusBadgeLegend'
 import { StatusProgressionPanel } from '../components/StatusProgressionPanel'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
 import { SubmissionQueueList } from '../components/SubmissionQueueList'
+import { opportunities } from '../data/mockData'
 import { submissionLifecycle } from '../data/submissionStatus'
 import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
@@ -42,6 +43,7 @@ type AgencySubmissionReviewPageProps = {
   submissions: Submission[]
   queueFilter: 'current' | 'all'
   onQueueFilterChange: (filter: 'current' | 'all') => void
+  onSelectOpportunity: (opportunity: Opportunity) => void
   onAdvanceStatus: (status: Submission['status']) => void
   onArchiveSubmission: () => void
   onNavigate: (view: ViewKey) => void
@@ -55,6 +57,7 @@ export function AgencySubmissionReviewPage({
   submissions,
   queueFilter,
   onQueueFilterChange,
+  onSelectOpportunity,
   onAdvanceStatus,
   onArchiveSubmission,
   onNavigate,
@@ -69,6 +72,14 @@ export function AgencySubmissionReviewPage({
   const currentOpportunitySubmissions = visibleSubmissions.filter((submission) => submission.opportunityId === currentOpportunity.id)
   const displayedSubmissions = queueFilter === 'current' ? currentOpportunitySubmissions : visibleSubmissions
   const activeSubmission = submissions.find((submission) => submission.opportunityId === currentOpportunity.id) ?? null
+  const selectOpportunityFromSubmission = (submission: Submission) => {
+    const matchingOpportunity = opportunities.find((opportunity) => opportunity.id === submission.opportunityId)
+    if (matchingOpportunity) {
+      onSelectOpportunity(matchingOpportunity)
+      onQueueFilterChange('current')
+      onNavigate('agency-submission-review')
+    }
+  }
   return (
     <main className="main">
       <ActionHeader
@@ -102,7 +113,12 @@ export function AgencySubmissionReviewPage({
               <button className={queueFilter === 'all' ? 'switch-pill switch-pill-active' : 'switch-pill'} onClick={() => onQueueFilterChange('all')}>All opportunities</button>
             </div>
           </div>
-          <SubmissionQueueList submissions={displayedSubmissions} mode="agency" currentOpportunityId={currentOpportunity.id} />
+          <SubmissionQueueList
+            submissions={displayedSubmissions}
+            mode="agency"
+            currentOpportunityId={currentOpportunity.id}
+            onSelectSubmission={selectOpportunityFromSubmission}
+          />
         </div>
 
         <OutcomeSummaryPanel mode="agency" />

@@ -64,6 +64,15 @@ export function VendorDashboardPage({ currentOpportunity, submissions, draftSumm
     { value: lifecycleMetrics.vendorProfileCompleteness, label: 'Profile completeness' },
   ]
   const activeSubmission = submissions.find((submission) => submission.opportunityId === currentOpportunity.id) ?? null
+  const selectOpportunityFromSubmission = (submission: Submission) => {
+    const matchingOpportunity = savedOpportunities.find((opportunity) => opportunity.id === submission.opportunityId)
+      ?? opportunities.find((opportunity) => opportunity.id === submission.opportunityId)
+
+    if (matchingOpportunity) {
+      onSelectOpportunity(matchingOpportunity)
+      onNavigate('submission-workflow')
+    }
+  }
 
   return (
     <main className="main">
@@ -129,7 +138,12 @@ export function VendorDashboardPage({ currentOpportunity, submissions, draftSumm
               <button className={queueFilter === 'all' ? 'switch-pill switch-pill-active' : 'switch-pill'} onClick={() => onQueueFilterChange('all')}>All opportunities</button>
             </div>
           </div>
-          <SubmissionQueueList submissions={displayedSubmissions} mode="vendor" currentOpportunityId={currentOpportunity.id} />
+          <SubmissionQueueList
+            submissions={displayedSubmissions}
+            mode="vendor"
+            currentOpportunityId={currentOpportunity.id}
+            onSelectSubmission={selectOpportunityFromSubmission}
+          />
         </div>
       </section>
 
