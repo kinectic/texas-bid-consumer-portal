@@ -13,7 +13,7 @@ import { StatusBadgeLegend } from '../components/StatusBadgeLegend'
 import { SubmissionActivityPanel } from '../components/SubmissionActivityPanel'
 import { WorkflowFilterStrip } from '../components/WorkflowFilterStrip'
 import type { CreateBidFormState } from '../types/forms'
-import type { Submission } from '../types'
+import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import { opportunities, statusClass } from '../data/mockData'
 
@@ -32,13 +32,14 @@ const agencyFlowSteps = [
 
 type MarketplacePageProps = {
   publishedBidPreview: CreateBidFormState
+  publishedOpportunity: Opportunity | null
   submissions: Submission[]
   onNavigate: (view: ViewKey) => void
 }
 
-export function MarketplacePage({ publishedBidPreview, submissions, onNavigate }: MarketplacePageProps) {
-  const highlighted = opportunities[0]
-  const previewOpportunity = {
+export function MarketplacePage({ publishedBidPreview, publishedOpportunity, submissions, onNavigate }: MarketplacePageProps) {
+  const highlighted = publishedOpportunity ?? opportunities[0]
+  const previewOpportunity = publishedOpportunity ?? {
     ...highlighted,
     title: publishedBidPreview.title,
     category: publishedBidPreview.category,
@@ -46,7 +47,7 @@ export function MarketplacePage({ publishedBidPreview, submissions, onNavigate }
     summary: publishedBidPreview.scope,
   }
 
-  const marketplaceFeed = [previewOpportunity, ...opportunities.slice(1)]
+  const marketplaceFeed = publishedOpportunity ? [publishedOpportunity, ...opportunities.slice(1)] : opportunities
   const submissionActivityItems = submissions.map((submission) => ({
     title: submission.vendor,
     detail: `${submission.opportunity} • Submitted ${submission.submittedAt}`,
@@ -79,7 +80,14 @@ export function MarketplacePage({ publishedBidPreview, submissions, onNavigate }
           />
           <WorkflowFilterStrip title="Marketplace filters" filters={['All', 'Open', 'Facilities', 'Professional']} activeIndex={0} />
 
-          <PublishedBidSnapshotPanel title="Published bid preview sync" bid={publishedBidPreview} />
+          <PublishedBidSnapshotPanel
+            title="Published bid preview sync"
+            bid={publishedBidPreview}
+            statusLabel={publishedOpportunity ? 'Published' : 'Draft only'}
+            note={publishedOpportunity
+              ? 'This solicitation is live in the marketplace feed and now behaves like an active opportunity.'
+              : 'This solicitation is still draft-only. Publish it from the agency workflow to move it into the live marketplace feed.'}
+          />
 
           <OpportunityCardList
             opportunities={marketplaceFeed}

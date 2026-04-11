@@ -13,6 +13,7 @@ import { WorkflowStageSummary } from '../components/WorkflowStageSummary'
 import { lifecycleMetrics } from '../data/metrics'
 import { workflowStageLabels } from '../data/workflowStages'
 import { opportunities } from '../data/mockData'
+import type { Opportunity } from '../types'
 import type { CreateBidFormState } from '../types/forms'
 import type { ViewKey } from '../data/viewData'
 
@@ -33,12 +34,6 @@ const workflowCards = [
     description: 'Move from saved opportunity to actual submission without leaving the portal.',
   },
 ] as const
-
-const workflowMetricsItems = [
-  { value: lifecycleMetrics.workflowScreensBuilt, label: 'Interactive workflow screens built' },
-  { value: 3, label: 'Core workflow lanes shown in the MVP' },
-  { value: 'Texas', label: 'Localized procurement-first product direction' },
-]
 
 const workflowStageSummaryItems = workflowCards.map((card) => ({
   stage: workflowStageLabels[card.key].stage,
@@ -89,11 +84,19 @@ const lifecycleSteps = [
 
 type HomeDashboardPageProps = {
   publishedBidPreview: CreateBidFormState
+  publishedOpportunity: Opportunity | null
   onNavigate: (view: ViewKey) => void
 }
 
-export function HomeDashboardPage({ publishedBidPreview, onNavigate }: HomeDashboardPageProps) {
-  const recommendedOpportunities = opportunities.slice(0, 2)
+export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, onNavigate }: HomeDashboardPageProps) {
+  const recommendedOpportunities = publishedOpportunity
+    ? [publishedOpportunity, ...opportunities.filter((opportunity) => opportunity.id !== publishedOpportunity.id)].slice(0, 2)
+    : opportunities.slice(0, 2)
+  const workflowMetricsItems = [
+    { value: lifecycleMetrics.workflowScreensBuilt, label: 'Interactive workflow screens built' },
+    { value: publishedOpportunity ? 1 : 0, label: 'Agency draft promoted live' },
+    { value: 'Texas', label: 'Localized procurement-first product direction' },
+  ]
 
   return (
     <main className="main">
@@ -133,7 +136,13 @@ export function HomeDashboardPage({ publishedBidPreview, onNavigate }: HomeDashb
 
       <section className="content-grid lower-grid">
         <HomeCtaPanel onNavigate={onNavigate} />
-        <PublishedBidSnapshotPanel bid={publishedBidPreview} />
+        <PublishedBidSnapshotPanel
+          bid={publishedBidPreview}
+          statusLabel={publishedOpportunity ? 'Published' : 'Draft'}
+          note={publishedOpportunity
+            ? 'The current agency draft has been promoted into the live marketplace and dashboard state.'
+            : 'The current agency draft is still editable and waiting for publication.'}
+        />
       </section>
 
       <section className="content-grid lower-grid">

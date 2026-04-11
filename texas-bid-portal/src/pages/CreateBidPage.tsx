@@ -20,10 +20,38 @@ type CreateBidPageProps = {
   formState: CreateBidFormState
   documents: BidDocument[]
   onChange: (field: keyof CreateBidFormState, value: string) => void
+  isPublished: boolean
+  onSaveDraft: () => void
+  onPublishBid: () => void
   onNavigate: (view: ViewKey) => void
 }
 
-export function CreateBidPage({ formState, documents, onChange, onNavigate }: CreateBidPageProps) {
+export function CreateBidPage({
+  formState,
+  documents,
+  onChange,
+  isPublished,
+  onSaveDraft,
+  onPublishBid,
+  onNavigate,
+}: CreateBidPageProps) {
+  const draftSummaryItems = [
+    {
+      title: isPublished ? 'Published to marketplace' : 'Draft in progress',
+      detail: isPublished
+        ? 'This solicitation is now live in the Texas marketplace feed and visible in the agency dashboard active opportunities list.'
+        : 'The solicitation is still editable and waiting for a final publish action before vendors can discover it.',
+    },
+    {
+      title: 'Form fields synced',
+      detail: 'Title, category, scope, and requirements update the shared MVP preview state in real time.',
+    },
+    {
+      title: 'Publish destination',
+      detail: 'Publishing promotes this draft into the live marketplace and agency active-bids surfaces.',
+    },
+  ] as const
+
   return (
     <main className="main">
       <header className="topbar">
@@ -35,8 +63,14 @@ export function CreateBidPage({ formState, documents, onChange, onNavigate }: Cr
           </p>
         </div>
         <div className="top-actions">
-          <button className="ghost" onClick={() => onNavigate('agency-dashboard')}>Save Draft</button>
-          <button className="primary" onClick={() => onNavigate('marketplace')}>Publish Bid</button>
+          <button className="ghost" onClick={() => {
+            onSaveDraft()
+            onNavigate('agency-dashboard')
+          }}>Save Draft</button>
+          <button className="primary" onClick={() => {
+            onPublishBid()
+            onNavigate('marketplace')
+          }}>Publish Bid</button>
         </div>
       </header>
 
@@ -58,7 +92,7 @@ export function CreateBidPage({ formState, documents, onChange, onNavigate }: Cr
           </div>
         </div>
 
-        <DraftPublishSummaryPanel />
+        <DraftPublishSummaryPanel items={draftSummaryItems} />
       </section>
 
       <section className="content-grid lower-grid create-bid-layout">

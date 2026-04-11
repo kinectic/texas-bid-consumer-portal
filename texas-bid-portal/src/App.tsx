@@ -10,7 +10,7 @@ import {
   submissionDocuments as initialSubmissionDocuments,
   submissionFormState as initialSubmissionFormState,
 } from './data/formState'
-import { vendorSubmissions as initialVendorSubmissions } from './data/mockData'
+import { opportunities, vendorSubmissions as initialVendorSubmissions } from './data/mockData'
 import { viewOrder, type ViewKey } from './data/viewData'
 import { AgencyDashboardPage } from './pages/AgencyDashboardPage'
 import { AgencySubmissionReviewPage } from './pages/AgencySubmissionReviewPage'
@@ -21,7 +21,7 @@ import { OpportunityDetailPage } from './pages/OpportunityDetailPage'
 import { SubmissionWorkflowPage } from './pages/SubmissionWorkflowPage'
 import { VendorDashboardPage } from './pages/VendorDashboardPage'
 import type { CreateBidFormState, ReviewNotesState, SubmissionFormState, BidDocument } from './types/forms'
-import type { Submission } from './types'
+import type { Opportunity, Submission } from './types'
 
 function renderView(
   view: ViewKey,
@@ -33,6 +33,10 @@ function renderView(
   updateReviewNotes: (field: keyof ReviewNotesState, value: string) => void,
   submissionDocuments: BidDocument[],
   uploadNextSubmissionDocument: () => void,
+  isBidPublished: boolean,
+  saveDraft: () => void,
+  publishBid: () => void,
+  publishedOpportunity: Opportunity | null,
   submissionQueue: Submission[],
   advanceSubmissionStatus: (status: Submission['status']) => void,
   archiveSubmission: () => void,
@@ -40,15 +44,25 @@ function renderView(
 ) {
   switch (view) {
     case 'home':
-      return <HomeDashboardPage publishedBidPreview={createBidForm} onNavigate={navigate} />
+      return <HomeDashboardPage publishedBidPreview={createBidForm} publishedOpportunity={publishedOpportunity} onNavigate={navigate} />
     case 'marketplace':
-      return <MarketplacePage publishedBidPreview={createBidForm} submissions={submissionQueue} onNavigate={navigate} />
+      return <MarketplacePage publishedBidPreview={createBidForm} publishedOpportunity={publishedOpportunity} submissions={submissionQueue} onNavigate={navigate} />
     case 'opportunity':
       return <OpportunityDetailPage onNavigate={navigate} />
     case 'agency-dashboard':
-      return <AgencyDashboardPage submissions={submissionQueue} onNavigate={navigate} />
+      return <AgencyDashboardPage publishedOpportunity={publishedOpportunity} submissions={submissionQueue} onNavigate={navigate} />
     case 'create-bid':
-      return <CreateBidPage formState={createBidForm} documents={bidPacketDocuments} onChange={updateCreateBidForm} onNavigate={navigate} />
+      return (
+        <CreateBidPage
+          formState={createBidForm}
+          documents={bidPacketDocuments}
+          onChange={updateCreateBidForm}
+          isPublished={isBidPublished}
+          onSaveDraft={saveDraft}
+          onPublishBid={publishBid}
+          onNavigate={navigate}
+        />
+      )
     case 'agency-submission-review':
       return (
         <AgencySubmissionReviewPage
@@ -73,7 +87,7 @@ function renderView(
         />
       )
     default:
-      return <HomeDashboardPage publishedBidPreview={createBidForm} onNavigate={navigate} />
+      return <HomeDashboardPage publishedBidPreview={createBidForm} publishedOpportunity={publishedOpportunity} onNavigate={navigate} />
   }
 }
 
@@ -84,8 +98,10 @@ function App() {
   const [reviewNotes, setReviewNotes] = useState<ReviewNotesState>(initialReviewNotesState)
   const [submissionDocuments, setSubmissionDocuments] = useState<BidDocument[]>(initialSubmissionDocuments)
   const [submissionQueue, setSubmissionQueue] = useState<Submission[]>(initialVendorSubmissions)
+  const [isBidPublished, setIsBidPublished] = useState(false)
 
   const updateCreateBidForm = (field: keyof CreateBidFormState, value: string) => {
+    setIsBidPublished(false)
     setCreateBidForm((current) => ({ ...current, [field]: value }))
   }
 
@@ -95,6 +111,14 @@ function App() {
 
   const updateReviewNotes = (field: keyof ReviewNotesState, value: string) => {
     setReviewNotes((current) => ({ ...current, [field]: value }))
+  }
+
+  const saveDraft = () => {
+    setIsBidPublished(false)
+  }
+
+  const publishBid = () => {
+    setIsBidPublished(true)
   }
 
   const uploadNextSubmissionDocument = () => {
@@ -129,6 +153,18 @@ function App() {
     setSubmissionQueue((current) => current.slice(1))
   }
 
+  const publishedOpportunity = isBidPublished
+    ? {
+        ...opportunities[0],
+        title: createBidForm.title,
+        category: createBidForm.category,
+        dueDate: createBidForm.deadline,
+        summary: createBidForm.scope,
+        source: 'TexasBid Agency Publish Flow',
+        documents: bidPacketDocuments.map((document) => document.name),
+      }
+    : null
+
   return (
     <div className="app-shell">
       <Sidebar activeView={activeView} onSelect={setActiveView} />
@@ -156,6 +192,10 @@ function App() {
           updateReviewNotes,
           submissionDocuments,
           uploadNextSubmissionDocument,
+          isBidPublished,
+          saveDraft,
+          publishBid,
+          publishedOpportunity,
           submissionQueue,
           advanceSubmissionStatus,
           archiveSubmission,

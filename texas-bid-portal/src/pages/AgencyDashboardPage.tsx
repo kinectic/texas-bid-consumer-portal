@@ -9,16 +9,9 @@ import { OpportunityCardList } from '../components/OpportunityCardList'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
 import { SubmissionActivityPanel } from '../components/SubmissionActivityPanel'
 import { WorkflowMetricsSnapshot } from '../components/WorkflowMetricsSnapshot'
-import { lifecycleMetrics } from '../data/metrics'
 import { opportunities, statusClass } from '../data/mockData'
-import type { Submission } from '../types'
+import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
-
-const agencyMetricsItems = [
-  { value: lifecycleMetrics.activeBids, label: 'Active bids' },
-  { value: lifecycleMetrics.draftBids, label: 'Drafts waiting for final review' },
-  { value: lifecycleMetrics.responsesInReview, label: 'Recent vendor submissions' },
-]
 
 const agencyPriorityControls = [
   { label: 'Create new bid', className: 'primary wide' as const },
@@ -44,13 +37,39 @@ const milestoneItems = [
 ] as const
 
 type AgencyDashboardPageProps = {
+  publishedOpportunity: Opportunity | null
   submissions: Submission[]
   onNavigate: (view: ViewKey) => void
 }
 
-export function AgencyDashboardPage({ submissions, onNavigate }: AgencyDashboardPageProps) {
-  const activeBids = opportunities.filter((opportunity) => opportunity.status === 'open')
+export function AgencyDashboardPage({ publishedOpportunity, submissions, onNavigate }: AgencyDashboardPageProps) {
+  const activeBids = publishedOpportunity
+    ? [publishedOpportunity, ...opportunities.filter((opportunity) => opportunity.status === 'open' && opportunity.id !== publishedOpportunity.id)]
+    : opportunities.filter((opportunity) => opportunity.status === 'open')
   const awardedBids = opportunities.filter((opportunity) => opportunity.status === 'awarded')
+  const agencyMetricsItems = [
+    { value: activeBids.length, label: 'Active bids' },
+    { value: publishedOpportunity ? 0 : 1, label: 'Drafts waiting for final review' },
+    { value: submissions.length, label: 'Recent vendor submissions' },
+  ]
+  const draftSummaryItems = [
+    {
+      title: publishedOpportunity ? 'Publishing complete' : 'Draft still pending publish',
+      detail: publishedOpportunity
+        ? `${publishedOpportunity.title} is now visible as a live agency opportunity.`
+        : 'The current agency draft has not been promoted into the live marketplace yet.',
+    },
+    {
+      title: 'Dashboard sync',
+      detail: 'Active bid counts and the opportunity list now reflect the shared create-bid publishing state.',
+    },
+    {
+      title: 'Vendor visibility',
+      detail: publishedOpportunity
+        ? 'Vendors can now discover the live opportunity from the marketplace workflow.'
+        : 'Vendors will only see the draft after the publish action is triggered.',
+    },
+  ] as const
   const awardHistoryItems = awardedBids.map((opportunity) => ({
     title: opportunity.title,
     detail: opportunity.agency,
@@ -100,7 +119,7 @@ export function AgencyDashboardPage({ submissions, onNavigate }: AgencyDashboard
 
         <div className="content-grid nested-grid">
           <RoleModeSummaryPanel mode="agency" />
-          <DraftPublishSummaryPanel title="Draft publishing readiness" />
+          <DraftPublishSummaryPanel title="Draft publishing readiness" items={draftSummaryItems} />
         </div>
       </section>
 
