@@ -15,6 +15,7 @@ import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import type { ReviewNotesState } from '../types/forms'
 import { buildSubmissionQueueRowMeta } from '../utils/submissionQueue'
+import { agencyReviewCopy } from '../utils/agencyReviewContent'
 import {
   presentAgencyActiveSubmissionLabel,
   presentAgencyChecklistContext,
@@ -112,34 +113,34 @@ export function AgencySubmissionReviewPage({
   return (
     <main className="main">
       <ActionHeader
-        eyebrow="Agency workspace"
-        title="Submission review"
-        intro="A direct review screen where agencies can triage vendor responses, inspect package completeness, and move decisions forward without leaving the platform."
+        eyebrow={agencyReviewCopy.workspaceEyebrow}
+        title={agencyReviewCopy.title}
+        intro={agencyReviewCopy.intro}
         actions={
           <>
-            <button className="ghost" onClick={() => onNavigate('agency-dashboard')}>Export responses</button>
-            <button className="primary" onClick={() => onNavigate('vendor-dashboard')}>Advance shortlist</button>
+            <button className="ghost" onClick={() => onNavigate('agency-dashboard')}>{agencyReviewCopy.exportResponsesLabel}</button>
+            <button className="primary" onClick={() => onNavigate('vendor-dashboard')}>{agencyReviewCopy.advanceShortlistLabel}</button>
           </>
         }
       />
 
       <section className="stats-grid">
-        <MetricCard value={currentOpportunitySubmissions.length} label="Current opportunity responses" />
-        <MetricCard value={visibleSubmissions.length} label="All responses in review" />
-        <MetricCard value={visibleSubmissions.filter((submission) => submission.status === 'shortlisted').length} label="Shortlist candidate" />
-        <MetricCard value="Today" label="Decision window" />
+        <MetricCard value={currentOpportunitySubmissions.length} label={agencyReviewCopy.currentResponsesLabel} />
+        <MetricCard value={visibleSubmissions.length} label={agencyReviewCopy.allResponsesLabel} />
+        <MetricCard value={visibleSubmissions.filter((submission) => submission.status === 'shortlisted').length} label={agencyReviewCopy.shortlistLabel} />
+        <MetricCard value={agencyReviewCopy.decisionWindowValue} label={agencyReviewCopy.decisionWindowLabel} />
       </section>
 
       <section className="content-grid">
         <div className="panel">
           <div className="panel-header">
             <div>
-              <div className="panel-title">Response queue</div>
-              <div className="panel-subtitle">Keep the selected opportunity context while switching queue scope. Current opportunity has {currentOpportunitySubmissions.length} review row{currentOpportunitySubmissions.length === 1 ? '' : 's'}.</div>
+              <div className="panel-title">{agencyReviewCopy.queueTitle}</div>
+              <div className="panel-subtitle">{agencyReviewCopy.queueSubtitle(currentOpportunitySubmissions.length)}</div>
             </div>
             <div className="workflow-actions-list">
-              <button className={queueFilter === 'current' ? 'switch-pill switch-pill-active' : 'switch-pill'} onClick={() => onQueueFilterChange('current')}>Current opportunity</button>
-              <button className={queueFilter === 'all' ? 'switch-pill switch-pill-active' : 'switch-pill'} onClick={() => onQueueFilterChange('all')}>All opportunities</button>
+              <button className={queueFilter === 'current' ? 'switch-pill switch-pill-active' : 'switch-pill'} onClick={() => onQueueFilterChange('current')}>{agencyReviewCopy.queueFilterCurrent}</button>
+              <button className={queueFilter === 'all' ? 'switch-pill switch-pill-active' : 'switch-pill'} onClick={() => onQueueFilterChange('all')}>{agencyReviewCopy.queueFilterAll}</button>
             </div>
           </div>
           <SubmissionQueueList
@@ -170,7 +171,7 @@ export function AgencySubmissionReviewPage({
 
       <section className="content-grid lower-grid">
         <SelectionContextPanel
-          title="Selected opportunity + submission context"
+          title={agencyReviewCopy.selectionContextTitle}
           currentOpportunity={currentOpportunity}
           activeSubmission={activeSubmission}
           mode="agency"
@@ -179,12 +180,12 @@ export function AgencySubmissionReviewPage({
       </section>
 
       <section className="content-grid lower-grid">
-        <SubmissionChecklistPanel title="Agency review checklist" contextLabel={presentAgencyChecklistContext(currentOpportunity.title, activeSubmissionLabel)} />
+        <SubmissionChecklistPanel title={agencyReviewCopy.checklistTitle} contextLabel={presentAgencyChecklistContext(currentOpportunity.title, activeSubmissionLabel)} />
 
         <div className="content-grid nested-grid">
           <StatusProgressionPanel steps={submissionLifecycle} />
           <StatusBadgeLegend
-            title="Review status legend"
+            title={agencyReviewCopy.reviewLegendTitle}
             items={[
               {
                 label: 'received',
