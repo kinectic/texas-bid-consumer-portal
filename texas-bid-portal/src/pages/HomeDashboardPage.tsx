@@ -172,6 +172,7 @@ export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, c
             opportunities={recommendedOpportunities}
             statusClassMap={{ open: 'status status-open', awarded: 'status status-awarded', 'under-review': 'status status-review' }}
             metaFormatter={(opportunity) => `${opportunity.agency} • ${opportunity.location}`}
+            role="vendor"
             readinessByOpportunityId={readinessByOpportunityId}
             selectedOpportunityId={currentOpportunity.id}
             onSelectOpportunity={(opportunity) => {

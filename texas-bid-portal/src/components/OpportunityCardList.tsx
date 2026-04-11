@@ -1,4 +1,5 @@
 import type { Opportunity } from '../types'
+import { presentReadinessForRole } from '../utils/readinessPresentation'
 
 type OpportunityReadinessSummary = {
   label: string
@@ -9,6 +10,7 @@ type OpportunityCardListProps = {
   opportunities: Opportunity[]
   statusClassMap: Record<Opportunity['status'], string>
   metaFormatter: (opportunity: Opportunity) => string
+  role?: 'vendor' | 'agency'
   selectedOpportunityId?: string
   onSelectOpportunity?: (opportunity: Opportunity) => void
   readinessByOpportunityId?: Record<string, OpportunityReadinessSummary>
@@ -18,6 +20,7 @@ export function OpportunityCardList({
   opportunities,
   statusClassMap,
   metaFormatter,
+  role = 'vendor',
   selectedOpportunityId,
   onSelectOpportunity,
   readinessByOpportunityId,
@@ -26,7 +29,7 @@ export function OpportunityCardList({
     <div className="opportunity-list">
       {opportunities.map((opportunity) => (
         (() => {
-          const readiness = readinessByOpportunityId?.[opportunity.id]
+          const readiness = presentReadinessForRole(readinessByOpportunityId?.[opportunity.id], role)
           return (
         <article
           className="opportunity-card"

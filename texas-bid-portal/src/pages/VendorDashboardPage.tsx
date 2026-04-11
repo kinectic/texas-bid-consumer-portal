@@ -147,6 +147,7 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
             opportunities={savedOpportunities}
             statusClassMap={statusClass}
             metaFormatter={(opportunity) => `${opportunity.agency} • ${opportunity.location}`}
+            role="vendor"
             readinessByOpportunityId={readinessByOpportunityId}
             selectedOpportunityId={currentOpportunity.id}
             onSelectOpportunity={(opportunity) => {

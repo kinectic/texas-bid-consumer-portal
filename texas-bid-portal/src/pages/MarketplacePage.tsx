@@ -118,6 +118,7 @@ export function MarketplacePage({
             opportunities={marketplaceFeed}
             statusClassMap={statusClass}
             metaFormatter={(opportunity) => `${opportunity.agency} • ${opportunity.location} • ${opportunity.category}`}
+            role="vendor"
             readinessByOpportunityId={readinessByOpportunityId}
             selectedOpportunityId={previewOpportunity.id}
             onSelectOpportunity={(opportunity) => {

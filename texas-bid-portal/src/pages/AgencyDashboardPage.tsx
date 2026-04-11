@@ -131,6 +131,7 @@ export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, 
             opportunities={activeBids}
             statusClassMap={statusClass}
             metaFormatter={(opportunity) => `${opportunity.category} • ${opportunity.location}`}
+            role="agency"
             readinessByOpportunityId={readinessByOpportunityId}
             selectedOpportunityId={currentOpportunity.id}
             onSelectOpportunity={(opportunity) => {
