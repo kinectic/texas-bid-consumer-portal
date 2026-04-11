@@ -1,4 +1,5 @@
 import { FieldMock } from '../components/FieldMock'
+import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
 import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacketPanel'
 import { submissionDocuments } from '../data/formState'
@@ -32,35 +33,13 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
       <section className="content-grid">
         <div className="panel">
           <div className="panel-title">Opportunity summary</div>
-          <div className="detail-grid">
-            <div>
-              <div className="detail-label">Bid</div>
-              <div>{opportunity.title}</div>
-            </div>
-            <div>
-              <div className="detail-label">Agency</div>
-              <div>{opportunity.agency}</div>
-            </div>
-            <div>
-              <div className="detail-label">Deadline</div>
-              <div>{opportunity.dueDate}</div>
-            </div>
-            <div>
-              <div className="detail-label">Category</div>
-              <div>{opportunity.category}</div>
-            </div>
-            <div>
-              <div className="detail-label">Source</div>
-              <div>{opportunity.source}</div>
-            </div>
-            <div>
-              <div className="detail-label">Opportunity ID</div>
-              <div>{opportunity.id}</div>
-            </div>
-          </div>
           <p className="detail-copy">{opportunity.summary}</p>
         </div>
 
+        <OpportunityMetadataPanel opportunity={opportunity} title="Submission metadata" />
+      </section>
+
+      <section className="content-grid lower-grid">
         <div className="panel">
           <div className="panel-title">Submission status</div>
           <div className="draft-list">
@@ -78,6 +57,8 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
             </div>
           </div>
         </div>
+
+        <VendorSubmissionPacketPanel />
       </section>
 
       <section className="content-grid lower-grid">
@@ -94,10 +75,6 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
           </div>
         </div>
 
-        <VendorSubmissionPacketPanel />
-      </section>
-
-      <section className="content-grid lower-grid">
         <div className="panel">
           <div className="panel-title">Required attachments</div>
           <div className="draft-list">
@@ -110,11 +87,11 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
           </div>
           <button className="ghost wide">Upload attachment</button>
         </div>
-
-        <SubmissionChecklistPanel title="Pre-submit checklist" contextLabel={opportunity.title} />
       </section>
 
       <section className="content-grid lower-grid">
+        <SubmissionChecklistPanel title="Pre-submit checklist" contextLabel={opportunity.title} />
+
         <div className="panel">
           <div className="panel-title">Submission confirmation</div>
           <div className="dashboard-note">

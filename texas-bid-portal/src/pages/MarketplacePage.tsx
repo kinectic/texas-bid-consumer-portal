@@ -1,3 +1,4 @@
+import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
 import { OpportunityStatusPanel } from '../components/OpportunityStatusPanel'
 import type { CreateBidFormState } from '../types/forms'
 import { opportunities, statusClass, vendorSubmissions } from '../data/mockData'
@@ -94,46 +95,30 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
         </div>
 
         <div className="content-grid nested-grid">
-          <div className="panel detail-panel">
-            <div className="panel-title">Opportunity detail</div>
-            <h2>{previewOpportunity.title}</h2>
-            <div className="detail-grid">
-              <div>
-                <div className="detail-label">Agency</div>
-                <div>{previewOpportunity.agency}</div>
-              </div>
-              <div>
-                <div className="detail-label">Deadline</div>
-                <div>{previewOpportunity.dueDate}</div>
-              </div>
-              <div>
-                <div className="detail-label">Category</div>
-                <div>{previewOpportunity.category}</div>
-              </div>
-              <div>
-                <div className="detail-label">Source</div>
-                <div>{previewOpportunity.source}</div>
-              </div>
-            </div>
-            <p className="detail-copy">{previewOpportunity.summary}</p>
-            <div className="doc-list">
-              {previewOpportunity.documents.map((document) => (
-                <div className="doc-item" key={document}>
-                  <span>{document}</span>
-                  <button className="linkish">Open</button>
-                </div>
-              ))}
-            </div>
-            <div className="detail-actions">
-              <button className="ghost">Save Opportunity</button>
-              <button className="primary">Submit Response</button>
-            </div>
-          </div>
+          <OpportunityMetadataPanel opportunity={previewOpportunity} title="Marketplace metadata" />
           <OpportunityStatusPanel status="open" />
         </div>
       </section>
 
       <section className="content-grid lower-grid">
+        <div className="panel detail-panel">
+          <div className="panel-title">Opportunity detail</div>
+          <h2>{previewOpportunity.title}</h2>
+          <p className="detail-copy">{previewOpportunity.summary}</p>
+          <div className="doc-list">
+            {previewOpportunity.documents.map((document) => (
+              <div className="doc-item" key={document}>
+                <span>{document}</span>
+                <button className="linkish">Open</button>
+              </div>
+            ))}
+          </div>
+          <div className="detail-actions">
+            <button className="ghost">Save Opportunity</button>
+            <button className="primary">Submit Response</button>
+          </div>
+        </div>
+
         <div className="panel agency-panel">
           <div className="panel-title">Agency posting flow</div>
           <ol className="flow-list">
@@ -156,7 +141,9 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
             <button className="primary wide">Publish Bid</button>
           </div>
         </div>
+      </section>
 
+      <section className="content-grid lower-grid">
         <div className="panel vendor-panel">
           <div className="panel-title">Submission workspace</div>
           {vendorSubmissions.map((submission) => (

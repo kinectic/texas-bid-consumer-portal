@@ -1,4 +1,5 @@
 import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
+import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
 import { OpportunityStatusPanel } from '../components/OpportunityStatusPanel'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
 import { bidPacketDocuments } from '../data/formState'
@@ -32,36 +33,11 @@ export function OpportunityDetailPage() {
             </div>
             <span className={statusClass[opportunity.status]}>{opportunity.status}</span>
           </div>
-          <div className="detail-grid">
-            <div>
-              <div className="detail-label">Agency</div>
-              <div>{opportunity.agency}</div>
-            </div>
-            <div>
-              <div className="detail-label">Location</div>
-              <div>{opportunity.location}</div>
-            </div>
-            <div>
-              <div className="detail-label">Category</div>
-              <div>{opportunity.category}</div>
-            </div>
-            <div>
-              <div className="detail-label">Deadline</div>
-              <div>{opportunity.dueDate}</div>
-            </div>
-            <div>
-              <div className="detail-label">Source</div>
-              <div>{opportunity.source}</div>
-            </div>
-            <div>
-              <div className="detail-label">Opportunity ID</div>
-              <div>{opportunity.id}</div>
-            </div>
-          </div>
           <p className="detail-copy">{opportunity.summary}</p>
         </div>
 
         <div className="content-grid nested-grid">
+          <OpportunityMetadataPanel opportunity={opportunity} />
           <VendorQualificationPanel />
           <OpportunityStatusPanel status="open" />
         </div>
