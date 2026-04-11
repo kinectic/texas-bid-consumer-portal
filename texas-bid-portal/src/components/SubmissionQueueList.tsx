@@ -10,9 +10,16 @@ type SubmissionQueueListProps = {
 }
 
 export function SubmissionQueueList({ submissions, mode = 'agency', currentOpportunityId, selectedSubmissionId, onSelectSubmission }: SubmissionQueueListProps) {
+  const orderedSubmissions = selectedSubmissionId
+    ? [
+        ...submissions.filter((submission) => submission.id === selectedSubmissionId),
+        ...submissions.filter((submission) => submission.id !== selectedSubmissionId),
+      ]
+    : submissions
+
   return (
     <div className="submission-list">
-      {submissions.map((submission) => (
+      {orderedSubmissions.map((submission) => (
         <ReviewQueueCard
           key={submission.id}
           submission={submission}

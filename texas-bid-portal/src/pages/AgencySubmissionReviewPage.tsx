@@ -62,6 +62,9 @@ export function AgencySubmissionReviewPage({
   const activeSubmissionLabel = activeSubmission
     ? `${activeSubmission.vendor} · ${activeSubmission.id}`
     : 'No submission selected'
+  const activeOutcomeSummary = activeSubmission
+    ? `${activeSubmission.vendor} is currently ${activeSubmission.status} for ${currentOpportunity.title}. Decision actions now apply only to submission ${activeSubmission.id}.`
+    : 'Select a submission row to apply review actions and see row-specific review context.'
   const decisionControls = [
     { label: `Shortlist ${activeSubmission?.vendor ?? 'selected vendor'}`, className: 'primary wide' as const, onClick: () => onAdvanceStatus('shortlisted') },
     { label: `Request clarification from ${activeSubmission?.vendor ?? 'vendor'}`, className: 'ghost wide' as const, onClick: () => onAdvanceStatus('reviewing') },
@@ -120,6 +123,11 @@ export function AgencySubmissionReviewPage({
         </div>
 
         <OutcomeSummaryPanel mode="agency" />
+        <OutcomeSummaryPanel
+          mode="agency"
+          overrideTitle={`Active review outcome — ${activeSubmission?.vendor ?? 'No submission selected'}`}
+          overrideSummary={activeOutcomeSummary}
+        />
       </section>
 
       <section className="content-grid lower-grid">
