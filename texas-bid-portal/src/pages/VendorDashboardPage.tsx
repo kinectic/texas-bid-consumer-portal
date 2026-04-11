@@ -20,6 +20,12 @@ import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import { buildSubmissionActivityItems } from '../utils/submissionActivity'
 import { buildSubmissionQueueRowMeta } from '../utils/submissionQueue'
+import {
+  presentVendorActiveSubmissionLabel,
+  presentVendorPrimaryActionDescription,
+  presentVendorQueueSubtitle,
+  presentVendorRowSummary,
+} from '../utils/vendorPresentation'
 
 const submissionStatusItems = [
   submissionStatusSummary.draft,
@@ -79,12 +85,15 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
     selectedSubmissionId: selectedSubmissionId ?? undefined,
     mode: 'vendor',
   })
-  const activeSubmissionLabel = activeSubmission
-    ? rowMetaBySubmissionId[activeSubmission.id]?.activeLabel ?? `${activeSubmission.vendor} · ${activeSubmission.id}`
-    : 'new unsaved response'
-  const draftRowSummary = activeSubmission
-    ? `Active saved row: ${rowMetaBySubmissionId[activeSubmission.id]?.activeLabel ?? activeSubmission.id}. Current opportunity has ${currentOpportunitySubmissions.length} total response rows.`
-    : `No saved active row selected. Starting now will create response ${currentOpportunitySubmissions.length + 1}.`
+  const activeSubmissionLabel = presentVendorActiveSubmissionLabel(
+    activeSubmission,
+    activeSubmission ? rowMetaBySubmissionId[activeSubmission.id] : null,
+  )
+  const draftRowSummary = presentVendorRowSummary(
+    activeSubmission,
+    activeSubmission ? rowMetaBySubmissionId[activeSubmission.id] : null,
+    currentOpportunitySubmissions.length,
+  )
   const bufferModelSummary = `${draftSummary.bufferLabel} • ${draftSummary.preservedUnsavedDraftLabel}`
   const vendorActivityItems = buildSubmissionActivityItems({
     submissions: displayedSubmissions,
@@ -122,7 +131,7 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
 
       <PrimaryActionStrip
         title="Vendor priorities"
-        description={`Keep the active bid pipeline moving from qualification into submission and tracking. Current opportunity has ${currentOpportunitySubmissions.length} response row${currentOpportunitySubmissions.length === 1 ? '' : 's'}; active row: ${activeSubmissionLabel}.`}
+        description={presentVendorPrimaryActionDescription(currentOpportunitySubmissions.length, activeSubmissionLabel)}
         actions={
           <>
             <button className="primary" onClick={() => onNavigate('marketplace')}>Find opportunities</button>
@@ -180,7 +189,7 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
           <div className="panel-header">
             <div>
               <div className="panel-title">Active submissions</div>
-              <div className="panel-subtitle">Filter between the selected opportunity and the full vendor queue. Selected row: {activeSubmissionLabel}.</div>
+              <div className="panel-subtitle">{presentVendorQueueSubtitle(activeSubmissionLabel)}</div>
             </div>
             <div className="workflow-actions-list">
               <button className={queueFilter === 'current' ? 'switch-pill switch-pill-active' : 'switch-pill'} onClick={() => onQueueFilterChange('current')}>Current opportunity</button>
