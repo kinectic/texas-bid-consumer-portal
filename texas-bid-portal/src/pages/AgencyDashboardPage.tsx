@@ -13,30 +13,13 @@ import { WorkflowMetricsSnapshot } from '../components/WorkflowMetricsSnapshot'
 import { opportunities, statusClass } from '../data/mockData'
 import type { Opportunity, Submission } from '../types'
 import { buildSubmissionActivityItems } from '../utils/submissionActivity'
+import {
+  agencyDashboardCopy,
+  agencyDraftPipelineItems,
+  agencyMilestoneItems,
+  agencyPriorityControls,
+} from '../utils/agencyDashboardContent'
 import type { ViewKey } from '../data/viewData'
-
-const agencyPriorityControls = [
-  { label: 'Create new bid', className: 'primary wide' as const },
-  { label: 'Manage deadlines', className: 'ghost wide' as const },
-  { label: 'Review submissions', className: 'ghost wide' as const },
-]
-
-const draftPipelineItems = [
-  {
-    title: 'Transit Shelter Cleaning Services',
-    detail: 'Draft ready for legal review',
-  },
-  {
-    title: 'IT Equipment Replacement RFP',
-    detail: 'Awaiting attachments and insurance requirements',
-  },
-]
-
-const milestoneItems = [
-  'Create bid workflow connected to publishing state',
-  'Agency dashboard active opportunities surface',
-  'Submission review and vendor activity tracking',
-] as const
 
 type AgencyDashboardPageProps = {
   currentOpportunity: Opportunity
@@ -99,21 +82,21 @@ export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, 
   return (
     <main className="main">
       <ActionHeader
-        eyebrow="Agency workspace"
-        title="Agency dashboard"
-        intro="A Texas-first control center for procurement teams to manage live bids, vendor activity, and fast next actions without portal clutter."
+        eyebrow={agencyDashboardCopy.workspaceEyebrow}
+        title={agencyDashboardCopy.title}
+        intro={agencyDashboardCopy.intro}
         actions={
           <>
-            <button className="ghost" onClick={() => onNavigate('agency-submission-review')}>Export Activity</button>
-            <button className="primary" onClick={() => onNavigate('create-bid')}>New Bid</button>
+            <button className="ghost" onClick={() => onNavigate('agency-submission-review')}>{agencyDashboardCopy.exportActivityLabel}</button>
+            <button className="primary" onClick={() => onNavigate('create-bid')}>{agencyDashboardCopy.newBidLabel}</button>
           </>
         }
       />
 
       <DecisionControlsPanel
-        title="Agency priorities"
-        controls={agencyPriorityControls}
-        description="Move the procurement flow forward from draft through publishing and review."
+        title={agencyDashboardCopy.prioritiesTitle}
+        controls={[...agencyPriorityControls]}
+        description={agencyDashboardCopy.prioritiesDescription}
       />
 
       <WorkflowMetricsSnapshot items={agencyMetricsItems} />
@@ -122,10 +105,10 @@ export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, 
         <div className="panel">
           <div className="panel-header">
             <div>
-              <div className="panel-title">Active opportunities</div>
-              <div className="panel-subtitle">Live agency postings with vendor-facing visibility</div>
+              <div className="panel-title">{agencyDashboardCopy.activeOpportunitiesTitle}</div>
+              <div className="panel-subtitle">{agencyDashboardCopy.activeOpportunitiesSubtitle}</div>
             </div>
-            <button className="ghost">Manage deadlines</button>
+            <button className="ghost">{agencyDashboardCopy.manageDeadlinesLabel}</button>
           </div>
           <OpportunityCardList
             opportunities={activeBids}
@@ -143,32 +126,32 @@ export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, 
 
         <div className="content-grid nested-grid">
           <RoleModeSummaryPanel mode="agency" />
-          <DraftPublishSummaryPanel title="Draft publishing readiness" items={draftSummaryItems} />
+          <DraftPublishSummaryPanel title={agencyDashboardCopy.draftPublishTitle} items={draftSummaryItems} />
         </div>
       </section>
 
       <section className="content-grid lower-grid">
         <SelectionContextPanel
-          title="Selected opportunity + submission context"
+          title={agencyDashboardCopy.selectionContextTitle}
           currentOpportunity={currentOpportunity}
           activeSubmission={activeSubmission}
           mode="agency"
         />
-        <MilestonesPanel title="Agency workflow milestones" items={milestoneItems} />
+        <MilestonesPanel title={agencyDashboardCopy.milestonesTitle} items={agencyMilestoneItems} />
       </section>
 
       <section className="content-grid lower-grid">
         <EmptyStatePanel mode="agency" />
 
         <div className="content-grid nested-grid">
-          <DraftPipelinePanel items={draftPipelineItems} />
+          <DraftPipelinePanel items={[...agencyDraftPipelineItems]} />
           <AwardHistoryPanel items={awardHistoryItems} />
         </div>
       </section>
 
       <section className="content-grid lower-grid">
         <SubmissionActivityPanel
-          title={queueFilter === 'current' ? 'Submission activity — current opportunity' : 'Submission activity — all opportunities'}
+          title={queueFilter === 'current' ? agencyDashboardCopy.currentSubmissionActivityTitle : agencyDashboardCopy.allSubmissionActivityTitle}
           items={submissionActivityItems}
           currentOpportunityId={currentOpportunity.id}
           selectedSubmissionId={selectedSubmissionId ?? undefined}
@@ -189,13 +172,13 @@ export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, 
           }}
         />
         <div className="panel">
-          <div className="panel-title">Submission queue scope</div>
+          <div className="panel-title">{agencyDashboardCopy.queueScopeTitle}</div>
           <div className="workflow-actions-list">
-            <button className={queueFilter === 'current' ? 'switch-pill switch-pill-active' : 'switch-pill'} onClick={() => onQueueFilterChange('current')}>Current opportunity</button>
-            <button className={queueFilter === 'all' ? 'switch-pill switch-pill-active' : 'switch-pill'} onClick={() => onQueueFilterChange('all')}>All opportunities</button>
+            <button className={queueFilter === 'current' ? 'switch-pill switch-pill-active' : 'switch-pill'} onClick={() => onQueueFilterChange('current')}>{agencyDashboardCopy.queueScopeCurrent}</button>
+            <button className={queueFilter === 'all' ? 'switch-pill switch-pill-active' : 'switch-pill'} onClick={() => onQueueFilterChange('all')}>{agencyDashboardCopy.queueScopeAll}</button>
           </div>
           <div className="dashboard-note compact-note">
-            Current opportunity submissions: {currentOpportunitySubmissions.length} • All submissions: {submissions.length}
+            {agencyDashboardCopy.queueScopeSummary(currentOpportunitySubmissions.length, submissions.length)}
           </div>
         </div>
       </section>
