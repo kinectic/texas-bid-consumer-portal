@@ -106,3 +106,38 @@ export function computeReadinessByOpportunityId({
     }),
   )
 }
+
+type ComputePackageCompletenessParams = {
+  submissionForm: SubmissionFormState
+  submissionDocuments: BidDocument[]
+  attachedCount: number
+  currentSubmission: Submission | null
+  initialSubmissionFormState: SubmissionFormState
+}
+
+export function computePackageCompletenessItems({
+  submissionForm,
+  submissionDocuments,
+  attachedCount,
+  currentSubmission,
+  initialSubmissionFormState,
+}: ComputePackageCompletenessParams) {
+  return [
+    {
+      title: 'Pricing sheet',
+      detail: submissionForm.pricing === initialSubmissionFormState.pricing
+        ? 'Using baseline pricing draft'
+        : 'Pricing updated for this selected opportunity',
+    },
+    {
+      title: 'Compliance docs',
+      detail: `${attachedCount}/${submissionDocuments.length} attachments linked to this opportunity packet`,
+    },
+    {
+      title: 'Response narrative',
+      detail: currentSubmission
+        ? `Submission status is ${currentSubmission.status} for this opportunity`
+        : 'No submission record created yet for this opportunity',
+    },
+  ]
+}

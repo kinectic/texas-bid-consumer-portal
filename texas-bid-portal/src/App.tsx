@@ -22,7 +22,7 @@ import { SubmissionWorkflowPage } from './pages/SubmissionWorkflowPage'
 import { VendorDashboardPage } from './pages/VendorDashboardPage'
 import type { CreateBidFormState, ReviewNotesState, SubmissionFormState, BidDocument } from './types/forms'
 import type { Opportunity, Submission } from './types'
-import { computeDraftSummaryState, computeReadinessByOpportunityId } from './utils/readinessState'
+import { computeDraftSummaryState, computePackageCompletenessItems, computeReadinessByOpportunityId } from './utils/readinessState'
 
 type SubmissionFormStateByKey = Record<string, SubmissionFormState>
 type SubmissionDocumentsByKey = Record<string, BidDocument[]>
@@ -290,24 +290,13 @@ function App() {
     initialSubmissionFormState,
     initialSubmissionDocuments,
   })
-  const packageCompletenessItems: PackageCompletenessItem[] = [
-    {
-      title: 'Pricing sheet',
-      detail: submissionForm.pricing === initialSubmissionFormState.pricing
-        ? 'Using baseline pricing draft'
-        : 'Pricing updated for this selected opportunity',
-    },
-    {
-      title: 'Compliance docs',
-      detail: `${attachedCount}/${submissionDocuments.length} attachments linked to this opportunity packet`,
-    },
-    {
-      title: 'Response narrative',
-      detail: currentSubmission
-        ? `Submission status is ${currentSubmission.status} for this opportunity`
-        : 'No submission record created yet for this opportunity',
-    },
-  ]
+  const packageCompletenessItems: PackageCompletenessItem[] = computePackageCompletenessItems({
+    submissionForm,
+    submissionDocuments,
+    attachedCount,
+    currentSubmission,
+    initialSubmissionFormState,
+  })
 
   const updateSubmissionForm = (field: keyof SubmissionFormState, value: string) => {
     setSubmissionFormsByKey((current) => ({
