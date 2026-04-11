@@ -1,7 +1,9 @@
+import { HomeCtaPanel } from '../components/HomeCtaPanel'
 import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
 import { lifecycleMetrics } from '../data/metrics'
 import { workflowStageLabels } from '../data/workflowStages'
 import type { CreateBidFormState } from '../types/forms'
+import type { ViewKey } from '../data/viewData'
 
 const workflowCards = [
   {
@@ -53,9 +55,10 @@ const lifecycleSteps = [
 
 type HomeDashboardPageProps = {
   publishedBidPreview: CreateBidFormState
+  onNavigate: (view: ViewKey) => void
 }
 
-export function HomeDashboardPage({ publishedBidPreview }: HomeDashboardPageProps) {
+export function HomeDashboardPage({ publishedBidPreview, onNavigate }: HomeDashboardPageProps) {
   return (
     <main className="main">
       <header className="topbar">
@@ -68,7 +71,7 @@ export function HomeDashboardPage({ publishedBidPreview }: HomeDashboardPageProp
         </div>
         <div className="top-actions">
           <button className="ghost">View product map</button>
-          <button className="primary">Enter workflow</button>
+          <button className="primary" onClick={() => onNavigate('marketplace')}>Enter workflow</button>
         </div>
       </header>
 
@@ -125,18 +128,7 @@ export function HomeDashboardPage({ publishedBidPreview }: HomeDashboardPageProp
       </section>
 
       <section className="content-grid lower-grid">
-        <div className="panel">
-          <div className="panel-title">Connected lifecycle summary</div>
-          <div className="draft-list">
-            {lifecycleSteps.map((step) => (
-              <div className="draft-card" key={step.stage}>
-                <strong>{step.stage}</strong>
-                <div className="muted">{step.detail}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
+        <HomeCtaPanel onNavigate={onNavigate} />
         <div className="panel">
           <div className="panel-title">Published bid snapshot</div>
           <div className="draft-list">
@@ -158,7 +150,21 @@ export function HomeDashboardPage({ publishedBidPreview }: HomeDashboardPageProp
       </section>
 
       <section className="content-grid lower-grid">
+        <div className="panel">
+          <div className="panel-title">Connected lifecycle summary</div>
+          <div className="draft-list">
+            {lifecycleSteps.map((step) => (
+              <div className="draft-card" key={step.stage}>
+                <strong>{step.stage}</strong>
+                <div className="muted">{step.detail}</div>
+              </div>
+            ))}
+          </div>
+        </div>
         <LifecycleTimelinePanel title="Lifecycle timeline" />
+      </section>
+
+      <section className="content-grid lower-grid">
         <div className="panel">
           <div className="panel-title">Built milestones</div>
           <ol className="flow-list">
@@ -167,32 +173,12 @@ export function HomeDashboardPage({ publishedBidPreview }: HomeDashboardPageProp
             ))}
           </ol>
         </div>
-      </section>
 
-      <section className="content-grid lower-grid">
         <div className="panel">
           <div className="panel-title">Consistent next move</div>
           <div className="draft-card">
             <strong>Follow the workflow actions bar</strong>
             <div className="muted">Every major screen now pushes toward the next practical procurement step instead of leaving the user guessing.</div>
-          </div>
-        </div>
-
-        <div className="panel">
-          <div className="panel-title">Next product layers</div>
-          <div className="draft-list">
-            <div className="draft-card">
-              <strong>Reusable form state</strong>
-              <div className="muted">Move from static screen mocks to shared interaction state.</div>
-            </div>
-            <div className="draft-card">
-              <strong>Submission review controls</strong>
-              <div className="muted">Give agencies a real response triage view.</div>
-            </div>
-            <div className="draft-card">
-              <strong>Cross-screen data continuity</strong>
-              <div className="muted">Make screens feel connected instead of isolated.</div>
-            </div>
           </div>
         </div>
       </section>

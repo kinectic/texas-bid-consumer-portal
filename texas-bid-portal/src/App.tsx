@@ -28,10 +28,11 @@ function renderView(
   updateSubmissionForm: (field: keyof SubmissionFormState, value: string) => void,
   reviewNotes: ReviewNotesState,
   updateReviewNotes: (field: keyof ReviewNotesState, value: string) => void,
+  navigate: (view: ViewKey) => void,
 ) {
   switch (view) {
     case 'home':
-      return <HomeDashboardPage publishedBidPreview={createBidForm} />
+      return <HomeDashboardPage publishedBidPreview={createBidForm} onNavigate={navigate} />
     case 'marketplace':
       return <MarketplacePage publishedBidPreview={createBidForm} />
     case 'opportunity':
@@ -47,7 +48,7 @@ function renderView(
     case 'submission-workflow':
       return <SubmissionWorkflowPage formState={submissionForm} onChange={updateSubmissionForm} />
     default:
-      return <HomeDashboardPage publishedBidPreview={createBidForm} />
+      return <HomeDashboardPage publishedBidPreview={createBidForm} onNavigate={navigate} />
   }
 }
 
@@ -94,6 +95,7 @@ function App() {
           updateSubmissionForm,
           reviewNotes,
           updateReviewNotes,
+          setActiveView,
         )}
       </div>
     </div>

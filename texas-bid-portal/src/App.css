@@ -391,6 +391,17 @@ h1 {
   padding: 14px;
 }
 
+.cta-card {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.cta-card-primary {
+  border-color: rgba(104, 164, 255, 0.45);
+  box-shadow: 0 0 0 1px rgba(104, 164, 255, 0.12) inset;
+}
+
 .preview-card {
   margin-top: 16px;
 }
