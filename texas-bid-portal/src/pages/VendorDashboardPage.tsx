@@ -1,4 +1,5 @@
 import { ActionHeader } from '../components/ActionHeader'
+import { MetricCard } from '../components/MetricCard'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
@@ -26,18 +27,9 @@ export function VendorDashboardPage() {
       />
 
       <section className="stats-grid">
-        <div className="stat-card">
-          <span className="stat-value">{savedOpportunities.length}</span>
-          <span className="stat-label">Saved opportunities</span>
-        </div>
-        <div className="stat-card">
-          <span className="stat-value">{lifecycleMetrics.responsesInReview}</span>
-          <span className="stat-label">Active submissions</span>
-        </div>
-        <div className="stat-card">
-          <span className="stat-value">{lifecycleMetrics.vendorProfileCompleteness}</span>
-          <span className="stat-label">Profile completeness</span>
-        </div>
+        <MetricCard value={savedOpportunities.length} label="Saved opportunities" />
+        <MetricCard value={lifecycleMetrics.responsesInReview} label="Active submissions" />
+        <MetricCard value={lifecycleMetrics.vendorProfileCompleteness} label="Profile completeness" />
       </section>
 
       <section className="content-grid">

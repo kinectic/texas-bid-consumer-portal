@@ -1,5 +1,6 @@
 import { HomeCtaPanel } from '../components/HomeCtaPanel'
 import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
+import { MetricCard } from '../components/MetricCard'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { lifecycleMetrics } from '../data/metrics'
 import { workflowStageLabels } from '../data/workflowStages'
@@ -77,18 +78,9 @@ export function HomeDashboardPage({ publishedBidPreview, onNavigate }: HomeDashb
       </header>
 
       <section className="stats-grid">
-        <div className="stat-card">
-          <span className="stat-value">{lifecycleMetrics.workflowScreensBuilt}</span>
-          <span className="stat-label">Interactive workflow screens built</span>
-        </div>
-        <div className="stat-card">
-          <span className="stat-value">3</span>
-          <span className="stat-label">Core workflow lanes shown in the MVP</span>
-        </div>
-        <div className="stat-card">
-          <span className="stat-value">Texas</span>
-          <span className="stat-label">Localized procurement-first product direction</span>
-        </div>
+        <MetricCard value={lifecycleMetrics.workflowScreensBuilt} label="Interactive workflow screens built" />
+        <MetricCard value={3} label="Core workflow lanes shown in the MVP" />
+        <MetricCard value="Texas" label="Localized procurement-first product direction" />
       </section>
 
       <section className="content-grid">

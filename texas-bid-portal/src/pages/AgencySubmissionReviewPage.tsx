@@ -1,5 +1,6 @@
 import { ActionHeader } from '../components/ActionHeader'
 import { FieldMock } from '../components/FieldMock'
+import { MetricCard } from '../components/MetricCard'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
 import { lifecycleMetrics } from '../data/metrics'
@@ -28,18 +29,9 @@ export function AgencySubmissionReviewPage({ reviewNotes, onChange }: AgencySubm
       />
 
       <section className="stats-grid">
-        <div className="stat-card">
-          <span className="stat-value">{lifecycleMetrics.responsesInReview}</span>
-          <span className="stat-label">Responses in review</span>
-        </div>
-        <div className="stat-card">
-          <span className="stat-value">{lifecycleMetrics.shortlisted}</span>
-          <span className="stat-label">Shortlist candidate</span>
-        </div>
-        <div className="stat-card">
-          <span className="stat-value">Today</span>
-          <span className="stat-label">Decision window</span>
-        </div>
+        <MetricCard value={lifecycleMetrics.responsesInReview} label="Responses in review" />
+        <MetricCard value={lifecycleMetrics.shortlisted} label="Shortlist candidate" />
+        <MetricCard value="Today" label="Decision window" />
       </section>
 
       <section className="content-grid">

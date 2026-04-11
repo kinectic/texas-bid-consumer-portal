@@ -1,5 +1,6 @@
 import { ActionHeader } from '../components/ActionHeader'
 import { DraftPublishSummaryPanel } from '../components/DraftPublishSummaryPanel'
+import { MetricCard } from '../components/MetricCard'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
 import { lifecycleMetrics } from '../data/metrics'
 import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
@@ -23,18 +24,9 @@ export function AgencyDashboardPage() {
       />
 
       <section className="stats-grid">
-        <div className="stat-card">
-          <span className="stat-value">{lifecycleMetrics.activeBids}</span>
-          <span className="stat-label">Active bids</span>
-        </div>
-        <div className="stat-card">
-          <span className="stat-value">{lifecycleMetrics.draftBids}</span>
-          <span className="stat-label">Drafts waiting for final review</span>
-        </div>
-        <div className="stat-card">
-          <span className="stat-value">{lifecycleMetrics.responsesInReview}</span>
-          <span className="stat-label">Recent vendor submissions</span>
-        </div>
+        <MetricCard value={lifecycleMetrics.activeBids} label="Active bids" />
+        <MetricCard value={lifecycleMetrics.draftBids} label="Drafts waiting for final review" />
+        <MetricCard value={lifecycleMetrics.responsesInReview} label="Recent vendor submissions" />
       </section>
 
       <section className="content-grid">
