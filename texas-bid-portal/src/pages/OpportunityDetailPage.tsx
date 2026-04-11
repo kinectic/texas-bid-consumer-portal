@@ -1,3 +1,4 @@
+import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
 import { bidPacketDocuments } from '../data/formState'
 import { selectedOpportunity, statusClass } from '../data/mockData'
 
@@ -103,6 +104,10 @@ export function OpportunityDetailPage() {
             ))}
           </div>
         </div>
+      </section>
+
+      <section className="content-grid lower-grid">
+        <LifecycleTimelinePanel />
       </section>
     </main>
   )

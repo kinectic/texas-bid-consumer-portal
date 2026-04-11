@@ -1,3 +1,4 @@
+import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
 import { lifecycleMetrics } from '../data/metrics'
 import type { CreateBidFormState } from '../types/forms'
 
@@ -152,6 +153,7 @@ export function HomeDashboardPage({ publishedBidPreview }: HomeDashboardPageProp
       </section>
 
       <section className="content-grid lower-grid">
+        <LifecycleTimelinePanel title="Lifecycle timeline" />
         <div className="panel">
           <div className="panel-title">Built milestones</div>
           <ol className="flow-list">
@@ -160,7 +162,9 @@ export function HomeDashboardPage({ publishedBidPreview }: HomeDashboardPageProp
             ))}
           </ol>
         </div>
+      </section>
 
+      <section className="content-grid lower-grid">
         <div className="panel">
           <div className="panel-title">Next product layers</div>
           <div className="draft-list">
