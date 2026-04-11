@@ -1,6 +1,12 @@
 import type { Submission } from '../types'
 import type { SubmissionQueueRowMeta } from './submissionQueue'
 
+type DraftSummaryLike = {
+  formStatus: string
+  attachedCount: number
+  totalDocuments: number
+}
+
 export function presentVendorActiveSubmissionLabel(
   activeSubmission: Submission | null,
   activeRowMeta?: SubmissionQueueRowMeta | null,
@@ -33,4 +39,49 @@ export function presentVendorPrimaryActionDescription(
 
 export function presentVendorQueueSubtitle(activeSubmissionLabel: string) {
   return `Filter between the selected opportunity and the full vendor queue. Selected row: ${activeSubmissionLabel}.`
+}
+
+export function presentVendorResponseRowMode(activeSubmission: Submission | null) {
+  return activeSubmission ? 'editing existing saved row' : 'drafting a brand-new unsaved row'
+}
+
+export function presentVendorSiblingRowItems({
+  activeSubmission,
+  siblingSubmissions,
+  rowMetaBySubmissionId,
+  draftSummary,
+  onSelectSubmission,
+  onStartNewSubmission,
+}: {
+  activeSubmission: Submission | null
+  siblingSubmissions: Submission[]
+  rowMetaBySubmissionId: Record<string, SubmissionQueueRowMeta>
+  draftSummary: DraftSummaryLike
+  onSelectSubmission: (submission: Submission) => void
+  onStartNewSubmission: () => void
+}) {
+  const unsavedDraftHasEdits = draftSummary.formStatus !== 'Untouched default draft' || draftSummary.attachedCount > 0
+
+  return [
+    ...(!activeSubmission
+      ? [{
+          stage: 'Unsaved draft lane',
+          detail: `Current draft is not saved as a submission row yet. ${unsavedDraftHasEdits ? 'Unsaved draft edits are preserved for this opportunity.' : 'No draft edits yet; save or submit to create the next response row.'} • active row`,
+          active: true,
+        }]
+      : [{
+          stage: `Unsaved draft lane • response ${siblingSubmissions.length + 1}`,
+          detail: unsavedDraftHasEdits
+            ? `Preserved unsaved draft buffer. ${draftSummary.formStatus} • ${draftSummary.attachedCount}/${draftSummary.totalDocuments} attachments ready.`
+            : 'Fresh unsaved draft buffer. Creates a brand-new response row after save or submit.',
+          onClick: onStartNewSubmission,
+          active: false,
+        }]),
+    ...siblingSubmissions.map((submission) => ({
+      stage: `${rowMetaBySubmissionId[submission.id]?.rowLabel ?? submission.id} • saved row buffer`,
+      detail: `${submission.vendor} • ${submission.id} • ${submission.status}${submission.id === activeSubmission?.id ? ' • active row' : ''}`,
+      onClick: () => onSelectSubmission(submission),
+      active: submission.id === activeSubmission?.id,
+    })),
+  ]
 }

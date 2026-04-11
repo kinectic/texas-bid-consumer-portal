@@ -16,7 +16,11 @@ import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import type { BidDocument, SubmissionFormState } from '../types/forms'
 import { buildSubmissionQueueRowMeta } from '../utils/submissionQueue'
-import { presentVendorActiveSubmissionLabel } from '../utils/vendorPresentation'
+import {
+  presentVendorActiveSubmissionLabel,
+  presentVendorResponseRowMode,
+  presentVendorSiblingRowItems,
+} from '../utils/vendorPresentation'
 
 const submissionStageSummaryItems = [
   {
@@ -128,30 +132,15 @@ export function SubmissionWorkflowPage({
     activeSubmission,
     activeSubmission ? rowMetaBySubmissionId[activeSubmission.id] : null,
   )
-  const responseRowMode = activeSubmission ? 'editing existing saved row' : 'drafting a brand-new unsaved row'
-  const unsavedDraftHasEdits = draftSummary.formStatus !== 'Untouched default draft' || draftSummary.attachedCount > 0
-  const siblingRowItems = [
-    ...(!activeSubmission
-      ? [{
-          stage: 'Unsaved draft lane',
-          detail: `Current draft is not saved as a submission row yet. ${unsavedDraftHasEdits ? 'Unsaved draft edits are preserved for this opportunity.' : 'No draft edits yet; save or submit to create the next response row.'} • active row`,
-          active: true,
-        }]
-      : [{
-          stage: `Unsaved draft lane • response ${siblingSubmissions.length + 1}`,
-          detail: unsavedDraftHasEdits
-            ? `Preserved unsaved draft buffer. ${draftSummary.formStatus} • ${draftSummary.attachedCount}/${draftSummary.totalDocuments} attachments ready.`
-            : 'Fresh unsaved draft buffer. Creates a brand-new response row after save or submit.',
-          onClick: onStartNewSubmission,
-          active: false,
-        }]),
-    ...siblingSubmissions.map((submission) => ({
-      stage: `${rowMetaBySubmissionId[submission.id]?.rowLabel ?? submission.id} • saved row buffer`,
-      detail: `${submission.vendor} • ${submission.id} • ${submission.status}${submission.id === activeSubmission?.id ? ' • active row' : ''}`,
-      onClick: () => onSelectSubmission(submission),
-      active: submission.id === activeSubmission?.id,
-    })),
-  ]
+  const responseRowMode = presentVendorResponseRowMode(activeSubmission)
+  const siblingRowItems = presentVendorSiblingRowItems({
+    activeSubmission,
+    siblingSubmissions,
+    rowMetaBySubmissionId,
+    draftSummary,
+    onSelectSubmission,
+    onStartNewSubmission,
+  })
 
   return (
     <main className="main">
