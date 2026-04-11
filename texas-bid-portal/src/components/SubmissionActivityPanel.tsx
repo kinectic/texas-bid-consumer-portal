@@ -3,6 +3,7 @@ type SubmissionActivityItem = {
   opportunityId: string
   title: string
   detail: string
+  summary?: string
 }
 
 type SubmissionActivityPanelProps = {
@@ -31,6 +32,7 @@ export function SubmissionActivityPanel({
           >
             <strong>{item.title}</strong>
             <div className="muted">{item.detail}</div>
+            {item.summary ? <div className="dashboard-note compact-note">{item.summary}</div> : null}
           </div>
         ))}
       </div>

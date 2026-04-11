@@ -82,13 +82,24 @@ export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, 
   }))
   const currentOpportunitySubmissions = submissions.filter((submission) => submission.opportunityId === currentOpportunity.id)
   const displayedSubmissions = queueFilter === 'current' ? currentOpportunitySubmissions : submissions
+  const selectedSubmissionForOpportunity = currentOpportunitySubmissions[0] ?? null
   const submissionActivityItems = displayedSubmissions.map((submission) => ({
-    key: `${submission.opportunityId}-${submission.vendor}`,
+    key: submission.id,
     opportunityId: submission.opportunityId,
-    title: submission.vendor,
-    detail: `${submission.opportunity} • ${submission.opportunityId} • Submitted ${submission.submittedAt}`,
+    title: `${submission.vendor} • ${submission.id}`,
+    detail: (() => {
+      const siblingRows = submissions.filter((item) => item.opportunityId === submission.opportunityId)
+      const rowNumber = siblingRows.findIndex((item) => item.id === submission.id) + 1
+      return `${submission.opportunity} • row ${rowNumber} of ${siblingRows.length} • ${submission.opportunityId} • Submitted ${submission.submittedAt}`
+    })(),
+    summary: (() => {
+      const siblingRows = submissions.filter((item) => item.opportunityId === submission.opportunityId)
+      const rowNumber = siblingRows.findIndex((item) => item.id === submission.id) + 1
+      const isCurrentOpportunity = submission.opportunityId === currentOpportunity.id
+      return `${isCurrentOpportunity ? 'Current opportunity' : 'Other opportunity'} • ${submission.status} • Vendor ${submission.vendor} • active row ${isCurrentOpportunity && selectedSubmissionForOpportunity?.id === submission.id ? 'yes' : 'no'} • response row ${rowNumber}`
+    })(),
   }))
-  const activeSubmission = submissions.find((submission) => submission.opportunityId === currentOpportunity.id) ?? null
+  const activeSubmission = selectedSubmissionForOpportunity
 
   return (
     <main className="main">
