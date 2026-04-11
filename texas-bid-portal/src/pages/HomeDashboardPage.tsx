@@ -1,4 +1,5 @@
 import { HomeCtaPanel } from '../components/HomeCtaPanel'
+import { DraftPipelinePanel } from '../components/DraftPipelinePanel'
 import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
@@ -46,6 +47,17 @@ const milestoneCards = [
   'Agency dashboard and bid creation',
   'Vendor dashboard and submission workflow',
   'Interactive shell navigation across the built prototype',
+]
+
+const draftPipelineItems = [
+  {
+    title: 'Agency draft quality pass',
+    detail: 'Refining the bid form, publishing readiness, and operational review surfaces.',
+  },
+  {
+    title: 'Vendor submission continuity',
+    detail: 'Keeping vendor response assembly and status tracking connected across the MVP.',
+  },
 ]
 
 const lifecycleSteps = [
@@ -153,13 +165,16 @@ export function HomeDashboardPage({ publishedBidPreview, onNavigate }: HomeDashb
       </section>
 
       <section className="content-grid lower-grid">
-        <div className="panel">
-          <div className="panel-title">Built milestones</div>
-          <ol className="flow-list">
-            {milestoneCards.map((milestone) => (
-              <li key={milestone}>{milestone}</li>
-            ))}
-          </ol>
+        <div className="content-grid nested-grid">
+          <div className="panel">
+            <div className="panel-title">Built milestones</div>
+            <ol className="flow-list">
+              {milestoneCards.map((milestone) => (
+                <li key={milestone}>{milestone}</li>
+              ))}
+            </ol>
+          </div>
+          <DraftPipelinePanel title="Current build lanes" items={draftPipelineItems} />
         </div>
 
         <RecommendedOpportunitiesPanel title="Suggested opportunities" opportunities={recommendedOpportunities} actionLabel="Review opportunities" />

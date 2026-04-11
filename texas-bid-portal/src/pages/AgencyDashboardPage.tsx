@@ -1,5 +1,6 @@
 import { ActionHeader } from '../components/ActionHeader'
 import { DecisionControlsPanel } from '../components/DecisionControlsPanel'
+import { DraftPipelinePanel } from '../components/DraftPipelinePanel'
 import { DraftPublishSummaryPanel } from '../components/DraftPublishSummaryPanel'
 import { EmptyStatePanel } from '../components/EmptyStatePanel'
 import { OpportunityCardList } from '../components/OpportunityCardList'
@@ -18,6 +19,17 @@ const agencyPriorityControls = [
   { label: 'Create new bid', className: 'primary wide' as const },
   { label: 'Manage deadlines', className: 'ghost wide' as const },
   { label: 'Review submissions', className: 'ghost wide' as const },
+]
+
+const draftPipelineItems = [
+  {
+    title: 'Transit Shelter Cleaning Services',
+    detail: 'Draft ready for legal review',
+  },
+  {
+    title: 'IT Equipment Replacement RFP',
+    detail: 'Awaiting attachments and insurance requirements',
+  },
 ]
 
 export function AgencyDashboardPage() {
@@ -71,26 +83,19 @@ export function AgencyDashboardPage() {
       <section className="content-grid lower-grid">
         <EmptyStatePanel mode="agency" />
 
-        <div className="panel">
-          <div className="panel-title">Draft pipeline</div>
-          <div className="draft-list">
-            <div className="draft-card">
-              <strong>Transit Shelter Cleaning Services</strong>
-              <div className="muted">Draft ready for legal review</div>
+        <div className="content-grid nested-grid">
+          <DraftPipelinePanel items={draftPipelineItems} />
+
+          <div className="panel">
+            <div className="panel-title section-title">Recently awarded</div>
+            <div className="draft-list">
+              {awardedBids.map((opportunity) => (
+                <div className="draft-card" key={opportunity.id}>
+                  <strong>{opportunity.title}</strong>
+                  <div className="muted">{opportunity.agency}</div>
+                </div>
+              ))}
             </div>
-            <div className="draft-card">
-              <strong>IT Equipment Replacement RFP</strong>
-              <div className="muted">Awaiting attachments and insurance requirements</div>
-            </div>
-          </div>
-          <div className="panel-title section-title">Recently awarded</div>
-          <div className="draft-list">
-            {awardedBids.map((opportunity) => (
-              <div className="draft-card" key={opportunity.id}>
-                <strong>{opportunity.title}</strong>
-                <div className="muted">{opportunity.agency}</div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
