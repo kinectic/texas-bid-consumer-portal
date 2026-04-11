@@ -5,6 +5,8 @@ type DraftSummary = {
   attachedCount: number
   totalDocuments: number
   submissionStatus: string
+  bufferLabel: string
+  preservedUnsavedDraftLabel: string
 }
 
 type SelectionContextPanelProps = {
@@ -41,9 +43,11 @@ export function SelectionContextPanel({
         {draftSummary ? (
           <div className="draft-card">
             <strong>Draft persistence snapshot</strong>
+            <div className="muted">Buffer: {draftSummary.bufferLabel}</div>
             <div className="muted">Form state: {draftSummary.formStatus}</div>
             <div className="muted">Attachments: {draftSummary.attachedCount}/{draftSummary.totalDocuments} attached</div>
             <div className="muted">Submission record: {draftSummary.submissionStatus}</div>
+            <div className="muted">Unsaved draft lane: {draftSummary.preservedUnsavedDraftLabel}</div>
           </div>
         ) : null}
       </div>

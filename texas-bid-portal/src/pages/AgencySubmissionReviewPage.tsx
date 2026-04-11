@@ -24,6 +24,8 @@ type AgencySubmissionReviewPageProps = {
     attachedCount: number
     totalDocuments: number
     submissionStatus: string
+    bufferLabel: string
+    preservedUnsavedDraftLabel: string
   }
   reviewNotes: ReviewNotesState
   onChange: (field: keyof ReviewNotesState, value: string) => void

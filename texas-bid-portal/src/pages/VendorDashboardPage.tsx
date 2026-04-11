@@ -37,6 +37,8 @@ type VendorDashboardPageProps = {
     attachedCount: number
     totalDocuments: number
     submissionStatus: string
+    bufferLabel: string
+    preservedUnsavedDraftLabel: string
   }
   readinessByOpportunityId: Record<string, { label: string, detail: string }>
   queueFilter: 'current' | 'all'
@@ -83,6 +85,7 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
   const draftRowSummary = activeSubmission
     ? `Active saved row: ${rowMetaBySubmissionId[activeSubmission.id]?.activeLabel ?? activeSubmission.id}. Current opportunity has ${currentOpportunitySubmissions.length} total response rows.`
     : `No saved active row selected. Starting now will create response ${currentOpportunitySubmissions.length + 1}.`
+  const bufferModelSummary = `${draftSummary.bufferLabel} • ${draftSummary.preservedUnsavedDraftLabel}`
   const vendorActivityItems = buildSubmissionActivityItems({
     submissions: displayedSubmissions,
     allSubmissions: submissions,
@@ -164,6 +167,11 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
           mode="vendor"
           overrideTitle="Vendor row context"
           overrideSummary={draftRowSummary}
+        />
+        <OutcomeSummaryPanel
+          mode="vendor"
+          overrideTitle="Draft vs saved buffer state"
+          overrideSummary={bufferModelSummary}
         />
 
         <div className="panel">
