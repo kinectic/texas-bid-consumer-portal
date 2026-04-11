@@ -1,4 +1,5 @@
 import { AwardHistoryPanel } from '../components/AwardHistoryPanel'
+import { DetailActionsStrip } from '../components/DetailActionsStrip'
 import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
 import { OpportunityDocumentsPanel } from '../components/OpportunityDocumentsPanel'
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
@@ -62,6 +63,7 @@ export function OpportunityDetailPage() {
           <div className="dashboard-note">
             This screen should make it immediately obvious what the opportunity is, what matters, and what the vendor should do next.
           </div>
+          <DetailActionsStrip secondaryLabel="Save Opportunity" primaryLabel="Start Submission" />
         </div>
 
         <OpportunityDocumentsPanel documents={bidPacketDocuments} />

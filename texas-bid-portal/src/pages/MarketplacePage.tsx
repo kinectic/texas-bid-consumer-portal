@@ -1,4 +1,5 @@
 import { AgencyFlowPanel } from '../components/AgencyFlowPanel'
+import { DetailActionsStrip } from '../components/DetailActionsStrip'
 import { FinalActionPanel } from '../components/FinalActionPanel'
 import { MarketplaceStatsSnapshot } from '../components/MarketplaceStatsSnapshot'
 import { OpportunityCardList } from '../components/OpportunityCardList'
@@ -107,10 +108,7 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
             documents={previewOpportunity.documents.map((name) => ({ name, status: 'Open' }))}
             title="Opportunity documents"
           />
-          <div className="detail-actions">
-            <button className="ghost">Save Opportunity</button>
-            <button className="primary">Submit Response</button>
-          </div>
+          <DetailActionsStrip secondaryLabel="Save Opportunity" primaryLabel="Submit Response" />
         </div>
 
         <AgencyFlowPanel
