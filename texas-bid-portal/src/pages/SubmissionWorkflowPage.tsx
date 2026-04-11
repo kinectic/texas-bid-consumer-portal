@@ -2,6 +2,7 @@ import { FieldMock } from '../components/FieldMock'
 import { FinalActionPanel } from '../components/FinalActionPanel'
 import { LifecycleSummaryPanel } from '../components/LifecycleSummaryPanel'
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
+import { OpportunityRequirementsPanel } from '../components/OpportunityRequirementsPanel'
 import { OpportunitySummaryPanel } from '../components/OpportunitySummaryPanel'
 import { PackageCompletenessPanel } from '../components/PackageCompletenessPanel'
 import { SectionIntro } from '../components/SectionIntro'
@@ -69,6 +70,14 @@ const lifecycleSummaryItems = [
   },
 ]
 
+const submissionRequirementItems = [
+  'Confirm the bid matches capability, timing, and submission requirements',
+  'Prepare pricing total, timeline, and response narrative',
+  'Upload required attachments and compliance materials',
+  'Validate signer details and final packet completeness',
+  'Submit directly into agency review',
+] as const
+
 type SubmissionWorkflowPageProps = {
   formState: SubmissionFormState
   onChange: (field: keyof SubmissionFormState, value: string) => void
@@ -110,6 +119,17 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
       </section>
 
       <section className="content-grid lower-grid">
+        <OpportunityRequirementsPanel title="Response requirements" items={submissionRequirementItems} />
+
+        <SubmissionAttachmentsPanel
+          title="Required attachments"
+          description="The packet components the vendor must gather and upload before final submission."
+          documents={submissionDocuments}
+          actionLabel="Upload attachment"
+        />
+      </section>
+
+      <section className="content-grid lower-grid">
         <div className="panel">
           <SectionIntro
             eyebrow="Vendor drafting"
@@ -127,27 +147,16 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
           </div>
         </div>
 
-        <SubmissionAttachmentsPanel
-          title="Required attachments"
-          description="The packet components the vendor must gather and upload before final submission."
-          documents={submissionDocuments}
-          actionLabel="Upload attachment"
-        />
-      </section>
-
-      <section className="content-grid lower-grid">
         <SubmissionChecklistPanel title="Pre-submit checklist" contextLabel={opportunity.title} />
+      </section>
 
+      <section className="content-grid lower-grid">
         <SubmissionStatusSnapshot items={submissionStatusItems} />
-      </section>
-
-      <section className="content-grid lower-grid">
         <PackageCompletenessPanel title="Response completeness" items={packageCompletenessItems} />
-
-        <LifecycleSummaryPanel title="Submission lifecycle summary" items={lifecycleSummaryItems} />
       </section>
 
       <section className="content-grid lower-grid">
+        <LifecycleSummaryPanel title="Submission lifecycle summary" items={lifecycleSummaryItems} />
         <FinalActionPanel
           eyebrow="Final step"
           title="Submission confirmation"

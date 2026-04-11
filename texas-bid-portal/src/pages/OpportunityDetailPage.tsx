@@ -3,11 +3,20 @@ import { DetailActionsStrip } from '../components/DetailActionsStrip'
 import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
 import { OpportunityDocumentsPanel } from '../components/OpportunityDocumentsPanel'
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
+import { OpportunityRequirementsPanel } from '../components/OpportunityRequirementsPanel'
 import { OpportunityStatusPanel } from '../components/OpportunityStatusPanel'
 import { OpportunitySummaryPanel } from '../components/OpportunitySummaryPanel'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
 import { bidPacketDocuments } from '../data/formState'
 import { opportunities, selectedOpportunity, statusClass } from '../data/mockData'
+
+const opportunityRequirementItems = [
+  'Review solicitation documents and pricing sheet',
+  'Confirm vendor qualification and insurance readiness',
+  'Prepare pricing response and service notes',
+  'Upload required attachments before deadline',
+  'Submit directly through the platform',
+] as const
 
 export function OpportunityDetailPage() {
   const opportunity = selectedOpportunity
@@ -51,18 +60,11 @@ export function OpportunityDetailPage() {
       </section>
 
       <section className="content-grid lower-grid">
-        <div className="panel">
-          <div className="panel-title">Requirements and scope</div>
-          <ol className="flow-list">
-            <li>Review solicitation documents and pricing sheet</li>
-            <li>Confirm vendor qualification and insurance readiness</li>
-            <li>Prepare pricing response and service notes</li>
-            <li>Upload required attachments before deadline</li>
-            <li>Submit directly through the platform</li>
-          </ol>
-          <div className="dashboard-note">
-            This screen should make it immediately obvious what the opportunity is, what matters, and what the vendor should do next.
-          </div>
+        <div>
+          <OpportunityRequirementsPanel
+            items={opportunityRequirementItems}
+            note="This screen should make it immediately obvious what the opportunity is, what matters, and what the vendor should do next."
+          />
           <DetailActionsStrip secondaryLabel="Save Opportunity" primaryLabel="Start Submission" />
         </div>
 
