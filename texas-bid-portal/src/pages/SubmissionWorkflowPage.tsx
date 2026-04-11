@@ -14,8 +14,8 @@ import { WorkflowStageSummary } from '../components/WorkflowStageSummary'
 import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import type { BidDocument, SubmissionFormState } from '../types/forms'
-import { buildSubmissionQueueRowMeta } from '../utils/submissionQueue'
 import {
+  buildSubmissionQueueRowMeta,
   presentVendorActiveSubmissionLabel,
   presentVendorDraftPersistenceDetail,
   presentVendorDraftPersistenceLabel,
@@ -27,7 +27,7 @@ import {
   presentVendorUnsavedDraftProgress,
   presentVendorWorkflowHeaderTitle,
   presentVendorWorkflowRecordLine,
-} from '../utils/vendorPresentation'
+} from '../utils/vendorHelpers'
 import {
   lifecycleSummaryItems,
   submissionRequirementItems,

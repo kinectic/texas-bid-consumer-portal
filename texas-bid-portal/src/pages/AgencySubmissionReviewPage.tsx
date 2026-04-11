@@ -24,7 +24,7 @@ import {
   presentAgencyOutcomeSummary,
   presentAgencyPackageTitle,
   presentAgencyReviewerLabels,
-} from '../utils/reviewPresentation'
+} from '../utils/agencyPresentation'
 
 type AgencySubmissionReviewPageProps = {
   currentOpportunity: Opportunity

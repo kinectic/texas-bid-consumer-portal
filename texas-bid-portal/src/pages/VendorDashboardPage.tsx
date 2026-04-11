@@ -18,14 +18,14 @@ import { opportunities, statusClass } from '../data/mockData'
 import { submissionLifecycle, submissionStatusSummary } from '../data/submissionStatus'
 import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
-import { buildSubmissionActivityItems } from '../utils/submissionActivity'
-import { buildSubmissionQueueRowMeta } from '../utils/submissionQueue'
 import {
+  buildSubmissionActivityItems,
+  buildSubmissionQueueRowMeta,
   presentVendorActiveSubmissionLabel,
   presentVendorPrimaryActionDescription,
   presentVendorQueueSubtitle,
   presentVendorRowSummary,
-} from '../utils/vendorPresentation'
+} from '../utils/vendorHelpers'
 import { shellContent } from '../utils/shellContent'
 
 const submissionStatusItems = [
