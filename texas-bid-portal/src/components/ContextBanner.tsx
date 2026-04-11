@@ -1,3 +1,4 @@
+import { workflowStageLabels } from '../data/workflowStages'
 import type { ViewKey } from '../data/viewData'
 
 type ContextBannerProps = {
@@ -41,12 +42,14 @@ const contextMap: Record<ViewKey, { lane: string; summary: string }> = {
 
 export function ContextBanner({ activeView }: ContextBannerProps) {
   const context = contextMap[activeView]
+  const stage = workflowStageLabels[activeView]
 
   return (
     <section className="context-banner">
       <div>
         <div className="context-label">Current workflow lane</div>
         <strong>{context.lane}</strong>
+        <div className="context-stage">Stage: {stage.stage} · Owner: {stage.owner}</div>
       </div>
       <p>{context.summary}</p>
     </section>

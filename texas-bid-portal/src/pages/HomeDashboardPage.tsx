@@ -1,21 +1,25 @@
 import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
 import { lifecycleMetrics } from '../data/metrics'
+import { workflowStageLabels } from '../data/workflowStages'
 import type { CreateBidFormState } from '../types/forms'
 
 const workflowCards = [
   {
+    key: 'marketplace',
     title: 'Marketplace search',
     description: 'Browse and qualify Texas opportunities with cleaner sourcing and next-step clarity.',
   },
   {
+    key: 'create-bid',
     title: 'Agency posting',
     description: 'Create, structure, and publish solicitations from a direct agency workflow.',
   },
   {
+    key: 'submission-workflow',
     title: 'Vendor response',
     description: 'Move from saved opportunity to actual submission without leaving the portal.',
   },
-]
+] as const
 
 const milestoneCards = [
   'Marketplace feed and opportunity detail',
@@ -91,6 +95,7 @@ export function HomeDashboardPage({ publishedBidPreview }: HomeDashboardPageProp
               <div className="draft-card" key={card.title}>
                 <strong>{card.title}</strong>
                 <div className="muted">{card.description}</div>
+                <div className="muted">Stage: {workflowStageLabels[card.key].stage} · Owner: {workflowStageLabels[card.key].owner}</div>
               </div>
             ))}
           </div>

@@ -159,6 +159,12 @@ button {
   margin-bottom: 6px;
 }
 
+.context-stage {
+  margin-top: 6px;
+  color: #b7c6e8;
+  font-size: 0.95rem;
+}
+
 .nav-item.active,
 .nav-item:hover {
   background: rgba(104, 164, 255, 0.12);
