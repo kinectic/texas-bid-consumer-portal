@@ -13,6 +13,7 @@ import { StatusBadgeLegend } from '../components/StatusBadgeLegend'
 import { SubmissionActivityPanel } from '../components/SubmissionActivityPanel'
 import { WorkflowFilterStrip } from '../components/WorkflowFilterStrip'
 import type { CreateBidFormState } from '../types/forms'
+import type { ViewKey } from '../data/viewData'
 import { opportunities, statusClass, vendorSubmissions } from '../data/mockData'
 
 const marketplaceStatsItems = [
@@ -30,9 +31,10 @@ const agencyFlowSteps = [
 
 type MarketplacePageProps = {
   publishedBidPreview: CreateBidFormState
+  onNavigate: (view: ViewKey) => void
 }
 
-export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
+export function MarketplacePage({ publishedBidPreview, onNavigate }: MarketplacePageProps) {
   const highlighted = opportunities[0]
   const previewOpportunity = {
     ...highlighted,
@@ -59,8 +61,8 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
           </p>
         </div>
         <div className="top-actions">
-          <button className="ghost">Vendor Sign In</button>
-          <button className="primary">Post a Bid</button>
+          <button className="ghost" onClick={() => onNavigate('vendor-dashboard')}>Vendor Sign In</button>
+          <button className="primary" onClick={() => onNavigate('create-bid')}>Post a Bid</button>
         </div>
       </header>
 
@@ -108,7 +110,12 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
             documents={previewOpportunity.documents.map((name) => ({ name, status: 'Open' }))}
             title="Opportunity documents"
           />
-          <DetailActionsStrip secondaryLabel="Save Opportunity" primaryLabel="Submit Response" />
+          <DetailActionsStrip
+            secondaryLabel="Save Opportunity"
+            primaryLabel="Submit Response"
+            onSecondaryAction={() => onNavigate('vendor-dashboard')}
+            onPrimaryAction={() => onNavigate('submission-workflow')}
+          />
         </div>
 
         <AgencyFlowPanel
@@ -125,6 +132,7 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
           description="Move from marketplace review into a direct submission flow without leaving the product."
           note="This is the product promise: discover, qualify, and act in one clearer Texas-first procurement surface."
           actionLabel="Open submission workflow"
+          onAction={() => onNavigate('submission-workflow')}
         />
       </section>
     </main>

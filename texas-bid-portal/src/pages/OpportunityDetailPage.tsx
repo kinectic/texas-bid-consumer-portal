@@ -9,6 +9,7 @@ import { OpportunitySummaryPanel } from '../components/OpportunitySummaryPanel'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
 import { bidPacketDocuments } from '../data/formState'
 import { opportunities, selectedOpportunity, statusClass } from '../data/mockData'
+import type { ViewKey } from '../data/viewData'
 
 const opportunityRequirementItems = [
   'Review solicitation documents and pricing sheet',
@@ -18,7 +19,11 @@ const opportunityRequirementItems = [
   'Submit directly through the platform',
 ] as const
 
-export function OpportunityDetailPage() {
+type OpportunityDetailPageProps = {
+  onNavigate: (view: ViewKey) => void
+}
+
+export function OpportunityDetailPage({ onNavigate }: OpportunityDetailPageProps) {
   const opportunity = selectedOpportunity
   const awardHistoryItems = opportunities
     .filter((item) => item.status === 'awarded')
@@ -38,8 +43,8 @@ export function OpportunityDetailPage() {
           </p>
         </div>
         <div className="top-actions">
-          <button className="ghost">Save Opportunity</button>
-          <button className="primary">Start Submission</button>
+          <button className="ghost" onClick={() => onNavigate('vendor-dashboard')}>Save Opportunity</button>
+          <button className="primary" onClick={() => onNavigate('submission-workflow')}>Start Submission</button>
         </div>
       </header>
 
@@ -65,7 +70,12 @@ export function OpportunityDetailPage() {
             items={opportunityRequirementItems}
             note="This screen should make it immediately obvious what the opportunity is, what matters, and what the vendor should do next."
           />
-          <DetailActionsStrip secondaryLabel="Save Opportunity" primaryLabel="Start Submission" />
+          <DetailActionsStrip
+            secondaryLabel="Save Opportunity"
+            primaryLabel="Start Submission"
+            onSecondaryAction={() => onNavigate('vendor-dashboard')}
+            onPrimaryAction={() => onNavigate('submission-workflow')}
+          />
         </div>
 
         <OpportunityDocumentsPanel documents={bidPacketDocuments} />

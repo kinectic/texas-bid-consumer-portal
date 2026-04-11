@@ -34,19 +34,19 @@ function renderView(
     case 'home':
       return <HomeDashboardPage publishedBidPreview={createBidForm} onNavigate={navigate} />
     case 'marketplace':
-      return <MarketplacePage publishedBidPreview={createBidForm} />
+      return <MarketplacePage publishedBidPreview={createBidForm} onNavigate={navigate} />
     case 'opportunity':
-      return <OpportunityDetailPage />
+      return <OpportunityDetailPage onNavigate={navigate} />
     case 'agency-dashboard':
-      return <AgencyDashboardPage />
+      return <AgencyDashboardPage onNavigate={navigate} />
     case 'create-bid':
-      return <CreateBidPage formState={createBidForm} documents={bidPacketDocuments} onChange={updateCreateBidForm} />
+      return <CreateBidPage formState={createBidForm} documents={bidPacketDocuments} onChange={updateCreateBidForm} onNavigate={navigate} />
     case 'agency-submission-review':
-      return <AgencySubmissionReviewPage reviewNotes={reviewNotes} onChange={updateReviewNotes} />
+      return <AgencySubmissionReviewPage reviewNotes={reviewNotes} onChange={updateReviewNotes} onNavigate={navigate} />
     case 'vendor-dashboard':
-      return <VendorDashboardPage />
+      return <VendorDashboardPage onNavigate={navigate} />
     case 'submission-workflow':
-      return <SubmissionWorkflowPage formState={submissionForm} onChange={updateSubmissionForm} />
+      return <SubmissionWorkflowPage formState={submissionForm} onChange={updateSubmissionForm} onNavigate={navigate} />
     default:
       return <HomeDashboardPage publishedBidPreview={createBidForm} onNavigate={navigate} />
   }

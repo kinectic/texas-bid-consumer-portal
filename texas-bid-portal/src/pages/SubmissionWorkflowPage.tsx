@@ -14,6 +14,7 @@ import { WorkflowStageSummary } from '../components/WorkflowStageSummary'
 import { submissionDocuments } from '../data/formState'
 import { selectedOpportunity } from '../data/mockData'
 import { submissionStatusSummary } from '../data/submissionStatus'
+import type { ViewKey } from '../data/viewData'
 import type { SubmissionFormState } from '../types/forms'
 
 const submissionStageSummaryItems = [
@@ -81,9 +82,10 @@ const submissionRequirementItems = [
 type SubmissionWorkflowPageProps = {
   formState: SubmissionFormState
   onChange: (field: keyof SubmissionFormState, value: string) => void
+  onNavigate: (view: ViewKey) => void
 }
 
-export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkflowPageProps) {
+export function SubmissionWorkflowPage({ formState, onChange, onNavigate }: SubmissionWorkflowPageProps) {
   const opportunity = selectedOpportunity
 
   return (
@@ -97,8 +99,8 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
           </p>
         </div>
         <div className="top-actions">
-          <button className="ghost">Save Progress</button>
-          <button className="primary">Submit Response</button>
+          <button className="ghost" onClick={() => onNavigate('vendor-dashboard')}>Save Progress</button>
+          <button className="primary" onClick={() => onNavigate('agency-submission-review')}>Submit Response</button>
         </div>
       </header>
 
@@ -163,6 +165,7 @@ export function SubmissionWorkflowPage({ formState, onChange }: SubmissionWorkfl
           description="The last confirmation state before the vendor sends the completed response into agency review."
           note={`This is the core V1 workflow: vendors should be able to move from ${opportunity.title} discovery to actual response submission without leaving the Texas-first portal.`}
           actionLabel="Final submit"
+          onAction={() => onNavigate('agency-submission-review')}
         />
       </section>
     </main>

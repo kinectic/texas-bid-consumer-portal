@@ -14,6 +14,7 @@ import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacke
 import { lifecycleMetrics } from '../data/metrics'
 import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
 import { submissionLifecycle, submissionStatusSummary } from '../data/submissionStatus'
+import type { ViewKey } from '../data/viewData'
 
 const submissionStatusItems = [
   submissionStatusSummary.received,
@@ -21,7 +22,11 @@ const submissionStatusItems = [
   submissionStatusSummary.shortlisted,
 ]
 
-export function VendorDashboardPage() {
+type VendorDashboardPageProps = {
+  onNavigate: (view: ViewKey) => void
+}
+
+export function VendorDashboardPage({ onNavigate }: VendorDashboardPageProps) {
   const savedOpportunities = opportunities.filter((opportunity) => opportunity.status === 'open')
   const recommendedOpportunities = opportunities.slice(0, 2)
   const vendorStatsItems = [
@@ -38,8 +43,8 @@ export function VendorDashboardPage() {
         intro="A cleaner Texas-first workspace where vendors can track saved bids, monitor active responses, and see what to pursue next without portal confusion."
         actions={
           <>
-            <button className="ghost">Update Profile</button>
-            <button className="primary">Find Opportunities</button>
+            <button className="ghost" onClick={() => onNavigate('vendor-dashboard')}>Update Profile</button>
+            <button className="primary" onClick={() => onNavigate('marketplace')}>Find Opportunities</button>
           </>
         }
       />
@@ -49,9 +54,9 @@ export function VendorDashboardPage() {
         description="Keep the active bid pipeline moving from qualification into submission and tracking."
         actions={
           <>
-            <button className="primary">Find opportunities</button>
-            <button className="ghost">Continue submission</button>
-            <button className="ghost">Review packet</button>
+            <button className="primary" onClick={() => onNavigate('marketplace')}>Find opportunities</button>
+            <button className="ghost" onClick={() => onNavigate('submission-workflow')}>Continue submission</button>
+            <button className="ghost" onClick={() => onNavigate('opportunity')}>Review packet</button>
           </>
         }
       />

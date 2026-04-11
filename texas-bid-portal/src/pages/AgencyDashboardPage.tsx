@@ -11,6 +11,7 @@ import { SubmissionActivityPanel } from '../components/SubmissionActivityPanel'
 import { WorkflowMetricsSnapshot } from '../components/WorkflowMetricsSnapshot'
 import { lifecycleMetrics } from '../data/metrics'
 import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
+import type { ViewKey } from '../data/viewData'
 
 const agencyMetricsItems = [
   { value: lifecycleMetrics.activeBids, label: 'Active bids' },
@@ -41,7 +42,11 @@ const milestoneItems = [
   'Submission review and vendor activity tracking',
 ] as const
 
-export function AgencyDashboardPage() {
+type AgencyDashboardPageProps = {
+  onNavigate: (view: ViewKey) => void
+}
+
+export function AgencyDashboardPage({ onNavigate }: AgencyDashboardPageProps) {
   const activeBids = opportunities.filter((opportunity) => opportunity.status === 'open')
   const awardedBids = opportunities.filter((opportunity) => opportunity.status === 'awarded')
   const awardHistoryItems = awardedBids.map((opportunity) => ({
@@ -61,8 +66,8 @@ export function AgencyDashboardPage() {
         intro="A Texas-first control center for procurement teams to manage live bids, vendor activity, and fast next actions without portal clutter."
         actions={
           <>
-            <button className="ghost">Export Activity</button>
-            <button className="primary">New Bid</button>
+            <button className="ghost" onClick={() => onNavigate('agency-submission-review')}>Export Activity</button>
+            <button className="primary" onClick={() => onNavigate('create-bid')}>New Bid</button>
           </>
         }
       />

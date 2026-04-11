@@ -11,6 +11,7 @@ import { SubmissionQueueList } from '../components/SubmissionQueueList'
 import { lifecycleMetrics } from '../data/metrics'
 import { vendorSubmissions } from '../data/mockData'
 import { submissionLifecycle } from '../data/submissionStatus'
+import type { ViewKey } from '../data/viewData'
 import type { ReviewNotesState } from '../types/forms'
 
 const decisionControls = [
@@ -38,9 +39,10 @@ const packageCompletenessItems = [
 type AgencySubmissionReviewPageProps = {
   reviewNotes: ReviewNotesState
   onChange: (field: keyof ReviewNotesState, value: string) => void
+  onNavigate: (view: ViewKey) => void
 }
 
-export function AgencySubmissionReviewPage({ reviewNotes, onChange }: AgencySubmissionReviewPageProps) {
+export function AgencySubmissionReviewPage({ reviewNotes, onChange, onNavigate }: AgencySubmissionReviewPageProps) {
   return (
     <main className="main">
       <ActionHeader
@@ -49,8 +51,8 @@ export function AgencySubmissionReviewPage({ reviewNotes, onChange }: AgencySubm
         intro="A direct review screen where agencies can triage vendor responses, inspect package completeness, and move decisions forward without leaving the platform."
         actions={
           <>
-            <button className="ghost">Export responses</button>
-            <button className="primary">Advance shortlist</button>
+            <button className="ghost" onClick={() => onNavigate('agency-dashboard')}>Export responses</button>
+            <button className="primary" onClick={() => onNavigate('vendor-dashboard')}>Advance shortlist</button>
           </>
         }
       />

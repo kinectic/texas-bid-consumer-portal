@@ -4,6 +4,7 @@ type ProcurementChecklistPanelProps = {
   contextLabel?: string
   actionLabel?: string
   actionClassName?: 'primary wide' | 'ghost wide'
+  onAction?: () => void
 }
 
 export function ProcurementChecklistPanel({
@@ -12,6 +13,7 @@ export function ProcurementChecklistPanel({
   contextLabel,
   actionLabel,
   actionClassName = 'primary wide',
+  onAction,
 }: ProcurementChecklistPanelProps) {
   return (
     <div className="panel">
@@ -21,7 +23,7 @@ export function ProcurementChecklistPanel({
           <li key={item}>{contextLabel ? `${item} — ${contextLabel}` : item}</li>
         ))}
       </ol>
-      {actionLabel ? <button className={actionClassName}>{actionLabel}</button> : null}
+      {actionLabel ? <button className={actionClassName} onClick={onAction}>{actionLabel}</button> : null}
     </div>
   )
 }

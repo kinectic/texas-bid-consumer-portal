@@ -6,6 +6,7 @@ import { ProcurementChecklistPanel } from '../components/ProcurementChecklistPan
 import { ReviewerNotesPanel } from '../components/ReviewerNotesPanel'
 import { SubmissionAttachmentsPanel } from '../components/SubmissionAttachmentsPanel'
 import { prePublishChecklist } from '../data/checklists'
+import type { ViewKey } from '../data/viewData'
 import type { BidDocument, CreateBidFormState } from '../types/forms'
 
 const agencyFlowSteps = [
@@ -19,9 +20,10 @@ type CreateBidPageProps = {
   formState: CreateBidFormState
   documents: BidDocument[]
   onChange: (field: keyof CreateBidFormState, value: string) => void
+  onNavigate: (view: ViewKey) => void
 }
 
-export function CreateBidPage({ formState, documents, onChange }: CreateBidPageProps) {
+export function CreateBidPage({ formState, documents, onChange, onNavigate }: CreateBidPageProps) {
   return (
     <main className="main">
       <header className="topbar">
@@ -33,8 +35,8 @@ export function CreateBidPage({ formState, documents, onChange }: CreateBidPageP
           </p>
         </div>
         <div className="top-actions">
-          <button className="ghost">Save Draft</button>
-          <button className="primary">Publish Bid</button>
+          <button className="ghost" onClick={() => onNavigate('agency-dashboard')}>Save Draft</button>
+          <button className="primary" onClick={() => onNavigate('marketplace')}>Publish Bid</button>
         </div>
       </header>
 
@@ -71,6 +73,7 @@ export function CreateBidPage({ formState, documents, onChange }: CreateBidPageP
           title="Pre-publish checklist"
           items={prePublishChecklist}
           actionLabel="Submit for agency review"
+          onAction={() => onNavigate('agency-submission-review')}
         />
       </section>
 
