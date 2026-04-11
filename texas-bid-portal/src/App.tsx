@@ -26,6 +26,13 @@ import type { Opportunity, Submission } from './types'
 type SubmissionFormStateByOpportunity = Record<string, SubmissionFormState>
 type SubmissionDocumentsByOpportunity = Record<string, BidDocument[]>
 
+type DraftSummary = {
+  formStatus: string
+  attachedCount: number
+  totalDocuments: number
+  submissionStatus: string
+}
+
 function renderView(
   view: ViewKey,
   createBidForm: CreateBidFormState,
@@ -35,6 +42,7 @@ function renderView(
   reviewNotes: ReviewNotesState,
   updateReviewNotes: (field: keyof ReviewNotesState, value: string) => void,
   submissionDocuments: BidDocument[],
+  draftSummary: DraftSummary,
   uploadNextSubmissionDocument: () => void,
   isBidPublished: boolean,
   saveDraft: () => void,
@@ -99,6 +107,7 @@ function renderView(
       return (
         <AgencySubmissionReviewPage
           currentOpportunity={currentOpportunity}
+          draftSummary={draftSummary}
           reviewNotes={reviewNotes}
           onChange={updateReviewNotes}
           submissions={submissionQueue}
@@ -108,13 +117,14 @@ function renderView(
         />
       )
     case 'vendor-dashboard':
-      return <VendorDashboardPage currentOpportunity={currentOpportunity} submissions={submissionQueue} onSelectOpportunity={selectOpportunity} onNavigate={navigate} />
+      return <VendorDashboardPage currentOpportunity={currentOpportunity} submissions={submissionQueue} draftSummary={draftSummary} onSelectOpportunity={selectOpportunity} onNavigate={navigate} />
     case 'submission-workflow':
       return (
         <SubmissionWorkflowPage
           formState={submissionForm}
           onChange={updateSubmissionForm}
           documents={submissionDocuments}
+          draftSummary={draftSummary}
           onUploadNextDocument={uploadNextSubmissionDocument}
           opportunity={currentOpportunity}
           activeSubmission={submissionQueue.find((submission) => submission.opportunityId === currentOpportunity.id) ?? null}
@@ -177,6 +187,15 @@ function App() {
 
   const submissionForm = submissionFormsByOpportunity[currentOpportunity.id] ?? initialSubmissionFormState
   const submissionDocuments = submissionDocumentsByOpportunity[currentOpportunity.id] ?? initialSubmissionDocuments
+  const currentSubmission = submissionQueue.find((submission) => submission.opportunityId === currentOpportunity.id) ?? null
+  const changedFormFields = Object.entries(submissionForm).filter(([key, value]) => value !== initialSubmissionFormState[key as keyof SubmissionFormState]).length
+  const attachedCount = submissionDocuments.filter((document) => document.status.toLowerCase().includes('attached')).length
+  const draftSummary: DraftSummary = {
+    formStatus: changedFormFields === 0 ? 'Untouched default draft' : `Edited draft (${changedFormFields} fields changed)`,
+    attachedCount,
+    totalDocuments: submissionDocuments.length,
+    submissionStatus: currentSubmission?.status ?? 'No saved submission record',
+  }
 
   const updateSubmissionForm = (field: keyof SubmissionFormState, value: string) => {
     setSubmissionFormsByOpportunity((current) => ({
@@ -302,6 +321,7 @@ function App() {
           reviewNotes,
           updateReviewNotes,
           submissionDocuments,
+          draftSummary,
           uploadNextSubmissionDocument,
           isBidPublished,
           saveDraft,

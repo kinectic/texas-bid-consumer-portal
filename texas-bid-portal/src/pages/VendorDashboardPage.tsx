@@ -28,11 +28,17 @@ const submissionStatusItems = [
 type VendorDashboardPageProps = {
   currentOpportunity: Opportunity
   submissions: Submission[]
+  draftSummary: {
+    formStatus: string
+    attachedCount: number
+    totalDocuments: number
+    submissionStatus: string
+  }
   onSelectOpportunity: (opportunity: Opportunity) => void
   onNavigate: (view: ViewKey) => void
 }
 
-export function VendorDashboardPage({ currentOpportunity, submissions, onSelectOpportunity, onNavigate }: VendorDashboardPageProps) {
+export function VendorDashboardPage({ currentOpportunity, submissions, draftSummary, onSelectOpportunity, onNavigate }: VendorDashboardPageProps) {
   const savedOpportunities = [
     currentOpportunity,
     ...opportunities.filter((opportunity) => opportunity.status === 'open' && opportunity.id !== currentOpportunity.id),
@@ -116,6 +122,7 @@ export function VendorDashboardPage({ currentOpportunity, submissions, onSelectO
           currentOpportunity={currentOpportunity}
           activeSubmission={activeSubmission}
           mode="vendor"
+          draftSummary={draftSummary}
         />
       </section>
 

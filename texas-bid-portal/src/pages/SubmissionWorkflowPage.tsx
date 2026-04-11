@@ -83,6 +83,12 @@ type SubmissionWorkflowPageProps = {
   formState: SubmissionFormState
   onChange: (field: keyof SubmissionFormState, value: string) => void
   documents: BidDocument[]
+  draftSummary: {
+    formStatus: string
+    attachedCount: number
+    totalDocuments: number
+    submissionStatus: string
+  }
   onUploadNextDocument: () => void
   opportunity: Opportunity
   activeSubmission: Submission | null
@@ -95,6 +101,7 @@ export function SubmissionWorkflowPage({
   formState,
   onChange,
   documents,
+  draftSummary,
   onUploadNextDocument,
   opportunity,
   activeSubmission,
@@ -174,7 +181,16 @@ export function SubmissionWorkflowPage({
       </section>
 
       <section className="content-grid lower-grid">
-        <SubmissionStatusSnapshot items={submissionStatusItems} />
+        <SubmissionStatusSnapshot
+          items={[
+            {
+              label: 'Draft persistence',
+              detail: `${draftSummary.formStatus} • ${draftSummary.attachedCount}/${draftSummary.totalDocuments} attachments ready • ${draftSummary.submissionStatus}`,
+              progress: `${Math.round((draftSummary.attachedCount / Math.max(draftSummary.totalDocuments, 1)) * 100)}%`,
+            },
+            ...submissionStatusItems,
+          ]}
+        />
         <PackageCompletenessPanel title="Response completeness" items={packageCompletenessItems} />
       </section>
 

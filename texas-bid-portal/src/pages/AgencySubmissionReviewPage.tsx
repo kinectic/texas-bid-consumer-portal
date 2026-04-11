@@ -31,6 +31,12 @@ const packageCompletenessItems = [
 
 type AgencySubmissionReviewPageProps = {
   currentOpportunity: Opportunity
+  draftSummary: {
+    formStatus: string
+    attachedCount: number
+    totalDocuments: number
+    submissionStatus: string
+  }
   reviewNotes: ReviewNotesState
   onChange: (field: keyof ReviewNotesState, value: string) => void
   submissions: Submission[]
@@ -41,6 +47,7 @@ type AgencySubmissionReviewPageProps = {
 
 export function AgencySubmissionReviewPage({
   currentOpportunity,
+  draftSummary,
   reviewNotes,
   onChange,
   submissions,
@@ -100,6 +107,7 @@ export function AgencySubmissionReviewPage({
           currentOpportunity={currentOpportunity}
           activeSubmission={activeSubmission}
           mode="agency"
+          draftSummary={draftSummary}
         />
       </section>
 
