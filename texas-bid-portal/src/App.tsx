@@ -227,6 +227,22 @@ function App() {
     return opportunities.find((opportunity) => opportunity.id === selectedOpportunityId) ?? publishedOpportunity ?? opportunities[0]
   })()
 
+  const ensureSubmissionSelection = (
+    queue: Submission[],
+    opportunityId: string,
+    preferredSubmissionId?: string | null,
+  ) => {
+    const exactMatch = preferredSubmissionId
+      ? queue.find((submission) => submission.id === preferredSubmissionId && submission.opportunityId === opportunityId)
+      : null
+
+    if (exactMatch) {
+      return exactMatch
+    }
+
+    return queue.find((submission) => submission.opportunityId === opportunityId) ?? null
+  }
+
   const submissionForm = submissionFormsByOpportunity[currentOpportunity.id] ?? initialSubmissionFormState
   const submissionDocuments = submissionDocumentsByOpportunity[currentOpportunity.id] ?? initialSubmissionDocuments
   const reviewNotes = reviewNotesByOpportunity[currentOpportunity.id] ?? initialReviewNotesState
@@ -314,18 +330,21 @@ function App() {
     setSelectedOpportunityId(opportunity.id)
     setSelectedSubmissionByOpportunity((current) => {
       if (current[opportunity.id]) {
-        return current
+        const selectedStillExists = submissionQueue.some((submission) => submission.id === current[opportunity.id])
+        if (selectedStillExists) {
+          return current
+        }
       }
 
-      const firstSubmissionForOpportunity = submissionQueue.find((submission) => submission.opportunityId === opportunity.id)
+      const repairedSelection = ensureSubmissionSelection(submissionQueue, opportunity.id, current[opportunity.id])
 
-      if (!firstSubmissionForOpportunity) {
+      if (!repairedSelection) {
         return current
       }
 
       return {
         ...current,
-        [opportunity.id]: firstSubmissionForOpportunity.id,
+        [opportunity.id]: repairedSelection.id,
       }
     })
   }
@@ -409,9 +428,19 @@ function App() {
         return current
       }
 
-      return current.map((submission, index) =>
+      const updatedQueue = current.map((submission, index) =>
         index === activeIndex ? { ...submission, status } : submission,
       )
+
+      const repairedSelection = ensureSubmissionSelection(updatedQueue, currentOpportunity.id, selectedSubmissionId)
+      if (repairedSelection) {
+        setSelectedSubmissionByOpportunity((selected) => ({
+          ...selected,
+          [currentOpportunity.id]: repairedSelection.id,
+        }))
+      }
+
+      return updatedQueue
     })
   }
 
