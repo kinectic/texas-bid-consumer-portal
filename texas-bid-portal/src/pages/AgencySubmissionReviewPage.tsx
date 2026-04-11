@@ -1,3 +1,4 @@
+import { ActionHeader } from '../components/ActionHeader'
 import { FieldMock } from '../components/FieldMock'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
@@ -14,19 +15,17 @@ type AgencySubmissionReviewPageProps = {
 export function AgencySubmissionReviewPage({ reviewNotes, onChange }: AgencySubmissionReviewPageProps) {
   return (
     <main className="main">
-      <header className="topbar">
-        <div>
-          <div className="eyebrow">Agency workspace</div>
-          <h1>Submission review</h1>
-          <p className="intro">
-            A direct review screen where agencies can triage vendor responses, inspect package completeness, and move decisions forward without leaving the platform.
-          </p>
-        </div>
-        <div className="top-actions">
-          <button className="ghost">Export responses</button>
-          <button className="primary">Advance shortlist</button>
-        </div>
-      </header>
+      <ActionHeader
+        eyebrow="Agency workspace"
+        title="Submission review"
+        intro="A direct review screen where agencies can triage vendor responses, inspect package completeness, and move decisions forward without leaving the platform."
+        actions={
+          <>
+            <button className="ghost">Export responses</button>
+            <button className="primary">Advance shortlist</button>
+          </>
+        }
+      />
 
       <section className="stats-grid">
         <div className="stat-card">

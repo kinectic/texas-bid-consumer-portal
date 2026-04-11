@@ -1,3 +1,4 @@
+import { ActionHeader } from '../components/ActionHeader'
 import { DraftPublishSummaryPanel } from '../components/DraftPublishSummaryPanel'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
 import { lifecycleMetrics } from '../data/metrics'
@@ -9,19 +10,17 @@ export function AgencyDashboardPage() {
 
   return (
     <main className="main">
-      <header className="topbar">
-        <div>
-          <div className="eyebrow">Agency workspace</div>
-          <h1>Agency dashboard</h1>
-          <p className="intro">
-            A Texas-first control center for procurement teams to manage live bids, vendor activity, and fast next actions without portal clutter.
-          </p>
-        </div>
-        <div className="top-actions">
-          <button className="ghost">Export Activity</button>
-          <button className="primary">New Bid</button>
-        </div>
-      </header>
+      <ActionHeader
+        eyebrow="Agency workspace"
+        title="Agency dashboard"
+        intro="A Texas-first control center for procurement teams to manage live bids, vendor activity, and fast next actions without portal clutter."
+        actions={
+          <>
+            <button className="ghost">Export Activity</button>
+            <button className="primary">New Bid</button>
+          </>
+        }
+      />
 
       <section className="stats-grid">
         <div className="stat-card">

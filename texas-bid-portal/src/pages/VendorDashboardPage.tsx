@@ -1,3 +1,4 @@
+import { ActionHeader } from '../components/ActionHeader'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
@@ -12,19 +13,17 @@ export function VendorDashboardPage() {
 
   return (
     <main className="main">
-      <header className="topbar">
-        <div>
-          <div className="eyebrow">Vendor workspace</div>
-          <h1>Vendor dashboard</h1>
-          <p className="intro">
-            A cleaner Texas-first workspace where vendors can track saved bids, monitor active responses, and see what to pursue next without portal confusion.
-          </p>
-        </div>
-        <div className="top-actions">
-          <button className="ghost">Update Profile</button>
-          <button className="primary">Find Opportunities</button>
-        </div>
-      </header>
+      <ActionHeader
+        eyebrow="Vendor workspace"
+        title="Vendor dashboard"
+        intro="A cleaner Texas-first workspace where vendors can track saved bids, monitor active responses, and see what to pursue next without portal confusion."
+        actions={
+          <>
+            <button className="ghost">Update Profile</button>
+            <button className="primary">Find Opportunities</button>
+          </>
+        }
+      />
 
       <section className="stats-grid">
         <div className="stat-card">
