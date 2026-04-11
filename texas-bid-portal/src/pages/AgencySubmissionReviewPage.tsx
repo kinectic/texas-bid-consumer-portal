@@ -15,7 +15,12 @@ import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import type { ReviewNotesState } from '../types/forms'
 import { buildSubmissionQueueRowMeta } from '../utils/submissionQueue'
-import { presentAgencyOutcomeSummary } from '../utils/reviewPresentation'
+import {
+  presentAgencyActiveSubmissionLabel,
+  presentAgencyDecisionControls,
+  presentAgencyOutcomeSummary,
+  presentAgencyReviewerLabels,
+} from '../utils/reviewPresentation'
 
 type AgencySubmissionReviewPageProps = {
   currentOpportunity: Opportunity
@@ -69,9 +74,7 @@ export function AgencySubmissionReviewPage({
     mode: 'agency',
   })
   const activeRowMeta = activeSubmission ? rowMetaBySubmissionId[activeSubmission.id] : null
-  const activeSubmissionLabel = activeSubmission
-    ? `${activeSubmission.vendor} · ${activeSubmission.id} · ${activeRowMeta?.rowLabel ?? 'Response row 1 of 1'}`
-    : 'No submission selected'
+  const activeSubmissionLabel = presentAgencyActiveSubmissionLabel(activeSubmission, activeRowMeta)
   const activeOutcomeSummary = presentAgencyOutcomeSummary({
     activeSubmission,
     currentOpportunityTitle: currentOpportunity.title,
@@ -81,12 +84,17 @@ export function AgencySubmissionReviewPage({
       detail: draftSummary.preservedUnsavedDraftLabel,
     },
   })
-  const decisionControls = [
-    { label: `Shortlist ${activeSubmission?.vendor ?? 'selected vendor'}`, className: 'primary wide' as const, onClick: () => onAdvanceStatus('shortlisted') },
-    { label: `Request clarification from ${activeSubmission?.vendor ?? 'vendor'}`, className: 'ghost wide' as const, onClick: () => onAdvanceStatus('reviewing') },
-    { label: `Flag ${activeSubmission?.vendor ?? 'submission'} incomplete`, className: 'ghost wide' as const, onClick: () => onAdvanceStatus('received') },
-    { label: `Archive ${activeSubmission?.vendor ?? 'selected response'}`, className: 'ghost wide' as const, onClick: onArchiveSubmission },
-  ]
+  const decisionControls = presentAgencyDecisionControls(activeSubmission).map((control) => ({
+    ...control,
+    onClick:
+      control.label.startsWith('Shortlist')
+        ? () => onAdvanceStatus('shortlisted')
+        : control.label.startsWith('Request clarification')
+          ? () => onAdvanceStatus('reviewing')
+          : control.label.startsWith('Flag')
+            ? () => onAdvanceStatus('received')
+            : onArchiveSubmission,
+  }))
   const selectOpportunityFromSubmission = (submission: Submission) => {
     const matchingOpportunity = opportunities.find((opportunity) => opportunity.id === submission.opportunityId)
     if (matchingOpportunity) {
@@ -96,6 +104,8 @@ export function AgencySubmissionReviewPage({
       onNavigate('agency-submission-review')
     }
   }
+  const reviewerLabels = presentAgencyReviewerLabels(activeSubmission)
+
   return (
     <main className="main">
       <ActionHeader
@@ -195,14 +205,14 @@ export function AgencySubmissionReviewPage({
 
       <section className="content-grid lower-grid">
         <ReviewerNotesPanel
-          title={`Reviewer notes — ${activeSubmissionLabel}`}
-          primaryLabel={`Internal procurement notes for ${activeSubmission?.vendor ?? 'selected vendor'}`}
+          title={reviewerLabels.title}
+          primaryLabel={reviewerLabels.primaryLabel}
           primaryValue={reviewNotes.internalNotes}
-          secondaryLabel={`Follow-up questions for ${activeSubmission?.vendor ?? 'selected vendor'}`}
+          secondaryLabel={reviewerLabels.secondaryLabel}
           secondaryValue={reviewNotes.vendorQuestions}
           onPrimaryChange={(value) => onChange('internalNotes', value)}
           onSecondaryChange={(value) => onChange('vendorQuestions', value)}
-          actionLabel={`Save notes for ${activeSubmission?.vendor ?? 'selected vendor'}`}
+          actionLabel={reviewerLabels.actionLabel}
         />
       </section>
     </main>
