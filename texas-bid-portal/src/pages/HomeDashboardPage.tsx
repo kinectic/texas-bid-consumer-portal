@@ -17,71 +17,19 @@ import { opportunities } from '../data/mockData'
 import type { Opportunity } from '../types'
 import type { CreateBidFormState } from '../types/forms'
 import type { ViewKey } from '../data/viewData'
+import {
+  homeDashboardCopy,
+  homeDraftPipelineItems,
+  homeLifecycleSteps,
+  homeMilestoneCards,
+  homeWorkflowCards,
+} from '../utils/homeDashboardContent'
 
-const workflowCards = [
-  {
-    key: 'marketplace',
-    title: 'Marketplace search',
-    description: 'Browse and qualify Texas opportunities with cleaner sourcing and next-step clarity.',
-  },
-  {
-    key: 'create-bid',
-    title: 'Agency posting',
-    description: 'Create, structure, and publish solicitations from a direct agency workflow.',
-  },
-  {
-    key: 'submission-workflow',
-    title: 'Vendor response',
-    description: 'Move from saved opportunity to actual submission without leaving the portal.',
-  },
-] as const
-
-const workflowStageSummaryItems = workflowCards.map((card) => ({
+const workflowStageSummaryItems = homeWorkflowCards.map((card) => ({
   stage: workflowStageLabels[card.key].stage,
   owner: workflowStageLabels[card.key].owner,
   detail: card.description,
 }))
-
-const milestoneCards = [
-  'Marketplace feed and opportunity detail',
-  'Agency dashboard and bid creation',
-  'Vendor dashboard and submission workflow',
-  'Interactive shell navigation across the built prototype',
-] as const
-
-const draftPipelineItems = [
-  {
-    title: 'Agency draft quality pass',
-    detail: 'Refining the bid form, publishing readiness, and operational review surfaces.',
-  },
-  {
-    title: 'Vendor submission continuity',
-    detail: 'Keeping vendor response assembly and status tracking connected across the MVP.',
-  },
-]
-
-const lifecycleSteps = [
-  {
-    stage: '1. Agency drafts bid',
-    detail: 'The procurement team structures the solicitation in the create-bid workflow.',
-  },
-  {
-    stage: '2. Bid is published',
-    detail: 'The opportunity appears in the marketplace with Texas-local sourcing clarity.',
-  },
-  {
-    stage: '3. Vendor qualifies opportunity',
-    detail: 'The vendor reviews fit, documents, and urgency from the detail screen.',
-  },
-  {
-    stage: '4. Vendor submits response',
-    detail: 'The submission workflow captures pricing, attachments, and confirmation in-platform.',
-  },
-  {
-    stage: '5. Agency reviews responses',
-    detail: 'The review lane supports triage, completeness checks, and shortlist decisions.',
-  },
-]
 
 type HomeDashboardPageProps = {
   publishedBidPreview: CreateBidFormState
@@ -106,26 +54,24 @@ export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, c
     <main className="main">
       <header className="topbar">
         <div>
-          <div className="eyebrow">TexasBid MVP</div>
-          <h1>Texas procurement platform overview</h1>
-          <p className="intro">
-            One landing screen that shows the real product shape: agency posting, vendor discovery, direct submissions, and a cleaner Texas-first workflow than generic bidding portals.
-          </p>
+          <div className="eyebrow">{homeDashboardCopy.eyebrow}</div>
+          <h1>{homeDashboardCopy.title}</h1>
+          <p className="intro">{homeDashboardCopy.intro}</p>
         </div>
         <div className="top-actions">
-          <button className="ghost">View product map</button>
-          <button className="primary" onClick={() => onNavigate('marketplace')}>Enter workflow</button>
+          <button className="ghost">{homeDashboardCopy.productMapLabel}</button>
+          <button className="primary" onClick={() => onNavigate('marketplace')}>{homeDashboardCopy.enterWorkflowLabel}</button>
         </div>
       </header>
 
       <PrimaryActionStrip
-        title="Start the next move"
-        description="Jump straight into the most important lifecycle actions for agencies or vendors."
+        title={homeDashboardCopy.primaryActionTitle}
+        description={homeDashboardCopy.primaryActionDescription}
         actions={
           <>
-            <button className="primary" onClick={() => onNavigate('create-bid')}>Create a bid</button>
-            <button className="ghost" onClick={() => onNavigate('opportunity')}>Review live opportunity</button>
-            <button className="ghost" onClick={() => onNavigate('agency-submission-review')}>Review submissions</button>
+            <button className="primary" onClick={() => onNavigate('create-bid')}>{homeDashboardCopy.createBidLabel}</button>
+            <button className="ghost" onClick={() => onNavigate('opportunity')}>{homeDashboardCopy.reviewLiveOpportunityLabel}</button>
+            <button className="ghost" onClick={() => onNavigate('agency-submission-review')}>{homeDashboardCopy.reviewSubmissionsLabel}</button>
           </>
         }
       />
@@ -133,7 +79,7 @@ export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, c
       <WorkflowMetricsSnapshot items={workflowMetricsItems} />
 
       <section className="content-grid">
-        <WorkflowStageSummary title="Workflow landing" items={workflowStageSummaryItems} />
+        <WorkflowStageSummary title={homeDashboardCopy.workflowLandingTitle} items={workflowStageSummaryItems} />
 
         <OutcomeSummaryPanel mode="shared" />
       </section>
@@ -150,16 +96,16 @@ export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, c
       </section>
 
       <section className="content-grid lower-grid">
-        <LifecycleSummaryPanel items={lifecycleSteps} />
+        <LifecycleSummaryPanel items={[...homeLifecycleSteps]} />
         <LifecycleTimelinePanel title="Lifecycle timeline" />
       </section>
 
       <section className="content-grid lower-grid">
         <BidFormOverviewPanel formState={publishedBidPreview} />
         <RecommendedOpportunitiesPanel
-          title="Suggested opportunities"
+          title={homeDashboardCopy.suggestedOpportunitiesTitle}
           opportunities={recommendedOpportunities}
-          actionLabel="Review opportunities"
+          actionLabel={homeDashboardCopy.suggestedOpportunitiesAction}
           onSelectOpportunity={onSelectOpportunity}
           onAction={() => onNavigate('opportunity')}
         />
@@ -167,7 +113,7 @@ export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, c
 
       <section className="content-grid lower-grid">
         <div className="panel">
-          <div className="panel-title">Opportunity readiness scan</div>
+          <div className="panel-title">{homeDashboardCopy.opportunityReadinessTitle}</div>
           <OpportunityCardList
             opportunities={recommendedOpportunities}
             statusClassMap={{ open: 'status status-open', awarded: 'status status-awarded', 'under-review': 'status status-review' }}
@@ -184,8 +130,8 @@ export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, c
       </section>
 
       <section className="content-grid lower-grid">
-        <MilestonesPanel items={milestoneCards} />
-        <DraftPipelinePanel title="Current build lanes" items={draftPipelineItems} />
+        <MilestonesPanel items={homeMilestoneCards} />
+        <DraftPipelinePanel title={homeDashboardCopy.currentBuildLanesTitle} items={[...homeDraftPipelineItems]} />
       </section>
     </main>
   )

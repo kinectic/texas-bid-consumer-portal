@@ -18,19 +18,7 @@ import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import { opportunities, statusClass } from '../data/mockData'
 import { buildSubmissionActivityItems } from '../utils/submissionActivity'
-
-const marketplaceStatsItems = [
-  { value: '2,092+', label: 'Texas opportunities visible in ecosystem research' },
-  { value: 3, label: 'Core workflows shown in this prototype' },
-  { value: 1, label: 'Texas-first experience instead of generic procurement clutter' },
-]
-
-const agencyFlowSteps = [
-  'Create agency profile',
-  'Draft solicitation with deadlines and attachments',
-  'Publish to Texas marketplace',
-  'Review vendor responses in one dashboard',
-] as const
+import { agencyFlowSteps, marketplaceCopy, marketplaceStatsItems } from '../utils/marketplaceContent'
 
 type MarketplacePageProps = {
   publishedBidPreview: CreateBidFormState
@@ -82,28 +70,26 @@ export function MarketplacePage({
     <main className="main">
       <header className="topbar">
         <div>
-          <div className="eyebrow">Product prototype</div>
-          <h1>Texas procurement, without the ugly parts.</h1>
-          <p className="intro">
-            A structured Texas-first portal where government agencies can post opportunities and vendors can discover and submit directly.
-          </p>
+          <div className="eyebrow">{marketplaceCopy.eyebrow}</div>
+          <h1>{marketplaceCopy.title}</h1>
+          <p className="intro">{marketplaceCopy.intro}</p>
         </div>
         <div className="top-actions">
-          <button className="ghost" onClick={() => onNavigate('vendor-dashboard')}>Vendor Sign In</button>
-          <button className="primary" onClick={() => onNavigate('create-bid')}>Post a Bid</button>
+          <button className="ghost" onClick={() => onNavigate('vendor-dashboard')}>{marketplaceCopy.vendorSignInLabel}</button>
+          <button className="primary" onClick={() => onNavigate('create-bid')}>{marketplaceCopy.postBidLabel}</button>
         </div>
       </header>
 
-      <MarketplaceStatsSnapshot items={marketplaceStatsItems} />
+      <MarketplaceStatsSnapshot items={[...marketplaceStatsItems]} />
 
       <section className="content-grid">
         <div className="panel marketplace-panel">
           <SectionIntro
-            eyebrow="Vendor discovery"
-            title="Marketplace feed"
-            description="What vendors see when they browse live opportunities and decide which bid deserves action next."
+            eyebrow={marketplaceCopy.marketplaceFeedEyebrow}
+            title={marketplaceCopy.marketplaceFeedTitle}
+            description={marketplaceCopy.marketplaceFeedDescription}
           />
-          <WorkflowFilterStrip title="Marketplace filters" filters={['All', 'Open', 'Facilities', 'Professional']} activeIndex={0} />
+          <WorkflowFilterStrip title={marketplaceCopy.marketplaceFiltersTitle} filters={[...marketplaceCopy.marketplaceFilters]} activeIndex={0} />
 
           <PublishedBidSnapshotPanel
             title="Published bid preview sync"
@@ -129,28 +115,28 @@ export function MarketplacePage({
         </div>
 
         <div className="content-grid nested-grid">
-          <OpportunityMetadataPanel opportunity={previewOpportunity} title="Marketplace metadata" />
+          <OpportunityMetadataPanel opportunity={previewOpportunity} title={marketplaceCopy.metadataTitle} />
           <OpportunityStatusPanel status="open" />
-          <StatusBadgeLegend title="Marketplace status legend" />
+          <StatusBadgeLegend title={marketplaceCopy.legendTitle} />
         </div>
       </section>
 
       <section className="content-grid lower-grid">
         <div className="panel detail-panel">
           <SectionIntro
-            eyebrow="Qualification"
-            title="Opportunity detail"
-            description="The focused opportunity view vendors use when deciding whether to move into the submission workflow."
+            eyebrow={marketplaceCopy.detailEyebrow}
+            title={marketplaceCopy.detailTitle}
+            description={marketplaceCopy.detailDescription}
           />
           <h2>{previewOpportunity.title}</h2>
           <OpportunitySummaryPanel
-            title="Opportunity summary"
-            subtitle="Focused vendor-facing summary before moving into the submission workflow."
+            title={marketplaceCopy.detailSummaryTitle}
+            subtitle={marketplaceCopy.detailSummarySubtitle}
             summary={previewOpportunity.summary}
           />
           <OpportunityDocumentsPanel
             documents={previewOpportunity.documents.map((name) => ({ name, status: 'Open' }))}
-            title="Opportunity documents"
+            title={marketplaceCopy.detailDocumentsTitle}
           />
           <DetailActionsStrip
             secondaryLabel="Save Opportunity"
@@ -168,13 +154,13 @@ export function MarketplacePage({
 
       <section className="content-grid lower-grid">
         <SelectionContextPanel
-          title="Selected opportunity + submission context"
+          title={marketplaceCopy.selectionContextTitle}
           currentOpportunity={previewOpportunity}
           activeSubmission={activeSubmission ?? null}
           mode="vendor"
         />
         <SubmissionActivityPanel
-          title="Submission workspace"
+          title={marketplaceCopy.submissionWorkspaceTitle}
           items={submissionActivityItems}
           currentOpportunityId={previewOpportunity.id}
           selectedSubmissionId={activeSubmission?.id}
@@ -196,10 +182,10 @@ export function MarketplacePage({
 
       <section className="content-grid lower-grid">
         <FinalActionPanel
-          eyebrow="Vendor action"
-          title="Ready to respond"
-          description="Move from marketplace review into a direct submission flow without leaving the product."
-          note="This is the product promise: discover, qualify, and act in one clearer Texas-first procurement surface."
+          eyebrow={marketplaceCopy.vendorActionEyebrow}
+          title={marketplaceCopy.vendorActionTitle}
+          description={marketplaceCopy.vendorActionDescription}
+          note={marketplaceCopy.vendorActionNote}
           actionLabel={activeSubmission ? 'Continue submission workflow' : 'Open submission workflow'}
           onAction={() => onNavigate('submission-workflow')}
         />
