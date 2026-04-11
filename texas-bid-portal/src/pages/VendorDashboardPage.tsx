@@ -92,6 +92,7 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
     selectedSubmissionId,
     currentOpportunityId: currentOpportunity.id,
     mode: 'vendor',
+    readinessByOpportunityId,
   })
 
   const selectOpportunityFromSubmission = (submission: Submission) => {

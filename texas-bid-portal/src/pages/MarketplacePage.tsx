@@ -75,6 +75,7 @@ export function MarketplacePage({
     selectedSubmissionId: activeSubmission?.id,
     currentOpportunityId: previewOpportunity.id,
     mode: 'vendor',
+    readinessByOpportunityId,
   })
 
   return (

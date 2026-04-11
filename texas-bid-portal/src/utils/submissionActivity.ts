@@ -15,6 +15,7 @@ type BuildSubmissionActivityItemsOptions = {
   selectedSubmissionId?: string | null
   currentOpportunityId?: string
   mode: 'agency' | 'vendor'
+  readinessByOpportunityId?: Record<string, { label: string; detail: string }>
 }
 
 export function buildSubmissionActivityItems({
@@ -23,6 +24,7 @@ export function buildSubmissionActivityItems({
   selectedSubmissionId,
   currentOpportunityId,
   mode,
+  readinessByOpportunityId,
 }: BuildSubmissionActivityItemsOptions): SubmissionActivityItem[] {
   return submissions.map((submission) => {
     const siblingRows = allSubmissions.filter((item) => item.opportunityId === submission.opportunityId)
@@ -40,8 +42,8 @@ export function buildSubmissionActivityItems({
         mode === 'agency'
           ? `${isCurrentOpportunity ? 'Current opportunity' : 'Other opportunity'} • ${submission.status} • Vendor ${submission.vendor} • active row ${isSelected ? 'yes' : 'no'} • response row ${rowNumber}`
           : isSelected
-            ? 'Active vendor-side submission row.'
-            : 'Click to reopen this exact vendor response row in the workflow.',
+            ? `Active vendor-side submission row. ${readinessByOpportunityId?.[submission.opportunityId]?.label ?? 'Saved row active'} • ${readinessByOpportunityId?.[submission.opportunityId]?.detail ?? 'No extra buffer context.'}`
+            : `Click to reopen this exact vendor response row in the workflow. ${readinessByOpportunityId?.[submission.opportunityId]?.label ?? 'Saved/draft state available'} • ${readinessByOpportunityId?.[submission.opportunityId]?.detail ?? 'No extra buffer context.'}`,
     }
   })
 }
