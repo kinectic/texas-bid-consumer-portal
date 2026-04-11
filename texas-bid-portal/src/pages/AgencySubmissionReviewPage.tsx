@@ -17,6 +17,7 @@ import type { ReviewNotesState } from '../types/forms'
 
 type AgencySubmissionReviewPageProps = {
   currentOpportunity: Opportunity
+  selectedSubmissionId: string | null
   draftSummary: {
     formStatus: string
     attachedCount: number
@@ -30,6 +31,7 @@ type AgencySubmissionReviewPageProps = {
   queueFilter: 'current' | 'all'
   onQueueFilterChange: (filter: 'current' | 'all') => void
   onSelectOpportunity: (opportunity: Opportunity) => void
+  onSelectSubmission: (submission: Submission) => void
   onAdvanceStatus: (status: Submission['status']) => void
   onArchiveSubmission: () => void
   onNavigate: (view: ViewKey) => void
@@ -37,6 +39,7 @@ type AgencySubmissionReviewPageProps = {
 
 export function AgencySubmissionReviewPage({
   currentOpportunity,
+  selectedSubmissionId,
   draftSummary,
   reviewNotes,
   onChange,
@@ -45,6 +48,7 @@ export function AgencySubmissionReviewPage({
   queueFilter,
   onQueueFilterChange,
   onSelectOpportunity,
+  onSelectSubmission,
   onAdvanceStatus,
   onArchiveSubmission,
   onNavigate,
@@ -58,10 +62,13 @@ export function AgencySubmissionReviewPage({
   const visibleSubmissions = submissions.filter((submission) => submission.status !== 'draft')
   const currentOpportunitySubmissions = visibleSubmissions.filter((submission) => submission.opportunityId === currentOpportunity.id)
   const displayedSubmissions = queueFilter === 'current' ? currentOpportunitySubmissions : visibleSubmissions
-  const activeSubmission = submissions.find((submission) => submission.opportunityId === currentOpportunity.id) ?? null
+  const activeSubmission = submissions.find((submission) => submission.id === selectedSubmissionId)
+    ?? submissions.find((submission) => submission.opportunityId === currentOpportunity.id)
+    ?? null
   const selectOpportunityFromSubmission = (submission: Submission) => {
     const matchingOpportunity = opportunities.find((opportunity) => opportunity.id === submission.opportunityId)
     if (matchingOpportunity) {
+      onSelectSubmission(submission)
       onSelectOpportunity(matchingOpportunity)
       onQueueFilterChange('current')
       onNavigate('agency-submission-review')
@@ -104,6 +111,7 @@ export function AgencySubmissionReviewPage({
             submissions={displayedSubmissions}
             mode="agency"
             currentOpportunityId={currentOpportunity.id}
+            selectedSubmissionId={selectedSubmissionId ?? undefined}
             onSelectSubmission={selectOpportunityFromSubmission}
           />
         </div>

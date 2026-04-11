@@ -40,6 +40,7 @@ type OpportunityReadinessSummary = {
 
 type SubmissionQueueFilter = 'current' | 'all'
 type ReviewNotesByOpportunity = Record<string, ReviewNotesState>
+type SelectedSubmissionByOpportunity = Record<string, string>
 
 type PackageCompletenessItem = {
   title: string
@@ -66,6 +67,8 @@ function renderView(
   selectOpportunity: (opportunity: Opportunity) => void,
   readinessByOpportunityId: Record<string, OpportunityReadinessSummary>,
   submissionQueue: Submission[],
+  selectedSubmissionId: string | null,
+  selectSubmission: (submission: Submission) => void,
   vendorQueueFilter: SubmissionQueueFilter,
   setVendorQueueFilter: (filter: SubmissionQueueFilter) => void,
   agencyQueueFilter: SubmissionQueueFilter,
@@ -136,16 +139,18 @@ function renderView(
           onChange={updateReviewNotes}
           packageCompletenessItems={packageCompletenessItems}
           submissions={submissionQueue}
+          selectedSubmissionId={selectedSubmissionId}
           queueFilter={agencyQueueFilter}
           onQueueFilterChange={setAgencyQueueFilter}
           onSelectOpportunity={selectOpportunity}
+          onSelectSubmission={selectSubmission}
           onAdvanceStatus={advanceSubmissionStatus}
           onArchiveSubmission={archiveSubmission}
           onNavigate={navigate}
         />
       )
     case 'vendor-dashboard':
-      return <VendorDashboardPage currentOpportunity={currentOpportunity} submissions={submissionQueue} draftSummary={draftSummary} readinessByOpportunityId={readinessByOpportunityId} queueFilter={vendorQueueFilter} onQueueFilterChange={setVendorQueueFilter} onSelectOpportunity={selectOpportunity} onNavigate={navigate} />
+      return <VendorDashboardPage currentOpportunity={currentOpportunity} submissions={submissionQueue} selectedSubmissionId={selectedSubmissionId} draftSummary={draftSummary} readinessByOpportunityId={readinessByOpportunityId} queueFilter={vendorQueueFilter} onQueueFilterChange={setVendorQueueFilter} onSelectOpportunity={selectOpportunity} onSelectSubmission={selectSubmission} onNavigate={navigate} />
     case 'submission-workflow':
       return (
         <SubmissionWorkflowPage
@@ -190,6 +195,10 @@ function App() {
   const [submissionQueue, setSubmissionQueue] = useState<Submission[]>(initialVendorSubmissions)
   const [isBidPublished, setIsBidPublished] = useState(false)
   const [selectedOpportunityId, setSelectedOpportunityId] = useState(opportunities[0].id)
+  const [selectedSubmissionByOpportunity, setSelectedSubmissionByOpportunity] = useState<SelectedSubmissionByOpportunity>({
+    'tx-001': 'sub-001',
+    'tx-002': 'sub-002',
+  })
   const [vendorQueueFilter, setVendorQueueFilter] = useState<SubmissionQueueFilter>('current')
   const [agencyQueueFilter, setAgencyQueueFilter] = useState<SubmissionQueueFilter>('current')
 
@@ -221,7 +230,10 @@ function App() {
   const submissionForm = submissionFormsByOpportunity[currentOpportunity.id] ?? initialSubmissionFormState
   const submissionDocuments = submissionDocumentsByOpportunity[currentOpportunity.id] ?? initialSubmissionDocuments
   const reviewNotes = reviewNotesByOpportunity[currentOpportunity.id] ?? initialReviewNotesState
-  const currentSubmission = submissionQueue.find((submission) => submission.opportunityId === currentOpportunity.id) ?? null
+  const selectedSubmissionId = selectedSubmissionByOpportunity[currentOpportunity.id] ?? null
+  const currentSubmission = submissionQueue.find((submission) => submission.id === selectedSubmissionId)
+    ?? submissionQueue.find((submission) => submission.opportunityId === currentOpportunity.id)
+    ?? null
   const changedFormFields = Object.entries(submissionForm).filter(([key, value]) => value !== initialSubmissionFormState[key as keyof SubmissionFormState]).length
   const attachedCount = submissionDocuments.filter((document) => document.status.toLowerCase().includes('attached')).length
   const draftSummary: DraftSummary = {
@@ -302,6 +314,13 @@ function App() {
     setSelectedOpportunityId(opportunity.id)
   }
 
+  const selectSubmission = (submission: Submission) => {
+    setSelectedSubmissionByOpportunity((current) => ({
+      ...current,
+      [submission.opportunityId]: submission.id,
+    }))
+  }
+
   const uploadNextSubmissionDocument = () => {
     setSubmissionDocumentsByOpportunity((current) => {
       const currentDocuments = current[currentOpportunity.id] ?? initialSubmissionDocuments
@@ -327,6 +346,7 @@ function App() {
     setSubmissionQueue((current) => {
       const existingIndex = current.findIndex((submission) => submission.opportunityId === opportunityRecord.id)
       const nextRecord: Submission = {
+        id: existingIndex === -1 ? `sub-${Date.now()}` : current[existingIndex].id,
         opportunityId: opportunityRecord.id,
         vendor: vendorName,
         opportunity: opportunityRecord.title,
@@ -335,8 +355,17 @@ function App() {
       }
 
       if (existingIndex === -1) {
+        setSelectedSubmissionByOpportunity((selected) => ({
+          ...selected,
+          [opportunityRecord.id]: nextRecord.id,
+        }))
         return [nextRecord, ...current]
       }
+
+      setSelectedSubmissionByOpportunity((selected) => ({
+        ...selected,
+        [opportunityRecord.id]: nextRecord.id,
+      }))
 
       return current.map((submission, index) =>
         index === existingIndex
@@ -357,7 +386,7 @@ function App() {
   const advanceSubmissionStatus = (status: Submission['status']) => {
     setSubmissionQueue((current) => {
       const activeIndex = current.findIndex(
-        (submission) => submission.opportunityId === currentOpportunity.id && submission.status !== 'shortlisted',
+        (submission) => submission.id === selectedSubmissionId,
       )
 
       if (activeIndex === -1) {
@@ -371,7 +400,12 @@ function App() {
   }
 
   const archiveSubmission = () => {
-    setSubmissionQueue((current) => current.filter((submission) => submission.opportunityId !== currentOpportunity.id))
+    setSubmissionQueue((current) => current.filter((submission) => submission.id !== selectedSubmissionId))
+    setSelectedSubmissionByOpportunity((current) => {
+      const next = { ...current }
+      delete next[currentOpportunity.id]
+      return next
+    })
   }
 
   return (
@@ -411,6 +445,8 @@ function App() {
           selectOpportunity,
           readinessByOpportunityId,
           submissionQueue,
+          selectedSubmissionId,
+          selectSubmission,
           vendorQueueFilter,
           setVendorQueueFilter,
           agencyQueueFilter,

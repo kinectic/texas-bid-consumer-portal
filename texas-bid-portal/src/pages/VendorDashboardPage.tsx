@@ -28,6 +28,7 @@ const submissionStatusItems = [
 type VendorDashboardPageProps = {
   currentOpportunity: Opportunity
   submissions: Submission[]
+  selectedSubmissionId: string | null
   draftSummary: {
     formStatus: string
     attachedCount: number
@@ -38,10 +39,11 @@ type VendorDashboardPageProps = {
   queueFilter: 'current' | 'all'
   onQueueFilterChange: (filter: 'current' | 'all') => void
   onSelectOpportunity: (opportunity: Opportunity) => void
+  onSelectSubmission: (submission: Submission) => void
   onNavigate: (view: ViewKey) => void
 }
 
-export function VendorDashboardPage({ currentOpportunity, submissions, draftSummary, readinessByOpportunityId, queueFilter, onQueueFilterChange, onSelectOpportunity, onNavigate }: VendorDashboardPageProps) {
+export function VendorDashboardPage({ currentOpportunity, submissions, selectedSubmissionId, draftSummary, readinessByOpportunityId, queueFilter, onQueueFilterChange, onSelectOpportunity, onSelectSubmission, onNavigate }: VendorDashboardPageProps) {
   const savedOpportunities = [
     currentOpportunity,
     ...opportunities.filter((opportunity) => opportunity.status === 'open' && opportunity.id !== currentOpportunity.id),
@@ -65,6 +67,7 @@ export function VendorDashboardPage({ currentOpportunity, submissions, draftSumm
   ]
   const activeSubmission = submissions.find((submission) => submission.opportunityId === currentOpportunity.id) ?? null
   const selectOpportunityFromSubmission = (submission: Submission) => {
+    onSelectSubmission(submission)
     const matchingOpportunity = savedOpportunities.find((opportunity) => opportunity.id === submission.opportunityId)
       ?? opportunities.find((opportunity) => opportunity.id === submission.opportunityId)
 
@@ -142,6 +145,7 @@ export function VendorDashboardPage({ currentOpportunity, submissions, draftSumm
             submissions={displayedSubmissions}
             mode="vendor"
             currentOpportunityId={currentOpportunity.id}
+            selectedSubmissionId={selectedSubmissionId ?? undefined}
             onSelectSubmission={selectOpportunityFromSubmission}
           />
         </div>

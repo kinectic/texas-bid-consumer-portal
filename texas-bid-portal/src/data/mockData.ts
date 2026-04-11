@@ -44,6 +44,7 @@ export const opportunities: Opportunity[] = [
 
 export const vendorSubmissions: Submission[] = [
   {
+    id: 'sub-001',
     opportunityId: 'tx-001',
     vendor: 'Lone Star Facility Group',
     opportunity: 'Citywide Custodial Services RFP',
@@ -51,6 +52,15 @@ export const vendorSubmissions: Submission[] = [
     status: 'received',
   },
   {
+    id: 'sub-003',
+    opportunityId: 'tx-001',
+    vendor: 'Metro Civic Janitorial',
+    opportunity: 'Citywide Custodial Services RFP',
+    submittedAt: 'Apr 8, 2026 · 11:02 AM',
+    status: 'reviewing',
+  },
+  {
+    id: 'sub-002',
     opportunityId: 'tx-002',
     vendor: 'Texas Audit Partners',
     opportunity: 'Internal Audit Services',
