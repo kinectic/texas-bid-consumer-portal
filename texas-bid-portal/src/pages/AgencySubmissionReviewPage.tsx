@@ -1,4 +1,5 @@
 import { FieldMock } from '../components/FieldMock'
+import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { SubmissionChecklistPanel } from '../components/SubmissionChecklistPanel'
 import { lifecycleMetrics } from '../data/metrics'
 import { vendorSubmissions } from '../data/mockData'
@@ -67,6 +68,10 @@ export function AgencySubmissionReviewPage({ reviewNotes, onChange }: AgencySubm
           </div>
         </div>
 
+        <OutcomeSummaryPanel mode="agency" />
+      </section>
+
+      <section className="content-grid lower-grid">
         <div className="panel">
           <div className="panel-title">Decision controls</div>
           <div className="action-stack">
@@ -79,9 +84,7 @@ export function AgencySubmissionReviewPage({ reviewNotes, onChange }: AgencySubm
             This is where the agency workflow stops being a posting tool and becomes an actual procurement operations surface.
           </div>
         </div>
-      </section>
 
-      <section className="content-grid lower-grid">
         <div className="panel">
           <div className="panel-title">Package completeness</div>
           <div className="draft-list">
@@ -99,11 +102,11 @@ export function AgencySubmissionReviewPage({ reviewNotes, onChange }: AgencySubm
             </div>
           </div>
         </div>
-
-        <SubmissionChecklistPanel title="Agency review checklist" contextLabel="before shortlist decision" />
       </section>
 
       <section className="content-grid lower-grid">
+        <SubmissionChecklistPanel title="Agency review checklist" contextLabel="before shortlist decision" />
+
         <div className="panel">
           <div className="panel-title">Status progression</div>
           <ol className="flow-list">
@@ -112,7 +115,9 @@ export function AgencySubmissionReviewPage({ reviewNotes, onChange }: AgencySubm
             ))}
           </ol>
         </div>
+      </section>
 
+      <section className="content-grid lower-grid">
         <div className="panel">
           <div className="panel-title">Reviewer notes</div>
           <div className="form-mock create-bid-form">

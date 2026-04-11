@@ -1,5 +1,6 @@
 import { HomeCtaPanel } from '../components/HomeCtaPanel'
 import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
+import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { lifecycleMetrics } from '../data/metrics'
 import { workflowStageLabels } from '../data/workflowStages'
 import type { CreateBidFormState } from '../types/forms'
@@ -104,27 +105,7 @@ export function HomeDashboardPage({ publishedBidPreview, onNavigate }: HomeDashb
           </div>
         </div>
 
-        <div className="panel">
-          <div className="panel-title">Lifecycle metrics</div>
-          <div className="draft-list">
-            <div className="draft-card">
-              <strong>Active bids</strong>
-              <div className="muted">{lifecycleMetrics.activeBids}</div>
-            </div>
-            <div className="draft-card">
-              <strong>Draft bids</strong>
-              <div className="muted">{lifecycleMetrics.draftBids}</div>
-            </div>
-            <div className="draft-card">
-              <strong>Responses in review</strong>
-              <div className="muted">{lifecycleMetrics.responsesInReview}</div>
-            </div>
-            <div className="draft-card">
-              <strong>Shortlisted</strong>
-              <div className="muted">{lifecycleMetrics.shortlisted}</div>
-            </div>
-          </div>
-        </div>
+        <OutcomeSummaryPanel mode="shared" />
       </section>
 
       <section className="content-grid lower-grid">

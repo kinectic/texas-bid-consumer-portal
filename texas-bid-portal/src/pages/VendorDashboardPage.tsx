@@ -1,3 +1,4 @@
+import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
 import { VendorSubmissionPacketPanel } from '../components/VendorSubmissionPacketPanel'
@@ -72,6 +73,8 @@ export function VendorDashboardPage() {
       </section>
 
       <section className="content-grid lower-grid">
+        <OutcomeSummaryPanel mode="vendor" />
+
         <div className="panel">
           <div className="panel-title">Active submissions</div>
           <div className="submission-list">
@@ -95,7 +98,9 @@ export function VendorDashboardPage() {
             })}
           </div>
         </div>
+      </section>
 
+      <section className="content-grid lower-grid">
         <div className="panel">
           <div className="panel-title">Submission status progression</div>
           <ol className="flow-list">
@@ -104,11 +109,11 @@ export function VendorDashboardPage() {
             ))}
           </ol>
         </div>
+
+        <VendorSubmissionPacketPanel />
       </section>
 
       <section className="content-grid lower-grid">
-        <VendorSubmissionPacketPanel />
-
         <div className="panel">
           <div className="panel-title">Recommended bids</div>
           <div className="draft-list">
