@@ -312,6 +312,22 @@ function App() {
 
   const selectOpportunity = (opportunity: Opportunity) => {
     setSelectedOpportunityId(opportunity.id)
+    setSelectedSubmissionByOpportunity((current) => {
+      if (current[opportunity.id]) {
+        return current
+      }
+
+      const firstSubmissionForOpportunity = submissionQueue.find((submission) => submission.opportunityId === opportunity.id)
+
+      if (!firstSubmissionForOpportunity) {
+        return current
+      }
+
+      return {
+        ...current,
+        [opportunity.id]: firstSubmissionForOpportunity.id,
+      }
+    })
   }
 
   const selectSubmission = (submission: Submission) => {
@@ -400,11 +416,32 @@ function App() {
   }
 
   const archiveSubmission = () => {
-    setSubmissionQueue((current) => current.filter((submission) => submission.id !== selectedSubmissionId))
-    setSelectedSubmissionByOpportunity((current) => {
-      const next = { ...current }
-      delete next[currentOpportunity.id]
-      return next
+    setSubmissionQueue((current) => {
+      const remaining = current.filter((submission) => submission.id !== selectedSubmissionId)
+      const nextForSameOpportunity = remaining.find((submission) => submission.opportunityId === currentOpportunity.id)
+      const fallbackSubmission = nextForSameOpportunity ?? remaining[0] ?? null
+
+      setSelectedSubmissionByOpportunity((selected) => {
+        const next = { ...selected }
+
+        if (nextForSameOpportunity) {
+          next[currentOpportunity.id] = nextForSameOpportunity.id
+        } else {
+          delete next[currentOpportunity.id]
+        }
+
+        if (fallbackSubmission) {
+          next[fallbackSubmission.opportunityId] = fallbackSubmission.id
+        }
+
+        return next
+      })
+
+      if (!nextForSameOpportunity && fallbackSubmission) {
+        setSelectedOpportunityId(fallbackSubmission.opportunityId)
+      }
+
+      return remaining
     })
   }
 
