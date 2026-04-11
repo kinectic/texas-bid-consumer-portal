@@ -1,6 +1,8 @@
 import { DraftPublishSummaryPanel } from '../components/DraftPublishSummaryPanel'
 import { FieldMock } from '../components/FieldMock'
+import { ProcurementChecklistPanel } from '../components/ProcurementChecklistPanel'
 import { SubmissionAttachmentsPanel } from '../components/SubmissionAttachmentsPanel'
+import { prePublishChecklist } from '../data/checklists'
 import type { BidDocument, CreateBidFormState } from '../types/forms'
 
 type CreateBidPageProps = {
@@ -55,17 +57,11 @@ export function CreateBidPage({ formState, documents, onChange }: CreateBidPageP
           actionLabel="Add attachment"
         />
 
-        <div className="panel">
-          <div className="panel-title">Pre-publish checklist</div>
-          <ol className="flow-list">
-            <li>Title and category are clear to vendors</li>
-            <li>Deadline and issue dates are set</li>
-            <li>Scope and evaluation notes are complete</li>
-            <li>Required attachments are uploaded</li>
-            <li>Submission mode is ready for vendor intake</li>
-          </ol>
-          <button className="primary wide">Submit for agency review</button>
-        </div>
+        <ProcurementChecklistPanel
+          title="Pre-publish checklist"
+          items={prePublishChecklist}
+          actionLabel="Submit for agency review"
+        />
       </section>
     </main>
   )
