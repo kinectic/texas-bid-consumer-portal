@@ -12,6 +12,7 @@ import { SubmissionActivityPanel } from '../components/SubmissionActivityPanel'
 import { WorkflowMetricsSnapshot } from '../components/WorkflowMetricsSnapshot'
 import { opportunities, statusClass } from '../data/mockData'
 import type { Opportunity, Submission } from '../types'
+import { buildSubmissionActivityItems } from '../utils/submissionActivity'
 import type { ViewKey } from '../data/viewData'
 
 const agencyPriorityControls = [
@@ -85,23 +86,13 @@ export function AgencyDashboardPage({ currentOpportunity, publishedOpportunity, 
   const currentOpportunitySubmissions = submissions.filter((submission) => submission.opportunityId === currentOpportunity.id)
   const displayedSubmissions = queueFilter === 'current' ? currentOpportunitySubmissions : submissions
   const selectedSubmissionForOpportunity = currentOpportunitySubmissions[0] ?? null
-  const submissionActivityItems = displayedSubmissions.map((submission) => ({
-    key: submission.id,
-    opportunityId: submission.opportunityId,
-    submissionId: submission.id,
-    title: `${submission.vendor} • ${submission.id}`,
-    detail: (() => {
-      const siblingRows = submissions.filter((item) => item.opportunityId === submission.opportunityId)
-      const rowNumber = siblingRows.findIndex((item) => item.id === submission.id) + 1
-      return `${submission.opportunity} • row ${rowNumber} of ${siblingRows.length} • ${submission.opportunityId} • Submitted ${submission.submittedAt}`
-    })(),
-    summary: (() => {
-      const siblingRows = submissions.filter((item) => item.opportunityId === submission.opportunityId)
-      const rowNumber = siblingRows.findIndex((item) => item.id === submission.id) + 1
-      const isCurrentOpportunity = submission.opportunityId === currentOpportunity.id
-      return `${isCurrentOpportunity ? 'Current opportunity' : 'Other opportunity'} • ${submission.status} • Vendor ${submission.vendor} • active row ${isCurrentOpportunity && selectedSubmissionForOpportunity?.id === submission.id ? 'yes' : 'no'} • response row ${rowNumber}`
-    })(),
-  }))
+  const submissionActivityItems = buildSubmissionActivityItems({
+    submissions: displayedSubmissions,
+    allSubmissions: submissions,
+    selectedSubmissionId,
+    currentOpportunityId: currentOpportunity.id,
+    mode: 'agency',
+  })
   const activeSubmission = selectedSubmissionForOpportunity
 
   return (

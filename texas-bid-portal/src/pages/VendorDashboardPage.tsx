@@ -18,6 +18,7 @@ import { opportunities, statusClass } from '../data/mockData'
 import { submissionLifecycle, submissionStatusSummary } from '../data/submissionStatus'
 import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
+import { buildSubmissionActivityItems } from '../utils/submissionActivity'
 
 const submissionStatusItems = [
   submissionStatusSummary.draft,
@@ -76,20 +77,12 @@ export function VendorDashboardPage({ currentOpportunity, submissions, selectedS
   const draftRowSummary = activeSubmission
     ? `Active saved row: ${activeSubmission.id}. Current opportunity has ${currentOpportunitySubmissions.length} total response rows.`
     : `No saved active row selected. Starting now will create response ${currentOpportunitySubmissions.length + 1}.`
-  const vendorActivityItems = displayedSubmissions.map((submission) => {
-    const siblingRows = submissions.filter((item) => item.opportunityId === submission.opportunityId)
-    const rowNumber = siblingRows.findIndex((item) => item.id === submission.id) + 1
-
-    return {
-      key: submission.id,
-      opportunityId: submission.opportunityId,
-      submissionId: submission.id,
-      title: `${submission.vendor} • ${submission.id}`,
-      detail: `${submission.opportunity} • row ${rowNumber} of ${siblingRows.length} • Submitted ${submission.submittedAt}`,
-      summary: submission.id === selectedSubmissionId
-        ? 'Active vendor-side submission row.'
-        : 'Click to reopen this exact vendor response row in the workflow.',
-    }
+  const vendorActivityItems = buildSubmissionActivityItems({
+    submissions: displayedSubmissions,
+    allSubmissions: submissions,
+    selectedSubmissionId,
+    currentOpportunityId: currentOpportunity.id,
+    mode: 'vendor',
   })
 
   const selectOpportunityFromSubmission = (submission: Submission) => {

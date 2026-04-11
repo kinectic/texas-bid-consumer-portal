@@ -1,11 +1,4 @@
-type SubmissionActivityItem = {
-  key: string
-  opportunityId: string
-  submissionId?: string
-  title: string
-  detail: string
-  summary?: string
-}
+import type { SubmissionActivityItem } from '../utils/submissionActivity'
 
 type SubmissionActivityPanelProps = {
   title?: string

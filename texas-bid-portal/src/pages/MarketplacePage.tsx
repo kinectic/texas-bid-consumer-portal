@@ -17,6 +17,7 @@ import type { CreateBidFormState } from '../types/forms'
 import type { Opportunity, Submission } from '../types'
 import type { ViewKey } from '../data/viewData'
 import { opportunities, statusClass } from '../data/mockData'
+import { buildSubmissionActivityItems } from '../utils/submissionActivity'
 
 const marketplaceStatsItems = [
   { value: '2,092+', label: 'Texas opportunities visible in ecosystem research' },
@@ -68,16 +69,13 @@ export function MarketplacePage({
     ...opportunities.filter((opportunity) => opportunity.id !== highlighted.id),
   ]
   const activeSubmission = submissions.find((submission) => submission.opportunityId === previewOpportunity.id)
-  const submissionActivityItems = submissions.map((submission) => ({
-    key: submission.id,
-    opportunityId: submission.opportunityId,
-    submissionId: submission.id,
-    title: `${submission.vendor} • ${submission.id}`,
-    detail: `${submission.opportunity} • ${submission.opportunityId} • Submitted ${submission.submittedAt}`,
-    summary: submission.id === activeSubmission?.id
-      ? 'Currently selected vendor-side submission row for this opportunity.'
-      : 'Click to open this exact submission row in the vendor workflow.',
-  }))
+  const submissionActivityItems = buildSubmissionActivityItems({
+    submissions,
+    allSubmissions: submissions,
+    selectedSubmissionId: activeSubmission?.id,
+    currentOpportunityId: previewOpportunity.id,
+    mode: 'vendor',
+  })
 
   return (
     <main className="main">
