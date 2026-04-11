@@ -3,6 +3,7 @@ import { OpportunityDocumentsPanel } from '../components/OpportunityDocumentsPan
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
 import { OpportunityStatusPanel } from '../components/OpportunityStatusPanel'
 import { OpportunitySummaryPanel } from '../components/OpportunitySummaryPanel'
+import { PublishedBidSnapshotPanel } from '../components/PublishedBidSnapshotPanel'
 import { SectionIntro } from '../components/SectionIntro'
 import { StatusBadgeLegend } from '../components/StatusBadgeLegend'
 import { SubmissionActivityPanel } from '../components/SubmissionActivityPanel'
@@ -70,12 +71,7 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
           />
           <WorkflowFilterStrip title="Marketplace filters" filters={['All', 'Open', 'Facilities', 'Professional']} activeIndex={0} />
 
-          <div className="draft-card preview-card">
-            <strong>Published bid preview sync</strong>
-            <div className="muted">
-              The top marketplace record now mirrors the current agency create-bid form state.
-            </div>
-          </div>
+          <PublishedBidSnapshotPanel title="Published bid preview sync" bid={publishedBidPreview} />
 
           <OpportunityCardList
             opportunities={marketplaceFeed}

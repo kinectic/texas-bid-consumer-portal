@@ -661,6 +661,12 @@ h1 {
   margin-top: 16px;
 }
 
+.published-bid-snapshot-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
 @media (max-width: 1100px) {
   .app-shell {
     grid-template-columns: 1fr;

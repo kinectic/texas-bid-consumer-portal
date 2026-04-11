@@ -1,8 +1,9 @@
-import { HomeCtaPanel } from '../components/HomeCtaPanel'
 import { DraftPipelinePanel } from '../components/DraftPipelinePanel'
+import { HomeCtaPanel } from '../components/HomeCtaPanel'
 import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
+import { PublishedBidSnapshotPanel } from '../components/PublishedBidSnapshotPanel'
 import { RecommendedOpportunitiesPanel } from '../components/RecommendedOpportunitiesPanel'
 import { WorkflowMetricsSnapshot } from '../components/WorkflowMetricsSnapshot'
 import { WorkflowStageSummary } from '../components/WorkflowStageSummary'
@@ -129,24 +130,7 @@ export function HomeDashboardPage({ publishedBidPreview, onNavigate }: HomeDashb
 
       <section className="content-grid lower-grid">
         <HomeCtaPanel onNavigate={onNavigate} />
-        <div className="panel">
-          <div className="panel-title">Published bid snapshot</div>
-          <div className="draft-list">
-            <div className="draft-card">
-              <strong>{publishedBidPreview.title}</strong>
-              <div className="muted">Category: {publishedBidPreview.category}</div>
-              <div className="muted">Deadline: {publishedBidPreview.deadline}</div>
-            </div>
-            <div className="draft-card">
-              <strong>Scope preview</strong>
-              <div className="muted">{publishedBidPreview.scope}</div>
-            </div>
-            <div className="draft-card">
-              <strong>Requirements preview</strong>
-              <div className="muted">{publishedBidPreview.requirements}</div>
-            </div>
-          </div>
-        </div>
+        <PublishedBidSnapshotPanel bid={publishedBidPreview} />
       </section>
 
       <section className="content-grid lower-grid">
