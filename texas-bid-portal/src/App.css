@@ -69,6 +69,10 @@ button {
   min-width: 0;
 }
 
+.nested-grid {
+  grid-template-columns: 1fr;
+}
+
 .view-switcher {
   display: flex;
   gap: 10px;

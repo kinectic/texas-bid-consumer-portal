@@ -1,4 +1,5 @@
 import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
+import { OpportunityStatusPanel } from '../components/OpportunityStatusPanel'
 import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
 import { bidPacketDocuments } from '../data/formState'
 import { selectedOpportunity, statusClass } from '../data/mockData'
@@ -60,7 +61,10 @@ export function OpportunityDetailPage() {
           <p className="detail-copy">{opportunity.summary}</p>
         </div>
 
-        <VendorQualificationPanel />
+        <div className="content-grid nested-grid">
+          <VendorQualificationPanel />
+          <OpportunityStatusPanel status="open" />
+        </div>
       </section>
 
       <section className="content-grid lower-grid">
