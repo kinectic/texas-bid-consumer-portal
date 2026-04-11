@@ -131,20 +131,20 @@ export function SubmissionWorkflowPage({
   const siblingRowItems = [
     ...(!activeSubmission
       ? [{
-          stage: 'New unsaved response',
+          stage: 'Unsaved draft lane',
           detail: `Current draft is not saved as a submission row yet. ${unsavedDraftHasEdits ? 'Unsaved draft edits are preserved for this opportunity.' : 'No draft edits yet; save or submit to create the next response row.'} • active row`,
           active: true,
         }]
       : [{
-          stage: `Start response ${siblingSubmissions.length + 1}`,
+          stage: `Unsaved draft lane • response ${siblingSubmissions.length + 1}`,
           detail: unsavedDraftHasEdits
-            ? `Return to the preserved unsaved draft for this opportunity. ${draftSummary.formStatus} • ${draftSummary.attachedCount}/${draftSummary.totalDocuments} attachments ready.`
-            : 'Jump back into a fresh unsaved draft without leaving the workflow. Creates a brand-new response row after save or submit.',
+            ? `Preserved unsaved draft buffer. ${draftSummary.formStatus} • ${draftSummary.attachedCount}/${draftSummary.totalDocuments} attachments ready.`
+            : 'Fresh unsaved draft buffer. Creates a brand-new response row after save or submit.',
           onClick: onStartNewSubmission,
           active: false,
         }]),
     ...siblingSubmissions.map((submission) => ({
-      stage: rowMetaBySubmissionId[submission.id]?.rowLabel ?? submission.id,
+      stage: `${rowMetaBySubmissionId[submission.id]?.rowLabel ?? submission.id} • saved row buffer`,
       detail: `${submission.vendor} • ${submission.id} • ${submission.status}${submission.id === activeSubmission?.id ? ' • active row' : ''}`,
       onClick: () => onSelectSubmission(submission),
       active: submission.id === activeSubmission?.id,
