@@ -1,5 +1,6 @@
 import { ActionHeader } from '../components/ActionHeader'
 import { EmptyStatePanel } from '../components/EmptyStatePanel'
+import { OpportunityCardList } from '../components/OpportunityCardList'
 import { OutcomeSummaryPanel } from '../components/OutcomeSummaryPanel'
 import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
 import { RecommendedOpportunitiesPanel } from '../components/RecommendedOpportunitiesPanel'
@@ -59,26 +60,11 @@ export function VendorDashboardPage() {
       <section className="content-grid">
         <div className="panel">
           <div className="panel-title">Saved opportunities</div>
-          <div className="opportunity-list">
-            {savedOpportunities.map((opportunity) => (
-              <article className="opportunity-card" key={opportunity.id}>
-                <div className="opportunity-top">
-                  <div>
-                    <h3>{opportunity.title}</h3>
-                    <div className="meta">
-                      {opportunity.agency} • {opportunity.location}
-                    </div>
-                  </div>
-                  <span className={statusClass[opportunity.status]}>{opportunity.status}</span>
-                </div>
-                <p>{opportunity.summary}</p>
-                <div className="card-footer">
-                  <div className="muted">Due {opportunity.dueDate}</div>
-                  <div className="muted">Source: {opportunity.source}</div>
-                </div>
-              </article>
-            ))}
-          </div>
+          <OpportunityCardList
+            opportunities={savedOpportunities}
+            statusClassMap={statusClass}
+            metaFormatter={(opportunity) => `${opportunity.agency} • ${opportunity.location}`}
+          />
         </div>
 
         <div className="content-grid nested-grid">

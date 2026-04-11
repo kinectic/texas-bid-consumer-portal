@@ -1,3 +1,4 @@
+import { OpportunityCardList } from '../components/OpportunityCardList'
 import { OpportunityDocumentsPanel } from '../components/OpportunityDocumentsPanel'
 import { OpportunityMetadataPanel } from '../components/OpportunityMetadataPanel'
 import { OpportunityStatusPanel } from '../components/OpportunityStatusPanel'
@@ -71,26 +72,11 @@ export function MarketplacePage({ publishedBidPreview }: MarketplacePageProps) {
             </div>
           </div>
 
-          <div className="opportunity-list">
-            {marketplaceFeed.map((opportunity) => (
-              <article className="opportunity-card" key={opportunity.id}>
-                <div className="opportunity-top">
-                  <div>
-                    <h3>{opportunity.title}</h3>
-                    <div className="meta">
-                      {opportunity.agency} • {opportunity.location} • {opportunity.category}
-                    </div>
-                  </div>
-                  <span className={statusClass[opportunity.status]}>{opportunity.status}</span>
-                </div>
-                <p>{opportunity.summary}</p>
-                <div className="card-footer">
-                  <div className="muted">Due {opportunity.dueDate}</div>
-                  <div className="muted">Source: {opportunity.source}</div>
-                </div>
-              </article>
-            ))}
-          </div>
+          <OpportunityCardList
+            opportunities={marketplaceFeed}
+            statusClassMap={statusClass}
+            metaFormatter={(opportunity) => `${opportunity.agency} • ${opportunity.location} • ${opportunity.category}`}
+          />
         </div>
 
         <div className="content-grid nested-grid">

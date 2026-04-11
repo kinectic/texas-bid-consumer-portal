@@ -1,6 +1,7 @@
 import { ActionHeader } from '../components/ActionHeader'
 import { DraftPublishSummaryPanel } from '../components/DraftPublishSummaryPanel'
 import { EmptyStatePanel } from '../components/EmptyStatePanel'
+import { OpportunityCardList } from '../components/OpportunityCardList'
 import { PrimaryActionStrip } from '../components/PrimaryActionStrip'
 import { RoleModeSummaryPanel } from '../components/RoleModeSummaryPanel'
 import { WorkflowMetricsSnapshot } from '../components/WorkflowMetricsSnapshot'
@@ -54,26 +55,11 @@ export function AgencyDashboardPage() {
             </div>
             <button className="ghost">Manage deadlines</button>
           </div>
-          <div className="opportunity-list">
-            {activeBids.map((opportunity) => (
-              <article className="opportunity-card" key={opportunity.id}>
-                <div className="opportunity-top">
-                  <div>
-                    <h3>{opportunity.title}</h3>
-                    <div className="meta">
-                      {opportunity.category} • {opportunity.location}
-                    </div>
-                  </div>
-                  <span className={statusClass[opportunity.status]}>{opportunity.status}</span>
-                </div>
-                <p>{opportunity.summary}</p>
-                <div className="card-footer">
-                  <div className="muted">Due {opportunity.dueDate}</div>
-                  <div className="muted">Source: {opportunity.source}</div>
-                </div>
-              </article>
-            ))}
-          </div>
+          <OpportunityCardList
+            opportunities={activeBids}
+            statusClassMap={statusClass}
+            metaFormatter={(opportunity) => `${opportunity.category} • ${opportunity.location}`}
+          />
         </div>
 
         <div className="content-grid nested-grid">
