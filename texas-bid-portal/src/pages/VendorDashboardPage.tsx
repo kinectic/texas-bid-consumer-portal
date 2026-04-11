@@ -1,6 +1,7 @@
 import { lifecycleMetrics } from '../data/metrics'
 import { opportunities, vendorSubmissions, statusClass } from '../data/mockData'
 import { submissionLifecycle, submissionStatusSummary } from '../data/submissionStatus'
+import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
 
 export function VendorDashboardPage() {
   const savedOpportunities = opportunities.filter((opportunity) => opportunity.status === 'open')
@@ -62,24 +63,7 @@ export function VendorDashboardPage() {
           </div>
         </div>
 
-        <div className="panel">
-          <div className="panel-title">Account and compliance</div>
-          <div className="draft-list">
-            <div className="draft-card">
-              <strong>Business profile</strong>
-              <div className="muted">Complete</div>
-            </div>
-            <div className="draft-card">
-              <strong>W-9</strong>
-              <div className="muted">On file</div>
-            </div>
-            <div className="draft-card">
-              <strong>Insurance certificate</strong>
-              <div className="muted">Needs refresh in 14 days</div>
-            </div>
-          </div>
-          <button className="ghost wide">Review compliance docs</button>
-        </div>
+        <VendorQualificationPanel />
       </section>
 
       <section className="content-grid lower-grid">

@@ -1,4 +1,5 @@
 import { LifecycleTimelinePanel } from '../components/LifecycleTimelinePanel'
+import { VendorQualificationPanel } from '../components/VendorQualificationPanel'
 import { bidPacketDocuments } from '../data/formState'
 import { selectedOpportunity, statusClass } from '../data/mockData'
 
@@ -59,23 +60,7 @@ export function OpportunityDetailPage() {
           <p className="detail-copy">{opportunity.summary}</p>
         </div>
 
-        <div className="panel">
-          <div className="panel-title">Vendor fit snapshot</div>
-          <div className="draft-list">
-            <div className="draft-card">
-              <strong>Match score</strong>
-              <div className="muted">High fit for janitorial / facilities suppliers</div>
-            </div>
-            <div className="draft-card">
-              <strong>Submission path</strong>
-              <div className="muted">Direct portal response supported</div>
-            </div>
-            <div className="draft-card">
-              <strong>Time sensitivity</strong>
-              <div className="muted">Recommended action within 48 hours</div>
-            </div>
-          </div>
-        </div>
+        <VendorQualificationPanel />
       </section>
 
       <section className="content-grid lower-grid">
