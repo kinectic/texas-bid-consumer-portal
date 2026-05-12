@@ -1,0 +1,16 @@
+{
+  "name": "Texas Bid Consumer Portal",
+  "short_name": "TexasBid",
+  "description": "Texas contractor marketplace for posting jobs, comparing trusted contractors, and reviewing bids.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#091221",
+  "theme_color": "#091221",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
