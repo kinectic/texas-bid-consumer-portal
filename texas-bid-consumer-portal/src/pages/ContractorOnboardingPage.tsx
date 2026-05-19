@@ -1,3 +1,4 @@
+import { ContractorProofChecklistPanel } from '../components/ContractorProofChecklistPanel'
 import { DemoNarrativeCommandBar } from '../components/DemoNarrativeCommandBar'
 import { FinalActionPanel } from '../components/FinalActionPanel'
 import type { ViewKey } from '../data/viewData'
@@ -30,15 +31,15 @@ const trustTiers = [
 ] as const
 
 const contractorValuePoints = [
-  'Local jobs should feel reachable, not buried in a national lead feed.',
+  'Local jobs feel reachable instead of buried in a national lead feed.',
   'Trust signals help serious contractors stand out without forcing a giant application first.',
-  'The product should make it obvious how credibility turns into more customer confidence.',
+  'The product makes it obvious how credibility turns into more customer confidence.',
 ] as const
 
 const earlyLaunchContractorPoints = [
   'Early marketplace supply grows faster when the first onboarding step is simple.',
-  'Contractors should see how stronger trust proof can improve visibility and customer confidence over time.',
-  'The launch story should make it clear that good local contractors can join early without heavy enterprise friction.',
+  'Contractors can see how stronger trust proof improves visibility and customer confidence over time.',
+  'Good local contractors can join early without heavy enterprise friction.',
 ] as const
 
 const onboardingToMarketplaceLoop = [
@@ -55,7 +56,7 @@ export function ContractorOnboardingPage({ onNavigate }: ContractorOnboardingPag
           <div className="eyebrow">For contractors</div>
           <h1>Join the Texas marketplace without heavy signup friction</h1>
           <p className="intro">
-            Contractors should understand what it takes to get visible, trusted, and ready to win work across Texas without forcing enterprise-style onboarding on day one.
+            Contractors can see what it takes to get visible, trusted, and ready to win work across Texas without dealing with enterprise-style onboarding on day one.
           </p>
         </div>
         <div className="top-actions">
@@ -105,7 +106,7 @@ export function ContractorOnboardingPage({ onNavigate }: ContractorOnboardingPag
             {onboardingToMarketplaceLoop.map((point) => (
               <div key={point} className="draft-card">
                 <strong>{point}</strong>
-                <div className="muted">This should feel like a supply activation path that feeds directly into customer-facing trust and job visibility.</div>
+                <div className="muted">This is a supply activation path that feeds directly into customer-facing trust and job visibility.</div>
               </div>
             ))}
           </div>
@@ -117,7 +118,7 @@ export function ContractorOnboardingPage({ onNavigate }: ContractorOnboardingPag
             {contractorValuePoints.map((point) => (
               <div key={point} className="draft-card">
                 <strong>{point}</strong>
-                <div className="muted">This onboarding surface should sell the value of joining, not just describe the mechanics.</div>
+                <div className="muted">This onboarding surface sells the value of joining instead of just describing the mechanics.</div>
               </div>
             ))}
           </div>
@@ -125,6 +126,8 @@ export function ContractorOnboardingPage({ onNavigate }: ContractorOnboardingPag
       </section>
 
       <section className="content-grid lower-grid">
+        <ContractorProofChecklistPanel />
+
         <div className="panel role-gateway-panel role-gateway-panel-primary">
           <div className="eyebrow">Early contractor launch</div>
           <h2>Bring in quality supply without heavy signup drag</h2>
@@ -152,7 +155,7 @@ export function ContractorOnboardingPage({ onNavigate }: ContractorOnboardingPag
             </div>
             <div className="draft-card">
               <strong>Local demand connection</strong>
-              <div className="muted">Onboarding should feel directly tied to real Texas jobs and customer trust, not like isolated admin paperwork.</div>
+              <div className="muted">Onboarding stays directly tied to real Texas jobs and customer trust instead of isolated admin paperwork.</div>
             </div>
           </div>
         </div>

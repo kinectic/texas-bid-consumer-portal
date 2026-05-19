@@ -8,6 +8,8 @@ type DemoNarrativeStep = {
   outcome: string
   audience: string
   proof: string
+  nextAction: string
+  presenterPrompt: string
 }
 
 type DemoNarrativeCommandBarProps = {
@@ -25,6 +27,8 @@ const demoNarrativeSteps: DemoNarrativeStep[] = [
     outcome: 'Customers immediately understand what the marketplace does and why it feels built for Texas.',
     audience: 'Homeowners, property managers, and small business buyers',
     proof: 'Texas-first home framing, simple entry actions, and local-market language.',
+    nextAction: 'Move into the plain-language how-it-works page so the model stays simple before browsing starts.',
+    presenterPrompt: 'Start with the customer problem: finding a trustworthy Texas contractor without wasting time.',
   },
   {
     label: '2. Simple how-it-works explainer',
@@ -34,6 +38,8 @@ const demoNarrativeSteps: DemoNarrativeStep[] = [
     outcome: 'First-time users understand the marketplace model before they browse.',
     audience: 'New customers evaluating whether the product feels credible and usable',
     proof: 'Four-step flow, trust framing, and explicit next-step calls to action.',
+    nextAction: 'Open the marketplace drill-down so the explanation immediately turns into local discovery.',
+    presenterPrompt: 'Make the loop feel obvious: post once, compare clearly, and hire without jumping between tools.',
   },
   {
     label: '3. Local matching flow',
@@ -43,6 +49,8 @@ const demoNarrativeSteps: DemoNarrativeStep[] = [
     outcome: 'Users see a cleaner path to finding the right contractor fast.',
     audience: 'Customers and contractors evaluating the marketplace',
     proof: 'Regional discovery shell, contractor/job matching, and cleaner comparison framing.',
+    nextAction: 'Carry one selected local job into the bid-review workspace instead of stopping at browsing.',
+    presenterPrompt: 'Point out that browsing stays local and trust-backed instead of looking like a generic lead board.',
   },
   {
     label: '4. Easy bid review',
@@ -52,6 +60,8 @@ const demoNarrativeSteps: DemoNarrativeStep[] = [
     outcome: 'The demo lands on an actual hiring workflow instead of a generic showcase.',
     audience: 'Customers choosing who to hire',
     proof: 'Bid-review workspace, trust cues, and direct selection flow.',
+    nextAction: 'End by showing that messages and hire confirmation stay attached to the same decision lane.',
+    presenterPrompt: 'Close on decision confidence: the customer can compare, message, and hire in one continuous lane.',
   },
 ]
 
@@ -70,8 +80,12 @@ export function DemoNarrativeCommandBar({ activeView, onNavigate, compact = fals
       </div>
 
       <div className={compact ? 'demo-narrative-list demo-narrative-list-compact' : 'demo-narrative-list'}>
-        {demoNarrativeSteps.map((step) => {
+        {demoNarrativeSteps.map((step, index) => {
           const isActive = step.target === activeView
+          const isComplete = demoNarrativeSteps.findIndex((item) => item.target === activeView) > index
+          const statusLabel = isActive ? 'Live' : isComplete ? 'Covered' : 'Ready'
+          const statusClassName = isActive ? 'status status-review' : isComplete ? 'status status-awarded' : 'status status-open'
+
           return (
             <button
               key={step.label}
@@ -80,11 +94,12 @@ export function DemoNarrativeCommandBar({ activeView, onNavigate, compact = fals
             >
               <div className="demo-narrative-step-heading">
                 <strong>{step.label}</strong>
-                <span className={isActive ? 'status status-review' : 'status status-open'}>{isActive ? 'Live' : 'Ready'}</span>
+                <span className={statusClassName}>{statusLabel}</span>
               </div>
               <div className="muted">{step.detail}</div>
               {!compact ? <div className="small-note">Audience: {step.audience}</div> : null}
               <div className="small-note">Presenter cue: {step.cue}</div>
+              <div className="small-note">Say: {step.presenterPrompt}</div>
               {!compact ? <div className="small-note">Expected outcome: {step.outcome}</div> : null}
             </button>
           )
@@ -113,6 +128,14 @@ export function DemoNarrativeCommandBar({ activeView, onNavigate, compact = fals
             <div className="draft-card">
               <strong>Proof on screen</strong>
               <div className="muted">{activeStep.proof}</div>
+            </div>
+            <div className="draft-card">
+              <strong>What to say</strong>
+              <div className="muted">{activeStep.presenterPrompt}</div>
+            </div>
+            <div className="draft-card">
+              <strong>Next move</strong>
+              <div className="muted">{activeStep.nextAction}</div>
             </div>
           </div>
         </div>

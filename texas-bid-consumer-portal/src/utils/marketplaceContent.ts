@@ -1,39 +1,39 @@
 export const marketplaceCopy = {
-  eyebrow: 'Texas vendor marketplace',
-  title: 'Posted Texas bids, grounded in place instead of clutter.',
+  eyebrow: 'Texas contractor marketplace',
+  title: 'Find local Texas contractors without generic marketplace clutter.',
   intro:
-    'A structured Texas-first marketplace where vendors move through county, city, and posted-bid discovery in a clearer local workflow instead of getting dropped into a generic statewide list.',
-  vendorSignInLabel: 'Vendor Sign In',
-  postBidLabel: 'Post a Bid',
+    'A structured Texas-first marketplace where customers move through county, city, and contractor discovery in a clearer local hiring workflow instead of getting dropped into a generic statewide list.',
+  vendorSignInLabel: 'For Contractors',
+  postBidLabel: 'Post a Job',
   marketplaceFiltersTitle: 'Marketplace filters',
   marketplaceFilters: ['All', 'Open', 'Facilities', 'Professional'] as const,
   marketplaceFeedEyebrow: 'Geographic discovery',
   marketplaceFeedTitle: 'Texas discovery lane',
   marketplaceFeedDescription:
-    'What vendors see when they move into a county, then a city, then the posted bid set that matters in that local market.',
+    'What customers see when they move into a county, then a city, then the local contractor options that matter in that hiring market.',
   metadataTitle: 'Marketplace metadata',
   legendTitle: 'Marketplace status legend',
   detailEyebrow: 'Qualification',
   detailTitle: 'Opportunity detail',
   detailDescription:
-    'The focused posted-bid view vendors use when deciding whether to move into the submission workflow.',
+    'The focused job-match view customers use when deciding whether to compare contractors more closely.',
   detailSummaryTitle: 'Opportunity summary',
-  detailSummarySubtitle: 'Focused vendor-facing summary before moving into the submission workflow.',
+  detailSummarySubtitle: 'Focused customer-facing summary before moving into bid comparison.',
   detailDocumentsTitle: 'Opportunity documents',
   selectionContextTitle: 'Selected opportunity + submission context',
   submissionWorkspaceTitle: 'Submission workspace',
-  vendorActionEyebrow: 'Vendor action',
-  vendorActionTitle: 'Ready to respond',
+  vendorActionEyebrow: 'Next move',
+  vendorActionTitle: 'Ready to compare',
   vendorActionDescription:
-    'Move from posted-bid review into a direct submission flow without leaving the product.',
+    'Move from local contractor review into a direct comparison flow without leaving the product.',
   vendorActionNote:
-    'This is the showcase promise: discover, qualify, and act in one clearer Texas-first procurement surface.',
+    'Discover, qualify, and choose in one clearer Texas-first hiring surface.',
 } as const
 
 export const marketplaceStatsItems = [
-  { value: '2,092+', label: 'Texas opportunities visible in ecosystem research' },
-  { value: 3, label: 'Core workflows shown in this prototype' },
-  { value: 1, label: 'Texas-first experience instead of generic procurement clutter' },
+  { value: '2,092+', label: 'Texas service opportunities reflected in research and sample coverage' },
+  { value: 3, label: 'Core hiring workflows connected in the site' },
+  { value: 1, label: 'Texas-first experience instead of generic marketplace clutter' },
 ] as const
 
 export const agencyFlowSteps = [

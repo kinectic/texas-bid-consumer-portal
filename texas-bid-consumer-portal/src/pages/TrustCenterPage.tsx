@@ -1,5 +1,6 @@
 import { DemoNarrativeCommandBar } from '../components/DemoNarrativeCommandBar'
 import { FinalActionPanel } from '../components/FinalActionPanel'
+import { TrustProofLadderPanel } from '../components/TrustProofLadderPanel'
 import { trustTierLabels } from '../data/consumerDataModel'
 import type { ViewKey } from '../data/viewData'
 
@@ -40,6 +41,30 @@ const trustFlowSteps = [
   {
     title: '3. Trust accelerates the final choice',
     detail: 'The trust model should reduce hesitation and help the customer move faster into shortlist and hire decisions.',
+  },
+] as const
+
+const decisionBridgePoints = [
+  'Use trust to narrow the shortlist before the customer re-enters quote comparison.',
+  'Carry the same trust interpretation into messages so last-minute questions do not reset confidence.',
+  'End trust review with one obvious move back into selection, not with a dead-end informational page.',
+] as const
+
+const trustExitRoutes = [
+  {
+    title: 'Back to marketplace comparison',
+    detail: 'Best when the customer still needs to compare multiple contractors side by side.',
+    target: 'marketplace' as const,
+  },
+  {
+    title: 'Go straight to bid review',
+    detail: 'Best when the shortlist is already clear and the customer just needed confidence before choosing.',
+    target: 'submission-workflow' as const,
+  },
+  {
+    title: 'Open job messages',
+    detail: 'Best when one last trust or scope question needs to be resolved before the hire decision.',
+    target: 'messages' as const,
   },
 ] as const
 
@@ -95,6 +120,8 @@ export function TrustCenterPage({ onNavigate }: TrustCenterPageProps) {
       </section>
 
       <section className="content-grid lower-grid">
+        <TrustProofLadderPanel />
+
         <div className="panel">
           <div className="panel-title">Trust in the hiring loop</div>
           <div className="draft-list">
@@ -128,7 +155,7 @@ export function TrustCenterPage({ onNavigate }: TrustCenterPageProps) {
             {earlyLaunchTrustPoints.map((point) => (
               <div key={point} className="draft-card">
                 <strong>{point}</strong>
-                <div className="muted">This page should explain why a newer marketplace can still feel safe and credible.</div>
+                <div className="muted">This page explains why a newer marketplace can still feel safe and credible.</div>
               </div>
             ))}
           </div>
@@ -155,13 +182,41 @@ export function TrustCenterPage({ onNavigate }: TrustCenterPageProps) {
       </section>
 
       <section className="content-grid lower-grid">
+        <div className="panel role-gateway-panel role-gateway-panel-primary">
+          <div className="eyebrow">Decision bridge</div>
+          <h2>Trust should hand the customer back into the same decision lane</h2>
+          <div className="draft-list">
+            {decisionBridgePoints.map((point) => (
+              <div key={point} className="draft-card">
+                <strong>{point}</strong>
+                <div className="muted">The trust surface only works if it improves the next hiring move immediately.</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="panel role-gateway-panel">
+          <div className="eyebrow">Exit paths</div>
+          <h2>Give the customer a clear move based on what trust answered</h2>
+          <div className="draft-list">
+            {trustExitRoutes.map((route) => (
+              <button key={route.title} className="draft-card cta-card" onClick={() => onNavigate(route.target)}>
+                <strong>{route.title}</strong>
+                <div className="muted">{route.detail}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="content-grid lower-grid">
         <FinalActionPanel
           eyebrow="Trust to action"
           title="Use trust proof to move straight back into contractor comparison"
-          description="The trust center should end with a direct hiring move: take the verification context, return to the marketplace, and compare contractors with clearer confidence."
+          description="The trust center should end with a direct hiring move: take the verification context, return to the marketplace, reopen bid review, or resolve the last question in messages without losing the decision thread."
           note="This turns trust from an informational side page into an active decision tool."
-          actionLabel="Compare trusted contractors"
-          onAction={() => onNavigate('marketplace')}
+          actionLabel="Go straight to bid review"
+          onAction={() => onNavigate('submission-workflow')}
         />
       </section>
     </main>

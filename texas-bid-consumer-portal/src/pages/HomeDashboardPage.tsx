@@ -13,6 +13,7 @@ import { RecommendedOpportunitiesPanel } from '../components/RecommendedOpportun
 import { RoleGatewayPanel } from '../components/RoleGatewayPanel'
 import { WorkflowMetricsSnapshot } from '../components/WorkflowMetricsSnapshot'
 import { WorkflowStageSummary } from '../components/WorkflowStageSummary'
+import { ConversionActionRail } from '../components/ConversionActionRail'
 import { CustomerIntakeProgressPanel } from '../components/CustomerIntakeProgressPanel'
 import { lifecycleMetrics } from '../data/metrics'
 import { workflowStageLabels } from '../data/workflowStages'
@@ -52,6 +53,26 @@ export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, c
   const recommendedOpportunities = publishedOpportunity
     ? [currentOpportunity, ...opportunities.filter((opportunity) => opportunity.id !== currentOpportunity.id)].slice(0, 2)
     : opportunities.slice(0, 2)
+  const conversionActions = [
+    {
+      title: 'Start with trust-first browsing',
+      detail: 'Use this path when the customer wants to understand screening and credibility before comparing local contractors.',
+      target: 'trust-center' as const,
+      buttonLabel: 'Review trust standards',
+    },
+    {
+      title: 'Go straight to local contractor discovery',
+      detail: 'Use this path when the customer is ready to narrow into a county, city, and job fit immediately.',
+      target: 'marketplace' as const,
+      buttonLabel: 'Find local contractors',
+    },
+    {
+      title: 'Jump into bid comparison',
+      detail: 'Use this path when the customer already understands the product and wants to see how hiring decisions get made.',
+      target: 'submission-workflow' as const,
+      buttonLabel: 'Review bids',
+    },
+  ]
   const workflowMetricsItems = [
     { value: lifecycleMetrics.workflowScreensBuilt, label: shellContent.homeWorkflowMetricLabels.screensBuilt },
     { value: '3-step flow', label: 'Post job → compare bids → hire' },
@@ -87,6 +108,13 @@ export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, c
 
       <WorkflowMetricsSnapshot items={workflowMetricsItems} />
 
+      <ConversionActionRail
+        title="Choose the fastest path into the hiring flow"
+        subtitle="The homepage makes the next move obvious based on whether the customer needs trust context, local discovery, or direct comparison."
+        actions={conversionActions}
+        onNavigate={onNavigate}
+      />
+
       <DemoNarrativeCommandBar activeView="marketplace" onNavigate={onNavigate} />
 
       <section className="content-grid">
@@ -120,7 +148,7 @@ export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, c
         </div>
 
         <div className="panel role-gateway-panel">
-          <div className="eyebrow">Public launch stance</div>
+          <div className="eyebrow">Launch approach</div>
           <h2>Start free, local, and trust-first</h2>
           <div className="draft-list">
             <div className="draft-card">

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 import { ContextBanner } from './components/ContextBanner'
+import { DemoFlowDock } from './components/DemoFlowDock'
 import { DemoNarrativeCommandBar } from './components/DemoNarrativeCommandBar'
 import { Sidebar } from './components/Sidebar'
 import { WorkflowActions } from './components/WorkflowActions'
@@ -485,6 +486,7 @@ function App() {
           })}
         </div>
         <ContextBanner activeView={activeView} />
+        <DemoFlowDock activeView={activeView} onNavigate={navigateToView} />
         <DemoNarrativeCommandBar activeView={activeView} onNavigate={navigateToView} />
         <WorkflowActions activeView={activeView} onNavigate={navigateToView} />
         {renderView(

@@ -1,3 +1,4 @@
+import { ConversionActionRail } from '../components/ConversionActionRail'
 import { DemoNarrativeCommandBar } from '../components/DemoNarrativeCommandBar'
 import { DemoWalkthroughPanel } from '../components/DemoWalkthroughPanel'
 import { FinalActionPanel } from '../components/FinalActionPanel'
@@ -62,6 +63,27 @@ type HowItWorksPageProps = {
 }
 
 export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
+  const conversionActions = [
+    {
+      title: 'Browse local matches now',
+      detail: 'Move from explanation into real contractor discovery in the Texas marketplace.',
+      target: 'marketplace' as const,
+      buttonLabel: 'Browse contractors',
+    },
+    {
+      title: 'Review trust before comparing',
+      detail: 'Use this path when the customer wants more confidence in screening and verification before choosing.',
+      target: 'trust-center' as const,
+      buttonLabel: 'Open trust center',
+    },
+    {
+      title: 'See how bids get compared',
+      detail: 'Jump ahead to the decision workspace that turns interest into contractor selection.',
+      target: 'submission-workflow' as const,
+      buttonLabel: 'Review bids',
+    },
+  ]
+
   return (
     <main className="main">
       <header className="topbar">
@@ -77,6 +99,13 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
           <button className="primary" onClick={() => onNavigate('marketplace')}>Browse local matches</button>
         </div>
       </header>
+
+      <ConversionActionRail
+        title="Move from explanation into action"
+        subtitle="This page converts understanding into a clear next click instead of ending as a static explainer."
+        actions={conversionActions}
+        onNavigate={onNavigate}
+      />
 
       <DemoNarrativeCommandBar activeView="how-it-works" onNavigate={onNavigate} compact />
 
@@ -115,7 +144,7 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
       <section className="content-grid lower-grid">
         <div className="panel role-gateway-panel">
           <div className="eyebrow">Trust and clarity</div>
-          <h2>Why this should feel safer than generic lead sites</h2>
+          <h2>Why this feels safer than generic lead sites</h2>
           <div className="draft-list">
             {trustProofPoints.map((point) => (
               <div key={point} className="draft-card">
@@ -142,13 +171,13 @@ export function HowItWorksPage({ onNavigate }: HowItWorksPageProps) {
 
       <section className="content-grid lower-grid">
         <div className="panel role-gateway-panel role-gateway-panel-primary">
-          <div className="eyebrow">Early launch stance</div>
+          <div className="eyebrow">Launch approach</div>
           <h2>Built to launch before the marketplace is huge</h2>
           <div className="draft-list">
             {launchReadinessPoints.map((point) => (
               <div key={point} className="draft-card">
                 <strong>{point}</strong>
-                <div className="muted">The product should explain why customers can trust the flow even during an early supply-building phase.</div>
+                <div className="muted">The product explains why customers can trust the flow even during an early supply-building phase.</div>
               </div>
             ))}
           </div>

@@ -48,6 +48,12 @@ const marketplaceLaunchPoints = [
   'Make the selected job feel like a live hiring path, not just a listing preview.',
 ] as const
 
+const marketplaceDecisionFlowSteps = [
+  'Choose the county market where the job feels local and relevant.',
+  'Narrow into the city so the user sees a believable hiring area instead of a statewide dump.',
+  'Open one job match, review trust and fit, then carry the same context into bid comparison.',
+] as const
+
 export function MarketplacePage({
   publishedBidPreview,
   publishedOpportunity,
@@ -179,6 +185,18 @@ export function MarketplacePage({
             statusLabel={publishedSnapshotState.statusLabel}
             note={publishedSnapshotState.note}
           />
+
+          <div className="panel" style={{ marginBottom: '1rem' }}>
+            <div className="panel-title">Demo handoff on this screen</div>
+            <div className="draft-list">
+              {marketplaceDecisionFlowSteps.map((step) => (
+                <div key={step} className="draft-card">
+                  <strong>{step}</strong>
+                  <div className="muted">This page narrows the user toward one hiring decision instead of leaving them in broad browsing mode.</div>
+                </div>
+              ))}
+            </div>
+          </div>
 
           <div className="texas-drilldown-card">
             <div className="texas-drilldown-header">
@@ -337,8 +355,20 @@ export function MarketplacePage({
             onSecondaryAction={() => onNavigate('trust-center')}
             onPrimaryAction={() => onNavigate('submission-workflow')}
           />
+          <div className="workflow-actions" style={{ margin: '0.85rem 0 0' }}>
+            <div className="panel-header">
+              <div>
+                <div className="eyebrow">Next decision move</div>
+                <div className="panel-title">Do not let the user fall out of the hiring lane here</div>
+              </div>
+              <span className="status status-review">Decision bridge</span>
+            </div>
+            <p className="action-strip-copy">
+              Once a local match looks credible, the next move should be obvious: inspect the job, validate trust if needed, and enter bid comparison with the same local context intact.
+            </p>
+          </div>
           <div className="dashboard-note" style={{ marginTop: '0.85rem' }}>
-            This screen now acts as the middle handoff in the demo: marketplace discovery narrows into one job match, then hands the same local decision context into final bid comparison.
+            This screen acts as the middle handoff in the hiring journey: marketplace discovery narrows into one job match, then carries the same local decision context into bid comparison.
           </div>
         </div>
 
@@ -393,7 +423,7 @@ export function MarketplacePage({
         <FinalActionPanel
           eyebrow={marketplaceCopy.vendorActionEyebrow}
           title="Choose a local contractor path and move into comparison"
-          description="After county and city drilldown, the page should make the next move explicit: inspect the selected job, review trust if needed, then open bid review with the same local context intact."
+          description="After county and city drilldown, the page makes the next move explicit: inspect the selected job, review trust if needed, then open bid review with the same local context intact."
           note="This closing panel now reinforces that the marketplace is a decision funnel, not just a browsing surface."
           actionLabel="Open trust-aware comparison"
           onAction={() => onNavigate('trust-center')}

@@ -6,6 +6,7 @@ type DemoWalkthroughStep = {
   target: ViewKey
   cue: string
   artifact: string
+  nextStep: string
 }
 
 type DemoWalkthroughPanelProps = {
@@ -20,6 +21,7 @@ const walkthroughSteps: DemoWalkthroughStep[] = [
     target: 'home',
     cue: 'Lead with local trust and speed.',
     artifact: 'Texas-first home framing and clear customer entry actions.',
+    nextStep: 'Then open the how-it-works explainer to make the product loop obvious before browsing.',
   },
   {
     title: 'Show local contractor discovery',
@@ -27,6 +29,7 @@ const walkthroughSteps: DemoWalkthroughStep[] = [
     target: 'marketplace',
     cue: 'Emphasize local relevance.',
     artifact: 'Texas marketplace shell showing regional discovery and job-fit context.',
+    nextStep: 'Select one job match so the story keeps narrowing toward a real hiring decision.',
   },
   {
     title: 'Open a job match and compare options',
@@ -34,6 +37,7 @@ const walkthroughSteps: DemoWalkthroughStep[] = [
     target: 'opportunity',
     cue: 'Show clarity and confidence.',
     artifact: 'Job match detail packet with scope, requirements, and next actions.',
+    nextStep: 'Carry the same contractor story into bid comparison without resetting the context.',
   },
   {
     title: 'Finish with bid review and trust',
@@ -41,6 +45,7 @@ const walkthroughSteps: DemoWalkthroughStep[] = [
     target: 'submission-workflow',
     cue: 'End with decision support.',
     artifact: 'Bid comparison workspace, trust cues, and connected follow-up flow.',
+    nextStep: 'Close by showing that message follow-up and hire confirmation remain attached to the same job thread.',
   },
 ] as const
 
@@ -61,6 +66,7 @@ export function DemoWalkthroughPanel({ activeView, onNavigate }: DemoWalkthrough
         <strong>Current showcase artifact</strong>
         <div className="muted">{activeStep.artifact}</div>
         <div className="small-note">Narration cue: {activeStep.cue}</div>
+        <div className="small-note">Next step: {activeStep.nextStep}</div>
       </div>
 
       <div className="demo-walkthrough-list">
@@ -72,6 +78,7 @@ export function DemoWalkthroughPanel({ activeView, onNavigate }: DemoWalkthrough
               <div className="muted">{step.detail}</div>
               <div className="small-note">Presenter cue: {step.cue}</div>
               <div className="small-note">Artifact: {step.artifact}</div>
+              <div className="small-note">Next: {step.nextStep}</div>
             </button>
           )
         })}

@@ -141,12 +141,89 @@ button {
   max-width: 620px;
 }
 
+.demo-flow-dock,
 .workflow-actions {
   margin: 18px 30px 0;
   padding: 16px 18px;
   border-radius: 16px;
   border: 1px solid rgba(120, 146, 196, 0.18);
   background: rgba(15, 25, 48, 0.55);
+}
+
+.demo-flow-dock {
+  display: grid;
+  gap: 14px;
+}
+
+.demo-flow-dock-copy {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.demo-flow-current {
+  display: grid;
+  gap: 6px;
+  justify-items: end;
+}
+
+.demo-flow-step-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  gap: 10px;
+}
+
+.demo-flow-step {
+  border: 1px solid rgba(120, 146, 196, 0.18);
+  background: rgba(255, 255, 255, 0.03);
+  color: #dce6fb;
+  border-radius: 14px;
+  padding: 12px 14px;
+  cursor: pointer;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  text-align: left;
+}
+
+.demo-flow-step-index {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(95, 140, 255, 0.18);
+  color: #ffffff;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.demo-flow-step-body {
+  display: grid;
+  gap: 2px;
+}
+
+.demo-flow-step-body span {
+  color: #8fa3cc;
+  font-size: 0.8rem;
+}
+
+.demo-flow-step-active {
+  border-color: rgba(95, 140, 255, 0.52);
+  background: rgba(95, 140, 255, 0.16);
+}
+
+.demo-flow-step-complete {
+  border-color: rgba(81, 181, 122, 0.28);
+  background: rgba(81, 181, 122, 0.12);
+}
+
+.demo-flow-rail-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .workflow-actions-list {
@@ -233,6 +310,30 @@ button {
   border-radius: 16px;
   padding: 16px;
   color: #c9d5ef;
+}
+
+.conversion-action-rail {
+  margin-top: 18px;
+}
+
+.conversion-action-card {
+  display: grid;
+  gap: 10px;
+}
+
+.conversion-action-card-primary {
+  border-color: rgba(95, 140, 255, 0.35);
+  background: rgba(95, 140, 255, 0.08);
+}
+
+.conversion-action-card button {
+  justify-self: start;
+}
+
+.trust-proof-card,
+.contractor-proof-card {
+  display: grid;
+  gap: 6px;
 }
 
 .card-label,
@@ -496,6 +597,12 @@ button {
 
 .demo-narrative-live-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.demo-narrative-live-grid .draft-card,
+.demo-walkthrough-active-card,
+.demo-walkthrough-list .draft-card {
+  height: 100%;
 }
 
 .demo-walkthrough-panel {
@@ -1126,6 +1233,16 @@ h1 {
     border-bottom: 1px solid rgba(120, 146, 196, 0.18);
   }
 
+  .context-banner,
+  .demo-flow-dock-copy {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .demo-flow-current {
+    justify-items: start;
+  }
+
   .stats-grid,
   .content-grid,
   .detail-grid,
@@ -1133,7 +1250,8 @@ h1 {
   .role-gateway-grid,
   .agency-access-request-grid,
   .demo-narrative-list,
-  .demo-walkthrough-list {
+  .demo-walkthrough-list,
+  .demo-flow-step-list {
     grid-template-columns: 1fr;
   }
 }

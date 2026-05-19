@@ -1,22 +1,22 @@
 export const lifecycleDrivenHomeCtas = [
   {
-    title: 'Customers: see how TexasBid works',
-    detail: 'Start with the simple four-step loop so first-time users understand the product before browsing.',
+    title: 'See how it works',
+    detail: 'Start with the four-step customer flow so the product makes sense before browsing begins.',
     target: 'how-it-works',
   },
   {
-    title: 'Customers: browse local contractor matches',
-    detail: 'Start with a Texas market view that quickly narrows to the right city, trade, and fit.',
+    title: 'Find local contractors',
+    detail: 'Open the Texas marketplace and narrow into the right county, city, and service fit.',
     target: 'marketplace',
   },
   {
-    title: 'Customers: compare bids and choose',
-    detail: 'Move into the decision workspace where price, timing, and trust are easier to compare.',
+    title: 'Review bids and choose',
+    detail: 'Move into the comparison workspace where trust, price, and timing stay in one hiring lane.',
     target: 'submission-workflow',
   },
   {
-    title: 'Contractors: build trust and get ready',
-    detail: 'Show how onboarding and verification help strong local contractors look credible fast.',
+    title: 'For contractors: get listed',
+    detail: 'Show contractors how to build trust, get visible, and start receiving local job matches.',
     target: 'contractor-onboarding',
   },
 ] as const

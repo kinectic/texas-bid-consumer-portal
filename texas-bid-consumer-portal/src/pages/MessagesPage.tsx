@@ -116,7 +116,7 @@ export function MessagesPage({ onNavigate }: MessagesPageProps) {
           eyebrow="Resolution move"
           title="Use the thread to close negotiation, then return to contractor selection"
           description="The message surface should end with a clear next move: resolve scope or pricing questions, reopen bid review, and push the final contractor choice forward without losing job context."
-          note="This turns messages into a decision-support layer instead of a detached inbox."
+          note="This keeps messages as a decision-support layer instead of a detached inbox."
           actionLabel="Return to selection review"
           onAction={() => onNavigate('submission-workflow')}
         />

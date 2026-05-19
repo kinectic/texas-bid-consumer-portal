@@ -114,9 +114,14 @@ export function SubmissionWorkflowPage({
     'Route the user into the message thread only after the review action is clear and intentional.',
   ]
   const comparisonLaunchPoints = [
-    'The comparison workspace should feel like the real moment where the customer gets comfortable choosing.',
+    'The comparison workspace is the real moment where the customer gets comfortable choosing.',
     'Trust, reasons to choose, and readiness should all reinforce the same recommended contractor story.',
     'Message follow-up should support the decision, not derail the user away from the shortlist and hire flow.',
+  ]
+  const finalDecisionSteps = [
+    'Keep the selected contractor and active bid record visually obvious throughout the page.',
+    'Use trust, shortlist, and packet-readiness surfaces to reinforce one confident recommendation.',
+    'Treat messages as support for the decision, then bring the user back to finalize the hire path fast.',
   ]
 
   return (
@@ -186,11 +191,19 @@ export function SubmissionWorkflowPage({
           <span className="status status-review">Final comparison</span>
         </div>
         <p className="action-strip-copy">
-          The review workspace should feel like the natural continuation of the job-match screen: same contractor context, same trust signal, and one clear move toward hire.
+          The review workspace is the natural continuation of the job-match screen: same contractor context, same trust signal, and one clear move toward hire.
         </p>
         <p className="action-strip-copy">
           If a message thread is still blocking selection, this screen should send the user out to resolve that thread fast, then bring them straight back into the shortlist and hire decision.
         </p>
+        <div className="draft-list" style={{ marginTop: '0.85rem' }}>
+          {finalDecisionSteps.map((step) => (
+            <div key={step} className="draft-card">
+              <strong>{step}</strong>
+              <div className="muted">This screen is the end of the hiring lane, not another workspace detour.</div>
+            </div>
+          ))}
+        </div>
       </div>
 
       <section className="content-grid lower-grid">
@@ -304,7 +317,7 @@ export function SubmissionWorkflowPage({
             {comparisonLaunchPoints.map((point) => (
               <div key={point} className="draft-card">
                 <strong>{point}</strong>
-                <div className="muted">A public-facing hiring product needs the comparison screen to feel confident and conversion-oriented, not tentative.</div>
+                <div className="muted">The comparison screen needs to feel confident and conversion-oriented, not tentative.</div>
               </div>
             ))}
           </div>
@@ -316,7 +329,7 @@ export function SubmissionWorkflowPage({
         <FinalActionPanel
           eyebrow={vendorWorkflowCopy.finalEyebrow}
           title="Close comparison and move toward contractor selection"
-          description="The last state on this page should feel like a hiring decision checkpoint: confirm the recommended contractor, keep message follow-up available, and move toward choosing without lingering in draft mode."
+          description="The last state on this page acts as a hiring decision checkpoint: confirm the recommended contractor, keep message follow-up available, and move toward choosing without lingering in draft mode."
           note={finalAction.note}
           actionLabel="Advance recommended contractor"
           onAction={() => {
