@@ -72,11 +72,11 @@ export function DemoNarrativeCommandBar({ activeView, onNavigate, compact = fals
     <section className="workflow-actions demo-narrative-command-bar">
       <div className="demo-narrative-header">
         <div>
-          <div className="panel-title">Consumer demo path</div>
-          <div className="panel-subtitle">Use this flow when presenting the Texas consumer marketplace.</div>
-          <div className="small-note">Recommended order: home story, how-it-works explainer, local matching, then easy bid review.</div>
+          <div className="panel-title">Launch narrative path</div>
+          <div className="panel-subtitle">Use this flow when walking someone through the Texas consumer marketplace.</div>
+          <div className="small-note">Recommended sequence: home story, how-it-works explainer, local matching, then bid review.</div>
         </div>
-        {activeStep ? <span className="status status-review">Live step: {activeStep.label}</span> : null}
+        {activeStep ? <span className="status status-review">Current step: {activeStep.label}</span> : null}
       </div>
 
       <div className={compact ? 'demo-narrative-list demo-narrative-list-compact' : 'demo-narrative-list'}>
@@ -99,7 +99,7 @@ export function DemoNarrativeCommandBar({ activeView, onNavigate, compact = fals
               <div className="muted">{step.detail}</div>
               {!compact ? <div className="small-note">Audience: {step.audience}</div> : null}
               <div className="small-note">Presenter cue: {step.cue}</div>
-              <div className="small-note">Say: {step.presenterPrompt}</div>
+              <div className="small-note">Open with: {step.presenterPrompt}</div>
               {!compact ? <div className="small-note">Expected outcome: {step.outcome}</div> : null}
             </button>
           )
@@ -110,7 +110,7 @@ export function DemoNarrativeCommandBar({ activeView, onNavigate, compact = fals
         <div className="demo-narrative-live-panel">
           <div>
             <div className="eyebrow">Narration support</div>
-            <div className="panel-title">What to say right now</div>
+            <div className="panel-title">Presenter notes</div>
           </div>
           <div className="demo-narrative-live-grid">
             <div className="draft-card">

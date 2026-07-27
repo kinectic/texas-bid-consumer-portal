@@ -1,8 +1,8 @@
 export const homeDashboardCopy = {
   eyebrow: 'Texas-first consumer marketplace',
-  title: 'Post a job once. Compare trusted Texas contractors in one cleaner hiring flow.',
+  title: 'Post a job once. Compare trusted Texas contractors in one clean hiring flow.',
   intro:
-    'TexasBid gives homeowners, property managers, and local businesses one clear place to describe a job, review trusted local contractors, compare bids, and choose confidently without bouncing across tools.',
+    'TexasBid gives homeowners, property managers, and local businesses one clear place to describe a job, review trusted local contractors, compare bids, and choose confidently without bouncing between tools.',
   productMapLabel: 'View marketplace map',
   enterWorkflowLabel: 'Explore local matches',
   primaryActionTitle: 'Start with the real customer loop',
