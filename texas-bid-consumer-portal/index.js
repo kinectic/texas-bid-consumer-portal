@@ -431,7 +431,7 @@ const styles = `
   }
 `
 
-function layout({ title, eyebrow, headline, subhead, body, footerLeft, footerRight, topChips = [], actions = [], nav = [], minimalHeader = false }) {
+function layout({ title, eyebrow, headline, subhead, body, footerLeft, footerRight, topChips = [], actions = [], nav = [], minimalHeader = false, bare = false }) {
   const chips = topChips.map((chip) => `<div class="pill ${chip.tone || ''}">${chip.label}</div>`).join('')
   const actionHtml = actions.map((action) => `<a class="cta ${action.primary ? 'primary' : 'secondary'}" href="${action.href}">${action.label}</a>`).join('')
   const navHtml = nav.map((item) => `<a class="pill ${item.tone || ''}" href="${item.href}">${item.label}</a>`).join('')
@@ -448,6 +448,7 @@ function layout({ title, eyebrow, headline, subhead, body, footerLeft, footerRig
   <div class="wrap">
     <div class="shell">
       <div class="page">
+        ${bare ? body : `
         <div class="topbar">
           <div class="brand">
             <b>Texas Bid</b>
@@ -463,11 +464,12 @@ function layout({ title, eyebrow, headline, subhead, body, footerLeft, footerRig
           ${actionHtml ? `<div class="actions">${actionHtml}</div>` : ''}
         </section>
         ${body}
+        `}
       </div>
-      <div class="footer">
+      ${bare ? '' : `<div class="footer">
         <span>${footerLeft}</span>
         <span>${footerRight}</span>
-      </div>
+      </div>`}
     </div>
   </div>
 </body>
@@ -508,34 +510,17 @@ const contractors = [
 function homePage() {
   return layout({
     title: 'Texas Bid',
-    eyebrow: 'Free for now. Two lanes only.',
-    headline: 'Pick a job or pick a bid.',
-    subhead: 'A clean Texas tool for both sides: post a job if you need work done, or bid a job if you want to win it.',
-    minimalHeader: true,
+    bare: true,
     body: `
       <main class="cards">
         <a class="card strong home-choice fade-up delay-1" href="/post-job">
-          <div class="cluster"><div class="chip good">Consumer</div><div class="chip">Location first</div></div>
           <h2>Post a job</h2>
-          <p>Start with your city, describe the work, and send it to contractors nearby.</p>
-          <div class="tableish">
-            <div class="field"><strong>Next screen</strong><p>Location, scope, timing, and budget.</p></div>
-            <div class="field"><strong>Launch note</strong><p>Free now. No paywall. No clutter.</p></div>
-          </div>
         </a>
         <a class="card strong home-choice fade-up delay-2" href="/bid-job">
-          <div class="cluster"><div class="chip warn">Contractor</div><div class="chip">Bid first</div></div>
-          <h2>Bid a job</h2>
-          <p>Create a profile, browse nearby work, and send a bid from the same flow.</p>
-          <div class="tableish">
-            <div class="field"><strong>Next screen</strong><p>Browse jobs, trust signals, and fast bid entry.</p></div>
-            <div class="field"><strong>Later-ready</strong><p>Messaging, ratings, and verification can expand cleanly.</p></div>
-          </div>
+          <h2>Place a bid</h2>
         </a>
       </main>
     `,
-    footerLeft: 'Everything is free right now.',
-    footerRight: 'Built to stay clean on the first screen.',
   })
 }
 
@@ -1079,26 +1064,17 @@ function contractorProfilePage(contractor) {
 function notFoundPage() {
   return layout({
     title: 'Texas Bid',
-    eyebrow: 'Free for now. Two lanes only.',
-    headline: 'Pick a job or pick a bid.',
-    subhead: 'A simple Texas tool for both sides: homeowners and contractors.',
-    minimalHeader: true,
+    bare: true,
     body: `
       <main class="cards">
         <a class="card strong home-choice fade-up delay-1" href="/post-job">
-          <div class="cluster"><div class="chip good">Consumer</div></div>
           <h2>Post a job</h2>
-          <p>Pick your location and move straight into the job posting flow.</p>
         </a>
         <a class="card strong home-choice fade-up delay-2" href="/bid-job">
-          <div class="cluster"><div class="chip warn">Contractor</div></div>
-          <h2>Bid a job</h2>
-          <p>Create an account, browse nearby work, and start bidding.</p>
+          <h2>Place a bid</h2>
         </a>
       </main>
     `,
-    footerLeft: 'Everything is free right now.',
-    footerRight: 'Built to keep the first screen clean.',
   })
 }
 
