@@ -1,0 +1,10 @@
+{
+  "name": "texas-bid-recovery-root",
+  "private": true,
+  "scripts": {
+    "build": "npm --prefix texas-bid-consumer-portal ci && npm --prefix texas-bid-consumer-portal run build && rm -rf dist && mkdir -p dist && cp -R texas-bid-consumer-portal/dist/. dist/",
+    "dev": "npm --prefix texas-bid-consumer-portal run dev",
+    "lint": "npm --prefix texas-bid-consumer-portal run lint",
+    "preview": "npm --prefix texas-bid-consumer-portal run preview"
+  }
+}
