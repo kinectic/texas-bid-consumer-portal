@@ -26,10 +26,10 @@ writeFileSync(
   join(distDir, 'server', 'index.js'),
   `import { createServer } from 'node:http'
 import { createReadStream, existsSync, statSync } from 'node:fs'
-import { extname, join, resolve } from 'node:path'
+import { dirname, extname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const distRoot = resolve(fileURLToPath(new URL('..', import.meta.url)))
+const distRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const mimeTypes = {
   '.css': 'text/css; charset=utf-8',
   '.html': 'text/html; charset=utf-8',
