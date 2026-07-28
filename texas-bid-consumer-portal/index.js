@@ -66,6 +66,11 @@ const styles = `
   .pill.good, .chip.good, .badge.good { border-color: rgba(78, 224, 154, 0.3); color: #b9f4d8; }
   .pill.warn, .chip.warn, .badge.warn { border-color: rgba(255, 211, 111, 0.3); color: #ffe6ae; }
   .pill.bad, .chip.bad, .badge.bad { border-color: rgba(255, 140, 140, 0.34); color: #ffcdcd; }
+  .switch {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
   .hero {
     display: grid;
     gap: 12px;
@@ -102,7 +107,11 @@ const styles = `
     padding: 22px;
     display: grid;
     gap: 14px;
+    text-decoration: none;
+    min-height: 220px;
+    transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
   }
+  .card:hover { border-color: rgba(111, 179, 255, 0.42); transform: translateY(-1px); }
   .card.strong {
     background: linear-gradient(180deg, rgba(14, 26, 48, 0.96), rgba(10, 18, 35, 0.86));
   }
@@ -115,6 +124,12 @@ const styles = `
     margin: 0;
     color: #d3def6;
     line-height: 1.6;
+  }
+  .section-title {
+    font-size: 0.82rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
   }
   .steps {
     display: grid;
@@ -139,6 +154,7 @@ const styles = `
     background: rgba(255,255,255,0.03);
     display: grid;
     gap: 8px;
+    text-decoration: none;
   }
   .mini strong { font-size: 1rem; }
   .mini .meta { color: var(--muted); font-size: 0.9rem; }
@@ -187,20 +203,6 @@ const styles = `
     flex-wrap: wrap;
     color: var(--muted);
   }
-  .section-title {
-    font-size: 0.82rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .switch {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  .switch .pill {
-    text-decoration: none;
-  }
   @media (max-width: 920px) {
     .cards, .split { grid-template-columns: 1fr; }
   }
@@ -248,6 +250,12 @@ function layout({ title, eyebrow, headline, subhead, body, footerLeft, footerRig
 </html>`
 }
 
+const jobs = [
+  { title: 'Drywall repair for a small retail space', city: 'Arlington', budget: '$1,500 - $3,000', category: 'Interior work' },
+  { title: 'Bathroom tile replacement', city: 'Plano', budget: '$2,000 - $4,500', category: 'Home repair' },
+  { title: 'After-hours lobby cleanup', city: 'Dallas', budget: '$900 - $1,800', category: 'Janitorial' },
+]
+
 const contractors = [
   {
     name: 'Alma Rivera',
@@ -273,39 +281,21 @@ const contractors = [
   },
 ]
 
-const jobs = [
-  {
-    title: 'Drywall repair for a small retail space',
-    city: 'Arlington',
-    budget: '$1,500 - $3,000',
-    category: 'Interior work',
-  },
-  {
-    title: 'Bathroom tile replacement',
-    city: 'Plano',
-    budget: '$2,000 - $4,500',
-    category: 'Home repair',
-  },
-]
-
 function homePage() {
   return layout({
     title: 'Texas Bid',
     eyebrow: 'Free for now. Choose your path.',
     headline: 'Pick a job or pick a bid.',
     subhead: 'A simple Texas tool for both sides: homeowners and contractors.',
-    topChips: [
-      { label: 'Free launch', tone: 'good' },
-      { label: 'Texas-first' },
-    ],
+    topChips: [{ label: 'Free launch', tone: 'good' }, { label: 'Texas-first' }],
     body: `
       <main class="cards">
-        <a class="card strong" href="/post-job" style="text-decoration:none;">
+        <a class="card strong" href="/post-job">
           <div class="pillrow"><div class="chip good">Consumer</div></div>
           <h2>Post a job</h2>
           <p>Pick your location and move straight into the job posting flow.</p>
         </a>
-        <a class="card strong" href="/bid-job" style="text-decoration:none;">
+        <a class="card strong" href="/bid-job">
           <div class="pillrow"><div class="chip warn">Contractor</div></div>
           <h2>Bid a job</h2>
           <p>Create an account, browse nearby work, and start bidding.</p>
@@ -330,13 +320,13 @@ function postJobPage() {
       { label: 'Messages', href: '/messages' },
     ],
     actions: [
+      { label: 'Review the job', href: '/post-job/review', primary: true },
       { label: 'Back home', href: '/', primary: false },
-      { label: 'See messages', href: '/messages', primary: true },
     ],
     body: `
       <main class="split">
         <section class="card strong">
-          <div class="section-title">Transition</div>
+          <div class="section-title">Step 1 of 3</div>
           <div class="steps">
             <div class="step"><strong>1. Choose your location</strong><span>Start with the city or area.</span></div>
             <div class="step"><strong>2. Describe the job</strong><span>Tell contractors what you need.</span></div>
@@ -349,24 +339,116 @@ function postJobPage() {
           </div>
         </section>
         <section class="card">
-          <div class="section-title">What comes next</div>
-          <div class="mini">
-            <strong>Messages</strong>
-            <div class="meta">Keep conversations attached to the job.</div>
-          </div>
-          <div class="mini">
-            <strong>Ratings</strong>
-            <div class="meta">See contractor trust without extra hunting.</div>
-          </div>
-          <div class="mini">
-            <strong>Certification</strong>
-            <div class="meta">Certified vs non-certified will matter here later.</div>
+          <div class="section-title">Location</div>
+          <div class="list">
+            <div class="mini"><strong>Dallas</strong><div class="meta">Fast urban match</div></div>
+            <div class="mini"><strong>Fort Worth</strong><div class="meta">Commercial and home work</div></div>
+            <div class="mini"><strong>Plano</strong><div class="meta">Residential and light business</div></div>
           </div>
         </section>
       </main>
     `,
     footerLeft: 'Consumer flow',
-    footerRight: 'Location first, then job details.',
+    footerRight: 'Location first, then the job details.',
+  })
+}
+
+function postJobReviewPage() {
+  return layout({
+    title: 'Review Job | Texas Bid',
+    eyebrow: 'Consumer path · free',
+    headline: 'Review the job.',
+    subhead: 'Keep the decision short. Check the scope, location, and what gets shown to contractors.',
+    topChips: [{ label: 'Free', tone: 'good' }, { label: 'Ready to submit' }],
+    nav: [
+      { label: 'Home', href: '/' },
+      { label: 'Post a job', href: '/post-job' },
+      { label: 'Trust & ratings', href: '/trust' },
+    ],
+    actions: [
+      { label: 'Go live', href: '/post-job/live', primary: true },
+      { label: 'Edit details', href: '/post-job', primary: false },
+    ],
+    body: `
+      <main class="split">
+        <section class="card strong">
+          <div class="section-title">Summary</div>
+          <div class="mini">
+            <strong>Location</strong>
+            <div class="meta">Dallas, TX</div>
+          </div>
+          <div class="mini">
+            <strong>Scope</strong>
+            <div class="meta">Drywall repair for a small retail space</div>
+          </div>
+          <div class="mini">
+            <strong>Timing</strong>
+            <div class="meta">This week</div>
+          </div>
+        </section>
+        <section class="card">
+          <div class="section-title">What happens next</div>
+          <div class="mini">
+            <strong>Messaging</strong>
+            <div class="meta">Replies stay attached to the job.</div>
+          </div>
+          <div class="mini">
+            <strong>Ratings</strong>
+            <div class="meta">Contractor trust shows next to the bid.</div>
+          </div>
+          <div class="mini">
+            <strong>Certification</strong>
+            <div class="meta">Certified and non-certified contractors stay visible later.</div>
+          </div>
+        </section>
+      </main>
+    `,
+    footerLeft: 'Consumer flow',
+    footerRight: 'A short review screen before posting.',
+  })
+}
+
+function postJobLivePage() {
+  return layout({
+    title: 'Job Live | Texas Bid',
+    eyebrow: 'Consumer path · free',
+    headline: 'Your job is live.',
+    subhead: 'Now contractors can find it, message you, and send bids.',
+    topChips: [{ label: 'Free', tone: 'good' }, { label: 'Ready for responses' }],
+    nav: [
+      { label: 'Home', href: '/' },
+      { label: 'Messages', href: '/messages' },
+      { label: 'Trust & ratings', href: '/trust' },
+    ],
+    actions: [
+      { label: 'Open messages', href: '/messages', primary: true },
+      { label: 'Back home', href: '/', primary: false },
+    ],
+    body: `
+      <main class="split">
+        <section class="card strong">
+          <div class="section-title">Live now</div>
+          <div class="list">
+            <div class="mini"><strong>First reply</strong><div class="meta">A contractor can ask clarifying questions inside the thread.</div></div>
+            <div class="mini"><strong>Ratings visible</strong><div class="meta">Show trust while the conversation is happening.</div></div>
+            <div class="mini"><strong>Certified badge</strong><div class="meta">Keep business proof visible without clutter.</div></div>
+          </div>
+        </section>
+        <section class="card">
+          <div class="section-title">Next move</div>
+          <div class="mini">
+            <strong>Read bids</strong>
+            <div class="meta">Compare contractors when the replies arrive.</div>
+          </div>
+          <div class="mini">
+            <strong>Message back</strong>
+            <div class="meta">Keep the thread in one place.</div>
+          </div>
+        </section>
+      </main>
+    `,
+    footerLeft: 'Consumer flow',
+    footerRight: 'The job, the thread, and the response lane.',
   })
 }
 
@@ -383,13 +465,70 @@ function bidJobPage() {
       { label: 'Trust & ratings', href: '/trust' },
     ],
     actions: [
-      { label: 'View messages', href: '/messages', primary: false },
-      { label: 'Trust rules', href: '/trust', primary: true },
+      { label: 'Browse jobs', href: '/bid-job/browse', primary: true },
+      { label: 'Trust rules', href: '/trust', primary: false },
     ],
     body: `
       <main class="split">
         <section class="card strong">
-          <div class="section-title">Nearby work</div>
+          <div class="section-title">Account first</div>
+          <div class="steps">
+            <div class="step"><strong>1. Create an account</strong><span>Set up your contractor profile.</span></div>
+            <div class="step"><strong>2. Browse jobs</strong><span>See work nearby by location and fit.</span></div>
+            <div class="step"><strong>3. Send a bid</strong><span>Respond to the jobs you want.</span></div>
+          </div>
+          <div class="mini">
+            <strong>Profile basics</strong>
+            <div class="meta">Business name · trade · service area · proof</div>
+          </div>
+        </section>
+        <section class="card">
+          <div class="section-title">Trust states</div>
+          <div class="list">
+            <a class="mini" href="/contractors/alma-rivera">
+              <strong>Certified contractor</strong>
+              <div class="meta">Higher trust signal and better visibility.</div>
+            </a>
+            <a class="mini" href="/contractors/lone-star-works">
+              <strong>Non-certified contractor</strong>
+              <div class="meta">Can still bid, but proof is lighter.</div>
+            </a>
+          </div>
+        </section>
+      </main>
+    `,
+    footerLeft: 'Contractor flow',
+    footerRight: 'Browse first, then bid.',
+  })
+}
+
+function bidBrowsePage() {
+  return layout({
+    title: 'Browse Jobs | Texas Bid',
+    eyebrow: 'Contractor path · free',
+    headline: 'Browse nearby jobs.',
+    subhead: 'See jobs by location, category, and urgency. Keep the best matches at the top.',
+    topChips: [{ label: 'Free', tone: 'good' }, { label: 'Open jobs' }],
+    nav: [
+      { label: 'Home', href: '/' },
+      { label: 'Post a job', href: '/post-job' },
+      { label: 'Messages', href: '/messages' },
+    ],
+    actions: [
+      { label: 'Send a bid', href: '/bid-job/bid', primary: true },
+      { label: 'View trust', href: '/trust', primary: false },
+    ],
+    body: `
+      <main class="split">
+        <section class="card strong">
+          <div class="section-title">Filters</div>
+          <div class="pillrow">
+            <div class="pill">Dallas</div>
+            <div class="pill">Fort Worth</div>
+            <div class="pill">Plano</div>
+            <div class="pill">Janitorial</div>
+            <div class="pill">Interior work</div>
+          </div>
           <div class="list">
             ${jobs.map((job) => `
               <div class="mini">
@@ -404,10 +543,10 @@ function bidJobPage() {
           </div>
         </section>
         <section class="card">
-          <div class="section-title">Contractor states</div>
+          <div class="section-title">Contractor trust</div>
           <div class="list">
             ${contractors.map((contractor) => `
-              <a class="mini" href="${contractor.route}" style="text-decoration:none;">
+              <a class="mini" href="${contractor.route}">
                 <strong>${contractor.name}</strong>
                 <div class="meta">${contractor.service}</div>
                 <div class="rating">
@@ -423,7 +562,55 @@ function bidJobPage() {
       </main>
     `,
     footerLeft: 'Contractor flow',
-    footerRight: 'Browse first, then bid.',
+    footerRight: 'Location, fit, and proof together.',
+  })
+}
+
+function bidFormPage() {
+  return layout({
+    title: 'Send a Bid | Texas Bid',
+    eyebrow: 'Contractor path · free',
+    headline: 'Send a bid.',
+    subhead: 'Keep it fast: price, timing, and a short note are enough for the first version.',
+    topChips: [{ label: 'Free', tone: 'good' }, { label: 'Ready to send' }],
+    nav: [
+      { label: 'Home', href: '/' },
+      { label: 'Browse jobs', href: '/bid-job/browse' },
+      { label: 'Messages', href: '/messages' },
+    ],
+    actions: [
+      { label: 'Open thread', href: '/messages', primary: true },
+      { label: 'Back to browse', href: '/bid-job/browse', primary: false },
+    ],
+    body: `
+      <main class="split">
+        <section class="card strong">
+          <div class="section-title">Bid form</div>
+          <div class="steps">
+            <div class="step"><strong>Price</strong><span>Enter your bid amount.</span></div>
+            <div class="step"><strong>Timing</strong><span>Tell them when you can start.</span></div>
+            <div class="step"><strong>Note</strong><span>Short message, attached to the job.</span></div>
+          </div>
+          <div class="mini">
+            <strong>Thread preview</strong>
+            <div class="meta">The message stays tied to this job and this bid.</div>
+          </div>
+        </section>
+        <section class="card">
+          <div class="section-title">Why this works</div>
+          <div class="mini">
+            <strong>Simple first</strong>
+            <div class="meta">Fast enough to use before the app gets heavier.</div>
+          </div>
+          <div class="mini">
+            <strong>Expandable later</strong>
+            <div class="meta">Saved templates, attachments, and paid tools can slot in later.</div>
+          </div>
+        </section>
+      </main>
+    `,
+    footerLeft: 'Contractor flow',
+    footerRight: 'Fast bid, attached to the job.',
   })
 }
 
@@ -433,7 +620,7 @@ function messagesPage() {
     eyebrow: 'Shared messaging · free',
     headline: 'Keep the conversation with the job.',
     subhead: 'A simple in-app message system that stays attached to the post, the bid, and the contractor.',
-    topChips: [{ label: 'Free', tone: 'good' }, { label: 'Built for both sides' }],
+    topChips: [{ label: 'Free', tone: 'good' }, { label: 'Both sides use it' }],
     nav: [
       { label: 'Home', href: '/' },
       { label: 'Post a job', href: '/post-job' },
@@ -526,13 +713,17 @@ function trustPage() {
   })
 }
 
-function contractorProfilePage() {
+function contractorProfilePage(contractor) {
   return layout({
-    title: 'Contractor Profile | Texas Bid',
-    eyebrow: 'Profile view · certified example',
-    headline: 'Alma Rivera',
+    title: `${contractor.name} | Texas Bid`,
+    eyebrow: contractor.badge === 'Certified' ? 'Profile view · certified example' : 'Profile view · non-certified example',
+    headline: contractor.name,
     subhead: 'A contractor profile that shows rating, certification, and proof in one place.',
-    topChips: [{ label: 'Certified', tone: 'good' }, { label: '4.9 rating', tone: 'good' }, { label: '42 reviews' }],
+    topChips: [
+      { label: contractor.badge, tone: contractor.tone },
+      { label: `${contractor.rating} rating`, tone: 'good' },
+      { label: `${contractor.reviews} reviews` },
+    ],
     nav: [
       { label: 'Home', href: '/' },
       { label: 'Bid a job', href: '/bid-job' },
@@ -540,25 +731,24 @@ function contractorProfilePage() {
     ],
     actions: [
       { label: 'Message contractor', href: '/messages', primary: true },
-      { label: 'Back to jobs', href: '/bid-job', primary: false },
+      { label: 'Back to jobs', href: '/bid-job/browse', primary: false },
     ],
     body: `
       <main class="split">
         <section class="card strong">
           <div class="section-title">Profile proof</div>
           <div class="rating">
-            <span class="score">4.9</span>
+            <span class="score">${contractor.rating}</span>
             <div>
-              <div class="muted">42 reviews</div>
+              <div class="muted">${contractor.reviews} reviews</div>
               <div class="pillrow" style="margin-top: 8px;">
-                <span class="badge good">Certified</span>
-                <span class="badge">Business license verified</span>
-                <span class="badge">Insurance on file</span>
+                <span class="badge ${contractor.tone}">${contractor.badge}</span>
+                <span class="badge">Service area: ${contractor.service}</span>
               </div>
             </div>
           </div>
           <div class="steps">
-            <div class="step"><strong>Service area</strong><span>Dallas, Fort Worth, Arlington</span></div>
+            <div class="step"><strong>Service area</strong><span>${contractor.service}</span></div>
             <div class="step"><strong>Trade focus</strong><span>Interior repair, light renovation, and small commercial jobs</span></div>
             <div class="step"><strong>Messaging status</strong><span>Replies quickly and keeps the thread with the job</span></div>
           </div>
@@ -594,12 +784,12 @@ function notFoundPage() {
     topChips: [{ label: 'Free launch', tone: 'good' }, { label: 'Texas-first' }],
     body: `
       <main class="cards">
-        <a class="card strong" href="/post-job" style="text-decoration:none;">
+        <a class="card strong" href="/post-job">
           <div class="pillrow"><div class="chip good">Consumer</div></div>
           <h2>Post a job</h2>
           <p>Pick your location and move straight into the job posting flow.</p>
         </a>
-        <a class="card strong" href="/bid-job" style="text-decoration:none;">
+        <a class="card strong" href="/bid-job">
           <div class="pillrow"><div class="chip warn">Contractor</div></div>
           <h2>Bid a job</h2>
           <p>Create an account, browse nearby work, and start bidding.</p>
@@ -611,17 +801,45 @@ function notFoundPage() {
   })
 }
 
+const contractorPages = {
+  '/contractors/alma-rivera': () => contractorProfilePage({
+    name: 'Alma Rivera',
+    badge: 'Certified',
+    tone: 'good',
+    rating: '4.9',
+    reviews: 42,
+    service: 'Dallas, TX',
+    proof: 'Business license verified',
+    note: 'Insurance on file and strong response time.',
+    route: '/contractors/alma-rivera',
+  }),
+  '/contractors/lone-star-works': () => contractorProfilePage({
+    name: 'Lone Star Works',
+    badge: 'Non-certified',
+    tone: 'warn',
+    rating: '4.3',
+    reviews: 11,
+    service: 'Fort Worth, TX',
+    proof: 'Basic profile only',
+    note: 'Ready to bid, but missing business proof.',
+    route: '/contractors/lone-star-works',
+  }),
+}
+
 export default {
   async fetch(request) {
     const url = new URL(request.url)
     const pathname = url.pathname
     if (pathname === '/') return new Response(homePage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
     if (pathname === '/post-job') return new Response(postJobPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+    if (pathname === '/post-job/review') return new Response(postJobReviewPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+    if (pathname === '/post-job/live') return new Response(postJobLivePage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
     if (pathname === '/bid-job') return new Response(bidJobPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+    if (pathname === '/bid-job/browse') return new Response(bidBrowsePage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+    if (pathname === '/bid-job/bid') return new Response(bidFormPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
     if (pathname === '/messages') return new Response(messagesPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
     if (pathname === '/trust') return new Response(trustPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
-    if (pathname === '/contractors/alma-rivera') return new Response(contractorProfilePage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
-    if (pathname === '/contractors/lone-star-works') return new Response(contractorProfilePage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+    if (pathname in contractorPages) return new Response(contractorPages[pathname](), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
     return new Response(notFoundPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
   },
 }
