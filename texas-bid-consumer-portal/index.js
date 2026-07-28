@@ -529,67 +529,93 @@ function postJobPage() {
     title: 'Post a Job | Texas Bid',
     eyebrow: 'Consumer path · free',
     headline: 'Post your job.',
-    subhead: 'Start with location, then keep the rest short. The point is to get to matched bids fast.',
-    topChips: [{ label: 'Free', tone: 'good' }, { label: 'Location first' }],
-    nav: [
-      { label: 'Home', href: '/' },
-      { label: 'Bid a job', href: '/bid-job' },
-      { label: 'Trust & ratings', href: '/trust' },
-    ],
+    subhead: 'Keep it short and move on.',
+    topChips: [{ label: 'Free', tone: 'good' }],
     actions: [
-      { label: 'Review the job', href: '/post-job/review', primary: true },
+      { label: 'Continue', href: '/post-job/account', primary: true },
       { label: 'Back home', href: '/', primary: false },
     ],
     body: `
-      <main class="split">
+      <main class="grid-two">
         <section class="sheet strong fade-up delay-1">
-          <div class="section-title">Posting flow</div>
-          <div class="steps">
-            <div class="step"><strong>1. Choose your location</strong><span>Start with city or area so the matching feels local.</span></div>
-            <div class="step"><strong>2. Describe the job</strong><span>Keep the first version focused on scope, timing, and budget.</span></div>
-            <div class="step"><strong>3. Review and launch</strong><span>Check the public details before contractors see it.</span></div>
+          <div class="section-title">Step 1</div>
+          <div class="field">
+            <strong>Location</strong>
+            <p>Dallas</p>
           </div>
           <div class="field">
-            <strong>Starter form</strong>
-            <p>Location · job type · timing · budget</p>
-            <div class="cluster">
-              <span class="tag good">Dallas</span>
-              <span class="tag">Interior work</span>
-              <span class="tag">This week</span>
-              <span class="tag">Budget visible</span>
-            </div>
+            <strong>Job</strong>
+            <p>Drywall repair</p>
+          </div>
+          <div class="field">
+            <strong>Timing</strong>
+            <p>This week</p>
           </div>
         </section>
         <section class="frame fade-up delay-2">
-          <div class="section-title">Location choice</div>
+          <div class="section-title">What gets sent</div>
           <div class="list">
-            <div class="job-card">
-              <div class="job-head">
-                <strong>Dallas</strong>
-                <span class="badge good">Fast match</span>
-              </div>
-              <div class="meta">Best for quick urban contractor response.</div>
+            <div class="mini">
+              <strong>Location</strong>
+              <div class="meta">Where the work is.</div>
             </div>
-            <div class="job-card">
-              <div class="job-head">
-                <strong>Fort Worth</strong>
-                <span class="badge">Mixed work</span>
-              </div>
-              <div class="meta">Good for home and light commercial jobs.</div>
+            <div class="mini">
+              <strong>Scope</strong>
+              <div class="meta">What needs to get done.</div>
             </div>
-            <div class="job-card">
-              <div class="job-head">
-                <strong>Plano</strong>
-                <span class="badge">Residential</span>
-              </div>
-              <div class="meta">Good for home repair and smaller trade work.</div>
+            <div class="mini">
+              <strong>Budget</strong>
+              <div class="meta">A quick signal for contractors.</div>
             </div>
           </div>
         </section>
       </main>
     `,
     footerLeft: 'Consumer flow',
-    footerRight: 'Location first, then the job details.',
+    footerRight: 'Keep it short, then continue.',
+  })
+}
+
+function postJobAccountPage() {
+  return layout({
+    title: 'Make an Account | Texas Bid',
+    eyebrow: 'Consumer path · free',
+    headline: 'Make an account.',
+    subhead: 'Just enough to keep the job and the replies in one place.',
+    topChips: [{ label: 'Free', tone: 'good' }],
+    actions: [
+      { label: 'Continue', href: '/post-job/review', primary: true },
+      { label: 'Back', href: '/post-job', primary: false },
+    ],
+    body: `
+      <main class="grid-two">
+        <section class="sheet strong fade-up delay-1">
+          <div class="section-title">Account</div>
+          <div class="field"><strong>Name</strong><p>Dylan</p></div>
+          <div class="field"><strong>Email</strong><p>dylan@example.com</p></div>
+          <div class="field"><strong>Phone</strong><p>555-000-0000</p></div>
+        </section>
+        <section class="frame fade-up delay-2">
+          <div class="section-title">Why it exists</div>
+          <div class="list">
+            <div class="mini">
+              <strong>Replies</strong>
+              <div class="meta">Keep messages tied to this job.</div>
+            </div>
+            <div class="mini">
+              <strong>Status</strong>
+              <div class="meta">Follow the post after it goes live.</div>
+            </div>
+            <div class="mini">
+              <strong>Later</strong>
+              <div class="meta">This can grow into a fuller account later.</div>
+            </div>
+          </div>
+        </section>
+      </main>
+    `,
+    footerLeft: 'Consumer flow',
+    footerRight: 'Account step before the review.',
   })
 }
 
@@ -1109,6 +1135,7 @@ export default {
     const pathname = url.pathname
     if (pathname === '/') return new Response(homePage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
     if (pathname === '/post-job') return new Response(postJobPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+    if (pathname === '/post-job/account') return new Response(postJobAccountPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
     if (pathname === '/post-job/review') return new Response(postJobReviewPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
     if (pathname === '/post-job/live') return new Response(postJobLivePage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
     if (pathname === '/bid-job') return new Response(bidJobPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
