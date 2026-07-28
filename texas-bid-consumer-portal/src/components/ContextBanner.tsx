@@ -24,6 +24,18 @@ const contextMap: Record<ViewKey, { lane: string; summary: string; surface: stri
     surface: 'Consumer-facing comparison and qualification view',
     boundary: 'Back-office approval controls and government review commentary stay out of the consumer lane.',
   },
+  'consumer-profile': {
+    lane: 'Consumer login and tracking',
+    summary: 'Consumers sign in to see the jobs they posted, the bids coming in, and the next hiring step.',
+    surface: 'Consumer account workspace',
+    boundary: 'This keeps the consumer view focused on posted jobs and decision making, not contractor setup.',
+  },
+  'contractor-profile': {
+    lane: 'Contractor login and bids',
+    summary: 'Contractors sign in to track the jobs they bid on, what is shortlisted, and what needs a follow-up.',
+    surface: 'Contractor account workspace',
+    boundary: 'This keeps the contractor view focused on bids and replies instead of consumer-side posting.',
+  },
   'vendor-dashboard': {
     lane: 'Customer job workspace',
     summary: 'Customers track posted requests, incoming bids, favorites, and selected contractors in one workspace.',

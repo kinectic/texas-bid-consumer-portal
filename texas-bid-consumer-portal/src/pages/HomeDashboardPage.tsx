@@ -61,16 +61,16 @@ export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, c
       buttonLabel: 'Review trust standards',
     },
     {
-      title: 'Go straight to local contractor discovery',
-      detail: 'Use this path when the customer is ready to narrow into a county, city, and job fit immediately.',
-      target: 'marketplace' as const,
-      buttonLabel: 'Find local contractors',
+      title: 'Go straight to consumer profile',
+      detail: 'Use this path when the customer wants the workspace for posted jobs, bids, and hiring decisions.',
+      target: 'consumer-profile' as const,
+      buttonLabel: 'Open consumer profile',
     },
     {
-      title: 'Jump into bid comparison',
-      detail: 'Use this path when the customer already understands the product and wants to see how hiring decisions get made.',
-      target: 'submission-workflow' as const,
-      buttonLabel: 'Review bids',
+      title: 'Jump into contractor profile',
+      detail: 'Use this path when the contractor wants the workspace for bids sent, replies, and active jobs.',
+      target: 'contractor-profile' as const,
+      buttonLabel: 'Open contractor profile',
     },
   ]
   const workflowMetricsItems = [
@@ -90,17 +90,17 @@ export function HomeDashboardPage({ publishedBidPreview, publishedOpportunity, c
         </div>
         <div className="top-actions">
           <button className="ghost" onClick={() => onNavigate('how-it-works')}>See how it works</button>
-          <button className="primary" onClick={() => onNavigate('marketplace')}>Compare trusted contractors</button>
+          <button className="primary" onClick={() => onNavigate('consumer-profile')}>Open consumer profile</button>
         </div>
       </header>
 
       <PrimaryActionStrip
         title="Customer starting points"
-        description="Lead with the real hiring loop: discover local contractors, compare bids, and keep trust and follow-up attached to the job."
+        description="Lead with the real hiring loop: sign in, see posted jobs, compare bids, and keep trust and follow-up attached to the job."
         actions={
           <>
-            <button className="primary" onClick={() => onNavigate('marketplace')}>Compare trusted contractors</button>
-            <button className="ghost" onClick={() => onNavigate('trust-center')}>Check trust standards first</button>
+            <button className="primary" onClick={() => onNavigate('consumer-profile')}>Open consumer profile</button>
+            <button className="ghost" onClick={() => onNavigate('contractor-profile')}>Open contractor profile</button>
             <button className="ghost" onClick={() => onNavigate('how-it-works')}>See how it works</button>
           </>
         }

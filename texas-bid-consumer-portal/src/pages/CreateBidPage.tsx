@@ -17,9 +17,9 @@ export function CreateBidPage({ onNavigate }: CreateBidPageProps) {
       <header className="topbar">
         <div>
           <div className="eyebrow">Government posting boundary</div>
-          <h1>Bid creation happens in the government portal</h1>
+          <h1>Bid creation happens in the contractor profile</h1>
           <p className="intro">
-            The consumer portal is where vendors find posted bids and submit responses. Drafting and publishing solicitations belong in the separate government product.
+            The consumer portal is where contractors find posted jobs and submit responses. Drafting and publishing solicitations belong in the separate government product.
           </p>
         </div>
         <div className="top-actions">
@@ -50,11 +50,11 @@ export function CreateBidPage({ onNavigate }: CreateBidPageProps) {
           <div className="draft-list">
             <div className="draft-card">
               <strong>Marketplace visibility</strong>
-              <div className="muted">Vendors browse only the posted opportunities that agencies chose to publish.</div>
+              <div className="muted">Contractors browse only the posted opportunities that agencies chose to publish.</div>
             </div>
             <div className="draft-card">
               <strong>Response execution</strong>
-              <div className="muted">Vendors inspect requirements, assemble submissions, and send complete response packets.</div>
+              <div className="muted">Contractors inspect requirements, assemble submissions, and send complete response packets.</div>
             </div>
           </div>
         </div>
@@ -66,7 +66,7 @@ export function CreateBidPage({ onNavigate }: CreateBidPageProps) {
           <div className="panel-subtitle">The split is simple: agencies publish there, vendors respond here.</div>
           <div className="workflow-actions-list">
             <button className="switch-pill switch-pill-active" onClick={() => onNavigate('marketplace')}>Browse posted bids</button>
-            <button className="switch-pill" onClick={() => onNavigate('vendor-dashboard')}>Open vendor workspace</button>
+            <button className="switch-pill" onClick={() => onNavigate('contractor-profile')}>Open contractor profile</button>
             <button className="switch-pill" onClick={() => onNavigate('submission-workflow')}>Open submission flow</button>
           </div>
         </div>

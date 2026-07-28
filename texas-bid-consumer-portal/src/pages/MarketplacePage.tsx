@@ -161,8 +161,8 @@ export function MarketplacePage({
         cityLabel={locationStage === 'bids' ? selectedCity : undefined}
       >
         <div className="top-actions">
-          <button className="ghost" onClick={() => onNavigate('contractor-onboarding')}>{marketplaceCopy.vendorSignInLabel}</button>
-          <button className="primary" onClick={() => onNavigate('vendor-dashboard')}>{marketplaceCopy.postBidLabel}</button>
+          <button className="ghost" onClick={() => onNavigate('consumer-profile')}>Open consumer profile</button>
+          <button className="primary" onClick={() => onNavigate('contractor-profile')}>Open contractor profile</button>
         </div>
       </TexasMarketplaceShell>
 

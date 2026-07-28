@@ -17,8 +17,8 @@ const roleGatewayMilestones = [
   },
   {
     label: '3. Customer compares and hires',
-    detail: 'Finish in the workspace where bids, trust, messages, and next actions stay attached to the job.',
-    target: 'vendor-dashboard' as ViewKey,
+    detail: 'Finish in the consumer profile where bids, trust, messages, and next actions stay attached to the job.',
+    target: 'consumer-profile' as ViewKey,
   },
 ]
 
@@ -26,30 +26,30 @@ export function RoleGatewayPanel({ onNavigate }: RoleGatewayPanelProps) {
   return (
     <section className="content-grid lower-grid role-gateway-grid">
       <div className="panel role-gateway-panel role-gateway-panel-primary">
-        <div className="eyebrow">For customers</div>
-        <h2>Describe the job once, then compare serious local contractors</h2>
+        <div className="eyebrow">For consumers</div>
+        <h2>Sign in, post a job, and keep every bid in one account</h2>
         <p className="intro">
-          The customer path should feel straightforward: define the work, see credible local options, compare bids, ask questions, and choose confidently.
+          The consumer path should feel straightforward: define the work, see credible local options, compare bids, ask questions, and choose confidently.
         </p>
         <div className="draft-list">
           <div className="draft-card">
-            <strong>Customer goals</strong>
+            <strong>Consumer goals</strong>
             <div className="muted">Post a job, review contractor fit, compare bids, and keep conversation attached to the job record.</div>
           </div>
           <div className="draft-card">
-            <strong>Customer trust need</strong>
+            <strong>Consumer trust need</strong>
             <div className="muted">Make contractor quality, response speed, and proof visible before the customer wastes time.</div>
           </div>
         </div>
         <div className="top-actions">
-          <button className="primary" onClick={() => onNavigate('marketplace')}>Find local contractors</button>
-          <button className="ghost" onClick={() => onNavigate('vendor-dashboard')}>Open my jobs</button>
+          <button className="primary" onClick={() => onNavigate('consumer-profile')}>Open consumer profile</button>
+          <button className="ghost" onClick={() => onNavigate('marketplace')}>Find local contractors</button>
         </div>
       </div>
 
       <div className="panel role-gateway-panel">
         <div className="eyebrow">For contractors</div>
-        <h2>Give good contractors a cleaner path to trust and demand</h2>
+        <h2>Sign in to track bids, replies, and active jobs</h2>
         <p className="intro">
           Contractors should be able to set up a credible profile, define service areas, and respond to real local jobs without slogging through enterprise-style friction.
         </p>
@@ -64,8 +64,8 @@ export function RoleGatewayPanel({ onNavigate }: RoleGatewayPanelProps) {
           </div>
         </div>
         <div className="top-actions">
-          <button className="primary" onClick={() => onNavigate('contractor-onboarding')}>Open contractor onboarding</button>
-          <button className="ghost" onClick={() => onNavigate('trust-center')}>View trust tiers</button>
+          <button className="primary" onClick={() => onNavigate('contractor-profile')}>Open contractor profile</button>
+          <button className="ghost" onClick={() => onNavigate('contractor-onboarding')}>Open contractor onboarding</button>
         </div>
       </div>
 

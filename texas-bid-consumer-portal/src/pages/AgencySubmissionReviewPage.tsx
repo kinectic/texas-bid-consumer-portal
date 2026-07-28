@@ -100,7 +100,7 @@ export function AgencySubmissionReviewPage({ onNavigate }: AgencySubmissionRevie
           <div className="panel-subtitle">End the vendor journey cleanly, then hand off. Do not merge government review back into this app.</div>
           <div className="workflow-actions-list">
             <button className="switch-pill switch-pill-active" onClick={() => onNavigate('marketplace')}>Browse more bids</button>
-            <button className="switch-pill" onClick={() => onNavigate('vendor-dashboard')}>Open vendor workspace</button>
+            <button className="switch-pill" onClick={() => onNavigate('consumer-profile')}>Open consumer profile</button>
             <button className="switch-pill" onClick={() => onNavigate('messages')}>Open messaging layer</button>
           </div>
         </div>

@@ -11,7 +11,8 @@ export function Sidebar({ activeView, onSelect }: SidebarProps) {
     'home',
     'marketplace',
     'opportunity',
-    'vendor-dashboard',
+    'consumer-profile',
+    'contractor-profile',
     'submission-workflow',
     'contractor-onboarding',
     'messages',
@@ -23,7 +24,7 @@ export function Sidebar({ activeView, onSelect }: SidebarProps) {
     <aside className="sidebar">
       <div>
         <div className="brand">TexasBid</div>
-        <div className="brand-sub">Texas contractor marketplace · post jobs, compare bids, and hire local pros with confidence</div>
+        <div className="brand-sub">Texas contractor marketplace · post jobs, compare bids, and log in to your own account workspace</div>
       </div>
       <nav className="nav">
         {navItems.map((key) => (
@@ -39,12 +40,12 @@ export function Sidebar({ activeView, onSelect }: SidebarProps) {
         ))}
       </nav>
       <div className="sidebar-card">
-        <div className="card-label">Consumer flow</div>
-        <strong>Post a job. Compare bids. Hire the right Texas contractor.</strong>
+        <div className="card-label">Account flow</div>
+        <strong>Consumers track posted jobs. Contractors track bids. Everyone stays in one place.</strong>
         <p>
-          This product is the consumer-side marketplace focused on local service matching, contractor trust, and fast decision-making.
+          This product is the Texas-first marketplace focused on local service matching, contractor trust, and fast decision-making.
         </p>
-        <div className="small-note">Recommended path: Texas Home → Find Contractors → Job Match → My Jobs → Review Bids.</div>
+        <div className="small-note">Recommended path: Texas Home → Consumer Profile → Contractor Profile → Review Bids.</div>
       </div>
     </aside>
   )

@@ -49,7 +49,7 @@ export function MessagesPage({ onNavigate }: MessagesPageProps) {
           </p>
         </div>
         <div className="top-actions">
-          <button className="ghost" onClick={() => onNavigate('vendor-dashboard')}>Back to my jobs</button>
+          <button className="ghost" onClick={() => onNavigate('consumer-profile')}>Back to consumer profile</button>
           <button className="primary" onClick={() => onNavigate('submission-workflow')}>Open bid review</button>
         </div>
       </header>

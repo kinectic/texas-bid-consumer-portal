@@ -32,10 +32,24 @@ export const consumerSurfaces: ConsumerSurface[] = [
   },
   {
     key: 'vendor-dashboard',
-    title: 'Customer job dashboard',
+    title: 'Customer workspace',
     audience: 'customer',
     purpose: 'Track posted jobs, bid activity, favorites, and selected contractors in one place.',
     primaryOutcome: 'The customer stays oriented across active jobs without leaving the marketplace.',
+  },
+  {
+    key: 'consumer-profile',
+    title: 'Consumer profile',
+    audience: 'customer',
+    purpose: 'Keep the consumer sign-in area focused on posted jobs, bids received, and job-level follow-up.',
+    primaryOutcome: 'The consumer can see what has been posted and what still needs a reply.',
+  },
+  {
+    key: 'contractor-profile',
+    title: 'Contractor profile',
+    audience: 'contractor',
+    purpose: 'Keep the contractor sign-in area focused on sent bids, replies, and active opportunities.',
+    primaryOutcome: 'The contractor can see where bids are winning attention and where follow-up is needed.',
   },
   {
     key: 'submission-workflow',

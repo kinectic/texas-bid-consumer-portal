@@ -147,7 +147,7 @@ export function SubmissionWorkflowPage({
         <div className="top-actions">
           <button className="ghost" onClick={() => {
             onSaveProgress()
-            onNavigate('vendor-dashboard')
+            onNavigate('consumer-profile')
           }}>{presentVendorSaveActionLabel(activeSubmission, responseRowLabel)}</button>
           <button className="primary" onClick={() => {
             onSubmitResponse()

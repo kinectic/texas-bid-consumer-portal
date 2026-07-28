@@ -2,6 +2,8 @@ export type ViewKey =
   | 'home'
   | 'marketplace'
   | 'opportunity'
+  | 'consumer-profile'
+  | 'contractor-profile'
   | 'vendor-dashboard'
   | 'submission-workflow'
   | 'contractor-onboarding'
@@ -13,7 +15,8 @@ export const viewOrder: { key: ViewKey; label: string }[] = [
   { key: 'home', label: 'Home' },
   { key: 'marketplace', label: 'Find Contractors' },
   { key: 'opportunity', label: 'Job Match' },
-  { key: 'vendor-dashboard', label: 'My Jobs' },
+  { key: 'consumer-profile', label: 'Consumer Profile' },
+  { key: 'contractor-profile', label: 'Contractor Profile' },
   { key: 'submission-workflow', label: 'Review Bids' },
   { key: 'contractor-onboarding', label: 'For Contractors' },
   { key: 'messages', label: 'Messages' },
@@ -27,7 +30,9 @@ export const viewPathMap: Record<ViewKey, string> = {
   home: '/',
   marketplace: '/find-contractors',
   opportunity: '/job-match',
-  'vendor-dashboard': '/my-jobs',
+  'consumer-profile': '/my-jobs',
+  'contractor-profile': '/my-bids',
+  'vendor-dashboard': '/customer-workspace',
   'submission-workflow': '/review-bids',
   'contractor-onboarding': '/for-contractors',
   messages: '/messages',

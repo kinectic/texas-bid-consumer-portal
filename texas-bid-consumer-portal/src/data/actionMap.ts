@@ -4,11 +4,12 @@ export const workflowActionMap: Partial<Record<ViewKey, { label: string; target:
   home: [
     { label: 'See how it works', target: 'how-it-works' },
     { label: 'Open marketplace', target: 'marketplace' },
-    { label: 'Open customer workspace', target: 'vendor-dashboard' },
+    { label: 'Open consumer profile', target: 'consumer-profile' },
   ],
   marketplace: [
     { label: 'View job match detail', target: 'opportunity' },
-    { label: 'Open customer workspace', target: 'vendor-dashboard' },
+    { label: 'Open consumer profile', target: 'consumer-profile' },
+    { label: 'Open contractor profile', target: 'contractor-profile' },
     { label: 'Open messages', target: 'messages' },
   ],
   opportunity: [
@@ -16,13 +17,23 @@ export const workflowActionMap: Partial<Record<ViewKey, { label: string; target:
     { label: 'Back to marketplace', target: 'marketplace' },
     { label: 'Open trust center', target: 'trust-center' },
   ],
+  'consumer-profile': [
+    { label: 'Open bid comparison', target: 'submission-workflow' },
+    { label: 'Back to marketplace', target: 'marketplace' },
+    { label: 'Open contractor profile', target: 'contractor-profile' },
+  ],
+  'contractor-profile': [
+    { label: 'Browse jobs', target: 'marketplace' },
+    { label: 'Open consumer profile', target: 'consumer-profile' },
+    { label: 'Open contractor onboarding', target: 'contractor-onboarding' },
+  ],
   'vendor-dashboard': [
     { label: 'Open job match detail', target: 'opportunity' },
     { label: 'Continue bid review', target: 'submission-workflow' },
     { label: 'Open messages', target: 'messages' },
   ],
   'submission-workflow': [
-    { label: 'Return to my jobs', target: 'vendor-dashboard' },
+    { label: 'Return to consumer profile', target: 'consumer-profile' },
     { label: 'Back to job match', target: 'opportunity' },
     { label: 'Open trust center', target: 'trust-center' },
   ],
@@ -32,7 +43,7 @@ export const workflowActionMap: Partial<Record<ViewKey, { label: string; target:
     { label: 'Open customer explainer', target: 'how-it-works' },
   ],
   messages: [
-    { label: 'Return to my jobs', target: 'vendor-dashboard' },
+    { label: 'Return to consumer profile', target: 'consumer-profile' },
     { label: 'Open bid review', target: 'submission-workflow' },
   ],
   'trust-center': [
@@ -42,7 +53,7 @@ export const workflowActionMap: Partial<Record<ViewKey, { label: string; target:
   ],
   'how-it-works': [
     { label: 'Browse the marketplace', target: 'marketplace' },
-    { label: 'Open customer workspace', target: 'vendor-dashboard' },
+    { label: 'Open consumer profile', target: 'consumer-profile' },
     { label: 'Open trust center', target: 'trust-center' },
   ],
 }

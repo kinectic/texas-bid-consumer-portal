@@ -14,6 +14,8 @@ import {
 import { opportunities, vendorSubmissions as initialVendorSubmissions } from './data/mockData'
 import { getPathForView, getViewFromLocation, viewOrder, type ViewKey } from './data/viewData'
 import { ContractorOnboardingPage } from './pages/ContractorOnboardingPage'
+import { ContractorProfilePage } from './pages/ContractorProfilePage'
+import { ConsumerProfilePage } from './pages/ConsumerProfilePage'
 import { HomeDashboardPage } from './pages/HomeDashboardPage'
 import { HowItWorksPage } from './pages/HowItWorksPage'
 import { MarketplacePage } from './pages/MarketplacePage'
@@ -95,6 +97,10 @@ function renderView(
       )
     case 'opportunity':
       return <OpportunityDetailPage opportunity={currentOpportunity} submissionQueue={submissionQueue} onSelectSubmission={selectSubmission} onStartNewSubmission={startNewSubmission} onNavigate={navigate} />
+    case 'consumer-profile':
+      return <ConsumerProfilePage onNavigate={navigate} />
+    case 'contractor-profile':
+      return <ContractorProfilePage onNavigate={navigate} />
     case 'contractor-onboarding':
       return <ContractorOnboardingPage onNavigate={navigate} />
     case 'messages':
@@ -441,7 +447,7 @@ function App() {
       params.set('submission', selectedSubmissionId)
     }
 
-    const queueValue = activeView === 'vendor-dashboard'
+    const queueValue = activeView === 'vendor-dashboard' || activeView === 'consumer-profile'
       ? vendorQueueFilter
       : null
 
@@ -468,7 +474,7 @@ function App() {
         <div className="showcase-lane-label">Consumer marketplace navigation</div>
         <div className="view-switcher">
           {viewOrder.map((view) => {
-            const laneClass = view.key === 'marketplace' || view.key === 'opportunity' || view.key === 'vendor-dashboard' || view.key === 'submission-workflow'
+            const laneClass = view.key === 'marketplace' || view.key === 'opportunity' || view.key === 'vendor-dashboard' || view.key === 'consumer-profile' || view.key === 'contractor-profile' || view.key === 'submission-workflow'
               ? 'switch-pill-vendor'
               : view.key === 'contractor-onboarding' || view.key === 'messages' || view.key === 'trust-center'
                 ? 'switch-pill-agency'

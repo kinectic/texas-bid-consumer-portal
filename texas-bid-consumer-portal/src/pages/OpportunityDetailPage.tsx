@@ -71,7 +71,7 @@ export function OpportunityDetailPage({ opportunity, submissionQueue, onSelectSu
           </p>
         </div>
         <div className="top-actions">
-          <button className="ghost" onClick={() => onNavigate('vendor-dashboard')}>Save Opportunity</button>
+          <button className="ghost" onClick={() => onNavigate('consumer-profile')}>Save Opportunity</button>
           <button className="primary" onClick={() => {
             if (activeSubmission) {
               onSelectSubmission(activeSubmission)
