@@ -1286,22 +1286,28 @@ const contractorPages = {
   }),
 }
 
+function handleRequest(request) {
+  const url = new URL(request.url)
+  const pathname = url.pathname
+  if (pathname === '/') return new Response(homePage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+  if (pathname === '/post-job') return new Response(postJobPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+  if (pathname === '/post-job/account') return new Response(postJobAccountPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+  if (pathname === '/post-job/review') return new Response(postJobReviewPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+  if (pathname === '/post-job/live') return new Response(postJobLivePage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+  if (pathname === '/bid-job') return new Response(bidJobPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+  if (pathname === '/bid-job/account') return new Response(bidJobAccountPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+  if (pathname === '/bid-job/browse') return new Response(bidBrowsePage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+  if (pathname === '/bid-job/bid') return new Response(bidFormPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+  if (pathname === '/messages') return new Response(messagesPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+  if (pathname === '/trust') return new Response(trustPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+  if (pathname in contractorPages) return new Response(contractorPages[pathname](), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+  return new Response(notFoundPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+}
+
+addEventListener('fetch', (event) => {
+  event.respondWith(handleRequest(event.request))
+})
+
 export default {
-  async fetch(request) {
-    const url = new URL(request.url)
-    const pathname = url.pathname
-    if (pathname === '/') return new Response(homePage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
-    if (pathname === '/post-job') return new Response(postJobPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
-    if (pathname === '/post-job/account') return new Response(postJobAccountPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
-    if (pathname === '/post-job/review') return new Response(postJobReviewPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
-    if (pathname === '/post-job/live') return new Response(postJobLivePage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
-    if (pathname === '/bid-job') return new Response(bidJobPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
-    if (pathname === '/bid-job/account') return new Response(bidJobAccountPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
-    if (pathname === '/bid-job/browse') return new Response(bidBrowsePage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
-    if (pathname === '/bid-job/bid') return new Response(bidFormPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
-    if (pathname === '/messages') return new Response(messagesPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
-    if (pathname === '/trust') return new Response(trustPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
-    if (pathname in contractorPages) return new Response(contractorPages[pathname](), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
-    return new Response(notFoundPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
-  },
+  fetch: handleRequest,
 }
