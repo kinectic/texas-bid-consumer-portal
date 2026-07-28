@@ -334,6 +334,67 @@ const styles = `
     display: grid;
     gap: 10px;
   }
+  .progress {
+    display: grid;
+    gap: 8px;
+  }
+  .progress .bar {
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+  }
+  .progress .bar span {
+    display: block;
+    height: 100%;
+    width: 33%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #5be0a4, #8cc7ff);
+  }
+  .form-grid {
+    display: grid;
+    gap: 12px;
+  }
+  .input {
+    border: 1px solid rgba(139, 176, 228, 0.22);
+    border-radius: 16px;
+    padding: 14px 16px;
+    background: rgba(4, 10, 20, 0.42);
+    display: grid;
+    gap: 6px;
+  }
+  .input label {
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+  }
+  .input .value {
+    font-family: 'Space Grotesk', 'Inter Tight', sans-serif;
+    font-size: 1.02rem;
+    letter-spacing: -0.03em;
+  }
+  .choice-list {
+    display: grid;
+    gap: 10px;
+  }
+  .choice {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+  }
+  .choice strong {
+    font-family: 'Space Grotesk', 'Inter Tight', sans-serif;
+  }
+  .choice .hint {
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
   .job-card {
     padding: 18px;
   }
@@ -539,33 +600,48 @@ function postJobPage() {
       <main class="grid-two">
         <section class="sheet strong fade-up delay-1">
           <div class="section-title">Step 1</div>
-          <div class="field">
-            <strong>Location</strong>
-            <p>Dallas</p>
+          <div class="progress">
+            <div class="bar"><span style="width: 25%;"></span></div>
+            <div class="meta">Location, then the job, then the account.</div>
           </div>
-          <div class="field">
-            <strong>Job</strong>
-            <p>Drywall repair</p>
-          </div>
-          <div class="field">
-            <strong>Timing</strong>
-            <p>This week</p>
+          <div class="form-grid">
+            <div class="input">
+              <label>Location</label>
+              <div class="value">Dallas</div>
+            </div>
+            <div class="input">
+              <label>Job</label>
+              <div class="value">Drywall repair</div>
+            </div>
+            <div class="input">
+              <label>Timing</label>
+              <div class="value">This week</div>
+            </div>
           </div>
         </section>
         <section class="frame fade-up delay-2">
-          <div class="section-title">What gets sent</div>
-          <div class="list">
-            <div class="mini">
-              <strong>Location</strong>
-              <div class="meta">Where the work is.</div>
+          <div class="section-title">Summary</div>
+          <div class="choice-list">
+            <div class="choice">
+              <div>
+                <strong>Location</strong>
+                <div class="hint">Dallas</div>
+              </div>
+              <span class="tag good">Set</span>
             </div>
-            <div class="mini">
-              <strong>Scope</strong>
-              <div class="meta">What needs to get done.</div>
+            <div class="choice">
+              <div>
+                <strong>Scope</strong>
+                <div class="hint">Drywall repair</div>
+              </div>
+              <span class="tag">Set</span>
             </div>
-            <div class="mini">
-              <strong>Budget</strong>
-              <div class="meta">A quick signal for contractors.</div>
+            <div class="choice">
+              <div>
+                <strong>Budget</strong>
+                <div class="hint">Visible to contractors</div>
+              </div>
+              <span class="tag">Open</span>
             </div>
           </div>
         </section>
@@ -591,24 +667,39 @@ function postJobAccountPage() {
       <main class="grid-two">
         <section class="sheet strong fade-up delay-1">
           <div class="section-title">Account</div>
-          <div class="field"><strong>Name</strong><p>Dylan</p></div>
-          <div class="field"><strong>Email</strong><p>dylan@example.com</p></div>
-          <div class="field"><strong>Phone</strong><p>555-000-0000</p></div>
+          <div class="progress">
+            <div class="bar"><span style="width: 60%;"></span></div>
+            <div class="meta">One quick account step keeps messages and bids attached.</div>
+          </div>
+          <div class="form-grid">
+            <div class="input"><label>Name</label><div class="value">Dylan</div></div>
+            <div class="input"><label>Email</label><div class="value">dylan@example.com</div></div>
+            <div class="input"><label>Phone</label><div class="value">555-000-0000</div></div>
+          </div>
         </section>
         <section class="frame fade-up delay-2">
-          <div class="section-title">Why it exists</div>
-          <div class="list">
-            <div class="mini">
-              <strong>Replies</strong>
-              <div class="meta">Keep messages tied to this job.</div>
+          <div class="section-title">Keep it attached</div>
+          <div class="choice-list">
+            <div class="choice">
+              <div>
+                <strong>Replies</strong>
+                <div class="hint">Stay with this job</div>
+              </div>
+              <span class="tag good">On</span>
             </div>
-            <div class="mini">
-              <strong>Status</strong>
-              <div class="meta">Follow the post after it goes live.</div>
+            <div class="choice">
+              <div>
+                <strong>Status</strong>
+                <div class="hint">Track the post after launch</div>
+              </div>
+              <span class="tag">On</span>
             </div>
-            <div class="mini">
-              <strong>Later</strong>
-              <div class="meta">This can grow into a fuller account later.</div>
+            <div class="choice">
+              <div>
+                <strong>Later</strong>
+                <div class="hint">Account can expand with more features</div>
+              </div>
+              <span class="tag">Ready</span>
             </div>
           </div>
         </section>
