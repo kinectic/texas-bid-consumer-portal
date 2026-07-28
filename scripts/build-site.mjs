@@ -26,10 +26,14 @@ writeFileSync(
   join(distDir, 'server', 'index.js'),
   `import { createServer } from 'node:http'
 import { createReadStream, existsSync, statSync } from 'node:fs'
-import { dirname, extname, join, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { extname, join, resolve } from 'node:path'
 
-const distRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const cwd = process.cwd()
+const distRoot = cwd.endsWith('/dist/server')
+  ? resolve(cwd, '..')
+  : cwd.endsWith('/dist')
+    ? cwd
+    : resolve(cwd, 'dist')
 const mimeTypes = {
   '.css': 'text/css; charset=utf-8',
   '.html': 'text/html; charset=utf-8',
@@ -62,7 +66,7 @@ const server = createServer((request, response) => {
   sendFile(response, join(distRoot, 'index.html'))
 })
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (process.env.PORT) {
   const port = Number(process.env.PORT ?? 3000)
   server.listen(port, '0.0.0.0')
 }
