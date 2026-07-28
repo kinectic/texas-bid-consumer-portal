@@ -843,48 +843,114 @@ function bidJobPage() {
     title: 'Bid a Job | Texas Bid',
     eyebrow: 'Contractor path · free',
     headline: 'Bid on work.',
-    subhead: 'Start with a contractor profile, then move straight into jobs that fit your area and trade.',
-    topChips: [{ label: 'Free', tone: 'good' }, { label: 'Browse first' }],
-    nav: [
-      { label: 'Home', href: '/' },
-      { label: 'Post a job', href: '/post-job' },
-      { label: 'Trust & ratings', href: '/trust' },
-    ],
+    subhead: 'Keep it short and move on.',
+    topChips: [{ label: 'Free', tone: 'good' }],
     actions: [
-      { label: 'Browse jobs', href: '/bid-job/browse', primary: true },
-      { label: 'Trust rules', href: '/trust', primary: false },
+      { label: 'Continue', href: '/bid-job/account', primary: true },
+      { label: 'Back home', href: '/', primary: false },
     ],
     body: `
-      <main class="split">
+      <main class="grid-two">
         <section class="sheet strong fade-up delay-1">
-          <div class="section-title">Contractor setup</div>
-          <div class="steps">
-            <div class="step"><strong>1. Create an account</strong><span>Set up your business profile and service area.</span></div>
-            <div class="step"><strong>2. Add proof</strong><span>Business name, license, insurance, or basic verification later.</span></div>
-            <div class="step"><strong>3. Start bidding</strong><span>See nearby jobs and send a clean bid fast.</span></div>
+          <div class="section-title">Step 1</div>
+          <div class="progress">
+            <div class="bar"><span style="width: 25%;"></span></div>
+            <div class="meta">Account, then jobs, then bids.</div>
           </div>
-          <div class="field">
-            <strong>Profile basics</strong>
-            <p>Business name · trade · service area · proof</p>
+          <div class="form-grid">
+            <div class="input"><label>Trade</label><div class="value">Drywall repair</div></div>
+            <div class="input"><label>Area</label><div class="value">Dallas</div></div>
+            <div class="input"><label>Status</label><div class="value">Ready to bid</div></div>
           </div>
         </section>
         <section class="frame fade-up delay-2">
-          <div class="section-title">Trust states</div>
-          <div class="list">
-            <a class="mini" href="/contractors/alma-rivera">
-              <strong>Certified contractor</strong>
-              <div class="meta">Higher trust signal and better visibility.</div>
-            </a>
-            <a class="mini" href="/contractors/lone-star-works">
-              <strong>Non-certified contractor</strong>
-              <div class="meta">Can still bid, but proof is lighter.</div>
-            </a>
+          <div class="section-title">Start state</div>
+          <div class="choice-list">
+            <div class="choice">
+              <div>
+                <strong>Account</strong>
+                <div class="hint">Create the contractor profile</div>
+              </div>
+              <span class="tag good">Next</span>
+            </div>
+            <div class="choice">
+              <div>
+                <strong>Proof</strong>
+                <div class="hint">License, insurance, or later verification</div>
+              </div>
+              <span class="tag">Ready</span>
+            </div>
+            <div class="choice">
+              <div>
+                <strong>Jobs</strong>
+                <div class="hint">Browse and bid</div>
+              </div>
+              <span class="tag">Open</span>
+            </div>
           </div>
         </section>
       </main>
     `,
     footerLeft: 'Contractor flow',
-    footerRight: 'Browse first, then bid.',
+    footerRight: 'Keep it short, then continue.',
+  })
+}
+
+function bidJobAccountPage() {
+  return layout({
+    title: 'Make an Account | Texas Bid',
+    eyebrow: 'Contractor path · free',
+    headline: 'Make an account.',
+    subhead: 'One screen to start the contractor profile.',
+    topChips: [{ label: 'Free', tone: 'good' }],
+    actions: [
+      { label: 'Continue', href: '/bid-job/browse', primary: true },
+      { label: 'Back', href: '/bid-job', primary: false },
+    ],
+    body: `
+      <main class="grid-two">
+        <section class="sheet strong fade-up delay-1">
+          <div class="section-title">Contractor account</div>
+          <div class="progress">
+            <div class="bar"><span style="width: 60%;"></span></div>
+            <div class="meta">A simple profile now, proof later if needed.</div>
+          </div>
+          <div class="form-grid">
+            <div class="input"><label>Business name</label><div class="value">Lone Star Works</div></div>
+            <div class="input"><label>Trade</label><div class="value">Interior repair</div></div>
+            <div class="input"><label>Service area</label><div class="value">Fort Worth + Dallas</div></div>
+          </div>
+        </section>
+        <section class="frame fade-up delay-2">
+          <div class="section-title">Verification</div>
+          <div class="choice-list">
+            <div class="choice">
+              <div>
+                <strong>Business license</strong>
+                <div class="hint">Optional for now</div>
+              </div>
+              <span class="tag">Later</span>
+            </div>
+            <div class="choice">
+              <div>
+                <strong>Insurance</strong>
+                <div class="hint">Optional for now</div>
+              </div>
+              <span class="tag">Later</span>
+            </div>
+            <div class="choice">
+              <div>
+                <strong>Visible badge</strong>
+                <div class="hint">Certified or not certified</div>
+              </div>
+              <span class="tag good">Ready</span>
+            </div>
+          </div>
+        </section>
+      </main>
+    `,
+    footerLeft: 'Contractor flow',
+    footerRight: 'Account step before browsing jobs.',
   })
 }
 
@@ -1230,6 +1296,7 @@ export default {
     if (pathname === '/post-job/review') return new Response(postJobReviewPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
     if (pathname === '/post-job/live') return new Response(postJobLivePage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
     if (pathname === '/bid-job') return new Response(bidJobPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+    if (pathname === '/bid-job/account') return new Response(bidJobAccountPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
     if (pathname === '/bid-job/browse') return new Response(bidBrowsePage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
     if (pathname === '/bid-job/bid') return new Response(bidFormPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
     if (pathname === '/messages') return new Response(messagesPage(), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
