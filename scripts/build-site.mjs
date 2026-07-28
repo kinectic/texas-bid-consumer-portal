@@ -1,8 +1,8 @@
-import { cpSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
-import { dirname, join, resolve } from 'node:path'
+import { cpSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { join, resolve, relative, sep } from 'node:path'
 import { execSync } from 'node:child_process'
 
-const root = resolve(dirname(new URL(import.meta.url).pathname), '..')
+const root = resolve(new URL('..', import.meta.url).pathname)
 const appDir = join(root, 'texas-bid-consumer-portal')
 const distDir = join(root, 'dist')
 const appDistDir = join(appDir, 'dist')
@@ -21,57 +21,89 @@ rmSync(distDir, { recursive: true, force: true })
 mkdirSync(distDir, { recursive: true })
 cpSync(appDistDir, distDir, { recursive: true })
 
+function collectFiles(baseDir) {
+  const results = []
+
+  const walk = (dir) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const fullPath = join(dir, entry.name)
+      if (entry.isDirectory()) {
+        walk(fullPath)
+        continue
+      }
+
+      const relPath = relative(baseDir, fullPath).split(sep).join('/')
+      results.push({
+        path: `/${relPath}`,
+        content: readFileSync(fullPath, 'utf8'),
+      })
+    }
+  }
+
+  walk(baseDir)
+  return results
+}
+
+const assetMap = Object.fromEntries(
+  collectFiles(appDistDir)
+    .filter((item) => item.path !== '/server/index.js')
+    .map((item) => [item.path, item.content]),
+)
+
 mkdirSync(join(distDir, 'server'), { recursive: true })
 writeFileSync(
   join(distDir, 'server', 'index.js'),
-  `import { createServer } from 'node:http'
-import { createReadStream, existsSync, statSync } from 'node:fs'
-import { extname, join, resolve } from 'node:path'
+  `const assets = ${JSON.stringify(assetMap, null, 2)}
 
-const cwd = process.cwd()
-const distRoot = cwd.endsWith('/dist/server')
-  ? resolve(cwd, '..')
-  : cwd.endsWith('/dist')
-    ? cwd
-    : resolve(cwd, 'dist')
-const mimeTypes = {
+const contentTypes = {
   '.css': 'text/css; charset=utf-8',
   '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
   '.svg': 'image/svg+xml',
-  '.png': 'image/png',
-  '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.ico': 'image/x-icon',
   '.webmanifest': 'application/manifest+json',
 }
 
-function sendFile(response, filePath) {
-  const type = mimeTypes[extname(filePath)] ?? 'application/octet-stream'
-  response.writeHead(200, { 'content-type': type })
-  createReadStream(filePath).pipe(response)
-}
-
-const server = createServer((request, response) => {
-  const urlPath = new URL(request.url ?? '/', 'http://localhost').pathname
-  const safePath = urlPath === '/' ? '/index.html' : urlPath
-  const filePath = join(distRoot, safePath)
-
-  if (existsSync(filePath) && statSync(filePath).isFile()) {
-    sendFile(response, filePath)
-    return
+function contentTypeFor(pathname) {
+  const dotIndex = pathname.lastIndexOf('.')
+  if (dotIndex === -1) {
+    return 'text/plain; charset=utf-8'
   }
 
-  sendFile(response, join(distRoot, 'index.html'))
-})
-
-if (process.env.PORT) {
-  const port = Number(process.env.PORT ?? 3000)
-  server.listen(port, '0.0.0.0')
+  return contentTypes[pathname.slice(dotIndex)] ?? 'application/octet-stream'
 }
 
-export default server
+function assetForPath(pathname) {
+  if (pathname === '/' || pathname === '') {
+    return assets['/index.html']
+  }
+
+  if (assets[pathname]) {
+    return assets[pathname]
+  }
+
+  if (!pathname.includes('.')) {
+    return assets['/index.html']
+  }
+
+  return assets['/404.html'] ?? assets['/index.html']
+}
+
+async function handleRequest(request) {
+  const url = new URL(request.url)
+  const pathname = url.pathname
+  const content = assetForPath(pathname)
+  return new Response(content ?? '', {
+    headers: {
+      'content-type': contentTypeFor(pathname === '/' ? '/index.html' : pathname),
+      'cache-control': 'no-store',
+    },
+  })
+}
+
+addEventListener('fetch', (event) => {
+  event.respondWith(handleRequest(event.request))
+})
 `,
 )
 
