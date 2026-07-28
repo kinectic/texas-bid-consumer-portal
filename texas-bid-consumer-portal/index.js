@@ -1,8 +1,8 @@
-const http = require('node:http')
-const { readFile } = require('node:fs/promises')
-const path = require('node:path')
+import http from 'node:http'
+import { readFile } from 'node:fs/promises'
+import path from 'node:path'
 
-const distDir = path.join(__dirname, 'dist')
+const distDir = path.join(process.cwd(), 'dist')
 const port = Number(process.env.PORT || 4173)
 
 const contentTypes = new Map([
@@ -23,7 +23,7 @@ async function sendFile(res, filePath, fallback = false) {
     const data = await readFile(filePath)
     const ext = path.extname(filePath).toLowerCase()
     res.writeHead(200, {
-      'Content-Type': contentTypes.get(ext) || 'application/octet-stream',
+      'Content-Type': contentTypes.get(ext) ?? 'application/octet-stream',
       'Cache-Control': fallback ? 'no-cache' : 'public, max-age=31536000, immutable',
     })
     res.end(data)
