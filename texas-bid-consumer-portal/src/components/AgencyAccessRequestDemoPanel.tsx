@@ -39,7 +39,7 @@ export function AgencyAccessRequestDemoPanel() {
       <div className="panel-header">
         <div>
           <div className="eyebrow">Controlled government onboarding</div>
-          <div className="panel-title">Agency access request demo</div>
+          <div className="panel-title">Agency access request</div>
           <div className="panel-subtitle">Approval-based onboarding for verified Texas public entities.</div>
         </div>
         <span className="status status-review">Approval required</span>
@@ -88,12 +88,12 @@ export function AgencyAccessRequestDemoPanel() {
         </div>
 
         <div className="draft-card">
-          <strong>Demo position</strong>
+          <strong>Access safeguards</strong>
           <div className="dashboard-note compact-note">
             This lane keeps agency creation private. Vendors never self-upgrade into government access, and internal workspaces stay provisioned through review instead of open signup.
           </div>
           <div className="dashboard-note compact-note">
-            Use this panel early in the showcase to establish trust, rollout control, and why Texas agencies get a governed onboarding path.
+            Texas agencies follow a governed onboarding path with clear ownership, verification, and workspace controls.
           </div>
         </div>
       </div>

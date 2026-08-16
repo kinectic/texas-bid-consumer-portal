@@ -10,6 +10,7 @@ export type ViewKey =
   | 'messages'
   | 'trust-center'
   | 'how-it-works'
+  | 'work-from-home'
 
 export const viewOrder: { key: ViewKey; label: string }[] = [
   { key: 'home', label: 'Home' },
@@ -22,6 +23,7 @@ export const viewOrder: { key: ViewKey; label: string }[] = [
   { key: 'messages', label: 'Messages' },
   { key: 'trust-center', label: 'Trust Center' },
   { key: 'how-it-works', label: 'How It Works' },
+  { key: 'work-from-home', label: 'Work From Home' },
 ]
 
 export const defaultView: ViewKey = 'home'
@@ -38,6 +40,7 @@ export const viewPathMap: Record<ViewKey, string> = {
   messages: '/messages',
   'trust-center': '/trust-center',
   'how-it-works': '/how-it-works',
+  'work-from-home': '/work-from-home',
 }
 
 export const pathViewMap = Object.fromEntries(

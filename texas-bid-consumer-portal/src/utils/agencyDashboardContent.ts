@@ -40,7 +40,7 @@ export const agencyDraftPipelineItems = [
 ] as const
 
 export const agencyMilestoneItems = [
-  'Agency access request demo lane',
+  'Agency access request and verification lane',
   'Controlled create-bid workflow connected to publishing state',
   'Submission review and vendor activity tracking',
 ] as const

@@ -46,7 +46,7 @@ export const opportunities: Opportunity[] = [
     status: 'awarded',
     source: 'DART Board Documents',
     summary:
-      'Awarded janitorial-services record used to demonstrate source transparency, historical context, and procurement intelligence value.',
+      'Awarded janitorial-services record with source transparency, historical context, and procurement intelligence details.',
     documents: ['Award Presentation.pdf'],
   },
 ]

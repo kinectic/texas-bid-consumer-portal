@@ -24,6 +24,7 @@ import { OpportunityDetailPage } from './pages/OpportunityDetailPage'
 import { SubmissionWorkflowPage } from './pages/SubmissionWorkflowPage'
 import { TrustCenterPage } from './pages/TrustCenterPage'
 import { VendorDashboardPage } from './pages/VendorDashboardPage'
+import { WorkFromHomePage } from './pages/WorkFromHomePage'
 import type { CreateBidFormState, SubmissionFormState, BidDocument } from './types/forms'
 import type { Opportunity, Submission } from './types'
 import { computeDraftSummaryState, computeReadinessByOpportunityId } from './utils/vendorLane'
@@ -109,6 +110,8 @@ function renderView(
       return <TrustCenterPage onNavigate={navigate} />
     case 'how-it-works':
       return <HowItWorksPage onNavigate={navigate} />
+    case 'work-from-home':
+      return <WorkFromHomePage onNavigate={navigate} />
     case 'vendor-dashboard':
       return <VendorDashboardPage currentOpportunity={currentOpportunity} submissions={submissionQueue} selectedSubmissionId={selectedSubmissionId} draftSummary={draftSummary} readinessByOpportunityId={readinessByOpportunityId} queueFilter={vendorQueueFilter} onQueueFilterChange={setVendorQueueFilter} onSelectOpportunity={selectOpportunity} onSelectSubmission={selectSubmission} onStartNewSubmission={startNewSubmission} onNavigate={navigate} />
     case 'submission-workflow':
@@ -471,7 +474,7 @@ function App() {
     <div className="app-shell">
       <Sidebar activeView={activeView} onSelect={navigateToView} />
       <div className="page-shell">
-        <div className="showcase-lane-label">Consumer marketplace navigation</div>
+        <div className="showcase-lane-label">Explore TexasBid</div>
         <div className="view-switcher">
           {viewOrder.map((view) => {
             const laneClass = view.key === 'marketplace' || view.key === 'opportunity' || view.key === 'vendor-dashboard' || view.key === 'consumer-profile' || view.key === 'contractor-profile' || view.key === 'submission-workflow'

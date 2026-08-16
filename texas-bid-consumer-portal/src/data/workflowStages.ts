@@ -12,4 +12,5 @@ export const workflowStageLabels: Record<ViewKey, { stage: string; owner: string
   messages: { stage: 'Messaging / follow-up', owner: 'Shared' },
   'trust-center': { stage: 'Trust / proof', owner: 'Shared' },
   'how-it-works': { stage: 'Onboarding / explainer', owner: 'Shared' },
+  'work-from-home': { stage: 'Remote job discovery', owner: 'Job seeker' },
 }

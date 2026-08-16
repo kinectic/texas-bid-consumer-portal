@@ -30,7 +30,7 @@ export function presentHomePublishedSnapshotState(isPublished: boolean) {
 
 export function presentMarketplacePublishedSnapshotState(isPublished: boolean) {
   return {
-    title: 'Published bid preview sync',
+    title: 'Published bid status',
     statusLabel: isPublished ? 'Published' : 'Draft only',
     note: isPublished
       ? 'This solicitation is live in the marketplace feed and now behaves like an active opportunity.'

@@ -72,6 +72,12 @@ const contextMap: Record<ViewKey, { lane: string; summary: string; surface: stri
     surface: 'Public-facing explainer and conversion support',
     boundary: 'This page explains the workflow; it does not replace the detailed marketplace, trust, or review surfaces.',
   },
+  'work-from-home': {
+    lane: 'Flexible Texas employment',
+    summary: 'Job seekers discover transparent, flexible remote roles from Texas employers and apply through a safer, focused experience.',
+    surface: 'Public remote job discovery, filtering, saving, and application entry',
+    boundary: 'Applicants never pay to apply, and employers must meet marketplace trust and transparency standards.',
+  },
 }
 
 export function ContextBanner({ activeView }: ContextBannerProps) {

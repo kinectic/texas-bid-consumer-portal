@@ -26,7 +26,7 @@ export function PostSelectionNextStepsPanel({ activeSubmission }: PostSelectionN
         <div className="muted">
           {activeSubmission
             ? `If ${activeSubmission.vendor} is confirmed, the workflow should move from comparison into kickoff without losing the job record.`
-            : 'Select a contractor bid to preview the post-selection flow.'}
+            : 'Select a contractor bid to continue with post-selection steps.'}
         </div>
       </div>
 

@@ -18,6 +18,7 @@ export function Sidebar({ activeView, onSelect }: SidebarProps) {
     'messages',
     'trust-center',
     'how-it-works',
+    'work-from-home',
   ]
 
   return (

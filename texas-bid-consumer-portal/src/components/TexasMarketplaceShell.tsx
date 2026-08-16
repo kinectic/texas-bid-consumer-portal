@@ -31,7 +31,7 @@ export function TexasMarketplaceShell({
             {countyLabel ? <span className="texas-shell-crumb">{countyLabel}</span> : null}
             {cityLabel ? <span className="texas-shell-crumb">{cityLabel}</span> : null}
           </div>
-          <div className="small-note">Demo frame: show local discovery first, then move directly into posted-bid action.</div>
+          <div className="small-note">Browse locally, compare verified details, and move directly into posted-job action.</div>
         </div>
         {children}
       </div>

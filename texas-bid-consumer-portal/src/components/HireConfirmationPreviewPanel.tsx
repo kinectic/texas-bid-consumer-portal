@@ -9,7 +9,7 @@ export function HireConfirmationPreviewPanel({ activeSubmission }: HireConfirmat
     <div className="panel">
       <div className="panel-header">
         <div>
-          <div className="eyebrow">Hire confirmation preview</div>
+          <div className="eyebrow">Hire confirmation</div>
           <div className="panel-title">What advancing this contractor would mean</div>
         </div>
         <span className="status status-review">Pre-confirmation</span>
@@ -21,7 +21,7 @@ export function HireConfirmationPreviewPanel({ activeSubmission }: HireConfirmat
           <div className="muted">
             {activeSubmission
               ? `If you advance ${activeSubmission.vendor}, this bid becomes the active hire candidate for ${activeSubmission.opportunity}.`
-              : 'Select a contractor bid to preview the hire confirmation state.'}
+              : 'Select a contractor bid to continue to hire confirmation.'}
           </div>
         </div>
         <div className="draft-card">

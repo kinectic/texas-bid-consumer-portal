@@ -17,7 +17,7 @@ export function WorkflowActions({ activeView, onNavigate }: WorkflowActionsProps
       <div className="panel-header">
         <div>
           <div className="eyebrow">Workflow actions</div>
-          <div className="panel-title">Suggested next demo actions</div>
+          <div className="panel-title">Recommended next actions</div>
         </div>
         <span className="status status-review">{actions.length} actions</span>
       </div>

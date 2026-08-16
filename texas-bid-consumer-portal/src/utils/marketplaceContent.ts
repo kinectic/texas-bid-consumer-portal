@@ -31,7 +31,7 @@ export const marketplaceCopy = {
 } as const
 
 export const marketplaceStatsItems = [
-  { value: '2,092+', label: 'Texas service opportunities reflected in research and sample coverage' },
+  { value: '2,092+', label: 'Texas service opportunities tracked across supported markets' },
   { value: 3, label: 'Core hiring workflows connected in the site' },
   { value: 1, label: 'Texas-first experience instead of generic marketplace clutter' },
 ] as const

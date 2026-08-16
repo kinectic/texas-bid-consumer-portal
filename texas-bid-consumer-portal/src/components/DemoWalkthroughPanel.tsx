@@ -56,16 +56,16 @@ export function DemoWalkthroughPanel({ activeView, onNavigate }: DemoWalkthrough
     <section className="panel demo-walkthrough-panel">
       <div className="demo-walkthrough-header">
         <div>
-          <div className="panel-title">Presenter walkthrough</div>
-          <div className="panel-subtitle">Use this order to keep the consumer demo tight, credible, and easy to narrate.</div>
+          <div className="panel-title">Explore the hiring process</div>
+          <div className="panel-subtitle">Follow a connected path from posting a job to choosing a contractor.</div>
         </div>
         <span className="status status-open">Focus: {activeStep.title}</span>
       </div>
 
       <div className="demo-walkthrough-active-card draft-card">
-        <strong>Current showcase artifact</strong>
+        <strong>Available in this step</strong>
         <div className="muted">{activeStep.artifact}</div>
-        <div className="small-note">Narration cue: {activeStep.cue}</div>
+        <div className="small-note">Focus: {activeStep.cue}</div>
         <div className="small-note">Next step: {activeStep.nextStep}</div>
       </div>
 
@@ -73,11 +73,11 @@ export function DemoWalkthroughPanel({ activeView, onNavigate }: DemoWalkthrough
         {walkthroughSteps.map((step, index) => {
           const isActive = step.target === activeView
           return (
-            <button key={step.title} className={isActive ? 'draft-card cta-card cta-card-primary' : 'draft-card cta-card'} onClick={() => onNavigate(step.target)}>
+            <button key={step.title} className={isActive ? 'draft-card cta-card cta-card-primary' : 'draft-card cta-card'} onClick={() => onNavigate(step.target)} aria-current={isActive ? 'step' : undefined}>
               <strong>{index + 1}. {step.title}</strong>
               <div className="muted">{step.detail}</div>
-              <div className="small-note">Presenter cue: {step.cue}</div>
-              <div className="small-note">Artifact: {step.artifact}</div>
+              <div className="small-note">Focus: {step.cue}</div>
+              <div className="small-note">Included: {step.artifact}</div>
               <div className="small-note">Next: {step.nextStep}</div>
             </button>
           )

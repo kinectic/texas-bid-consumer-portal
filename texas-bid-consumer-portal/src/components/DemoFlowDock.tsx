@@ -55,9 +55,9 @@ export function DemoFlowDock({ activeView, onNavigate }: DemoFlowDockProps) {
     <section className="demo-flow-dock">
       <div className="demo-flow-dock-copy">
         <div>
-          <div className="eyebrow">Guided demo flow</div>
-          <div className="panel-title">Keep the consumer story moving</div>
-          <div className="panel-subtitle">This dock turns the current screen into a continuous presentation path instead of loose navigation.</div>
+          <div className="eyebrow">Guided hiring flow</div>
+          <div className="panel-title">Continue your contractor search</div>
+          <div className="panel-subtitle">Move through each stage without losing your job or contractor context.</div>
         </div>
         {currentStep ? (
           <div className="demo-flow-current">
@@ -65,7 +65,7 @@ export function DemoFlowDock({ activeView, onNavigate }: DemoFlowDockProps) {
             <div className="small-note">Objective: {currentStep.objective}</div>
           </div>
         ) : (
-          <span className="status status-open">Outside guided flow</span>
+          <span className="status status-open">Choose a hiring step</span>
         )}
       </div>
 
@@ -78,6 +78,7 @@ export function DemoFlowDock({ activeView, onNavigate }: DemoFlowDockProps) {
               key={step.target}
               className={isActive ? 'demo-flow-step demo-flow-step-active' : isComplete ? 'demo-flow-step demo-flow-step-complete' : 'demo-flow-step'}
               onClick={() => onNavigate(step.target)}
+              aria-current={isActive ? 'step' : undefined}
             >
               <span className="demo-flow-step-index">{index + 1}</span>
               <span className="demo-flow-step-body">

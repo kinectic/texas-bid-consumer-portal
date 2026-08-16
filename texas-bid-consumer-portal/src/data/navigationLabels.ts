@@ -12,4 +12,5 @@ export const navigationLabels: Record<ViewKey, { short: string; stageAware: stri
   messages: { short: 'Messages', stageAware: 'Conversation layer · keep job questions and bid follow-up inside the platform' },
   'trust-center': { short: 'Trust Center', stageAware: 'Trust layer · show verification tiers, proof signals, and marketplace standards' },
   'how-it-works': { short: 'How It Works', stageAware: 'Customer explainer · show the simple post, compare, and hire flow end-to-end' },
+  'work-from-home': { short: 'Work From Home', stageAware: 'Remote job board · discover flexible, verified roles from Texas employers' },
 }

@@ -20,8 +20,8 @@ type DemoNarrativeCommandBarProps = {
 
 const demoNarrativeSteps: DemoNarrativeStep[] = [
   {
-    label: '1. Texas-first home story',
-    detail: 'Show that the product starts with simple Texas job posting and local contractor discovery.',
+    label: '1. Start your search',
+    detail: 'Post a Texas job or begin with local contractor discovery.',
     target: 'home',
     cue: 'Lead with local trust, speed, and simplicity for Texas users.',
     outcome: 'Customers immediately understand what the marketplace does and why it feels built for Texas.',
@@ -31,8 +31,8 @@ const demoNarrativeSteps: DemoNarrativeStep[] = [
     presenterPrompt: 'Start with the customer problem: finding a trustworthy Texas contractor without wasting time.',
   },
   {
-    label: '2. Simple how-it-works explainer',
-    detail: 'Show the plain-language post, compare, and hire loop before deeper workflow detail.',
+    label: '2. See how hiring works',
+    detail: 'Review the post, compare, and hire process before browsing.',
     target: 'how-it-works',
     cue: 'Reduce confusion early by explaining the product in simple steps.',
     outcome: 'First-time users understand the marketplace model before they browse.',
@@ -42,8 +42,8 @@ const demoNarrativeSteps: DemoNarrativeStep[] = [
     presenterPrompt: 'Make the loop feel obvious: post once, compare clearly, and hire without jumping between tools.',
   },
   {
-    label: '3. Local matching flow',
-    detail: 'Show customers browsing local contractors, regions, and job-fit details without clutter.',
+    label: '3. Find local matches',
+    detail: 'Browse contractors, regions, and job-fit details.',
     target: 'marketplace',
     cue: 'Emphasize easy browsing, trust signals, and Texas regional relevance.',
     outcome: 'Users see a cleaner path to finding the right contractor fast.',
@@ -53,11 +53,11 @@ const demoNarrativeSteps: DemoNarrativeStep[] = [
     presenterPrompt: 'Point out that browsing stays local and trust-backed instead of looking like a generic lead board.',
   },
   {
-    label: '4. Easy bid review',
-    detail: 'Show the customer moving from match review into quote comparison and selection.',
+    label: '4. Compare bids',
+    detail: 'Move from match review into quote comparison and contractor selection.',
     target: 'submission-workflow',
     cue: 'Finish on clarity, confidence, and ease of decision-making.',
-    outcome: 'The demo lands on an actual hiring workflow instead of a generic showcase.',
+    outcome: 'Customers can complete the hiring workflow in one place.',
     audience: 'Customers choosing who to hire',
     proof: 'Bid-review workspace, trust cues, and direct selection flow.',
     nextAction: 'End by showing that messages and hire confirmation stay attached to the same decision lane.',
@@ -72,9 +72,9 @@ export function DemoNarrativeCommandBar({ activeView, onNavigate, compact = fals
     <section className="workflow-actions demo-narrative-command-bar">
       <div className="demo-narrative-header">
         <div>
-          <div className="panel-title">Launch narrative path</div>
-          <div className="panel-subtitle">Use this flow when walking someone through the Texas consumer marketplace.</div>
-          <div className="small-note">Recommended sequence: home story, how-it-works explainer, local matching, then bid review.</div>
+          <div className="panel-title">Your hiring path</div>
+          <div className="panel-subtitle">Move from local discovery to a confident contractor decision.</div>
+          <div className="small-note">Start a search, understand the process, find matches, then compare bids.</div>
         </div>
         {activeStep ? <span className="status status-review">Current step: {activeStep.label}</span> : null}
       </div>
@@ -83,7 +83,7 @@ export function DemoNarrativeCommandBar({ activeView, onNavigate, compact = fals
         {demoNarrativeSteps.map((step, index) => {
           const isActive = step.target === activeView
           const isComplete = demoNarrativeSteps.findIndex((item) => item.target === activeView) > index
-          const statusLabel = isActive ? 'Live' : isComplete ? 'Covered' : 'Ready'
+          const statusLabel = isActive ? 'Current' : isComplete ? 'Complete' : 'Next'
           const statusClassName = isActive ? 'status status-review' : isComplete ? 'status status-awarded' : 'status status-open'
 
           return (
@@ -91,6 +91,7 @@ export function DemoNarrativeCommandBar({ activeView, onNavigate, compact = fals
               key={step.label}
               className={isActive ? 'draft-card cta-card cta-card-primary demo-narrative-step-active' : 'draft-card cta-card'}
               onClick={() => onNavigate(step.target)}
+              aria-current={isActive ? 'step' : undefined}
             >
               <div className="demo-narrative-step-heading">
                 <strong>{step.label}</strong>
@@ -98,8 +99,7 @@ export function DemoNarrativeCommandBar({ activeView, onNavigate, compact = fals
               </div>
               <div className="muted">{step.detail}</div>
               {!compact ? <div className="small-note">Audience: {step.audience}</div> : null}
-              <div className="small-note">Presenter cue: {step.cue}</div>
-              <div className="small-note">Open with: {step.presenterPrompt}</div>
+              <div className="small-note">What to expect: {step.cue}</div>
               {!compact ? <div className="small-note">Expected outcome: {step.outcome}</div> : null}
             </button>
           )
@@ -109,29 +109,29 @@ export function DemoNarrativeCommandBar({ activeView, onNavigate, compact = fals
       {activeStep && !compact ? (
         <div className="demo-narrative-live-panel">
           <div>
-            <div className="eyebrow">Narration support</div>
-            <div className="panel-title">Presenter notes</div>
+            <div className="eyebrow">Hiring guidance</div>
+            <div className="panel-title">Current step details</div>
           </div>
           <div className="demo-narrative-live-grid">
             <div className="draft-card">
-              <strong>Current frame</strong>
+              <strong>Current step</strong>
               <div className="muted">{activeStep.detail}</div>
             </div>
             <div className="draft-card">
-              <strong>Presenter cue</strong>
+              <strong>What to expect</strong>
               <div className="muted">{activeStep.cue}</div>
             </div>
             <div className="draft-card">
-              <strong>Audience takeaway</strong>
+              <strong>Outcome</strong>
               <div className="muted">{activeStep.outcome}</div>
             </div>
             <div className="draft-card">
-              <strong>Proof on screen</strong>
+              <strong>Included here</strong>
               <div className="muted">{activeStep.proof}</div>
             </div>
             <div className="draft-card">
-              <strong>What to say</strong>
-              <div className="muted">{activeStep.presenterPrompt}</div>
+              <strong>Who this helps</strong>
+              <div className="muted">{activeStep.audience}</div>
             </div>
             <div className="draft-card">
               <strong>Next move</strong>

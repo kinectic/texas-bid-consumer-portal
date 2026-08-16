@@ -30,7 +30,7 @@ const evaluationPoints = [
 ] as const
 
 const opportunityLaunchPoints = [
-  'The selected job feels real enough to imagine hiring through instead of reading like generic placeholder copy.',
+  'The selected job includes enough scope and location detail to make a confident hiring decision.',
   'Trust and fit reduce uncertainty before the customer opens the comparison workspace.',
   'The page makes the next move obvious: review trust, compare bids, or save this match and keep browsing.',
 ] as const
